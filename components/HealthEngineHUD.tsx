@@ -56,6 +56,13 @@ export interface PresetScenario {
   cameraShot?: string;
 }
 
+export interface HealthEngineHUDProps {
+  onPillarChange?: (pillar: PillarType) => void;
+  onRenderModeChange?: (mode: RenderMode) => void;
+  onParameterChange?: (key: keyof HealthParameters, value: number) => void;
+  onPresetLoad?: (preset: PresetScenario) => void;
+}
+
 // Scene 5 & Sleep Ladder Presets
 const PRESETS_V2: PresetScenario[] = [
   {
@@ -156,7 +163,12 @@ const CAMERA_SHOTS = [
   { id: 'shot-4-resonance', name: 'Shot 4: Systemic Resonance', azimuth: 220, elevation: 50, zoom: 0.8, desc: 'High isometric overview of social resonance dome' }
 ];
 
-export const HealthEngineHUD: React.FC = () => {
+export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
+  onPillarChange,
+  onRenderModeChange,
+  onParameterChange,
+  onPresetLoad,
+}) => {
   // Navigation & Control States
   const [activePillar, setActivePillar] = useState<PillarType>('Systems');
   const [activeScene, setActiveScene] = useState<number>(5);
@@ -193,6 +205,7 @@ export const HealthEngineHUD: React.FC = () => {
     setActivePreset(preset);
     setParams(preset.parameters);
     setActivePillar(preset.pillar);
+    onPresetLoad?.(preset);
     if (preset.cameraShot) {
       applyCameraShot(preset.cameraShot);
     }
@@ -215,6 +228,7 @@ export const HealthEngineHUD: React.FC = () => {
   // Slider change handler
   const handleParamChange = (key: keyof HealthParameters, val: number) => {
     setParams(prev => ({ ...prev, [key]: val }));
+    onParameterChange?.(key, val);
   };
 
   // Touch Gesture Controllers for 3D Viewport Manipulation
@@ -285,33 +299,9 @@ export const HealthEngineHUD: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-screen bg-slate-950 text-slate-100 font-sans overflow-hidden select-none">
-      
-      {/* 3D CANVAS BACKDROP WITH TOUCH GESTURE CONTROLLER */}
-      <div
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center cursor-grab active:cursor-grabbing"
-      >
-        <div className="text-center opacity-40 pointer-events-none">
-          <Layers className={`w-28 h-28 mx-auto text-cyan-400 mb-4 transition-transform duration-300 ${camera.isGesturing ? 'scale-110 text-emerald-400' : 'animate-pulse'}`} />
-          <p className="text-sm font-mono tracking-widest uppercase text-slate-300">
-            [ 3D Health Engine Viewport — {renderMode.toUpperCase()} Active ]
-          </p>
-          <p className="text-[11px] font-mono text-cyan-400 mt-2">
-            Swipe to Orbit ({Math.round(camera.orbitAzimuth)}°) • Pinch to Zoom ({camera.zoomDistance.toFixed(1)}x)
-          </p>
-        </div>
+    <div className="relative w-full h-screen bg-transparent text-slate-100 font-sans overflow-hidden select-none">
 
-        {/* Live Touch Camera Telemetry Badge */}
-        <div className="absolute top-20 right-64 bg-slate-900/70 border border-slate-800/80 rounded-xl px-3 py-1.5 backdrop-blur-md flex items-center space-x-3 text-[10px] font-mono text-slate-400 pointer-events-none hidden lg:flex">
-          <Compass className="w-3.5 h-3.5 text-cyan-400" />
-          <span>Azimuth: <strong className="text-slate-200">{Math.round(camera.orbitAzimuth)}°</strong></span>
-          <span>Elevation: <strong className="text-slate-200">{Math.round(camera.orbitElevation)}°</strong></span>
-          <span>Zoom: <strong className="text-emerald-400">{camera.zoomDistance.toFixed(1)}x</strong></span>
-        </div>
-      </div>
+
 
       {/* ------------------------------------------------------------------ */}
       {/* 1. TOP HEADER NAVIGATION BAR */}
@@ -334,7 +324,10 @@ export const HealthEngineHUD: React.FC = () => {
           {(['Fitness', 'Nutrition', 'Sleep', 'Stress', 'Systems'] as PillarType[]).map((pillar) => (
             <button
               key={pillar}
-              onClick={() => setActivePillar(pillar)}
+              onClick={() => {
+                setActivePillar(pillar);
+                onPillarChange?.(pillar);
+              }}
               className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 ${
                 activePillar === pillar
                   ? 'bg-slate-800 text-slate-100 shadow-sm border border-slate-700/50'
@@ -361,7 +354,10 @@ export const HealthEngineHUD: React.FC = () => {
             {(['high-3d', 'lite-3d', '2d-canvas'] as RenderMode[]).map((mode) => (
               <button
                 key={mode}
-                onClick={() => setRenderMode(mode)}
+                onClick={() => {
+                  setRenderMode(mode);
+                  onRenderModeChange?.(mode);
+                }}
                 className={`px-2.5 py-1 rounded-md text-[11px] font-mono capitalize transition-all ${
                   renderMode === mode
                     ? 'bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/30'

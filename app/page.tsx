@@ -98,7 +98,8 @@ export default function FourPillarsHealthEnginePage() {
       {/* 1. VISUAL VIEWPORT LAYER (3D WebGL vs 2D Fallback) */}
       {/* ------------------------------------------------------------------ */}
       {state.renderMode === '2d-canvas' ? (
-        <HealthEngine2DFallback
+        <div className="absolute inset-0 z-0 flex items-center justify-center overflow-auto bg-slate-950 p-6">
+          <HealthEngine2DFallback
             activePillar={state.activePillar}
             aerobicMins={state.parameters.aerobicVolume}
             sleepDuration={state.parameters.sleepDuration}
@@ -112,6 +113,7 @@ export default function FourPillarsHealthEnginePage() {
                   : "critical"
             }
           />
+        </div>
       ) : (
         <div className="absolute inset-0 z-0">
           <WebGLCanvasWrapper
@@ -124,8 +126,76 @@ export default function FourPillarsHealthEnginePage() {
       {/* ------------------------------------------------------------------ */}
       {/* 2. OVERLAY HUD INTERFACE */}
       {/* ------------------------------------------------------------------ */}
-      <div className="relative z-10 w-full h-full pointer-events-none">
-        <HealthEngineHUD />
+      <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
+        <HealthEngineHUD
+        onPillarChange={(pillar) => {
+          const sceneMap = {
+            Fitness: "fitness",
+            Nutrition: "nutrition",
+            Sleep: "sleep",
+            Stress: "stress",
+            Systems: "system",
+          } as const;
+
+          dispatch({
+            type: "SET_SCENE",
+            payload: sceneMap[pillar],
+          });
+        }}
+        onRenderModeChange={(mode) => {
+          dispatch({
+            type: "SET_RENDER_MODE",
+            payload: mode === "2d-canvas" ? "2d-canvas" : "3d-webgl",
+          });
+        }}
+        onParameterChange={(key, value) => {
+          const parameterMap = {
+            aerobicMins: "aerobicVolume",
+            strengthDays: "resistanceDays",
+            sleepDuration: "sleepDuration",
+            wholeFoodRatio: "wholeFoodRatio",
+            stressLevel: "perceivedStress",
+          } as const;
+
+          const mappedKey = parameterMap[key as keyof typeof parameterMap];
+
+          if (mappedKey) {
+            dispatch({
+              type: "UPDATE_PARAM",
+              payload: { key: mappedKey, value },
+            });
+          }
+        }}
+        onPresetLoad={(preset) => {
+          const sceneMap = {
+            Fitness: "fitness",
+            Nutrition: "nutrition",
+            Sleep: "sleep",
+            Stress: "stress",
+            Systems: "system",
+          } as const;
+
+          dispatch({
+            type: "SET_SCENE",
+            payload: sceneMap[preset.pillar],
+          });
+
+          const updates = [
+            ["aerobicVolume", preset.parameters.aerobicMins],
+            ["resistanceDays", preset.parameters.strengthDays],
+            ["sleepDuration", preset.parameters.sleepDuration],
+            ["wholeFoodRatio", preset.parameters.wholeFoodRatio],
+            ["perceivedStress", preset.parameters.stressLevel],
+          ] as const;
+
+          for (const [key, value] of updates) {
+            dispatch({
+              type: "UPDATE_PARAM",
+              payload: { key, value },
+            });
+          }
+        }}
+      />
       </div>
 
       {/* ------------------------------------------------------------------ */}

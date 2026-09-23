@@ -203,10 +203,11 @@ export interface State {
   overlay: ClinicalOverlayData;
 }
 
-type Action =
+export type Action =
   | { type: 'SET_SCENE'; payload: SceneId }
   | { type: 'SELECT_PRESET'; payload: PresetId }
-  | { type: 'UPDATE_PARAM'; payload: { key: keyof PillarParameters; value: number } };
+  | { type: 'UPDATE_PARAM'; payload: { key: keyof PillarParameters; value: number } }
+  | { type: 'SET_RENDER_MODE'; payload: State['renderMode'] };
 
 function sceneToPillar(scene: SceneId): PillarType {
   switch (scene) {
@@ -243,6 +244,9 @@ export function stateMachineReducer(state: State, action: Action): State {
         overlay: preset.overlay,
       };
     }
+    case 'SET_RENDER_MODE':
+      return { ...state, renderMode: action.payload };
+
     case 'UPDATE_PARAM': {
       const newParams = { ...state.parameters, [action.payload.key]: action.payload.value };
       return {
@@ -318,7 +322,7 @@ export function deriveVisualState(params: PillarParameters, scene: SceneId): Vis
 // 3. THREE.JS REACT-THREE-FIBER ANIMATED MESH COMPONENT
 // ============================================================================
 
-function InteractiveBodyEngineMesh({ params, scene }: { params: PillarParameters; scene: SceneId }) {
+export function InteractiveBodyEngineMesh({ params, scene }: { params: PillarParameters; scene: SceneId }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const visual = deriveVisualState(params, scene);
@@ -483,7 +487,7 @@ export default function FourPillars3DStateMachine() {
           <ambientLight intensity={0.5} />
           <directionalLight position={[10, 10, 5]} intensity={1.2} />
           <InteractiveBodyEngineMesh params={state.parameters} scene={state.activeScene} />
-          <OrbitControls enableZoom={false} />
+          <OrbitControls enableZoom enableRotate enablePan={false} />
         </Canvas>
 
         {/* Clinical Outcome Overlay Box */}
