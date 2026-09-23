@@ -29,7 +29,10 @@ const client = createClient({
 });
 
 const transaction = documents.reduce(
-  (currentTransaction: ReturnType<typeof client.transaction>, document: { _id: string }) =>
+  (
+    currentTransaction: ReturnType<typeof client.transaction>,
+    document: { _id: string; _type: string; [key: string]: unknown }
+  ) =>
     currentTransaction.createOrReplace(document),
   client.transaction()
 );

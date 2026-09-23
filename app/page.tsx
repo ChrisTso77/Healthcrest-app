@@ -22,15 +22,15 @@ import {
 } from 'lucide-react';
 
 // Import local components and state machine types
-import { HealthEngineHUD } from './HealthEngineHUD-v2';
-import { HealthEngine2DFallback } from './HealthEngine2DFallback';
+import { HealthEngineHUD } from '@/components/HealthEngineHUD';
+import { HealthEngine2DFallback } from '@/components/HealthEngine2DFallback';
 import {
   pillarsReducer,
   initialPillarsState,
   PillarType,
   HealthParameters,
   PresetScenario
-} from './PillarsStateMachine';
+} from '@/state/PillarsStateMachine';
 
 // Dynamically import Three.js Canvas with SSR disabled to prevent server-side DOM errors
 const WebGLCanvasWrapper = dynamic(
@@ -99,10 +99,19 @@ export default function FourPillarsHealthEnginePage() {
       {/* ------------------------------------------------------------------ */}
       {state.renderMode === '2d-canvas' ? (
         <HealthEngine2DFallback
-          parameters={state.parameters}
-          activePillar={state.activePillar}
-          renderMode={state.renderMode}
-        />
+            activePillar={state.activePillar}
+            aerobicMins={state.parameters.aerobicVolume}
+            sleepDuration={state.parameters.sleepDuration}
+            wholeFoodRatio={state.parameters.wholeFoodRatio}
+            stressLevel={state.parameters.perceivedStress}
+            healthStatus={
+              state.overlay.status === "Optimal"
+                ? "optimal"
+                : state.overlay.status === "Warning"
+                  ? "warning"
+                  : "critical"
+            }
+          />
       ) : (
         <div className="absolute inset-0 z-0">
           <WebGLCanvasWrapper

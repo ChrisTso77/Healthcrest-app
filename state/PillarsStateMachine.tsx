@@ -22,6 +22,14 @@ export type PresetId =
   | 'system_single_failure'
   | 'system_integrated_harmony';
 
+export type PillarType = 'Fitness' | 'Nutrition' | 'Sleep' | 'Stress' | 'Systems';
+
+export type HealthParameters = PillarParameters;
+
+export interface PresetScenario {
+  [key: string]: unknown;
+}
+
 export interface PillarParameters {
   // Fitness
   aerobicVolume: number; // 0 to 300+ mins/wk (UK CMO target: 150)
@@ -186,9 +194,11 @@ const PRESETS: Record<PresetId, { params: Partial<PillarParameters>; scene: Scen
 };
 
 // State Machine Reducer logic
-interface State {
+export interface State {
   activeScene: SceneId;
   activePreset: PresetId;
+  activePillar: PillarType;
+  renderMode: '3d-webgl' | '2d-canvas';
   parameters: PillarParameters;
   overlay: ClinicalOverlayData;
 }
@@ -198,15 +208,36 @@ type Action =
   | { type: 'SELECT_PRESET'; payload: PresetId }
   | { type: 'UPDATE_PARAM'; payload: { key: keyof PillarParameters; value: number } };
 
-function stateMachineReducer(state: State, action: Action): State {
+function sceneToPillar(scene: SceneId): PillarType {
+  switch (scene) {
+    case 'fitness':
+      return 'Fitness';
+    case 'nutrition':
+      return 'Nutrition';
+    case 'sleep':
+      return 'Sleep';
+    case 'stress':
+      return 'Stress';
+    case 'system':
+    default:
+      return 'Systems';
+  }
+}
+
+export function stateMachineReducer(state: State, action: Action): State {
   switch (action.type) {
     case 'SET_SCENE':
-      return { ...state, activeScene: action.payload };
+      return {
+        ...state,
+        activeScene: action.payload,
+        activePillar: sceneToPillar(action.payload),
+      };
     case 'SELECT_PRESET': {
       const preset = PRESETS[action.payload];
       return {
         ...state,
         activeScene: preset.scene,
+        activePillar: sceneToPillar(preset.scene),
         activePreset: action.payload,
         parameters: { ...state.parameters, ...preset.params },
         overlay: preset.overlay,
@@ -352,13 +383,22 @@ function InteractiveBodyEngineMesh({ params, scene }: { params: PillarParameters
 // 4. MAIN REACT STATE MACHINE PROVIDER & CONTAINER COMPONENT
 // ============================================================================
 
+export const initialPillarsState: State = {
+  activeScene: 'system',
+  activePreset: 'system_integrated_harmony',
+  activePillar: 'Systems',
+  renderMode: '3d-webgl',
+  parameters: DEFAULT_PARAMS,
+  overlay: PRESETS['system_integrated_harmony'].overlay,
+};
+
+export { stateMachineReducer as pillarsReducer };
+
 export default function FourPillars3DStateMachine() {
-  const [state, dispatch] = useReducer(stateMachineReducer, {
-    activeScene: 'system',
-    activePreset: 'system_integrated_harmony',
-    parameters: DEFAULT_PARAMS,
-    overlay: PRESETS['system_integrated_harmony'].overlay,
-  });
+  const [state, dispatch] = useReducer(
+    stateMachineReducer,
+    initialPillarsState
+  );
 
   return (
     <div style={{ display: 'flex', width: '100%', height: '100vh', background: '#0F172A', color: '#F8FAFC', fontFamily: 'sans-serif' }}>
