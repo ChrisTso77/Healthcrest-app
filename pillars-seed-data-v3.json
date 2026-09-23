@@ -1,0 +1,42 @@
+{
+  "pillars": [
+    {
+      "_id": "pillar-fitness",
+      "_type": "pillar",
+      "title": "Fitness",
+      "slug": { "_type": "slug", "current": "fitness" },
+      "accentColor": "#2D9D78"
+    },
+    {
+      "_id": "pillar-nutrition",
+      "_type": "pillar",
+      "title": "Nutrition",
+      "slug": { "_type": "slug", "current": "nutrition" },
+      "accentColor": "#D97706"
+    },
+    {
+      "_id": "pillar-sleep",
+      "_type": "pillar",
+      "title": "Sleep",
+      "slug": { "_type": "slug", "current": "sleep" },
+      "accentColor": "#4F7CAC"
+    },
+    {
+      "_id": "pillar-stress",
+      "_type": "pillar",
+      "title": "Stress",
+      "slug": { "_type": "slug", "current": "stress" },
+      "accentColor": "#B45309"
+    }
+  ],
+  "evidenceItems": [],
+  "scenarioPresets": [],
+  "storyboardScenes": [],
+  "globalNarrative": {
+    "_id": "global-narrative",
+    "_type": "globalNarrative",
+    "bottomLine": "Health outcomes reflect the interaction of the four pillars.",
+    "pillarsSummary": "Fitness, nutrition, sleep, and stress work together.",
+    "clinicalAlignment": "Educational content; not individual medical advice."
+  }
+}
