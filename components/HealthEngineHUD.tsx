@@ -136,6 +136,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   // Slider change handler
   const handleParamChange = (key: keyof HealthParameters, val: number) => {
     setParams(prev => ({ ...prev, [key]: val }));
+    setActivePreset(null);
     onParameterChange?.(key, val);
   };
 

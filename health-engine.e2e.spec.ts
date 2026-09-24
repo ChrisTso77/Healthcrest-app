@@ -95,6 +95,25 @@ test.describe('Healthcrest production regression', () => {
     await expect(integratedPreset).not.toHaveClass(/border-emerald-500\/50/);
   });
 
+  test('manual parameter change clears the active preset', async ({ page }) => {
+    const integratedPreset = page.getByRole('button', {
+      name: /Integrated Harmony/i,
+    });
+
+    await integratedPreset.click();
+
+    await expect(integratedPreset).toHaveClass(/border-emerald-500\/50/);
+
+    const aerobicSlider = page.getByRole('slider').first();
+    await aerobicSlider.fill('220');
+
+    await expect(integratedPreset).not.toHaveClass(
+      /border-emerald-500\/50/
+    );
+
+    await expect(page.getByText('MANUAL', { exact: true })).toBeVisible();
+  });
+
   test('camera director shots and reset remain usable', async ({ page }) => {
     const shots = [
       /Shot 1: Equilibrium Orbit/i,
