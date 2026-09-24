@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Activity,
   Apple,
@@ -13,13 +13,9 @@ import {
   Sliders,
   ChevronUp,
   ChevronDown,
-  Maximize2,
   Zap,
   RotateCcw,
-  Move,
-  ZoomIn,
-  Camera,
-  Compass
+  Camera
 } from 'lucide-react';
 
 // Types mirroring the Health Engine State Machine & Touch Gesture Controller
@@ -173,7 +169,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
 }) => {
   // Navigation & Control States
   const [activePillar, setActivePillar] = useState<PillarType>('Systems');
-  const [activeScene, setActiveScene] = useState<number>(5);
   const [renderMode, setRenderMode] = useState<RenderMode>('high-3d');
   const [isDayTime, setIsDayTime] = useState<boolean>(false);
   const [isDockOpen, setIsDockOpen] = useState<boolean>(true);
@@ -186,9 +181,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
     activeShotId: 'shot-1-orbit',
     isGesturing: false
   });
-
-  // Touch Gesture Tracking Refs
-  const touchStartRef = useRef<{ x: number; y: number; dist: number } | null>(null);
 
   // Active Health Parameters State
   const [params, setParams] = useState<HealthParameters>({
@@ -235,59 +227,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   const handleParamChange = (key: keyof HealthParameters, val: number) => {
     setParams(prev => ({ ...prev, [key]: val }));
     onParameterChange?.(key, val);
-  };
-
-  // Touch Gesture Controllers for 3D Viewport Manipulation
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (e.touches.length === 1) {
-      // Single finger drag for orbit rotation
-      touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, dist: 0 };
-      setCamera(prev => ({ ...prev, isGesturing: true }));
-    } else if (e.touches.length === 2) {
-      // Two finger pinch to zoom
-      const dx = e.touches[0].clientX - e.touches[1].clientX;
-      const dy = e.touches[0].clientY - e.touches[1].clientY;
-      const dist = Math.hypot(dx, dy);
-      touchStartRef.current = { x: 0, y: 0, dist };
-      setCamera(prev => ({ ...prev, isGesturing: true }));
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!touchStartRef.current) return;
-
-    if (e.touches.length === 1) {
-      const deltaX = e.touches[0].clientX - touchStartRef.current.x;
-      const deltaY = e.touches[0].clientY - touchStartRef.current.y;
-
-      setCamera(prev => ({
-        ...prev,
-        orbitAzimuth: (prev.orbitAzimuth + deltaX * 0.4) % 360,
-        orbitElevation: Math.max(-10, Math.min(80, prev.orbitElevation - deltaY * 0.3)),
-        activeShotId: 'custom-touch'
-      }));
-
-      touchStartRef.current.x = e.touches[0].clientX;
-      touchStartRef.current.y = e.touches[0].clientY;
-    } else if (e.touches.length === 2) {
-      const dx = e.touches[0].clientX - e.touches[1].clientX;
-      const dy = e.touches[0].clientY - e.touches[1].clientY;
-      const newDist = Math.hypot(dx, dy);
-      const pinchDelta = (touchStartRef.current.dist - newDist) * 0.005;
-
-      setCamera(prev => ({
-        ...prev,
-        zoomDistance: Math.max(0.5, Math.min(3.0, prev.zoomDistance + pinchDelta)),
-        activeShotId: 'custom-touch'
-      }));
-
-      touchStartRef.current.dist = newDist;
-    }
-  };
-
-  const handleTouchEnd = () => {
-    touchStartRef.current = null;
-    setCamera(prev => ({ ...prev, isGesturing: false }));
   };
 
   const pillarIcons: Record<PillarType, React.ReactNode> = {

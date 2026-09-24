@@ -18,7 +18,6 @@ export interface FallbackProps {
 }
 
 export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
-  activePillar = 'Systems',
   aerobicMins = 180,
   sleepDuration = 8.0,
   wholeFoodRatio = 75,
