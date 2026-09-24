@@ -187,5 +187,77 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.locator('canvas')).toBeVisible();
   });
 
+
+  test('warning preset synchronizes reducer state into 2D fallback', async ({ page }) => {
+    await page.route('**/api/presets', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          success: true,
+          count: 1,
+          data: [
+            {
+              id: 'test-warning-preset',
+              slug: 'test-warning-preset',
+              title: 'Warning State Test Preset',
+              pillar: 'Systems',
+              status: 'warning',
+              evidenceLevel: 'High-quality review',
+              parameters: {
+                aerobicMins: 300,
+                strengthDays: 4,
+                sleepDuration: 4.5,
+                wholeFoodRatio: 50,
+                stressLevel: 8,
+                alcoholUnits: 18
+              },
+              headline: 'Warning state synchronization test',
+              outcomes: ['Reducer overlay synchronization verified'],
+              cameraShot: 'shot-2-failure'
+            }
+          ]
+        })
+      });
+    });
+
+    await page.goto('/?warning-state-test=1', {
+      waitUntil: 'networkidle'
+    });
+
+    const preset = page.getByRole('button', {
+      name: /Warning State Test Preset/i
+    });
+
+    await expect(preset).toBeVisible();
+    await preset.click();
+
+    await expect(
+      page.getByText('Warning state synchronization test')
+    ).toBeVisible();
+
+    await page.getByRole('button', { name: /2d canvas/i }).click();
+
+    await expect(
+      page.getByText('Interactive 2D Vector Health Engine')
+    ).toBeVisible();
+
+    const fallback = page.getByText(
+      'Interactive 2D Vector Health Engine'
+    ).locator('..').locator('..');
+
+    await expect(
+      fallback.getByText('WARNING', { exact: true })
+    ).toBeVisible();
+
+    await expect(
+      page.getByText('4.5h Restorative', { exact: true })
+    ).toBeVisible();
+
+    await expect(
+      page.getByText('Lvl 8/10', { exact: true })
+    ).toBeVisible();
+  });
+
 });
 

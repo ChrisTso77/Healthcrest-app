@@ -2,6 +2,10 @@ import React, { createContext, useContext, useReducer, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text, Float, MeshWobbleMaterial, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
+import type {
+  CanonicalScenarioPreset,
+  EvidenceLevel,
+} from '@/lib/presets/types';
 
 // ============================================================================
 // 1. TYPES & CLINICAL PARAMETER DEFINITIONS
@@ -60,7 +64,7 @@ export interface ClinicalOverlayData {
   title: string;
   status: 'Optimal' | 'Warning' | 'Critical';
   keyOutcomes: string[];
-  evidenceLevel: 'Guideline-level' | 'High-quality review' | 'Emerging';
+  evidenceLevel: EvidenceLevel;
 }
 
 // ============================================================================
@@ -196,7 +200,7 @@ const PRESETS: Record<PresetId, { params: Partial<PillarParameters>; scene: Scen
 // State Machine Reducer logic
 export interface State {
   activeScene: SceneId;
-  activePreset: PresetId;
+  activePreset: string;
   activePillar: PillarType;
   renderMode: '3d-webgl' | '2d-canvas';
   parameters: PillarParameters;
@@ -206,8 +210,39 @@ export interface State {
 export type Action =
   | { type: 'SET_SCENE'; payload: SceneId }
   | { type: 'SELECT_PRESET'; payload: PresetId }
+  | { type: 'APPLY_CANONICAL_PRESET'; payload: CanonicalScenarioPreset }
   | { type: 'UPDATE_PARAM'; payload: { key: keyof PillarParameters; value: number } }
   | { type: 'SET_RENDER_MODE'; payload: State['renderMode'] };
+
+function pillarToScene(pillar: CanonicalScenarioPreset['pillar']): SceneId {
+  switch (pillar) {
+    case 'Fitness':
+      return 'fitness';
+    case 'Nutrition':
+      return 'nutrition';
+    case 'Sleep':
+      return 'sleep';
+    case 'Stress':
+      return 'stress';
+    case 'Systems':
+    default:
+      return 'system';
+  }
+}
+
+function canonicalStatusToOverlayStatus(
+  status: CanonicalScenarioPreset['status']
+): ClinicalOverlayData['status'] {
+  switch (status) {
+    case 'warning':
+      return 'Warning';
+    case 'critical':
+      return 'Critical';
+    case 'optimal':
+    default:
+      return 'Optimal';
+  }
+}
 
 function sceneToPillar(scene: SceneId): PillarType {
   switch (scene) {
@@ -244,6 +279,33 @@ export function stateMachineReducer(state: State, action: Action): State {
         overlay: preset.overlay,
       };
     }
+
+    case 'APPLY_CANONICAL_PRESET': {
+      const preset = action.payload;
+      const scene = pillarToScene(preset.pillar);
+
+      return {
+        ...state,
+        activeScene: scene,
+        activePillar: preset.pillar,
+        activePreset: preset.slug || preset.id,
+        parameters: {
+          ...state.parameters,
+          aerobicVolume: preset.parameters.aerobicMins,
+          resistanceDays: preset.parameters.strengthDays,
+          sleepDuration: preset.parameters.sleepDuration,
+          wholeFoodRatio: preset.parameters.wholeFoodRatio,
+          perceivedStress: preset.parameters.stressLevel,
+        },
+        overlay: {
+          title: preset.headline,
+          status: canonicalStatusToOverlayStatus(preset.status),
+          keyOutcomes: preset.outcomes,
+          evidenceLevel: preset.evidenceLevel,
+        },
+      };
+    }
+
     case 'SET_RENDER_MODE':
       return { ...state, renderMode: action.payload };
 
