@@ -46,6 +46,7 @@ export interface HealthEngineHUDProps {
   activePillar: PillarType;
   renderMode: RenderMode;
   parameters: HealthParameters;
+  activePresetId: string | null;
   onPillarChange?: (pillar: PillarType) => void;
   onRenderModeChange?: (mode: RenderMode) => void;
   onParameterChange?: (key: keyof HealthParameters, value: number) => void;
@@ -67,6 +68,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   activePillar,
   renderMode,
   parameters,
+  activePresetId,
   onPillarChange,
   onRenderModeChange,
   onParameterChange,
@@ -89,15 +91,22 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
 
   const cameraRequestRevision = useRef(0);
 
-  const [activePreset, setActivePreset] = useState<PresetScenario | null>(
-    FALLBACK_PRESETS[0]
-  );
-
   const availablePresets = presets.length > 0 ? presets : FALLBACK_PRESETS;
+
+  const activePreset = activePresetId
+    ? availablePresets.find(
+        (preset) =>
+          preset.slug === activePresetId || preset.id === activePresetId
+      ) ??
+      FALLBACK_PRESETS.find(
+        (preset) =>
+          preset.slug === activePresetId || preset.id === activePresetId
+      ) ??
+      null
+    : null;
 
   // Load Preset Handler
   const loadPreset = (preset: PresetScenario) => {
-    setActivePreset(preset);
     onPresetLoad?.(preset);
     if (preset.cameraShot) {
       applyCameraShot(preset.cameraShot);
@@ -127,7 +136,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
 
   // Slider change handler
   const handleParamChange = (key: keyof HealthParameters, val: number) => {
-    setActivePreset(null);
     onParameterChange?.(key, val);
   };
 
@@ -172,7 +180,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
             <button
               key={pillar}
               onClick={() => {
-                setActivePreset(null);
                 onPillarChange?.(pillar);
               }}
               className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 ${

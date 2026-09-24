@@ -114,6 +114,27 @@ test.describe('Healthcrest production regression', () => {
     await expect(sleep).not.toHaveClass(/border-slate-700\/50/);
   });
 
+  test('active preset presentation follows canonical reducer state', async ({ page }) => {
+    const sleepPreset = page.getByRole('button', {
+      name: /Sleep Rung 1/i,
+    });
+
+    await sleepPreset.click();
+
+    await expect(sleepPreset).toHaveClass(/border-emerald-500\/50/);
+    await expect(
+      page.getByText('7-9h Restorative Sleep & Substance Cut-offs')
+    ).toBeVisible();
+
+    await page.getByRole('button', {
+      name: 'Fitness',
+      exact: true,
+    }).click();
+
+    await expect(sleepPreset).not.toHaveClass(/border-emerald-500\/50/);
+    await expect(page.getByText('MANUAL', { exact: true })).toBeVisible();
+  });
+
   test('manual pillar selection does not leave a stale preset selected', async ({ page }) => {
     const integratedPreset = page.getByRole('button', {
       name: /Integrated Harmony/i,
