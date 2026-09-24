@@ -75,7 +75,7 @@ const DEFAULT_PARAMS: PillarParameters = {
 // State Machine Reducer logic
 export interface State {
   activeScene: SceneId;
-  activePreset: string;
+  activePreset: string | null;
   activePillar: PillarType;
   renderMode: 'high-3d' | 'lite-3d' | '2d-canvas';
   parameters: PillarParameters;
@@ -141,6 +141,7 @@ export function stateMachineReducer(state: State, action: Action): State {
         ...state,
         activeScene: action.payload,
         activePillar: sceneToPillar(action.payload),
+        activePreset: null,
       };
     case 'APPLY_CANONICAL_PRESET': {
       const preset = action.payload;
@@ -176,6 +177,7 @@ export function stateMachineReducer(state: State, action: Action): State {
       return {
         ...state,
         parameters: newParams,
+        activePreset: null,
       };
     }
     default:
