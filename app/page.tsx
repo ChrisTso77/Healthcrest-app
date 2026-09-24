@@ -72,8 +72,8 @@ export default function FourPillarsHealthEnginePage() {
   // UI Control States
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
   const [isNarrativeOpen, setIsNarrativeOpen] = useState<boolean>(false);
-  const [presetsList, setPresetsList] = useState<PresetScenario[]>([]);
-  const [isLoadingPresets, setIsLoadingPresets] = useState<boolean>(true);
+  const [, setPresetsList] = useState<PresetScenario[]>([]);
+  const [, setIsLoadingPresets] = useState<boolean>(true);
   const [apiError, setApiError] = useState<string | null>(null);
 
   // Fetch Preset Scenarios from Next.js App Router API (/api/presets) on mount
