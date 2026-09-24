@@ -95,7 +95,9 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
     alcoholUnits: 2
   });
 
-  const [activePreset, setActivePreset] = useState<PresetScenario>(FALLBACK_PRESETS[0]);
+  const [activePreset, setActivePreset] = useState<PresetScenario | null>(
+    FALLBACK_PRESETS[0]
+  );
 
   const availablePresets = presets.length > 0 ? presets : FALLBACK_PRESETS;
 
@@ -179,6 +181,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
               key={pillar}
               onClick={() => {
                 setActivePillar(pillar);
+                setActivePreset(null);
                 onPillarChange?.(pillar);
               }}
               className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 ${
@@ -234,32 +237,48 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
             <span className="text-xs font-mono tracking-wider uppercase text-slate-300">CLINICAL HUD</span>
           </div>
           
-          <div className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold border ${statusBadge[activePreset.status].bg} ${statusBadge[activePreset.status].text} ${statusBadge[activePreset.status].border}`}>
-            {statusBadge[activePreset.status].icon}
-            <span>{statusBadge[activePreset.status].label}</span>
-          </div>
+          {activePreset ? (
+            <div className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold border ${statusBadge[activePreset.status].bg} ${statusBadge[activePreset.status].text} ${statusBadge[activePreset.status].border}`}>
+              {statusBadge[activePreset.status].icon}
+              <span>{statusBadge[activePreset.status].label}</span>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold border bg-slate-800 text-slate-300 border-slate-700">
+              <span>MANUAL</span>
+            </div>
+          )}
         </div>
 
         <div className="mt-3 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-400">EVIDENCE LEVEL</span>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700/50">
-              {activePreset.evidenceLevel}
+              {activePreset?.evidenceLevel ?? 'Manual state'}
             </span>
           </div>
 
           <h3 className="text-xs font-semibold text-slate-100 leading-snug">
-            {activePreset.headline}
+            {activePreset?.headline ?? 'Manual pillar and parameter configuration'}
           </h3>
 
           <div className="pt-2 border-t border-slate-800/60 space-y-1.5">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Key Health Outcomes:</span>
-            {activePreset.outcomes.map((outcome, idx) => (
-              <div key={idx} className="flex items-start space-x-2 text-[11px] text-slate-300">
-                <span className="text-emerald-400 font-bold">•</span>
-                <span>{outcome}</span>
+            <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
+              {activePreset ? 'Key Health Outcomes:' : 'State Mode:'}
+            </span>
+
+            {activePreset ? (
+              activePreset.outcomes.map((outcome, idx) => (
+                <div key={idx} className="flex items-start space-x-2 text-[11px] text-slate-300">
+                  <span className="text-emerald-400 font-bold">•</span>
+                  <span>{outcome}</span>
+                </div>
+              ))
+            ) : (
+              <div className="flex items-start space-x-2 text-[11px] text-slate-300">
+                <span className="text-cyan-400 font-bold">•</span>
+                <span>No evidence preset is currently applied.</span>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>
@@ -333,7 +352,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
                     key={preset.id}
                     onClick={() => loadPreset(preset)}
                     className={`w-full text-left p-2 rounded-lg text-xs transition-all border ${
-                      activePreset.id === preset.id
+                      activePreset?.id === preset.id
                         ? 'bg-slate-800 border-emerald-500/50 text-slate-100 shadow-md'
                         : 'bg-slate-950/40 border-slate-800/80 text-slate-400 hover:bg-slate-800/40 hover:text-slate-200'
                     }`}
