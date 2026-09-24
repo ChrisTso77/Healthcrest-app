@@ -67,6 +67,28 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.locator('canvas')).toBeVisible();
   });
 
+  test('render mode controls stay synchronized with the rendered viewport', async ({ page }) => {
+    const high3d = page.getByRole('button', { name: /high 3d/i });
+    const lite3d = page.getByRole('button', { name: /lite 3d/i });
+    const canvas2d = page.getByRole('button', { name: /2d canvas/i });
+
+    await expect(high3d).toHaveClass(/border-emerald-500\/30/);
+
+    await lite3d.click();
+    await expect(lite3d).toHaveClass(/border-emerald-500\/30/);
+    await expect(page.locator('canvas')).toBeVisible();
+
+    await canvas2d.click();
+    await expect(canvas2d).toHaveClass(/border-emerald-500\/30/);
+    await expect(
+      page.getByText('Interactive 2D Vector Health Engine')
+    ).toBeVisible();
+
+    await high3d.click();
+    await expect(high3d).toHaveClass(/border-emerald-500\/30/);
+    await expect(page.locator('canvas')).toBeVisible();
+  });
+
   test('manual pillar selection does not leave a stale preset selected', async ({ page }) => {
     const integratedPreset = page.getByRole('button', {
       name: /Integrated Harmony/i,

@@ -141,6 +141,7 @@ export default function FourPillarsHealthEnginePage() {
       <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
         <HealthEngineHUD
         presets={presetsList}
+        renderMode={state.renderMode}
         onCameraChange={setCameraState}
         onPillarChange={(pillar) => {
           const sceneMap = {
@@ -159,7 +160,7 @@ export default function FourPillarsHealthEnginePage() {
         onRenderModeChange={(mode) => {
           dispatch({
             type: "SET_RENDER_MODE",
-            payload: mode === "2d-canvas" ? "2d-canvas" : "3d-webgl",
+            payload: mode,
           });
         }}
         onParameterChange={(key, value) => {

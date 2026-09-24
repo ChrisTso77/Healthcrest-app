@@ -77,7 +77,7 @@ export interface State {
   activeScene: SceneId;
   activePreset: string;
   activePillar: PillarType;
-  renderMode: '3d-webgl' | '2d-canvas';
+  renderMode: 'high-3d' | 'lite-3d' | '2d-canvas';
   parameters: PillarParameters;
   overlay: ClinicalOverlayData;
 }
@@ -317,7 +317,7 @@ export const initialPillarsState: State = {
   activeScene: 'system',
   activePreset: INITIAL_PRESET.slug,
   activePillar: INITIAL_PRESET.pillar,
-  renderMode: '3d-webgl',
+  renderMode: 'high-3d',
   parameters: {
     ...DEFAULT_PARAMS,
     aerobicVolume: INITIAL_PRESET.parameters.aerobicMins,
