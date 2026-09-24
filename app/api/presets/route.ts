@@ -80,6 +80,16 @@ const STORYBOARD_SCENES_QUERY = `
 `;
 
 // GROQ Query to fetch Global Narrative singleton document
+type StoryboardScene = {
+  sceneNumber?: number;
+  [key: string]: unknown;
+};
+
+type ScenarioPreset = {
+  slug?: string;
+  [key: string]: unknown;
+};
+
 const GLOBAL_NARRATIVE_QUERY = `
   *[_type == "globalNarrative"][0] {
     _id,
@@ -122,7 +132,7 @@ export async function GET(request: NextRequest) {
     // If query requests a specific scene (e.g. ?scene=5)
     if (scene) {
       const sceneNum = parseInt(scene, 10);
-      const scenes = await sanityClient.fetch(
+      const scenes = await sanityClient.fetch<StoryboardScene[]>(
         STORYBOARD_SCENES_QUERY,
         {},
         {
@@ -133,7 +143,7 @@ export async function GET(request: NextRequest) {
         }
       );
 
-      const targetScene = scenes.find((s: any) => s.sceneNumber === sceneNum);
+      const targetScene = scenes.find((s) => s.sceneNumber === sceneNum);
 
       if (!targetScene) {
         return NextResponse.json(
@@ -147,8 +157,8 @@ export async function GET(request: NextRequest) {
 
     // If query requests a specific preset by slug
     if (slug) {
-      const presets = await sanityClient.fetch(ALL_PRESETS_QUERY);
-      const preset = presets.find((p: any) => p.slug === slug);
+      const presets = await sanityClient.fetch<ScenarioPreset[]>(ALL_PRESETS_QUERY);
+      const preset = presets.find((p) => p.slug === slug);
 
       if (!preset) {
         return NextResponse.json(

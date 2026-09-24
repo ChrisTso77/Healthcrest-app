@@ -8,13 +8,10 @@ import {
   X,
   Activity,
   Layers,
-  HelpCircle,
-  FileText,
   CheckCircle2,
   AlertTriangle,
   BookOpen,
   Sparkles,
-  HeartPulse,
   Apple,
   Moon,
   Brain,
@@ -30,14 +27,16 @@ import { HealthEngine2DFallback } from '@/components/HealthEngine2DFallback';
 import {
   pillarsReducer,
   initialPillarsState,
-  PillarType,
-  HealthParameters,
   PresetScenario
 } from '@/state/PillarsStateMachine';
 
 // Dynamically import Three.js Canvas with SSR disabled to prevent server-side DOM errors
+function WebGLLoadErrorFallback() {
+  return <CanvasPlaceholder />;
+}
+
 const WebGLCanvasWrapper = dynamic(
-  () => import('./WebGLCanvasWrapper').catch(() => () => <CanvasPlaceholder />),
+  () => import('./WebGLCanvasWrapper').catch(() => WebGLLoadErrorFallback),
   { ssr: false, loading: () => <CanvasPlaceholder /> }
 );
 
@@ -92,7 +91,7 @@ export default function FourPillarsHealthEnginePage() {
         } else if (Array.isArray(json)) {
           setPresetsList(json);
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.warn('Failed to load presets from /api/presets, using local fallback presets:', err);
         setApiError('CMS connection offline — using local evidence presets.');
       } finally {
@@ -353,7 +352,7 @@ export default function FourPillarsHealthEnginePage() {
                 </p>
 
                 <p className="text-[11px] text-slate-300 leading-relaxed">
-                  Official UK public health guidance—including NHS "Live Well" guidance, UK Chief Medical Officers' physical activity guidelines, and NICE evidence standards—serves as a primary reference point across our content and scenario models. However, all materials, visualisations, and interactive tools provided on this platform are designed strictly for educational and informational purposes. They are not intended to diagnose, treat, or replace individual clinical advice, and you should always consult a qualified healthcare professional regarding any medical concerns or before embarking on a new health regimen.
+                  Official UK public health guidance—including NHS “Live Well” guidance, UK Chief Medical Officers’ physical activity guidelines, and NICE evidence standards—serves as a primary reference point across our content and scenario models. However, all materials, visualisations, and interactive tools provided on this platform are designed strictly for educational and informational purposes. They are not intended to diagnose, treat, or replace individual clinical advice, and you should always consult a qualified healthcare professional regarding any medical concerns or before embarking on a new health regimen.
                 </p>
               </div>
 

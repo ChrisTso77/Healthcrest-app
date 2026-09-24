@@ -12,9 +12,9 @@ export type RenderMode = 'high-3d' | 'lite-3d' | '2d-canvas';
 // Window extension for global analytics providers
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
-    plausible?: (eventName: string, options?: { props?: Record<string, any> }) => void;
-    posthog?: { capture: (eventName: string, properties?: Record<string, any>) => void };
+    gtag?: (...args: unknown[]) => void;
+    plausible?: (eventName: string, options?: { props?: Record<string, unknown> }) => void;
+    posthog?: { capture: (eventName: string, properties?: Record<string, unknown>) => void };
   }
 }
 
@@ -22,7 +22,7 @@ declare global {
  * Universal Event Dispatcher
  * Sends structured events to whichever provider is active in window
  */
-export const trackEvent = (eventName: string, props: Record<string, any> = {}) => {
+export const trackEvent = (eventName: string, props: Record<string, unknown> = {}) => {
   // Console logging in non-production environments
   if (process.env.NODE_ENV !== 'production') {
     console.log(`[Analytics Event: ${eventName}]`, props);
