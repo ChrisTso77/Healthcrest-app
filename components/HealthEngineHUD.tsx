@@ -43,6 +43,7 @@ export interface CameraState {
 
 export interface HealthEngineHUDProps {
   presets?: PresetScenario[];
+  activePillar: PillarType;
   renderMode: RenderMode;
   onPillarChange?: (pillar: PillarType) => void;
   onRenderModeChange?: (mode: RenderMode) => void;
@@ -62,6 +63,7 @@ const CAMERA_SHOTS = [
 
 export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   presets = [],
+  activePillar,
   renderMode,
   onPillarChange,
   onRenderModeChange,
@@ -70,7 +72,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   onCameraChange,
 }) => {
   // Navigation & Control States
-  const [activePillar, setActivePillar] = useState<PillarType>('Systems');
   const [isDayTime, setIsDayTime] = useState<boolean>(false);
   const [isDockOpen, setIsDockOpen] = useState<boolean>(true);
 
@@ -106,7 +107,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   const loadPreset = (preset: PresetScenario) => {
     setActivePreset(preset);
     setParams(preset.parameters);
-    setActivePillar(preset.pillar);
     onPresetLoad?.(preset);
     if (preset.cameraShot) {
       applyCameraShot(preset.cameraShot);
@@ -182,7 +182,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
             <button
               key={pillar}
               onClick={() => {
-                setActivePillar(pillar);
                 setActivePreset(null);
                 onPillarChange?.(pillar);
               }}

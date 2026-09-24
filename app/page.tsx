@@ -141,6 +141,7 @@ export default function FourPillarsHealthEnginePage() {
       <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
         <HealthEngineHUD
         presets={presetsList}
+        activePillar={state.activePillar}
         renderMode={state.renderMode}
         onCameraChange={setCameraState}
         onPillarChange={(pillar) => {
