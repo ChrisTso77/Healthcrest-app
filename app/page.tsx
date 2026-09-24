@@ -22,7 +22,10 @@ import {
 } from 'lucide-react';
 
 // Import local components and state machine types
-import { HealthEngineHUD } from '@/components/HealthEngineHUD';
+import {
+  HealthEngineHUD,
+  type CameraState,
+} from '@/components/HealthEngineHUD';
 import { HealthEngine2DFallback } from '@/components/HealthEngine2DFallback';
 import {
   pillarsReducer,
@@ -58,6 +61,14 @@ function CanvasPlaceholder() {
 export default function FourPillarsHealthEnginePage() {
   // Master State Machine Driven by Reducer
   const [state, dispatch] = useReducer(pillarsReducer, initialPillarsState);
+
+  const [cameraState, setCameraState] = useState<CameraState>({
+    orbitAzimuth: 45,
+    orbitElevation: 20,
+    zoomDistance: 1.0,
+    activeShotId: 'shot-1-orbit',
+    isGesturing: false,
+  });
 
   // UI Control States
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
@@ -118,6 +129,7 @@ export default function FourPillarsHealthEnginePage() {
         <div className="absolute inset-0 z-0">
           <WebGLCanvasWrapper
             state={state}
+            cameraState={cameraState}
             dispatch={dispatch}
           />
         </div>
@@ -128,6 +140,7 @@ export default function FourPillarsHealthEnginePage() {
       {/* ------------------------------------------------------------------ */}
       <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
         <HealthEngineHUD
+        onCameraChange={setCameraState}
         onPillarChange={(pillar) => {
           const sceneMap = {
             Fitness: "fitness",

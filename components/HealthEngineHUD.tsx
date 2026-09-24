@@ -61,6 +61,7 @@ export interface HealthEngineHUDProps {
   onRenderModeChange?: (mode: RenderMode) => void;
   onParameterChange?: (key: keyof HealthParameters, value: number) => void;
   onPresetLoad?: (preset: PresetScenario) => void;
+  onCameraChange?: (camera: CameraState) => void;
 }
 
 // Scene 5 & Sleep Ladder Presets
@@ -168,6 +169,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   onRenderModeChange,
   onParameterChange,
   onPresetLoad,
+  onCameraChange,
 }) => {
   // Navigation & Control States
   const [activePillar, setActivePillar] = useState<PillarType>('Systems');
@@ -214,14 +216,18 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   // Camera Shot Director Handler
   const applyCameraShot = (shotId: string) => {
     const shot = CAMERA_SHOTS.find(s => s.id === shotId);
+
     if (shot) {
-      setCamera(prev => ({
-        ...prev,
+      const nextCamera: CameraState = {
         orbitAzimuth: shot.azimuth,
         orbitElevation: shot.elevation,
         zoomDistance: shot.zoom,
-        activeShotId: shot.id
-      }));
+        activeShotId: shot.id,
+        isGesturing: false,
+      };
+
+      setCamera(nextCamera);
+      onCameraChange?.(nextCamera);
     }
   };
 
