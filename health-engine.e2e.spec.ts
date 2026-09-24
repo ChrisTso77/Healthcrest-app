@@ -110,4 +110,82 @@ test.describe('Healthcrest production regression', () => {
     expect(body).toHaveProperty('success', true);
     expect(Array.isArray(body.data)).toBeTruthy();
   });
+
+  test('Sanity preset synchronizes clinical state and camera', async ({ page }) => {
+    const preset = page.getByRole('button', {
+      name: /Integrated Harmony/i,
+    });
+
+    await expect(preset).toBeVisible();
+    await preset.click();
+
+    await expect(
+      page.getByText('Maximum Allostatic Resilience & Systemic Equilibrium')
+    ).toBeVisible();
+
+    await expect(
+      page.getByRole('button', { name: /Shot 1: Equilibrium Orbit/i })
+    ).toBeVisible();
+
+    await expect(page.locator('canvas')).toBeVisible();
+  });
+
+
+  test('HUD consumes presets returned by the API', async ({ page }) => {
+    let intercepted = false;
+
+    await page.route('**/api/presets', async (route) => {
+      intercepted = true;
+
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          success: true,
+          count: 1,
+          data: [
+            {
+              id: 'test-cms-only',
+              slug: 'test-cms-only',
+              title: 'CMS Only Test Preset',
+              pillar: 'Sleep',
+              status: 'optimal',
+              evidenceLevel: 'Guideline-level',
+              parameters: {
+                aerobicMins: 160,
+                strengthDays: 2,
+                sleepDuration: 9,
+                wholeFoodRatio: 88,
+                stressLevel: 2,
+                alcoholUnits: 0
+              },
+              headline: 'CMS-only preset loaded successfully',
+              outcomes: ['CMS data path verified'],
+              cameraShot: 'shot-3-macro'
+            }
+          ]
+        })
+      });
+    });
+
+    // Force a fresh navigation after the mock has been installed.
+    await page.goto('/?cms-test=1', { waitUntil: 'networkidle' });
+
+    expect(intercepted).toBeTruthy();
+
+    const preset = page.getByRole('button', {
+      name: /CMS Only Test Preset/i
+    });
+
+    await expect(preset).toBeVisible();
+    await preset.click();
+
+    await expect(
+      page.getByText('CMS-only preset loaded successfully')
+    ).toBeVisible();
+
+    await expect(page.locator('canvas')).toBeVisible();
+  });
+
 });
+

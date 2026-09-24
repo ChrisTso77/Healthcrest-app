@@ -4,33 +4,320 @@
       "_id": "pillar-fitness",
       "_type": "pillar",
       "title": "Fitness",
-      "slug": { "_type": "slug", "current": "fitness" },
+      "slug": {
+        "_type": "slug",
+        "current": "fitness"
+      },
       "accentColor": "#2D9D78"
     },
     {
       "_id": "pillar-nutrition",
       "_type": "pillar",
       "title": "Nutrition",
-      "slug": { "_type": "slug", "current": "nutrition" },
+      "slug": {
+        "_type": "slug",
+        "current": "nutrition"
+      },
       "accentColor": "#D97706"
     },
     {
       "_id": "pillar-sleep",
       "_type": "pillar",
       "title": "Sleep",
-      "slug": { "_type": "slug", "current": "sleep" },
+      "slug": {
+        "_type": "slug",
+        "current": "sleep"
+      },
       "accentColor": "#4F7CAC"
     },
     {
       "_id": "pillar-stress",
       "_type": "pillar",
       "title": "Stress",
-      "slug": { "_type": "slug", "current": "stress" },
+      "slug": {
+        "_type": "slug",
+        "current": "stress"
+      },
       "accentColor": "#B45309"
+    },
+    {
+      "_id": "pillar-systems",
+      "_type": "pillar",
+      "title": "Systems",
+      "slug": {
+        "_type": "slug",
+        "current": "systems"
+      },
+      "accentColor": "#06B6D4"
     }
   ],
   "evidenceItems": [],
-  "scenarioPresets": [],
+  "scenarioPresets": [
+    {
+      "_id": "preset-integrated-harmony",
+      "_type": "scenarioPreset",
+      "title": "Integrated Harmony (Scene 5)",
+      "slug": {
+        "_type": "slug",
+        "current": "integrated-harmony"
+      },
+      "healthStatus": "optimal",
+      "evidenceLevel": "Guideline-level",
+      "parameters": {
+        "aerobicMins": 180,
+        "strengthDays": 2,
+        "sleepDuration": 8,
+        "wholeFoodRatio": 80,
+        "stressLevel": 2,
+        "alcoholUnits": 2
+      },
+      "narrativeOverlay": {
+        "headline": "Maximum Allostatic Resilience & Systemic Equilibrium",
+        "body": "",
+        "outcomes": [
+          "Tetrapod Balance Maintained (0\u00b0 Tilt)",
+          "Low Chronic Disease Hazard Ratio",
+          "Oxytocin Shield Active"
+        ]
+      },
+      "cameraShot": "shot-1-orbit",
+      "pillar": {
+        "_type": "reference",
+        "_ref": "pillar-systems"
+      }
+    },
+    {
+      "_id": "preset-single-pillar-failure",
+      "_type": "scenarioPreset",
+      "title": "Single-Pillar Failure (Scene 5)",
+      "slug": {
+        "_type": "slug",
+        "current": "single-pillar-failure"
+      },
+      "healthStatus": "warning",
+      "evidenceLevel": "High-quality review",
+      "parameters": {
+        "aerobicMins": 300,
+        "strengthDays": 4,
+        "sleepDuration": 4.5,
+        "wholeFoodRatio": 50,
+        "stressLevel": 8,
+        "alcoholUnits": 18
+      },
+      "narrativeOverlay": {
+        "headline": "Structural Imbalance: Sleep & Stress Failure",
+        "body": "",
+        "outcomes": [
+          "Platform Tilts 28\u00b0 Off-Axis",
+          "Structural Micro-cracks on Core",
+          "Corrosive Friction Fog Active"
+        ]
+      },
+      "cameraShot": "shot-2-failure",
+      "pillar": {
+        "_type": "reference",
+        "_ref": "pillar-systems"
+      }
+    },
+    {
+      "_id": "preset-uk-cmo-optimal",
+      "_type": "scenarioPreset",
+      "title": "UK CMO Optimal Zone",
+      "slug": {
+        "_type": "slug",
+        "current": "uk-cmo-optimal"
+      },
+      "healthStatus": "optimal",
+      "evidenceLevel": "Guideline-level",
+      "parameters": {
+        "aerobicMins": 180,
+        "strengthDays": 2,
+        "sleepDuration": 8,
+        "wholeFoodRatio": 80,
+        "stressLevel": 3,
+        "alcoholUnits": 4
+      },
+      "narrativeOverlay": {
+        "headline": "Optimal Functional Capacity & Allostatic Resilience",
+        "body": "",
+        "outcomes": [
+          "-35% CVD Mortality Risk",
+          "-40% Type 2 Diabetes Risk",
+          "Enhanced Vascular Elasticity"
+        ]
+      },
+      "cameraShot": "shot-1-orbit",
+      "pillar": {
+        "_type": "reference",
+        "_ref": "pillar-fitness"
+      }
+    },
+    {
+      "_id": "preset-sleep-rung1-foundations",
+      "_type": "scenarioPreset",
+      "title": "Sleep Rung 1: Foundations",
+      "slug": {
+        "_type": "slug",
+        "current": "sleep-rung1-foundations"
+      },
+      "healthStatus": "optimal",
+      "evidenceLevel": "Guideline-level",
+      "parameters": {
+        "aerobicMins": 150,
+        "strengthDays": 2,
+        "sleepDuration": 8,
+        "wholeFoodRatio": 75,
+        "stressLevel": 3,
+        "alcoholUnits": 0
+      },
+      "narrativeOverlay": {
+        "headline": "7-9h Restorative Sleep & Substance Cut-offs",
+        "body": "",
+        "outcomes": [
+          "High-amplitude 24h Circadian Wave",
+          "Lower Cardiometabolic Hazard",
+          "Zero Nocturnal Micro-arousals"
+        ]
+      },
+      "cameraShot": "shot-3-macro",
+      "pillar": {
+        "_type": "reference",
+        "_ref": "pillar-sleep"
+      }
+    },
+    {
+      "_id": "preset-sleep-rung2-behavioral",
+      "_type": "scenarioPreset",
+      "title": "Sleep Rung 2: Behavioral & CBT-I",
+      "slug": {
+        "_type": "slug",
+        "current": "sleep-rung2-behavioral"
+      },
+      "healthStatus": "optimal",
+      "evidenceLevel": "High-quality review",
+      "parameters": {
+        "aerobicMins": 150,
+        "strengthDays": 2,
+        "sleepDuration": 8,
+        "wholeFoodRatio": 80,
+        "stressLevel": 2,
+        "alcoholUnits": 0
+      },
+      "narrativeOverlay": {
+        "headline": "Morning Light Anchors & Stimulus Control",
+        "body": "",
+        "outcomes": [
+          "Phase-aligned Circadian Clock",
+          "Reduced Sleep Onset Latency",
+          "Adenosine Sleep Pressure Optimization"
+        ]
+      },
+      "cameraShot": "shot-3-macro",
+      "pillar": {
+        "_type": "reference",
+        "_ref": "pillar-sleep"
+      }
+    },
+    {
+      "_id": "preset-sleep-rung3-circadian",
+      "_type": "scenarioPreset",
+      "title": "Sleep Rung 3: Thermal & Chrono",
+      "slug": {
+        "_type": "slug",
+        "current": "sleep-rung3-circadian"
+      },
+      "healthStatus": "optimal",
+      "evidenceLevel": "Emerging / Review",
+      "parameters": {
+        "aerobicMins": 180,
+        "strengthDays": 3,
+        "sleepDuration": 8.5,
+        "wholeFoodRatio": 85,
+        "stressLevel": 2,
+        "alcoholUnits": 0
+      },
+      "narrativeOverlay": {
+        "headline": "Pre-bed Thermal Drop & Blue-Light Shielding",
+        "body": "",
+        "outcomes": [
+          "Deep Slow-Wave (N3) Expansion",
+          "Melatonin Secretion Protection",
+          "Vagal HRV Tone Recovery"
+        ]
+      },
+      "cameraShot": "shot-3-macro",
+      "pillar": {
+        "_type": "reference",
+        "_ref": "pillar-sleep"
+      }
+    },
+    {
+      "_id": "preset-sleep-rung4-experimental",
+      "_type": "scenarioPreset",
+      "title": "Sleep Rung 4: Acoustic Delta & Flush",
+      "slug": {
+        "_type": "slug",
+        "current": "sleep-rung4-experimental"
+      },
+      "healthStatus": "optimal",
+      "evidenceLevel": "Experimental",
+      "parameters": {
+        "aerobicMins": 200,
+        "strengthDays": 3,
+        "sleepDuration": 8.5,
+        "wholeFoodRatio": 90,
+        "stressLevel": 1,
+        "alcoholUnits": 0
+      },
+      "narrativeOverlay": {
+        "headline": "Acoustic Pink-Noise Delta & Glymphatic Flush",
+        "body": "",
+        "outcomes": [
+          "Amplified Slow Delta Oscillations",
+          "Bioluminescent Glymphatic Clearance",
+          "Peak Recovery Readiness"
+        ]
+      },
+      "cameraShot": "shot-3-macro",
+      "pillar": {
+        "_type": "reference",
+        "_ref": "pillar-sleep"
+      }
+    },
+    {
+      "_id": "preset-active-vagal-reset",
+      "_type": "scenarioPreset",
+      "title": "Active Parasympathetic Reset",
+      "slug": {
+        "_type": "slug",
+        "current": "active-vagal-reset"
+      },
+      "healthStatus": "optimal",
+      "evidenceLevel": "High-quality review",
+      "parameters": {
+        "aerobicMins": 150,
+        "strengthDays": 2,
+        "sleepDuration": 7.5,
+        "wholeFoodRatio": 70,
+        "stressLevel": 2,
+        "alcoholUnits": 0
+      },
+      "narrativeOverlay": {
+        "headline": "Parasympathetic Dominance & Expanded HRV",
+        "body": "",
+        "outcomes": [
+          "Vagus Nerve Stimulation",
+          "Normalised Blood Pressure",
+          "Suppressed Pro-inflammatory Cytokines"
+        ]
+      },
+      "cameraShot": "shot-4-resonance",
+      "pillar": {
+        "_type": "reference",
+        "_ref": "pillar-stress"
+      }
+    }
+  ],
   "storyboardScenes": [],
   "globalNarrative": {
     "_id": "global-narrative",

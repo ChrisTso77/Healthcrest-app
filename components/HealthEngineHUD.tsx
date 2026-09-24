@@ -42,6 +42,7 @@ export interface HealthParameters {
 
 export interface PresetScenario {
   id: string;
+  slug?: string;
   title: string;
   pillar: PillarType;
   status: HealthStatus;
@@ -53,6 +54,7 @@ export interface PresetScenario {
 }
 
 export interface HealthEngineHUDProps {
+  presets?: PresetScenario[];
   onPillarChange?: (pillar: PillarType) => void;
   onRenderModeChange?: (mode: RenderMode) => void;
   onParameterChange?: (key: keyof HealthParameters, value: number) => void;
@@ -161,6 +163,7 @@ const CAMERA_SHOTS = [
 ];
 
 export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
+  presets = [],
   onPillarChange,
   onRenderModeChange,
   onParameterChange,
@@ -193,6 +196,8 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   });
 
   const [activePreset, setActivePreset] = useState<PresetScenario>(PRESETS_V2[0]);
+
+  const availablePresets = presets.length > 0 ? presets : PRESETS_V2;
 
   // Load Preset Handler
   const loadPreset = (preset: PresetScenario) => {
@@ -420,7 +425,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
             <div className="md:col-span-4 space-y-2 border-r border-slate-800/80 pr-4">
               <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">PRESET SCENARIOS & SLEEP LADDER</span>
               <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
-                {PRESETS_V2.map((preset) => (
+                {availablePresets.map((preset) => (
                   <button
                     key={preset.id}
                     onClick={() => loadPreset(preset)}
