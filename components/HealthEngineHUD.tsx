@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import type {
+  CanonicalPresetParameters,
+  CanonicalScenarioPreset,
+  HealthStatus as CanonicalHealthStatus,
+  PillarType as CanonicalPillarType,
+} from '@/lib/presets/types';
 import {
   Activity,
   Apple,
@@ -18,10 +24,12 @@ import {
   Camera
 } from 'lucide-react';
 
-// Types mirroring the Health Engine State Machine & Touch Gesture Controller
-export type PillarType = 'Fitness' | 'Nutrition' | 'Sleep' | 'Stress' | 'Systems';
-export type HealthStatus = 'optimal' | 'warning' | 'critical';
+// Shared canonical health-engine domain types
+export type PillarType = CanonicalPillarType;
+export type HealthStatus = CanonicalHealthStatus;
 export type RenderMode = 'high-3d' | 'lite-3d' | '2d-canvas';
+export type HealthParameters = CanonicalPresetParameters;
+export type PresetScenario = CanonicalScenarioPreset;
 
 export interface CameraState {
   orbitAzimuth: number; // Horizontal rotation angle in degrees
@@ -29,28 +37,6 @@ export interface CameraState {
   zoomDistance: number; // Camera zoom level (1.0 = baseline)
   activeShotId: string; // Active camera shot preset
   isGesturing: boolean;
-}
-
-export interface HealthParameters {
-  aerobicMins: number;
-  strengthDays: number;
-  sleepDuration: number;
-  wholeFoodRatio: number;
-  stressLevel: number;
-  alcoholUnits: number;
-}
-
-export interface PresetScenario {
-  id: string;
-  slug?: string;
-  title: string;
-  pillar: PillarType;
-  status: HealthStatus;
-  evidenceLevel: string;
-  parameters: HealthParameters;
-  headline: string;
-  outcomes: string[];
-  cameraShot?: string;
 }
 
 export interface HealthEngineHUDProps {
@@ -66,6 +52,7 @@ export interface HealthEngineHUDProps {
 const PRESETS_V2: PresetScenario[] = [
   {
     id: 'integrated-harmony',
+    slug: 'integrated-harmony',
     title: 'Integrated Harmony (Scene 5)',
     pillar: 'Systems',
     status: 'optimal',
@@ -77,6 +64,7 @@ const PRESETS_V2: PresetScenario[] = [
   },
   {
     id: 'single-pillar-failure',
+    slug: 'single-pillar-failure',
     title: 'Single-Pillar Failure (Scene 5)',
     pillar: 'Systems',
     status: 'warning',
@@ -88,6 +76,7 @@ const PRESETS_V2: PresetScenario[] = [
   },
   {
     id: 'uk-cmo-optimal',
+    slug: 'uk-cmo-optimal',
     title: 'UK CMO Optimal Zone',
     pillar: 'Fitness',
     status: 'optimal',
@@ -99,6 +88,7 @@ const PRESETS_V2: PresetScenario[] = [
   },
   {
     id: 'sleep-rung1-foundations',
+    slug: 'sleep-rung1-foundations',
     title: 'Sleep Rung 1: Foundations',
     pillar: 'Sleep',
     status: 'optimal',
@@ -110,6 +100,7 @@ const PRESETS_V2: PresetScenario[] = [
   },
   {
     id: 'sleep-rung2-behavioral',
+    slug: 'sleep-rung2-behavioral',
     title: 'Sleep Rung 2: Behavioral & CBT-I',
     pillar: 'Sleep',
     status: 'optimal',
@@ -121,6 +112,7 @@ const PRESETS_V2: PresetScenario[] = [
   },
   {
     id: 'sleep-rung3-circadian',
+    slug: 'sleep-rung3-circadian',
     title: 'Sleep Rung 3: Thermal & Chrono',
     pillar: 'Sleep',
     status: 'optimal',
@@ -132,6 +124,7 @@ const PRESETS_V2: PresetScenario[] = [
   },
   {
     id: 'sleep-rung4-experimental',
+    slug: 'sleep-rung4-experimental',
     title: 'Sleep Rung 4: Acoustic Delta & Flush',
     pillar: 'Sleep',
     status: 'optimal',
@@ -143,6 +136,7 @@ const PRESETS_V2: PresetScenario[] = [
   },
   {
     id: 'active-vagal-reset',
+    slug: 'active-vagal-reset',
     title: 'Active Parasympathetic Reset',
     pillar: 'Stress',
     status: 'optimal',

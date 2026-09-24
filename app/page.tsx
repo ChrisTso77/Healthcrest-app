@@ -180,33 +180,10 @@ export default function FourPillarsHealthEnginePage() {
           }
         }}
         onPresetLoad={(preset) => {
-          const sceneMap = {
-            Fitness: "fitness",
-            Nutrition: "nutrition",
-            Sleep: "sleep",
-            Stress: "stress",
-            Systems: "system",
-          } as const;
-
           dispatch({
-            type: "SET_SCENE",
-            payload: sceneMap[preset.pillar],
+            type: "APPLY_CANONICAL_PRESET",
+            payload: preset,
           });
-
-          const updates = [
-            ["aerobicVolume", preset.parameters.aerobicMins],
-            ["resistanceDays", preset.parameters.strengthDays],
-            ["sleepDuration", preset.parameters.sleepDuration],
-            ["wholeFoodRatio", preset.parameters.wholeFoodRatio],
-            ["perceivedStress", preset.parameters.stressLevel],
-          ] as const;
-
-          for (const [key, value] of updates) {
-            dispatch({
-              type: "UPDATE_PARAM",
-              payload: { key, value },
-            });
-          }
         }}
       />
       </div>
