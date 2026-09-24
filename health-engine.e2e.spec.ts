@@ -67,6 +67,34 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.locator('canvas')).toBeVisible();
   });
 
+  test('manual pillar selection does not leave a stale preset selected', async ({ page }) => {
+    const integratedPreset = page.getByRole('button', {
+      name: /Integrated Harmony/i,
+    });
+
+    await integratedPreset.click();
+
+    await expect(
+      page.getByText('Maximum Allostatic Resilience & Systemic Equilibrium')
+    ).toBeVisible();
+
+    await page.getByRole('button', {
+      name: 'Fitness',
+      exact: true,
+    }).click();
+
+    await expect(
+      page.getByRole('button', {
+        name: 'Fitness',
+        exact: true,
+      })
+    ).toBeVisible();
+
+    // Manual navigation must not leave the previous preset presented
+    // as though it still describes the active state.
+    await expect(integratedPreset).not.toHaveClass(/border-emerald-500\/50/);
+  });
+
   test('camera director shots and reset remain usable', async ({ page }) => {
     const shots = [
       /Shot 1: Equilibrium Orbit/i,
