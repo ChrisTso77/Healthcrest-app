@@ -6,25 +6,13 @@ import type {
   CanonicalScenarioPreset,
   EvidenceLevel,
 } from '@/lib/presets/types';
+import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 
 // ============================================================================
 // 1. TYPES & CLINICAL PARAMETER DEFINITIONS
 // ============================================================================
 
 export type SceneId = 'fitness' | 'nutrition' | 'sleep' | 'stress' | 'system';
-
-export type PresetId =
-  | 'fitness_sedentary'
-  | 'fitness_cmo_optimal'
-  | 'fitness_overtrained'
-  | 'nutrition_upf_heavy'
-  | 'nutrition_eatwell_optimal'
-  | 'sleep_deprived'
-  | 'sleep_restorative'
-  | 'stress_overload'
-  | 'stress_reset'
-  | 'system_single_failure'
-  | 'system_integrated_harmony';
 
 export type PillarType = 'Fitness' | 'Nutrition' | 'Sleep' | 'Stress' | 'Systems';
 
@@ -84,119 +72,6 @@ const DEFAULT_PARAMS: PillarParameters = {
   perceivedStress: 4,
 };
 
-const PRESETS: Record<PresetId, { params: Partial<PillarParameters>; scene: SceneId; overlay: ClinicalOverlayData }> = {
-  fitness_sedentary: {
-    scene: 'fitness',
-    params: { aerobicVolume: 20, resistanceDays: 0, sedentaryHours: 11 },
-    overlay: {
-      title: 'Physical Inactivity / High Sedentary Time',
-      status: 'Critical',
-      keyOutcomes: ['+35% CVD Risk', '+40% T2 Diabetes Risk', 'Reduced Capillary Density'],
-      evidenceLevel: 'Guideline-level',
-    },
-  },
-  fitness_cmo_optimal: {
-    scene: 'fitness',
-    params: { aerobicVolume: 180, resistanceDays: 2, sedentaryHours: 6 },
-    overlay: {
-      title: 'UK CMO Guidelines Compliant Zone',
-      status: 'Optimal',
-      keyOutcomes: ['-35% CVD Mortality', '-40% T2D Incidence', '-30% Depression Risk'],
-      evidenceLevel: 'Guideline-level',
-    },
-  },
-  fitness_overtrained: {
-    scene: 'fitness',
-    params: { aerobicVolume: 420, resistanceDays: 5, sedentaryHours: 4 },
-    overlay: {
-      title: 'Overtraining & Inadequate Recovery',
-      status: 'Warning',
-      keyOutcomes: ['Persistent Autonomic Fatigue', 'Micro-tear Accumulation', 'Elevated Cortisol'],
-      evidenceLevel: 'High-quality review',
-    },
-  },
-  nutrition_upf_heavy: {
-    scene: 'nutrition',
-    params: { wholeFoodRatio: 20, fruitVegPortions: 1, upfFrequency: 4 },
-    overlay: {
-      title: 'High Ultra-Processed Food Diet',
-      status: 'Critical',
-      keyOutcomes: ['Glycemic Spikes/Instability', 'Endothelial Inflammation', 'Reduced Microbiome Diversity'],
-      evidenceLevel: 'Guideline-level',
-    },
-  },
-  nutrition_eatwell_optimal: {
-    scene: 'nutrition',
-    params: { wholeFoodRatio: 90, fruitVegPortions: 7, upfFrequency: 0 },
-    overlay: {
-      title: 'NHS Eatwell & Plant-Predominant Pattern',
-      status: 'Optimal',
-      keyOutcomes: ['Stable Glycemic Homeostasis', 'Lower Colorectal Cancer Risk', 'Enhanced Microbiome'],
-      evidenceLevel: 'Guideline-level',
-    },
-  },
-  sleep_deprived: {
-    scene: 'sleep',
-    params: { sleepDuration: 5, regularityScore: 40 },
-    overlay: {
-      title: 'Chronic Sleep Restriction (<6 hrs)',
-      status: 'Critical',
-      keyOutcomes: ['Impaired Glymphatic Clearance', 'Leptin/Ghrelin Dysregulation', 'Systemic Cardiometabolic Stress'],
-      evidenceLevel: 'Guideline-level',
-    },
-  },
-  sleep_restorative: {
-    scene: 'sleep',
-    params: { sleepDuration: 8, regularityScore: 90 },
-    overlay: {
-      title: 'AASM/SRS Restorative Sleep Baseline',
-      status: 'Optimal',
-      keyOutcomes: ['Full N3/REM Cycles', 'Neuroplasticity Consolidation', 'Normal Glucose Tolerance'],
-      evidenceLevel: 'Guideline-level',
-    },
-  },
-  stress_overload: {
-    scene: 'stress',
-    params: { downRegPracticeMins: 0, perceivedStress: 9 },
-    overlay: {
-      title: 'Unbuffered Sympathetic Overdrive',
-      status: 'Critical',
-      keyOutcomes: ['Blunted HRV', 'Persistent IL-6/CRP Elevation', 'Allostatic Overload'],
-      evidenceLevel: 'High-quality review',
-    },
-  },
-  stress_reset: {
-    scene: 'stress',
-    params: { downRegPracticeMins: 20, perceivedStress: 3 },
-    overlay: {
-      title: 'Parasympathetic Modulation Protocol',
-      status: 'Optimal',
-      keyOutcomes: ['Enhanced Vagal Tone', 'Blood Pressure Normalization', 'Cortisol Dampening'],
-      evidenceLevel: 'High-quality review',
-    },
-  },
-  system_single_failure: {
-    scene: 'system',
-    params: { aerobicVolume: 250, sleepDuration: 5, perceivedStress: 8, downRegPracticeMins: 0 },
-    overlay: {
-      title: 'Single-Pillar Breakdown (High Fitness / Zero Sleep)',
-      status: 'Warning',
-      keyOutcomes: ['Structural System Imbalance', 'Recovery Blockade', 'Elevated Injury Vulnerability'],
-      evidenceLevel: 'Guideline-level',
-    },
-  },
-  system_integrated_harmony: {
-    scene: 'system',
-    params: { aerobicVolume: 180, resistanceDays: 2, wholeFoodRatio: 85, sleepDuration: 8, downRegPracticeMins: 15, perceivedStress: 3 },
-    overlay: {
-      title: '4-Pillar Synergistic Equilibrium',
-      status: 'Optimal',
-      keyOutcomes: ['Maximum Allostatic Resilience', 'Multi-System Risk Reduction', 'Biological Longevity Support'],
-      evidenceLevel: 'Guideline-level',
-    },
-  },
-};
-
 // State Machine Reducer logic
 export interface State {
   activeScene: SceneId;
@@ -209,7 +84,6 @@ export interface State {
 
 export type Action =
   | { type: 'SET_SCENE'; payload: SceneId }
-  | { type: 'SELECT_PRESET'; payload: PresetId }
   | { type: 'APPLY_CANONICAL_PRESET'; payload: CanonicalScenarioPreset }
   | { type: 'UPDATE_PARAM'; payload: { key: keyof PillarParameters; value: number } }
   | { type: 'SET_RENDER_MODE'; payload: State['renderMode'] };
@@ -268,18 +142,6 @@ export function stateMachineReducer(state: State, action: Action): State {
         activeScene: action.payload,
         activePillar: sceneToPillar(action.payload),
       };
-    case 'SELECT_PRESET': {
-      const preset = PRESETS[action.payload];
-      return {
-        ...state,
-        activeScene: preset.scene,
-        activePillar: sceneToPillar(preset.scene),
-        activePreset: action.payload,
-        parameters: { ...state.parameters, ...preset.params },
-        overlay: preset.overlay,
-      };
-    }
-
     case 'APPLY_CANONICAL_PRESET': {
       const preset = action.payload;
       const scene = pillarToScene(preset.pillar);
@@ -449,13 +311,27 @@ export function InteractiveBodyEngineMesh({ params, scene }: { params: PillarPar
 // 4. MAIN REACT STATE MACHINE PROVIDER & CONTAINER COMPONENT
 // ============================================================================
 
+const INITIAL_PRESET = FALLBACK_PRESETS[0];
+
 export const initialPillarsState: State = {
   activeScene: 'system',
-  activePreset: 'system_integrated_harmony',
-  activePillar: 'Systems',
+  activePreset: INITIAL_PRESET.slug,
+  activePillar: INITIAL_PRESET.pillar,
   renderMode: '3d-webgl',
-  parameters: DEFAULT_PARAMS,
-  overlay: PRESETS['system_integrated_harmony'].overlay,
+  parameters: {
+    ...DEFAULT_PARAMS,
+    aerobicVolume: INITIAL_PRESET.parameters.aerobicMins,
+    resistanceDays: INITIAL_PRESET.parameters.strengthDays,
+    sleepDuration: INITIAL_PRESET.parameters.sleepDuration,
+    wholeFoodRatio: INITIAL_PRESET.parameters.wholeFoodRatio,
+    perceivedStress: INITIAL_PRESET.parameters.stressLevel,
+  },
+  overlay: {
+    title: INITIAL_PRESET.headline,
+    status: 'Optimal',
+    keyOutcomes: INITIAL_PRESET.outcomes,
+    evidenceLevel: INITIAL_PRESET.evidenceLevel,
+  },
 };
 
 export { stateMachineReducer as pillarsReducer };
@@ -475,27 +351,43 @@ export default function FourPillars3DStateMachine() {
           Interactive clinical scenario presets & WebGL parameter mapping.
         </p>
 
-        {/* Preset Buttons */}
+        {/* Canonical fallback preset buttons */}
         <div style={{ marginBottom: '24px' }}>
-          <h3 style={{ fontSize: '0.9rem', fontWeight: '600', color: '#CBD5E1', marginBottom: '10px' }}>Clinical Scenario Presets</h3>
+          <h3 style={{ fontSize: '0.9rem', fontWeight: '600', color: '#CBD5E1', marginBottom: '10px' }}>
+            Clinical Scenario Presets
+          </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {Object.entries(PRESETS).map(([key, p]) => (
+            {FALLBACK_PRESETS.map((preset) => (
               <button
-                key={key}
-                onClick={() => dispatch({ type: 'SELECT_PRESET', payload: key as PresetId })}
+                key={preset.id}
+                onClick={() =>
+                  dispatch({
+                    type: 'APPLY_CANONICAL_PRESET',
+                    payload: preset,
+                  })
+                }
                 style={{
                   padding: '10px 12px',
                   borderRadius: '6px',
                   textAlign: 'left',
                   fontSize: '0.8rem',
                   cursor: 'pointer',
-                  border: state.activePreset === key ? '2px solid #38BDF8' : '1px solid #475569',
-                  background: state.activePreset === key ? '#0284C7' : '#334155',
+                  border:
+                    state.activePreset === preset.slug
+                      ? '2px solid #38BDF8'
+                      : '1px solid #475569',
+                  background:
+                    state.activePreset === preset.slug
+                      ? '#0284C7'
+                      : '#334155',
                   color: '#FFFFFF',
-                  fontWeight: state.activePreset === key ? 'bold' : 'normal',
+                  fontWeight:
+                    state.activePreset === preset.slug
+                      ? 'bold'
+                      : 'normal',
                 }}
               >
-                {p.overlay.title}
+                {preset.title}
               </button>
             ))}
           </div>
