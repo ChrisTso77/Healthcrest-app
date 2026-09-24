@@ -67,6 +67,7 @@ export default function FourPillarsHealthEnginePage() {
     zoomDistance: 1.0,
     activeShotId: 'shot-1-orbit',
     isGesturing: false,
+    requestRevision: 0,
   });
 
   // UI Control States

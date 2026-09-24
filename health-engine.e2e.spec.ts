@@ -87,6 +87,44 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.locator('canvas')).toBeVisible();
   });
 
+  test('reapplies the active camera shot after manual orbit', async ({ page }) => {
+    const viewport = page.locator('[data-camera-request-revision]');
+    const shot = page.getByRole('button', {
+      name: /Shot 1: Equilibrium Orbit/i,
+    });
+
+    await expect(viewport).toHaveAttribute('data-camera-request-revision', '0');
+
+    await shot.click();
+    await expect(viewport).toHaveAttribute('data-camera-request-revision', '1');
+
+    const canvas = page.locator('canvas');
+    const box = await canvas.boundingBox();
+
+    if (!box) {
+      throw new Error('WebGL canvas bounding box unavailable');
+    }
+
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(
+      box.x + box.width / 2 + 80,
+      box.y + box.height / 2 + 40,
+      { steps: 5 }
+    );
+    await page.mouse.up();
+
+    // The same active shot must issue a fresh camera command.
+    await shot.click();
+
+    await expect(viewport).toHaveAttribute('data-camera-request-revision', '2');
+    await expect(viewport).toHaveAttribute(
+      'data-camera-shot',
+      'shot-1-orbit'
+    );
+    await expect(canvas).toBeVisible();
+  });
+
   test('preset selection keeps WebGL alive', async ({ page }) => {
     await page
       .getByRole('button', { name: /Integrated Harmony/i })
