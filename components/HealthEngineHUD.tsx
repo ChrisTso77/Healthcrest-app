@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type {
   CanonicalPresetParameters,
   CanonicalScenarioPreset,
@@ -38,6 +38,7 @@ export interface CameraState {
   zoomDistance: number; // Camera zoom level (1.0 = baseline)
   activeShotId: string; // Active camera shot preset
   isGesturing: boolean;
+  requestRevision: number; // Forces repeated requests for the same shot to reapply
 }
 
 export interface HealthEngineHUDProps {
@@ -78,8 +79,11 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
     orbitElevation: 20,
     zoomDistance: 1.0,
     activeShotId: 'shot-1-orbit',
-    isGesturing: false
+    isGesturing: false,
+    requestRevision: 0
   });
+
+  const cameraRequestRevision = useRef(0);
 
   // Active Health Parameters State
   const [params, setParams] = useState<HealthParameters>({
@@ -111,12 +115,15 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
     const shot = CAMERA_SHOTS.find(s => s.id === shotId);
 
     if (shot) {
+      cameraRequestRevision.current += 1;
+
       const nextCamera: CameraState = {
         orbitAzimuth: shot.azimuth,
         orbitElevation: shot.elevation,
         zoomDistance: shot.zoom,
         activeShotId: shot.id,
         isGesturing: false,
+        requestRevision: cameraRequestRevision.current,
       };
 
       setCamera(nextCamera);

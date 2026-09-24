@@ -57,6 +57,7 @@ function CameraDirector({
     cameraState.orbitElevation,
     cameraState.zoomDistance,
     cameraState.activeShotId,
+    cameraState.requestRevision,
     controlsRef,
   ]);
 
@@ -70,7 +71,11 @@ export default function WebGLCanvasWrapper({
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
 
   return (
-    <div className="absolute inset-0 bg-slate-950">
+    <div
+      className="absolute inset-0 bg-slate-950"
+      data-camera-shot={cameraState.activeShotId}
+      data-camera-request-revision={cameraState.requestRevision}
+    >
       <Canvas
         camera={{
           position: [0, 0, 5],
