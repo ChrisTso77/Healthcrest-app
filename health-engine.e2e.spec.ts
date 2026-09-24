@@ -89,6 +89,31 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.locator('canvas')).toBeVisible();
   });
 
+  test('active pillar control stays synchronized with canonical state', async ({ page }) => {
+    const sleepPreset = page.getByRole('button', {
+      name: /Sleep Rung 1/i,
+    });
+
+    await sleepPreset.click();
+
+    const sleep = page.getByRole('button', {
+      name: 'Sleep',
+      exact: true,
+    });
+
+    await expect(sleep).toHaveClass(/border-slate-700\/50/);
+
+    const fitness = page.getByRole('button', {
+      name: 'Fitness',
+      exact: true,
+    });
+
+    await fitness.click();
+
+    await expect(fitness).toHaveClass(/border-slate-700\/50/);
+    await expect(sleep).not.toHaveClass(/border-slate-700\/50/);
+  });
+
   test('manual pillar selection does not leave a stale preset selected', async ({ page }) => {
     const integratedPreset = page.getByRole('button', {
       name: /Integrated Harmony/i,
