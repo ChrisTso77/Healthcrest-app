@@ -21,6 +21,7 @@ const pillarsCmsSchema = [
       { name: 'parameters', type: 'object', fields: [{ name: 'aerobicMins', type: 'number' }, { name: 'strengthDays', type: 'number' }, { name: 'sleepDuration', type: 'number' }, { name: 'wholeFoodRatio', type: 'number' }, { name: 'stressLevel', type: 'number' }, { name: 'alcoholUnits', type: 'number' }] },
       { name: 'visualProps', type: 'object', fields: [{ name: 'coreColor', type: 'string' }, { name: 'emissiveIntensity', type: 'number' }, { name: 'wobbleSpeed', type: 'number' }, { name: 'wobbleFactor', type: 'number' }, { name: 'particleDensity', type: 'number' }] },
       { name: 'narrativeOverlay', type: 'object', fields: [{ name: 'headline', type: 'string' }, { name: 'body', type: 'text' }, { name: 'outcomes', type: 'array', of: [{ type: 'string' }] }] },
+      { name: 'cameraShot', type: 'string' },
       { name: 'pillar', type: 'reference', to: [{ type: 'pillar' }] },
     ],
   },

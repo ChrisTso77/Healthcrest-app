@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@sanity/client';
+import { normalizeSanityPresets } from '@/lib/presets/normalize';
 
 /**
  * NEXT.JS APP ROUTER API ROUTE (v3)
@@ -45,6 +46,7 @@ const ALL_PRESETS_QUERY = `
       body,
       outcomes
     },
+    cameraShot,
     "pillar": pillar->{
       _id,
       title,
@@ -82,11 +84,6 @@ const STORYBOARD_SCENES_QUERY = `
 // GROQ Query to fetch Global Narrative singleton document
 type StoryboardScene = {
   sceneNumber?: number;
-  [key: string]: unknown;
-};
-
-type ScenarioPreset = {
-  slug?: string;
   [key: string]: unknown;
 };
 
@@ -157,7 +154,8 @@ export async function GET(request: NextRequest) {
 
     // If query requests a specific preset by slug
     if (slug) {
-      const presets = await sanityClient.fetch<ScenarioPreset[]>(ALL_PRESETS_QUERY);
+      const rawPresets = await sanityClient.fetch<unknown[]>(ALL_PRESETS_QUERY);
+      const presets = normalizeSanityPresets(rawPresets);
       const preset = presets.find((p) => p.slug === slug);
 
       if (!preset) {
@@ -171,7 +169,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Default: Fetch all scenario presets
-    const presets = await sanityClient.fetch(
+    const rawPresets = await sanityClient.fetch<unknown[]>(
       ALL_PRESETS_QUERY,
       {},
       {
@@ -181,6 +179,8 @@ export async function GET(request: NextRequest) {
         },
       }
     );
+
+    const presets = normalizeSanityPresets(rawPresets);
 
     return NextResponse.json({
       success: true,

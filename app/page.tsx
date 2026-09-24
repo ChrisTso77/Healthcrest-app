@@ -22,12 +22,12 @@ import {
 import {
   HealthEngineHUD,
   type CameraState,
+  type PresetScenario,
 } from '@/components/HealthEngineHUD';
 import { HealthEngine2DFallback } from '@/components/HealthEngine2DFallback';
 import {
   pillarsReducer,
-  initialPillarsState,
-  PresetScenario
+  initialPillarsState
 } from '@/state/PillarsStateMachine';
 
 // Dynamically import Three.js Canvas with SSR disabled to prevent server-side DOM errors
@@ -72,7 +72,7 @@ export default function FourPillarsHealthEnginePage() {
   // UI Control States
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
   const [isNarrativeOpen, setIsNarrativeOpen] = useState<boolean>(false);
-  const [, setPresetsList] = useState<PresetScenario[]>([]);
+  const [presetsList, setPresetsList] = useState<PresetScenario[]>([]);
   const [, setIsLoadingPresets] = useState<boolean>(true);
   const [apiError, setApiError] = useState<string | null>(null);
 
@@ -139,6 +139,7 @@ export default function FourPillarsHealthEnginePage() {
       {/* ------------------------------------------------------------------ */}
       <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
         <HealthEngineHUD
+        presets={presetsList}
         onCameraChange={setCameraState}
         onPillarChange={(pillar) => {
           const sceneMap = {
