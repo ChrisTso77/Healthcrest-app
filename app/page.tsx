@@ -143,6 +143,14 @@ export default function FourPillarsHealthEnginePage() {
         presets={presetsList}
         activePillar={state.activePillar}
         renderMode={state.renderMode}
+        parameters={{
+          aerobicMins: state.parameters.aerobicVolume,
+          strengthDays: state.parameters.resistanceDays,
+          sleepDuration: state.parameters.sleepDuration,
+          wholeFoodRatio: state.parameters.wholeFoodRatio,
+          stressLevel: state.parameters.perceivedStress,
+          alcoholUnits: 0,
+        }}
         onCameraChange={setCameraState}
         onPillarChange={(pillar) => {
           const sceneMap = {

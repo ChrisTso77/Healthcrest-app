@@ -142,6 +142,22 @@ test.describe('Healthcrest production regression', () => {
     await expect(integratedPreset).not.toHaveClass(/border-emerald-500\/50/);
   });
 
+  test('parameter controls stay synchronized with canonical preset state', async ({ page }) => {
+    const sliders = page.getByRole('slider');
+
+    await page.getByRole('button', {
+      name: /Sleep Rung 1/i,
+    }).click();
+
+    await expect(sliders.nth(0)).toHaveValue('150');
+    await expect(sliders.nth(1)).toHaveValue('8');
+    await expect(sliders.nth(2)).toHaveValue('75');
+    await expect(sliders.nth(3)).toHaveValue('3');
+
+    await sliders.nth(0).fill('220');
+    await expect(sliders.nth(0)).toHaveValue('220');
+  });
+
   test('manual parameter change clears the active preset', async ({ page }) => {
     const integratedPreset = page.getByRole('button', {
       name: /Integrated Harmony/i,

@@ -45,6 +45,7 @@ export interface HealthEngineHUDProps {
   presets?: PresetScenario[];
   activePillar: PillarType;
   renderMode: RenderMode;
+  parameters: HealthParameters;
   onPillarChange?: (pillar: PillarType) => void;
   onRenderModeChange?: (mode: RenderMode) => void;
   onParameterChange?: (key: keyof HealthParameters, value: number) => void;
@@ -65,6 +66,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   presets = [],
   activePillar,
   renderMode,
+  parameters,
   onPillarChange,
   onRenderModeChange,
   onParameterChange,
@@ -87,16 +89,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
 
   const cameraRequestRevision = useRef(0);
 
-  // Active Health Parameters State
-  const [params, setParams] = useState<HealthParameters>({
-    aerobicMins: 180,
-    strengthDays: 2,
-    sleepDuration: 8,
-    wholeFoodRatio: 80,
-    stressLevel: 2,
-    alcoholUnits: 2
-  });
-
   const [activePreset, setActivePreset] = useState<PresetScenario | null>(
     FALLBACK_PRESETS[0]
   );
@@ -106,7 +98,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   // Load Preset Handler
   const loadPreset = (preset: PresetScenario) => {
     setActivePreset(preset);
-    setParams(preset.parameters);
     onPresetLoad?.(preset);
     if (preset.cameraShot) {
       applyCameraShot(preset.cameraShot);
@@ -136,7 +127,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
 
   // Slider change handler
   const handleParamChange = (key: keyof HealthParameters, val: number) => {
-    setParams(prev => ({ ...prev, [key]: val }));
     setActivePreset(null);
     onParameterChange?.(key, val);
   };
@@ -374,14 +364,14 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
                   <span className="font-medium text-slate-300">Aerobic Activity (MVPA)</span>
-                  <span className="font-mono text-emerald-400">{params.aerobicMins} mins/wk</span>
+                  <span className="font-mono text-emerald-400">{parameters.aerobicMins} mins/wk</span>
                 </div>
                 <input
                   type="range"
                   min="0"
                   max="400"
                   step="10"
-                  value={params.aerobicMins}
+                  value={parameters.aerobicMins}
                   onChange={(e) => handleParamChange('aerobicMins', Number(e.target.value))}
                   className="w-full accent-emerald-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
@@ -391,14 +381,14 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
                   <span className="font-medium text-slate-300">Sleep Duration</span>
-                  <span className="font-mono text-violet-400">{params.sleepDuration} hrs/night</span>
+                  <span className="font-mono text-violet-400">{parameters.sleepDuration} hrs/night</span>
                 </div>
                 <input
                   type="range"
                   min="4"
                   max="10"
                   step="0.5"
-                  value={params.sleepDuration}
+                  value={parameters.sleepDuration}
                   onChange={(e) => handleParamChange('sleepDuration', Number(e.target.value))}
                   className="w-full accent-violet-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
@@ -408,14 +398,14 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
                   <span className="font-medium text-slate-300">Whole Food Ratio</span>
-                  <span className="font-mono text-amber-400">{params.wholeFoodRatio}%</span>
+                  <span className="font-mono text-amber-400">{parameters.wholeFoodRatio}%</span>
                 </div>
                 <input
                   type="range"
                   min="0"
                   max="100"
                   step="5"
-                  value={params.wholeFoodRatio}
+                  value={parameters.wholeFoodRatio}
                   onChange={(e) => handleParamChange('wholeFoodRatio', Number(e.target.value))}
                   className="w-full accent-amber-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
@@ -425,14 +415,14 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
                   <span className="font-medium text-slate-300">Perceived Stress Level</span>
-                  <span className="font-mono text-rose-400">{params.stressLevel} / 10</span>
+                  <span className="font-mono text-rose-400">{parameters.stressLevel} / 10</span>
                 </div>
                 <input
                   type="range"
                   min="1"
                   max="10"
                   step="1"
-                  value={params.stressLevel}
+                  value={parameters.stressLevel}
                   onChange={(e) => handleParamChange('stressLevel', Number(e.target.value))}
                   className="w-full accent-rose-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
