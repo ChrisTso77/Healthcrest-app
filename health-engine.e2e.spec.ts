@@ -242,8 +242,12 @@ test.describe('Healthcrest production regression', () => {
       page.getByText('Interactive 2D Vector Health Engine')
     ).toBeVisible();
 
+    const fallback = page.getByText(
+      'Interactive 2D Vector Health Engine'
+    ).locator('..').locator('..');
+
     await expect(
-      page.getByText('WARNING', { exact: true })
+      fallback.getByText('WARNING', { exact: true })
     ).toBeVisible();
 
     await expect(
