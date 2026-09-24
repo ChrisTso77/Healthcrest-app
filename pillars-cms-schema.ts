@@ -1,11 +1,16 @@
+interface ValidationRule {
+  required(): ValidationRule;
+  integer(): ValidationRule;
+}
+
 const pillarsCmsSchema = [
   {
     name: 'pillar',
     title: 'Pillar',
     type: 'document',
     fields: [
-      { name: 'title', type: 'string', validation: (rule: any) => rule.required() },
-      { name: 'slug', type: 'slug', options: { source: 'title' }, validation: (rule: any) => rule.required() },
+      { name: 'title', type: 'string', validation: (rule: ValidationRule) => rule.required() },
+      { name: 'slug', type: 'slug', options: { source: 'title' }, validation: (rule: ValidationRule) => rule.required() },
       { name: 'accentColor', type: 'string' },
     ],
   },
@@ -14,8 +19,8 @@ const pillarsCmsSchema = [
     title: 'Scenario Preset',
     type: 'document',
     fields: [
-      { name: 'title', type: 'string', validation: (rule: any) => rule.required() },
-      { name: 'slug', type: 'slug', options: { source: 'title' }, validation: (rule: any) => rule.required() },
+      { name: 'title', type: 'string', validation: (rule: ValidationRule) => rule.required() },
+      { name: 'slug', type: 'slug', options: { source: 'title' }, validation: (rule: ValidationRule) => rule.required() },
       { name: 'healthStatus', type: 'string', options: { list: ['optimal', 'warning', 'critical'] } },
       { name: 'evidenceLevel', type: 'string' },
       { name: 'parameters', type: 'object', fields: [{ name: 'aerobicMins', type: 'number' }, { name: 'strengthDays', type: 'number' }, { name: 'sleepDuration', type: 'number' }, { name: 'wholeFoodRatio', type: 'number' }, { name: 'stressLevel', type: 'number' }, { name: 'alcoholUnits', type: 'number' }] },
@@ -30,8 +35,8 @@ const pillarsCmsSchema = [
     title: 'Storyboard Scene',
     type: 'document',
     fields: [
-      { name: 'sceneNumber', type: 'number', validation: (rule: any) => rule.required().integer() },
-      { name: 'title', type: 'string', validation: (rule: any) => rule.required() },
+      { name: 'sceneNumber', type: 'number', validation: (rule: ValidationRule) => rule.required().integer() },
+      { name: 'title', type: 'string', validation: (rule: ValidationRule) => rule.required() },
       { name: 'visualMetaphor', type: 'text' },
       { name: 'associatedPillar', type: 'reference', to: [{ type: 'pillar' }] },
       { name: 'presets', type: 'array', of: [{ type: 'reference', to: [{ type: 'scenarioPreset' }] }] },

@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useReducer, useRef } from 'react';
+import React, { useReducer, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Text, Float, MeshWobbleMaterial, Sparkles } from '@react-three/drei';
+import { OrbitControls, Float, MeshWobbleMaterial, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
 import type {
   CanonicalScenarioPreset,
@@ -192,7 +192,7 @@ export function deriveVisualState(params: PillarParameters, scene: SceneId): Vis
   let coreColor = '#10B981'; // Emerald Green
   let pulseSpeed = 1.0;
   let meshDistortion = 0.1;
-  let particleDensity = 40;
+  const particleDensity = 40;
   let seesawTilt = 0;
   let glowIntensity = 1.5;
 
