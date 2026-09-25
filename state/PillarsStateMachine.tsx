@@ -7,6 +7,7 @@ import type {
   EvidenceLevel,
   PillarType as CanonicalPillarType,
   RenderMode,
+  OverlayStatus,
 } from '@/lib/presets/types';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 
@@ -54,7 +55,7 @@ export interface VisualState {
 
 export interface ClinicalOverlayData {
   title: string;
-  status: 'Optimal' | 'Warning' | 'Critical' | 'Manual';
+  status: OverlayStatus;
   keyOutcomes: string[];
   evidenceLevel: EvidenceLevel | null;
 }
