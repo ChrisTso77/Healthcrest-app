@@ -6,6 +6,7 @@ import type {
   CanonicalScenarioPreset,
   EvidenceLevel,
   PillarType as CanonicalPillarType,
+  RenderMode,
 } from '@/lib/presets/types';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 
@@ -81,7 +82,7 @@ export interface State {
   activeScene: SceneId;
   activePreset: string | null;
   activePillar: PillarType;
-  renderMode: 'high-3d' | 'lite-3d' | '2d-canvas';
+  renderMode: RenderMode;
   parameters: PillarParameters;
   overlay: ClinicalOverlayData;
 }

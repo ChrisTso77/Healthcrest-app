@@ -10,6 +10,11 @@ export type HealthStatus =
   | 'warning'
   | 'critical';
 
+export type RenderMode =
+  | 'high-3d'
+  | 'lite-3d'
+  | '2d-canvas';
+
 export type EvidenceLevel =
   | 'Guideline-level'
   | 'High-quality review'
