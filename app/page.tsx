@@ -151,7 +151,7 @@ export default function FourPillarsHealthEnginePage() {
           sleepDuration: state.parameters.sleepDuration,
           wholeFoodRatio: state.parameters.wholeFoodRatio,
           stressLevel: state.parameters.perceivedStress,
-          alcoholUnits: 0,
+          alcoholUnits: state.parameters.alcoholUnits,
         }}
         onCameraChange={setCameraState}
         onPillarChange={(pillar) => {
