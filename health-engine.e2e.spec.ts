@@ -163,6 +163,24 @@ test.describe('Healthcrest production regression', () => {
     await expect(integratedPreset).not.toHaveClass(/border-emerald-500\/50/);
   });
 
+  test('alcohol units stay synchronized with canonical preset state', async ({ page }) => {
+    const hud = page.locator('[data-alcohol-units]');
+
+    await expect(hud).toHaveAttribute('data-alcohol-units', '2');
+
+    await page.getByRole('button', {
+      name: /Single-Pillar Failure/i,
+    }).click();
+
+    await expect(hud).toHaveAttribute('data-alcohol-units', '18');
+
+    await page.getByRole('button', {
+      name: /Sleep Rung 1/i,
+    }).click();
+
+    await expect(hud).toHaveAttribute('data-alcohol-units', '0');
+  });
+
   test('parameter controls stay synchronized with canonical preset state', async ({ page }) => {
     const sliders = page.getByRole('slider');
 

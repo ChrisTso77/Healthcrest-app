@@ -37,6 +37,8 @@ export interface PillarParameters {
   // Stress
   downRegPracticeMins: number; // 0 to 30 mins/day
   perceivedStress: number; // 1 to 10
+  // Substance exposure
+  alcoholUnits: number;
 }
 
 export interface VisualState {
@@ -70,6 +72,7 @@ const DEFAULT_PARAMS: PillarParameters = {
   regularityScore: 85,
   downRegPracticeMins: 15,
   perceivedStress: 4,
+  alcoholUnits: 0,
 };
 
 // State Machine Reducer logic
@@ -159,6 +162,7 @@ export function stateMachineReducer(state: State, action: Action): State {
           sleepDuration: preset.parameters.sleepDuration,
           wholeFoodRatio: preset.parameters.wholeFoodRatio,
           perceivedStress: preset.parameters.stressLevel,
+          alcoholUnits: preset.parameters.alcoholUnits,
         },
         overlay: {
           title: preset.headline,
@@ -327,6 +331,7 @@ export const initialPillarsState: State = {
     sleepDuration: INITIAL_PRESET.parameters.sleepDuration,
     wholeFoodRatio: INITIAL_PRESET.parameters.wholeFoodRatio,
     perceivedStress: INITIAL_PRESET.parameters.stressLevel,
+    alcoholUnits: INITIAL_PRESET.parameters.alcoholUnits,
   },
   overlay: {
     title: INITIAL_PRESET.headline,
