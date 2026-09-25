@@ -121,7 +121,9 @@ export default function FourPillarsHealthEnginePage() {
                 ? "optimal"
                 : state.overlay.status === "Warning"
                   ? "warning"
-                  : "critical"
+                  : state.overlay.status === "Critical"
+                    ? "critical"
+                    : "manual"
             }
           />
         </div>

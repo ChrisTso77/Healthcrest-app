@@ -14,7 +14,7 @@ export interface FallbackProps {
   sleepDuration?: number;
   wholeFoodRatio?: number;
   stressLevel?: number;
-  healthStatus?: 'optimal' | 'warning' | 'critical';
+  healthStatus?: 'optimal' | 'warning' | 'critical' | 'manual';
 }
 
 export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
@@ -28,7 +28,8 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
   const statusColors = {
     optimal: '#10B981', // Emerald
     warning: '#F59E0B', // Amber
-    critical: '#EF4444' // Rose
+    critical: '#EF4444', // Rose
+    manual: '#64748B' // Slate
   };
 
   const coreColor = statusColors[healthStatus];
@@ -40,7 +41,10 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
   const nutritionCircleRadius = (wholeFoodRatio / 100) * 45 + 15;
 
   return (
-    <div className="w-full h-full min-h-[400px] bg-slate-950 flex flex-col items-center justify-center p-6 text-slate-100 rounded-2xl border border-slate-800">
+    <div
+      data-testid="health-engine-2d-fallback"
+      className="w-full h-full min-h-[400px] bg-slate-950 flex flex-col items-center justify-center p-6 text-slate-100 rounded-2xl border border-slate-800"
+    >
       <div className="w-full max-w-2xl bg-slate-900/90 rounded-2xl border border-slate-800/80 p-6 shadow-2xl">
         
         {/* Header Title */}
@@ -142,7 +146,16 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
         {/* Legend Footer */}
         <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-mono">
           <span>Mode: Accessible 2D Vector SVG</span>
-          <span>Interdependence Score: {healthStatus === 'optimal' ? '92/100' : healthStatus === 'warning' ? '64/100' : '38/100'}</span>
+          <span>
+            Interdependence Score:{' '}
+            {healthStatus === 'optimal'
+              ? '92/100'
+              : healthStatus === 'warning'
+                ? '64/100'
+                : healthStatus === 'critical'
+                  ? '38/100'
+                  : 'Not classified'}
+          </span>
         </div>
       </div>
     </div>

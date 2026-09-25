@@ -216,6 +216,35 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByText('MANUAL', { exact: true })).toBeVisible();
   });
 
+  test('manual changes clear stale preset status in 2D fallback', async ({ page }) => {
+    await page.getByRole('button', {
+      name: /Single-Pillar Failure/i,
+    }).click();
+
+    await page.getByRole('button', {
+      name: 'Fitness',
+      exact: true,
+    }).click();
+
+    await page.getByRole('button', {
+      name: /2d canvas/i,
+    }).click();
+
+    const fallback = page.getByTestId('health-engine-2d-fallback');
+
+    await expect(
+      fallback.getByText('MANUAL', { exact: true })
+    ).toBeVisible();
+
+    await expect(
+      fallback.getByText('Not classified', { exact: false })
+    ).toBeVisible();
+
+    await expect(
+      fallback.getByText('WARNING', { exact: true })
+    ).toHaveCount(0);
+  });
+
   test('camera controls stay synchronized with canonical camera state', async ({ page }) => {
     const viewport = page.locator('[data-camera-shot]');
 
