@@ -21,10 +21,6 @@ export type PillarType = CanonicalPillarType;
 
 export type HealthParameters = PillarParameters;
 
-export interface PresetScenario {
-  [key: string]: unknown;
-}
-
 export interface PillarParameters {
   // Fitness
   aerobicVolume: number; // 0 to 300+ mins/wk (UK CMO target: 150)
