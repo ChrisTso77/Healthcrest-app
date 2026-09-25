@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import type {
   CanonicalScenarioPreset,
   EvidenceLevel,
+  PillarType as CanonicalPillarType,
 } from '@/lib/presets/types';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 
@@ -14,7 +15,7 @@ import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 
 export type SceneId = 'fitness' | 'nutrition' | 'sleep' | 'stress' | 'system';
 
-export type PillarType = 'Fitness' | 'Nutrition' | 'Sleep' | 'Stress' | 'Systems';
+export type PillarType = CanonicalPillarType;
 
 export type HealthParameters = PillarParameters;
 
