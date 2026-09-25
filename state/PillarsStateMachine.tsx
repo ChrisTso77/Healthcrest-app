@@ -52,9 +52,9 @@ export interface VisualState {
 
 export interface ClinicalOverlayData {
   title: string;
-  status: 'Optimal' | 'Warning' | 'Critical';
+  status: 'Optimal' | 'Warning' | 'Critical' | 'Manual';
   keyOutcomes: string[];
-  evidenceLevel: EvidenceLevel;
+  evidenceLevel: EvidenceLevel | null;
 }
 
 // ============================================================================
@@ -145,6 +145,12 @@ export function stateMachineReducer(state: State, action: Action): State {
         activeScene: action.payload,
         activePillar: sceneToPillar(action.payload),
         activePreset: null,
+        overlay: {
+          title: 'Manual configuration',
+          status: 'Manual',
+          keyOutcomes: [],
+          evidenceLevel: null,
+        },
       };
     case 'APPLY_CANONICAL_PRESET': {
       const preset = action.payload;
@@ -182,6 +188,12 @@ export function stateMachineReducer(state: State, action: Action): State {
         ...state,
         parameters: newParams,
         activePreset: null,
+        overlay: {
+          title: 'Manual configuration',
+          status: 'Manual',
+          keyOutcomes: [],
+          evidenceLevel: null,
+        },
       };
     }
     default:
