@@ -144,6 +144,7 @@ export default function FourPillarsHealthEnginePage() {
         activePillar={state.activePillar}
         renderMode={state.renderMode}
         activePresetId={state.activePreset}
+        camera={cameraState}
         parameters={{
           aerobicMins: state.parameters.aerobicVolume,
           strengthDays: state.parameters.resistanceDays,

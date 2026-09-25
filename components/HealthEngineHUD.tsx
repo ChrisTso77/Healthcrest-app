@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import type {
   CanonicalPresetParameters,
   CanonicalScenarioPreset,
@@ -47,6 +47,7 @@ export interface HealthEngineHUDProps {
   renderMode: RenderMode;
   parameters: HealthParameters;
   activePresetId: string | null;
+  camera: CameraState;
   onPillarChange?: (pillar: PillarType) => void;
   onRenderModeChange?: (mode: RenderMode) => void;
   onParameterChange?: (key: keyof HealthParameters, value: number) => void;
@@ -69,6 +70,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   renderMode,
   parameters,
   activePresetId,
+  camera,
   onPillarChange,
   onRenderModeChange,
   onParameterChange,
@@ -78,18 +80,6 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   // Navigation & Control States
   const [isDayTime, setIsDayTime] = useState<boolean>(false);
   const [isDockOpen, setIsDockOpen] = useState<boolean>(true);
-
-  // Touch Gesture Camera State
-  const [camera, setCamera] = useState<CameraState>({
-    orbitAzimuth: 45,
-    orbitElevation: 20,
-    zoomDistance: 1.0,
-    activeShotId: 'shot-1-orbit',
-    isGesturing: false,
-    requestRevision: 0
-  });
-
-  const cameraRequestRevision = useRef(0);
 
   const availablePresets = presets.length > 0 ? presets : FALLBACK_PRESETS;
 
@@ -118,18 +108,15 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
     const shot = CAMERA_SHOTS.find(s => s.id === shotId);
 
     if (shot) {
-      cameraRequestRevision.current += 1;
-
       const nextCamera: CameraState = {
         orbitAzimuth: shot.azimuth,
         orbitElevation: shot.elevation,
         zoomDistance: shot.zoom,
         activeShotId: shot.id,
         isGesturing: false,
-        requestRevision: cameraRequestRevision.current,
+        requestRevision: camera.requestRevision + 1,
       };
 
-      setCamera(nextCamera);
       onCameraChange?.(nextCamera);
     }
   };

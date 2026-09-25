@@ -198,6 +198,36 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByText('MANUAL', { exact: true })).toBeVisible();
   });
 
+  test('camera controls stay synchronized with canonical camera state', async ({ page }) => {
+    const viewport = page.locator('[data-camera-shot]');
+
+    const failureShot = page.getByRole('button', {
+      name: /Shot 2: Single-Pillar Strain/i,
+    });
+
+    await failureShot.click();
+
+    await expect(failureShot).toHaveClass(/border-cyan-500\/40/);
+    await expect(viewport).toHaveAttribute(
+      'data-camera-shot',
+      'shot-2-failure'
+    );
+
+    await page.getByRole('button', {
+      name: /Sleep Rung 1/i,
+    }).click();
+
+    const macroShot = page.getByRole('button', {
+      name: /Shot 3: Core Deformation/i,
+    });
+
+    await expect(macroShot).toHaveClass(/border-cyan-500\/40/);
+    await expect(viewport).toHaveAttribute(
+      'data-camera-shot',
+      'shot-3-macro'
+    );
+  });
+
   test('camera director shots and reset remain usable', async ({ page }) => {
     const shots = [
       /Shot 1: Equilibrium Orbit/i,
