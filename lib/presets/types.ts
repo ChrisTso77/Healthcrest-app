@@ -15,6 +15,12 @@ export type RenderMode =
   | 'lite-3d'
   | '2d-canvas';
 
+export type OverlayStatus =
+  | 'Optimal'
+  | 'Warning'
+  | 'Critical'
+  | 'Manual';
+
 export type EvidenceLevel =
   | 'Guideline-level'
   | 'High-quality review'
