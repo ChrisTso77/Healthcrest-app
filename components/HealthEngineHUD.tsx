@@ -5,6 +5,7 @@ import type {
   HealthStatus as CanonicalHealthStatus,
   PillarType as CanonicalPillarType,
   RenderMode as CanonicalRenderMode,
+  CameraState as CanonicalCameraState,
 } from '@/lib/presets/types';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 import {
@@ -33,14 +34,7 @@ export type RenderMode = CanonicalRenderMode;
 export type HealthParameters = CanonicalPresetParameters;
 export type PresetScenario = CanonicalScenarioPreset;
 
-export interface CameraState {
-  orbitAzimuth: number; // Horizontal rotation angle in degrees
-  orbitElevation: number; // Vertical angle in degrees
-  zoomDistance: number; // Camera zoom level (1.0 = baseline)
-  activeShotId: string; // Active camera shot preset
-  isGesturing: boolean;
-  requestRevision: number; // Forces repeated requests for the same shot to reapply
-}
+export type CameraState = CanonicalCameraState;
 
 export interface HealthEngineHUDProps {
   presets?: PresetScenario[];

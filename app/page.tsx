@@ -21,9 +21,9 @@ import {
 // Import local components and state machine types
 import {
   HealthEngineHUD,
-  type CameraState,
   type PresetScenario,
 } from '@/components/HealthEngineHUD';
+import type { CameraState } from '@/lib/presets/types';
 import { HealthEngine2DFallback } from '@/components/HealthEngine2DFallback';
 import {
   pillarsReducer,
