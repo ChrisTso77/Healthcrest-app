@@ -21,6 +21,15 @@ export type OverlayStatus =
   | 'Critical'
   | 'Manual';
 
+export interface CameraState {
+  orbitAzimuth: number;
+  orbitElevation: number;
+  zoomDistance: number;
+  activeShotId: string;
+  isGesturing: boolean;
+  requestRevision: number;
+}
+
 export type EvidenceLevel =
   | 'Guideline-level'
   | 'High-quality review'

@@ -5,7 +5,7 @@ import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
-import type { CameraState } from "@/components/HealthEngineHUD";
+import type { CameraState } from "@/lib/presets/types";
 import {
   InteractiveBodyEngineMesh,
   type State,
