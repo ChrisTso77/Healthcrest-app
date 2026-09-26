@@ -3,7 +3,7 @@ import type {
   CanonicalPresetParameters,
   CanonicalScenarioPreset,
   HealthStatus,
-  PillarType as CanonicalPillarType,
+  PillarType,
   RenderMode as CanonicalRenderMode,
   CameraState as CanonicalCameraState,
 } from '@/lib/presets/types';
@@ -28,7 +28,6 @@ import {
 } from 'lucide-react';
 
 // Shared canonical health-engine domain types
-export type PillarType = CanonicalPillarType;
 export type RenderMode = CanonicalRenderMode;
 
 export type CameraState = CanonicalCameraState;
