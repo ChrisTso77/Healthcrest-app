@@ -5,9 +5,17 @@
  * Supports Google Analytics 4, Plausible, and PostHog.
  */
 
-export type PillarType = 'Fitness' | 'Nutrition' | 'Sleep' | 'Stress' | 'Systems';
-export type HealthStatus = 'optimal' | 'warning' | 'critical';
-export type RenderMode = 'high-3d' | 'lite-3d' | '2d-canvas';
+import type {
+  HealthStatus,
+  PillarType,
+  RenderMode,
+} from './presets/types';
+
+export type {
+  HealthStatus,
+  PillarType,
+  RenderMode,
+} from './presets/types';
 
 // Window extension for global analytics providers
 declare global {
