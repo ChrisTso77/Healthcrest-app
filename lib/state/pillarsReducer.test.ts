@@ -94,6 +94,29 @@ describe('pillarsReducer', () => {
     expect(result.overlay.title).toBe('Manual configuration');
   });
 
+  test('SET_SCENE and UPDATE_PARAM use the same canonical manual overlay', () => {
+    const sceneResult = pillarsReducer(initialPillarsState, {
+      type: 'SET_SCENE',
+      payload: 'sleep',
+    });
+
+    const parameterResult = pillarsReducer(initialPillarsState, {
+      type: 'UPDATE_PARAM',
+      payload: {
+        key: 'sleepDuration',
+        value: 6.5,
+      },
+    });
+
+    expect(sceneResult.overlay).toEqual(parameterResult.overlay);
+    expect(sceneResult.overlay).toEqual({
+      title: 'Manual configuration',
+      status: 'Manual',
+      keyOutcomes: [],
+      evidenceLevel: null,
+    });
+  });
+
   test('SET_RENDER_MODE changes render mode without altering clinical state', () => {
     const result = pillarsReducer(initialPillarsState, {
       type: 'SET_RENDER_MODE',
