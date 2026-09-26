@@ -19,11 +19,11 @@ import {
 } from 'lucide-react';
 
 // Import local components and state machine types
-import {
-  HealthEngineHUD,
-  type PresetScenario,
-} from '@/components/HealthEngineHUD';
-import type { CameraState } from '@/lib/presets/types';
+import { HealthEngineHUD } from '@/components/HealthEngineHUD';
+import type {
+  CameraState,
+  CanonicalScenarioPreset,
+} from '@/lib/presets/types';
 import { HealthEngine2DFallback } from '@/components/HealthEngine2DFallback';
 import {
   pillarsReducer,
@@ -73,7 +73,7 @@ export default function FourPillarsHealthEnginePage() {
   // UI Control States
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
   const [isNarrativeOpen, setIsNarrativeOpen] = useState<boolean>(false);
-  const [presetsList, setPresetsList] = useState<PresetScenario[]>([]);
+  const [presetsList, setPresetsList] = useState<CanonicalScenarioPreset[]>([]);
   const [apiError, setApiError] = useState<string | null>(null);
 
   // Fetch Preset Scenarios from Next.js App Router API (/api/presets) on mount
