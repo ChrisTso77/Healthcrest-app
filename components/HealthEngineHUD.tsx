@@ -27,7 +27,6 @@ import {
   Camera
 } from 'lucide-react';
 
-// Shared canonical health-engine domain types
 interface HealthEngineHUDProps {
   presets?: CanonicalScenarioPreset[];
   activePillar: PillarType;
@@ -42,7 +41,6 @@ interface HealthEngineHUDProps {
   onCameraChange?: (camera: CameraState) => void;
 }
 
-// Scene 5 & Sleep Ladder Presets
 // Scene 5 Camera Shot Director Presets
 const CAMERA_SHOTS = [
   { id: 'shot-1-orbit', name: 'Shot 1: Equilibrium Orbit', azimuth: 45, elevation: 20, zoom: 1.0, desc: 'Wide panoramic orbit around balanced tetrapod core' },
