@@ -132,7 +132,6 @@ export default function FourPillarsHealthEnginePage() {
           <WebGLCanvasWrapper
             state={state}
             cameraState={cameraState}
-            dispatch={dispatch}
           />
         </div>
       )}
