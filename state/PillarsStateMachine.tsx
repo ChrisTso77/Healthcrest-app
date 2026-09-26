@@ -9,6 +9,7 @@ import {
   sceneToPillar,
 } from '@/lib/state/pillarsMappings';
 import { createPillarsState } from '@/lib/state/createPillarsState';
+import { createManualOverlay } from '@/lib/state/createManualOverlay';
 
 // ============================================================================
 // 1. PRESET MAPPINGS & CLINICAL STATE MACHINE REDUCER
@@ -23,12 +24,7 @@ function stateMachineReducer(state: State, action: PillarsAction): State {
         activeScene: action.payload,
         activePillar: sceneToPillar(action.payload),
         activePreset: null,
-        overlay: {
-          title: 'Manual configuration',
-          status: 'Manual',
-          keyOutcomes: [],
-          evidenceLevel: null,
-        },
+        overlay: createManualOverlay(),
       };
     case 'APPLY_CANONICAL_PRESET': {
       const preset = action.payload;
@@ -66,12 +62,7 @@ function stateMachineReducer(state: State, action: PillarsAction): State {
         ...state,
         parameters: newParams,
         activePreset: null,
-        overlay: {
-          title: 'Manual configuration',
-          status: 'Manual',
-          keyOutcomes: [],
-          evidenceLevel: null,
-        },
+        overlay: createManualOverlay(),
       };
     }
     default:
