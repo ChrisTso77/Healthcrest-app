@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import type {
   CanonicalPresetParameters,
   CanonicalScenarioPreset,
-  HealthStatus as CanonicalHealthStatus,
+  HealthStatus,
   PillarType as CanonicalPillarType,
   RenderMode as CanonicalRenderMode,
   CameraState as CanonicalCameraState,
@@ -29,7 +29,6 @@ import {
 
 // Shared canonical health-engine domain types
 export type PillarType = CanonicalPillarType;
-export type HealthStatus = CanonicalHealthStatus;
 export type RenderMode = CanonicalRenderMode;
 export type HealthParameters = CanonicalPresetParameters;
 
