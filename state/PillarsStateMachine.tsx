@@ -4,13 +4,13 @@ import type {
 } from '@/state/PillarsStateTypes';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 import {
-  canonicalStatusToOverlayStatus,
   pillarToScene,
   sceneToPillar,
 } from '@/lib/state/pillarsMappings';
 import { createPillarsState } from '@/lib/state/createPillarsState';
 import { createManualOverlay } from '@/lib/state/createManualOverlay';
 import { applyPresetParameters } from '@/lib/state/applyPresetParameters';
+import { createPresetOverlay } from '@/lib/state/createPresetOverlay';
 
 // ============================================================================
 // 1. PRESET MAPPINGS & CLINICAL STATE MACHINE REDUCER
@@ -40,12 +40,7 @@ function stateMachineReducer(state: State, action: PillarsAction): State {
           state.parameters,
           preset
         ),
-        overlay: {
-          title: preset.headline,
-          status: canonicalStatusToOverlayStatus(preset.status),
-          keyOutcomes: preset.outcomes,
-          evidenceLevel: preset.evidenceLevel,
-        },
+        overlay: createPresetOverlay(preset),
       };
     }
 
