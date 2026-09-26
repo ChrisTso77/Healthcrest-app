@@ -32,12 +32,11 @@ export type PillarType = CanonicalPillarType;
 export type HealthStatus = CanonicalHealthStatus;
 export type RenderMode = CanonicalRenderMode;
 export type HealthParameters = CanonicalPresetParameters;
-export type PresetScenario = CanonicalScenarioPreset;
 
 export type CameraState = CanonicalCameraState;
 
 export interface HealthEngineHUDProps {
-  presets?: PresetScenario[];
+  presets?: CanonicalScenarioPreset[];
   activePillar: PillarType;
   renderMode: RenderMode;
   parameters: HealthParameters;
@@ -46,7 +45,7 @@ export interface HealthEngineHUDProps {
   onPillarChange?: (pillar: PillarType) => void;
   onRenderModeChange?: (mode: RenderMode) => void;
   onParameterChange?: (key: keyof HealthParameters, value: number) => void;
-  onPresetLoad?: (preset: PresetScenario) => void;
+  onPresetLoad?: (preset: CanonicalScenarioPreset) => void;
   onCameraChange?: (camera: CameraState) => void;
 }
 
@@ -91,7 +90,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
     : null;
 
   // Load Preset Handler
-  const loadPreset = (preset: PresetScenario) => {
+  const loadPreset = (preset: CanonicalScenarioPreset) => {
     onPresetLoad?.(preset);
     if (preset.cameraShot) {
       applyCameraShot(preset.cameraShot);
