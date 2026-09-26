@@ -1,65 +1,19 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
+import { useRef } from "react";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 import type { CameraState } from "@/lib/presets/types";
 import type { State } from "@/state/PillarsStateTypes";
 import { InteractiveBodyEngineMesh } from "@/components/InteractiveBodyEngineMesh";
+import { CameraDirector } from "@/components/CameraDirector";
 
 type WebGLCanvasWrapperProps = {
   state: State;
   cameraState: CameraState;
 };
-
-function CameraDirector({
-  cameraState,
-  controlsRef,
-}: {
-  cameraState: CameraState;
-  controlsRef: React.RefObject<OrbitControlsImpl | null>;
-}) {
-  const { camera } = useThree();
-
-  useEffect(() => {
-    const azimuth = (cameraState.orbitAzimuth * Math.PI) / 180;
-    const elevation = (cameraState.orbitElevation * Math.PI) / 180;
-
-    // Higher HUD zoom means a closer camera.
-    const radius = Math.max(
-      2.5,
-      Math.min(10, 5 / cameraState.zoomDistance)
-    );
-
-    const horizontal = radius * Math.cos(elevation);
-
-    const x = horizontal * Math.sin(azimuth);
-    const y = radius * Math.sin(elevation);
-    const z = horizontal * Math.cos(azimuth);
-
-    camera.position.set(x, y, z);
-    camera.lookAt(0, 0, 0);
-    camera.updateProjectionMatrix();
-    camera.updateMatrixWorld();
-
-    if (controlsRef.current) {
-      controlsRef.current.target.set(0, 0, 0);
-      controlsRef.current.update();
-    }
-  }, [
-    camera,
-    cameraState.orbitAzimuth,
-    cameraState.orbitElevation,
-    cameraState.zoomDistance,
-    cameraState.activeShotId,
-    cameraState.requestRevision,
-    controlsRef,
-  ]);
-
-  return null;
-}
 
 export default function WebGLCanvasWrapper({
   state,
