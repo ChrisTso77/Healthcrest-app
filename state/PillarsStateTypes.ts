@@ -1,4 +1,5 @@
 import type {
+  CanonicalScenarioPreset,
   EvidenceLevel,
   OverlayStatus,
   PillarType,
@@ -41,3 +42,15 @@ export interface State {
   parameters: PillarParameters;
   overlay: ClinicalOverlayData;
 }
+
+export type PillarsAction =
+  | { type: 'SET_SCENE'; payload: SceneId }
+  | { type: 'APPLY_CANONICAL_PRESET'; payload: CanonicalScenarioPreset }
+  | {
+      type: 'UPDATE_PARAM';
+      payload: {
+        key: keyof PillarParameters;
+        value: number;
+      };
+    }
+  | { type: 'SET_RENDER_MODE'; payload: RenderMode };

@@ -1,7 +1,6 @@
-import type { CanonicalScenarioPreset } from '@/lib/presets/types';
 import type {
   PillarParameters,
-  SceneId,
+  PillarsAction,
   State,
 } from '@/state/PillarsStateTypes';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
@@ -30,13 +29,7 @@ const DEFAULT_PARAMS: PillarParameters = {
 };
 
 // State Machine Reducer logic
-type Action =
-  | { type: 'SET_SCENE'; payload: SceneId }
-  | { type: 'APPLY_CANONICAL_PRESET'; payload: CanonicalScenarioPreset }
-  | { type: 'UPDATE_PARAM'; payload: { key: keyof PillarParameters; value: number } }
-  | { type: 'SET_RENDER_MODE'; payload: State['renderMode'] };
-
-function stateMachineReducer(state: State, action: Action): State {
+function stateMachineReducer(state: State, action: PillarsAction): State {
   switch (action.type) {
     case 'SET_SCENE':
       return {
