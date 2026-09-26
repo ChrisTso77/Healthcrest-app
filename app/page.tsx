@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import dynamic from 'next/dynamic';
 import {
   ShieldAlert,
