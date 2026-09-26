@@ -6,10 +6,8 @@ import { OrbitControls } from "@react-three/drei";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 import type { CameraState } from "@/lib/presets/types";
-import {
-  InteractiveBodyEngineMesh,
-  type State,
-} from "@/state/PillarsStateMachine";
+import type { State } from "@/state/PillarsStateTypes";
+import { InteractiveBodyEngineMesh } from "@/state/PillarsStateMachine";
 
 type WebGLCanvasWrapperProps = {
   state: State;
