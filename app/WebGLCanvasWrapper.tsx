@@ -7,7 +7,7 @@ import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 import type { CameraState } from "@/lib/presets/types";
 import type { State } from "@/state/PillarsStateTypes";
-import { InteractiveBodyEngineMesh } from "@/state/PillarsStateMachine";
+import { InteractiveBodyEngineMesh } from "@/components/InteractiveBodyEngineMesh";
 
 type WebGLCanvasWrapperProps = {
   state: State;
