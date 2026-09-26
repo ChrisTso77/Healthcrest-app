@@ -32,6 +32,9 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      - name: Run Unit Tests
+        run: npm run test:unit
+
   validate-cms-seed:
     name: Validate CMS Seed JSON
     runs-on: ubuntu-latest
