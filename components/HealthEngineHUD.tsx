@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type FC, type ReactNode } from 'react';
 import type {
   CanonicalPresetParameters,
   CanonicalScenarioPreset,
@@ -51,7 +51,7 @@ const CAMERA_SHOTS = [
   { id: 'shot-4-resonance', name: 'Shot 4: Systemic Resonance', azimuth: 220, elevation: 50, zoom: 0.8, desc: 'High isometric overview of social resonance dome' }
 ];
 
-export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
+export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
   presets = [],
   activePillar,
   renderMode,
@@ -113,7 +113,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
     onParameterChange?.(key, val);
   };
 
-  const pillarIcons: Record<PillarType, React.ReactNode> = {
+  const pillarIcons: Record<PillarType, ReactNode> = {
     Fitness: <Activity className="w-4 h-4 text-emerald-400" />,
     Nutrition: <Apple className="w-4 h-4 text-amber-400" />,
     Sleep: <Moon className="w-4 h-4 text-violet-400" />,
@@ -121,7 +121,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
     Systems: <Layers className="w-4 h-4 text-cyan-400" />
   };
 
-  const statusBadge: Record<HealthStatus, { label: string; bg: string; text: string; border: string; icon: React.ReactNode }> = {
+  const statusBadge: Record<HealthStatus, { label: string; bg: string; text: string; border: string; icon: ReactNode }> = {
     optimal: { label: 'OPTIMAL', bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30', icon: <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> },
     warning: { label: 'WARNING', bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/30', icon: <AlertTriangle className="w-3.5 h-3.5 text-amber-400" /> },
     critical: { label: 'CRITICAL', bg: 'bg-rose-500/10', text: 'text-rose-400', border: 'border-rose-500/30', icon: <ShieldAlert className="w-3.5 h-3.5 text-rose-400" /> }
