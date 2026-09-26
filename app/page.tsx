@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useReducer } from 'react';
-import dynamic from 'next/dynamic';
 import {
   ShieldAlert,
   Info,
@@ -20,42 +19,15 @@ import {
 
 // Import local components and state machine types
 import { HealthEngineHUD } from '@/components/HealthEngineHUD';
+import { HealthEngineViewport } from '@/components/HealthEngineViewport';
 import type {
   CameraState,
   CanonicalScenarioPreset,
 } from '@/lib/presets/types';
-import { HealthEngine2DFallback } from '@/components/HealthEngine2DFallback';
 import {
   pillarsReducer,
   initialPillarsState
 } from '@/state/PillarsStateMachine';
-
-// Dynamically import Three.js Canvas with SSR disabled to prevent server-side DOM errors
-function WebGLLoadErrorFallback() {
-  return <CanvasPlaceholder />;
-}
-
-const WebGLCanvasWrapper = dynamic(
-  () => import('./WebGLCanvasWrapper').catch(() => WebGLLoadErrorFallback),
-  { ssr: false, loading: () => <CanvasPlaceholder /> }
-);
-
-function CanvasPlaceholder() {
-  return (
-    <div className="absolute inset-0 bg-slate-950 flex flex-col items-center justify-center text-slate-400 select-none">
-      <div className="relative flex items-center justify-center mb-4">
-        <div className="w-20 h-20 rounded-full border-2 border-emerald-500/20 border-t-emerald-400 animate-spin" />
-        <Layers className="w-8 h-8 text-cyan-400 absolute animate-pulse" />
-      </div>
-      <p className="text-xs font-mono tracking-widest uppercase text-slate-300">
-        INITIALISING 3D HEALTH ENGINE...
-      </p>
-      <p className="text-[10px] font-mono text-slate-500 mt-1">
-        Compiling WebGL Shaders & Neural Meshes
-      </p>
-    </div>
-  );
-}
 
 export default function FourPillarsHealthEnginePage() {
   // Master State Machine Driven by Reducer
@@ -102,35 +74,12 @@ export default function FourPillarsHealthEnginePage() {
   return (
     <main className="relative w-full h-screen bg-slate-950 text-slate-100 font-sans overflow-hidden select-none">
       {/* ------------------------------------------------------------------ */}
-      {/* 1. VISUAL VIEWPORT LAYER (3D WebGL vs 2D Fallback) */}
+      {/* 1. VISUAL VIEWPORT LAYER */}
       {/* ------------------------------------------------------------------ */}
-      {state.renderMode === '2d-canvas' ? (
-        <div className="absolute inset-0 z-0 flex items-center justify-center overflow-auto bg-slate-950 p-6">
-          <HealthEngine2DFallback
-            activePillar={state.activePillar}
-            aerobicMins={state.parameters.aerobicVolume}
-            sleepDuration={state.parameters.sleepDuration}
-            wholeFoodRatio={state.parameters.wholeFoodRatio}
-            stressLevel={state.parameters.perceivedStress}
-            healthStatus={
-              state.overlay.status === "Optimal"
-                ? "optimal"
-                : state.overlay.status === "Warning"
-                  ? "warning"
-                  : state.overlay.status === "Critical"
-                    ? "critical"
-                    : "manual"
-            }
-          />
-        </div>
-      ) : (
-        <div className="absolute inset-0 z-0">
-          <WebGLCanvasWrapper
-            state={state}
-            cameraState={cameraState}
-          />
-        </div>
-      )}
+      <HealthEngineViewport
+        state={state}
+        cameraState={cameraState}
+      />
 
       {/* ------------------------------------------------------------------ */}
       {/* 2. OVERLAY HUD INTERFACE */}
