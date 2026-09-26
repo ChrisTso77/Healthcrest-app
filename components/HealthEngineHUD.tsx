@@ -7,11 +7,14 @@ import type {
   RenderMode,
   CameraState,
 } from '@/lib/presets/types';
-import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 import {
   CAMERA_SHOTS,
   createCameraStateForShot,
 } from '@/lib/camera/cameraShots';
+import {
+  resolveActivePreset,
+  resolveAvailablePresets,
+} from '@/lib/presets/presetSelection';
 import {
   Activity,
   Apple,
@@ -62,19 +65,13 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
   const [isDayTime, setIsDayTime] = useState<boolean>(false);
   const [isDockOpen, setIsDockOpen] = useState<boolean>(true);
 
-  const availablePresets = presets.length > 0 ? presets : FALLBACK_PRESETS;
+  const availablePresets =
+    resolveAvailablePresets(presets);
 
-  const activePreset = activePresetId
-    ? availablePresets.find(
-        (preset) =>
-          preset.slug === activePresetId || preset.id === activePresetId
-      ) ??
-      FALLBACK_PRESETS.find(
-        (preset) =>
-          preset.slug === activePresetId || preset.id === activePresetId
-      ) ??
-      null
-    : null;
+  const activePreset = resolveActivePreset(
+    availablePresets,
+    activePresetId
+  );
 
   // Load Preset Handler
   const loadPreset = (preset: CanonicalScenarioPreset) => {
