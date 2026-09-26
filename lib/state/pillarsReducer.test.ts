@@ -59,6 +59,39 @@ describe('pillarsReducer', () => {
     });
   });
 
+  test('APPLY_CANONICAL_PRESET preserves parameters not owned by presets', () => {
+    const preset = FALLBACK_PRESETS.find(
+      ({ slug }) => slug === 'uk-cmo-optimal'
+    );
+
+    if (!preset) {
+      throw new Error('Expected uk-cmo-optimal fallback preset');
+    }
+
+    const customState = {
+      ...initialPillarsState,
+      parameters: {
+        ...initialPillarsState.parameters,
+        sedentaryHours: 11,
+        fruitVegPortions: 9,
+        upfFrequency: 4,
+        regularityScore: 33,
+        downRegPracticeMins: 7,
+      },
+    };
+
+    const result = pillarsReducer(customState, {
+      type: 'APPLY_CANONICAL_PRESET',
+      payload: preset,
+    });
+
+    expect(result.parameters.sedentaryHours).toBe(11);
+    expect(result.parameters.fruitVegPortions).toBe(9);
+    expect(result.parameters.upfFrequency).toBe(4);
+    expect(result.parameters.regularityScore).toBe(33);
+    expect(result.parameters.downRegPracticeMins).toBe(7);
+  });
+
   test('APPLY_CANONICAL_PRESET translates warning status', () => {
     const preset = FALLBACK_PRESETS.find(
       ({ slug }) => slug === 'single-pillar-failure'
