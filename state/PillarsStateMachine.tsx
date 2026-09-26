@@ -1,11 +1,15 @@
-import type { CanonicalScenarioPreset, PillarType } from '@/lib/presets/types';
+import type { CanonicalScenarioPreset } from '@/lib/presets/types';
 import type {
-  ClinicalOverlayData,
   PillarParameters,
   SceneId,
   State,
 } from '@/state/PillarsStateTypes';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
+import {
+  canonicalStatusToOverlayStatus,
+  pillarToScene,
+  sceneToPillar,
+} from '@/lib/state/pillarsMappings';
 
 // ============================================================================
 // 1. PRESET MAPPINGS & CLINICAL STATE MACHINE REDUCER
@@ -31,52 +35,6 @@ type Action =
   | { type: 'APPLY_CANONICAL_PRESET'; payload: CanonicalScenarioPreset }
   | { type: 'UPDATE_PARAM'; payload: { key: keyof PillarParameters; value: number } }
   | { type: 'SET_RENDER_MODE'; payload: State['renderMode'] };
-
-function pillarToScene(pillar: CanonicalScenarioPreset['pillar']): SceneId {
-  switch (pillar) {
-    case 'Fitness':
-      return 'fitness';
-    case 'Nutrition':
-      return 'nutrition';
-    case 'Sleep':
-      return 'sleep';
-    case 'Stress':
-      return 'stress';
-    case 'Systems':
-    default:
-      return 'system';
-  }
-}
-
-function canonicalStatusToOverlayStatus(
-  status: CanonicalScenarioPreset['status']
-): ClinicalOverlayData['status'] {
-  switch (status) {
-    case 'warning':
-      return 'Warning';
-    case 'critical':
-      return 'Critical';
-    case 'optimal':
-    default:
-      return 'Optimal';
-  }
-}
-
-function sceneToPillar(scene: SceneId): PillarType {
-  switch (scene) {
-    case 'fitness':
-      return 'Fitness';
-    case 'nutrition':
-      return 'Nutrition';
-    case 'sleep':
-      return 'Sleep';
-    case 'stress':
-      return 'Stress';
-    case 'system':
-    default:
-      return 'Systems';
-  }
-}
 
 function stateMachineReducer(state: State, action: Action): State {
   switch (action.type) {
