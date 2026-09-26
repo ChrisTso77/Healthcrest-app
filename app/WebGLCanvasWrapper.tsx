@@ -14,7 +14,6 @@ import {
 type WebGLCanvasWrapperProps = {
   state: State;
   cameraState: CameraState;
-  dispatch?: unknown;
 };
 
 function CameraDirector({
