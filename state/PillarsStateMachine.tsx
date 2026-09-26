@@ -2,54 +2,26 @@ import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Float, MeshWobbleMaterial, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
+import type { CanonicalScenarioPreset, PillarType } from '@/lib/presets/types';
 import type {
-  CanonicalScenarioPreset,
-  EvidenceLevel,
-  PillarType,
-  RenderMode,
-  OverlayStatus,
-} from '@/lib/presets/types';
+  ClinicalOverlayData,
+  PillarParameters,
+  SceneId,
+  State,
+} from '@/state/PillarsStateTypes';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 
 // ============================================================================
 // 1. TYPES & CLINICAL PARAMETER DEFINITIONS
 // ============================================================================
 
-type SceneId = 'fitness' | 'nutrition' | 'sleep' | 'stress' | 'system';
-
-interface PillarParameters {
-  // Fitness
-  aerobicVolume: number; // 0 to 300+ mins/wk (UK CMO target: 150)
-  resistanceDays: number; // 0 to 4+ days/wk (UK CMO target: >=2)
-  sedentaryHours: number; // 2 to 14 hrs/day
-  // Nutrition
-  wholeFoodRatio: number; // 0 to 100%
-  fruitVegPortions: number; // 0 to 10 portions/day (NHS Eatwell: >=5)
-  upfFrequency: number; // 0 to 5 times/day
-  // Sleep
-  sleepDuration: number; // 4 to 10 hrs/night (AASM consensus: 7-9)
-  regularityScore: number; // 0 to 100%
-  // Stress
-  downRegPracticeMins: number; // 0 to 30 mins/day
-  perceivedStress: number; // 1 to 10
-  // Substance exposure
-  alcoholUnits: number;
-}
-
 interface VisualState {
   coreColor: string;
   pulseSpeed: number;
   meshDistortion: number;
   particleDensity: number;
-  seesawTilt: number; // -1 (sympathetic) to +1 (parasympathetic)
+  seesawTilt: number;
   glowIntensity: number;
-}
-
-interface ClinicalOverlayData {
-  title: string;
-  status: OverlayStatus;
-  keyOutcomes: string[];
-  evidenceLevel: EvidenceLevel | null;
 }
 
 // ============================================================================
@@ -71,15 +43,6 @@ const DEFAULT_PARAMS: PillarParameters = {
 };
 
 // State Machine Reducer logic
-export interface State {
-  activeScene: SceneId;
-  activePreset: string | null;
-  activePillar: PillarType;
-  renderMode: RenderMode;
-  parameters: PillarParameters;
-  overlay: ClinicalOverlayData;
-}
-
 type Action =
   | { type: 'SET_SCENE'; payload: SceneId }
   | { type: 'APPLY_CANONICAL_PRESET'; payload: CanonicalScenarioPreset }
