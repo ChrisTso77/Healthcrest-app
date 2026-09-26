@@ -17,7 +17,7 @@ import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 
 type SceneId = 'fitness' | 'nutrition' | 'sleep' | 'stress' | 'system';
 
-export interface PillarParameters {
+interface PillarParameters {
   // Fitness
   aerobicVolume: number; // 0 to 300+ mins/wk (UK CMO target: 150)
   resistanceDays: number; // 0 to 4+ days/wk (UK CMO target: >=2)
@@ -36,7 +36,7 @@ export interface PillarParameters {
   alcoholUnits: number;
 }
 
-export interface VisualState {
+interface VisualState {
   coreColor: string;
   pulseSpeed: number;
   meshDistortion: number;
@@ -45,7 +45,7 @@ export interface VisualState {
   glowIntensity: number;
 }
 
-export interface ClinicalOverlayData {
+interface ClinicalOverlayData {
   title: string;
   status: OverlayStatus;
   keyOutcomes: string[];
