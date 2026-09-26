@@ -74,14 +74,12 @@ export default function FourPillarsHealthEnginePage() {
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
   const [isNarrativeOpen, setIsNarrativeOpen] = useState<boolean>(false);
   const [presetsList, setPresetsList] = useState<PresetScenario[]>([]);
-  const [, setIsLoadingPresets] = useState<boolean>(true);
   const [apiError, setApiError] = useState<string | null>(null);
 
   // Fetch Preset Scenarios from Next.js App Router API (/api/presets) on mount
   useEffect(() => {
     async function fetchPresets() {
       try {
-        setIsLoadingPresets(true);
         const res = await fetch('/api/presets');
         if (!res.ok) {
           throw new Error(`API error: ${res.status} ${res.statusText}`);
@@ -95,8 +93,6 @@ export default function FourPillarsHealthEnginePage() {
       } catch (err: unknown) {
         console.warn('Failed to load presets from /api/presets, using local fallback presets:', err);
         setApiError('CMS connection offline — using local evidence presets.');
-      } finally {
-        setIsLoadingPresets(false);
       }
     }
 
