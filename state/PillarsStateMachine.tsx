@@ -10,6 +10,7 @@ import {
 } from '@/lib/state/pillarsMappings';
 import { createPillarsState } from '@/lib/state/createPillarsState';
 import { createManualOverlay } from '@/lib/state/createManualOverlay';
+import { applyPresetParameters } from '@/lib/state/applyPresetParameters';
 
 // ============================================================================
 // 1. PRESET MAPPINGS & CLINICAL STATE MACHINE REDUCER
@@ -35,15 +36,10 @@ function stateMachineReducer(state: State, action: PillarsAction): State {
         activeScene: scene,
         activePillar: preset.pillar,
         activePreset: preset.slug || preset.id,
-        parameters: {
-          ...state.parameters,
-          aerobicVolume: preset.parameters.aerobicMins,
-          resistanceDays: preset.parameters.strengthDays,
-          sleepDuration: preset.parameters.sleepDuration,
-          wholeFoodRatio: preset.parameters.wholeFoodRatio,
-          perceivedStress: preset.parameters.stressLevel,
-          alcoholUnits: preset.parameters.alcoholUnits,
-        },
+        parameters: applyPresetParameters(
+          state.parameters,
+          preset
+        ),
         overlay: {
           title: preset.headline,
           status: canonicalStatusToOverlayStatus(preset.status),
