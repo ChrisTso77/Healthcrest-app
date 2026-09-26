@@ -28,7 +28,7 @@ import {
 } from 'lucide-react';
 
 // Shared canonical health-engine domain types
-export interface HealthEngineHUDProps {
+interface HealthEngineHUDProps {
   presets?: CanonicalScenarioPreset[];
   activePillar: PillarType;
   renderMode: RenderMode;
