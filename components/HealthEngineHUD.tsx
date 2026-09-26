@@ -15,6 +15,7 @@ import {
   resolveActivePreset,
   resolveAvailablePresets,
 } from '@/lib/presets/presetSelection';
+import { createPresetLoadPlan } from '@/lib/presets/createPresetLoadPlan';
 import {
   Activity,
   Apple,
@@ -75,9 +76,15 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
 
   // Load Preset Handler
   const loadPreset = (preset: CanonicalScenarioPreset) => {
-    onPresetLoad?.(preset);
-    if (preset.cameraShot) {
-      applyCameraShot(preset.cameraShot);
+    const plan = createPresetLoadPlan(
+      preset,
+      camera
+    );
+
+    onPresetLoad?.(plan.preset);
+
+    if (plan.cameraState) {
+      onCameraChange?.(plan.cameraState);
     }
   };
 
