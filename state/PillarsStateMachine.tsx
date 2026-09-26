@@ -132,7 +132,7 @@ function sceneToPillar(scene: SceneId): PillarType {
   }
 }
 
-export function stateMachineReducer(state: State, action: Action): State {
+function stateMachineReducer(state: State, action: Action): State {
   switch (action.type) {
     case 'SET_SCENE':
       return {
