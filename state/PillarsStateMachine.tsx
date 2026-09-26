@@ -197,7 +197,7 @@ export function stateMachineReducer(state: State, action: Action): State {
 }
 
 // Compute derived 3D visual properties based on clinical parameters
-export function deriveVisualState(params: PillarParameters, scene: SceneId): VisualState {
+function deriveVisualState(params: PillarParameters, scene: SceneId): VisualState {
   const isOptimalAerobic = params.aerobicVolume >= 150 && params.aerobicVolume <= 300;
   const isRestorativeSleep = params.sleepDuration >= 7;
   const isLowStress = params.perceivedStress <= 4 || params.downRegPracticeMins >= 15;
