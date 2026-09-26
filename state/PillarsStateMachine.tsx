@@ -1,5 +1,4 @@
 import type {
-  PillarParameters,
   PillarsAction,
   State,
 } from '@/state/PillarsStateTypes';
@@ -9,24 +8,11 @@ import {
   pillarToScene,
   sceneToPillar,
 } from '@/lib/state/pillarsMappings';
+import { createPillarsState } from '@/lib/state/createPillarsState';
 
 // ============================================================================
 // 1. PRESET MAPPINGS & CLINICAL STATE MACHINE REDUCER
 // ============================================================================
-
-const DEFAULT_PARAMS: PillarParameters = {
-  aerobicVolume: 150,
-  resistanceDays: 2,
-  sedentaryHours: 6,
-  wholeFoodRatio: 80,
-  fruitVegPortions: 5,
-  upfFrequency: 1,
-  sleepDuration: 8,
-  regularityScore: 85,
-  downRegPracticeMins: 15,
-  perceivedStress: 4,
-  alcoholUnits: 0,
-};
 
 // State Machine Reducer logic
 function stateMachineReducer(state: State, action: PillarsAction): State {
@@ -99,26 +85,7 @@ function stateMachineReducer(state: State, action: PillarsAction): State {
 
 const INITIAL_PRESET = FALLBACK_PRESETS[0];
 
-export const initialPillarsState: State = {
-  activeScene: 'system',
-  activePreset: INITIAL_PRESET.slug,
-  activePillar: INITIAL_PRESET.pillar,
-  renderMode: 'high-3d',
-  parameters: {
-    ...DEFAULT_PARAMS,
-    aerobicVolume: INITIAL_PRESET.parameters.aerobicMins,
-    resistanceDays: INITIAL_PRESET.parameters.strengthDays,
-    sleepDuration: INITIAL_PRESET.parameters.sleepDuration,
-    wholeFoodRatio: INITIAL_PRESET.parameters.wholeFoodRatio,
-    perceivedStress: INITIAL_PRESET.parameters.stressLevel,
-    alcoholUnits: INITIAL_PRESET.parameters.alcoholUnits,
-  },
-  overlay: {
-    title: INITIAL_PRESET.headline,
-    status: 'Optimal',
-    keyOutcomes: INITIAL_PRESET.outcomes,
-    evidenceLevel: INITIAL_PRESET.evidenceLevel,
-  },
-};
+export const initialPillarsState: State =
+  createPillarsState(INITIAL_PRESET);
 
 export { stateMachineReducer as pillarsReducer };
