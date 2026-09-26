@@ -19,8 +19,6 @@ export type SceneId = 'fitness' | 'nutrition' | 'sleep' | 'stress' | 'system';
 
 export type PillarType = CanonicalPillarType;
 
-export type HealthParameters = PillarParameters;
-
 export interface PillarParameters {
   // Fitness
   aerobicVolume: number; // 0 to 300+ mins/wk (UK CMO target: 150)
