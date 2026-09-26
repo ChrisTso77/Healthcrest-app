@@ -11,6 +11,7 @@ import { createPillarsState } from '@/lib/state/createPillarsState';
 import { createManualOverlay } from '@/lib/state/createManualOverlay';
 import { applyPresetParameters } from '@/lib/state/applyPresetParameters';
 import { createPresetOverlay } from '@/lib/state/createPresetOverlay';
+import { updatePillarParameter } from '@/lib/state/updatePillarParameter';
 
 // ============================================================================
 // 1. PRESET MAPPINGS & CLINICAL STATE MACHINE REDUCER
@@ -47,15 +48,17 @@ function stateMachineReducer(state: State, action: PillarsAction): State {
     case 'SET_RENDER_MODE':
       return { ...state, renderMode: action.payload };
 
-    case 'UPDATE_PARAM': {
-      const newParams = { ...state.parameters, [action.payload.key]: action.payload.value };
+    case 'UPDATE_PARAM':
       return {
         ...state,
-        parameters: newParams,
+        parameters: updatePillarParameter(
+          state.parameters,
+          action.payload.key,
+          action.payload.value
+        ),
         activePreset: null,
         overlay: createManualOverlay(),
       };
-    }
     default:
       return state;
   }
