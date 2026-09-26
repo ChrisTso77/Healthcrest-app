@@ -15,7 +15,7 @@ import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 // 1. TYPES & CLINICAL PARAMETER DEFINITIONS
 // ============================================================================
 
-export type SceneId = 'fitness' | 'nutrition' | 'sleep' | 'stress' | 'system';
+type SceneId = 'fitness' | 'nutrition' | 'sleep' | 'stress' | 'system';
 
 export interface PillarParameters {
   // Fitness
