@@ -30,7 +30,6 @@ import {
 // Shared canonical health-engine domain types
 export type PillarType = CanonicalPillarType;
 export type RenderMode = CanonicalRenderMode;
-export type HealthParameters = CanonicalPresetParameters;
 
 export type CameraState = CanonicalCameraState;
 
@@ -38,12 +37,12 @@ export interface HealthEngineHUDProps {
   presets?: CanonicalScenarioPreset[];
   activePillar: PillarType;
   renderMode: RenderMode;
-  parameters: HealthParameters;
+  parameters: CanonicalPresetParameters;
   activePresetId: string | null;
   camera: CameraState;
   onPillarChange?: (pillar: PillarType) => void;
   onRenderModeChange?: (mode: RenderMode) => void;
-  onParameterChange?: (key: keyof HealthParameters, value: number) => void;
+  onParameterChange?: (key: keyof CanonicalPresetParameters, value: number) => void;
   onPresetLoad?: (preset: CanonicalScenarioPreset) => void;
   onCameraChange?: (camera: CameraState) => void;
 }
@@ -115,7 +114,7 @@ export const HealthEngineHUD: React.FC<HealthEngineHUDProps> = ({
   };
 
   // Slider change handler
-  const handleParamChange = (key: keyof HealthParameters, val: number) => {
+  const handleParamChange = (key: keyof CanonicalPresetParameters, val: number) => {
     onParameterChange?.(key, val);
   };
 
