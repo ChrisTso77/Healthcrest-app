@@ -80,7 +80,7 @@ export interface State {
   overlay: ClinicalOverlayData;
 }
 
-export type Action =
+type Action =
   | { type: 'SET_SCENE'; payload: SceneId }
   | { type: 'APPLY_CANONICAL_PRESET'; payload: CanonicalScenarioPreset }
   | { type: 'UPDATE_PARAM'; payload: { key: keyof PillarParameters; value: number } }
