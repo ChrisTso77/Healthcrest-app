@@ -4,7 +4,7 @@ import type {
   CanonicalScenarioPreset,
   HealthStatus,
   PillarType,
-  RenderMode as CanonicalRenderMode,
+  RenderMode,
   CameraState as CanonicalCameraState,
 } from '@/lib/presets/types';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
@@ -28,8 +28,6 @@ import {
 } from 'lucide-react';
 
 // Shared canonical health-engine domain types
-export type RenderMode = CanonicalRenderMode;
-
 export type CameraState = CanonicalCameraState;
 
 export interface HealthEngineHUDProps {
