@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Float, MeshWobbleMaterial, Sparkles } from '@react-three/drei';
+import { Float, MeshWobbleMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
 import type {
@@ -8,6 +8,8 @@ import type {
   SceneId,
 } from '@/state/PillarsStateTypes';
 import { deriveVisualState } from '@/lib/visuals/deriveVisualState';
+import { StressAutonomicSeesaw } from '@/components/StressAutonomicSeesaw';
+import { HealthParticleField } from '@/components/HealthParticleField';
 
 export function InteractiveBodyEngineMesh({ params, scene }: { params: PillarParameters; scene: SceneId }) {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -45,26 +47,17 @@ export function InteractiveBodyEngineMesh({ params, scene }: { params: PillarPar
           />
         </mesh>
 
-        {/* Autonomic Seesaw Component for Stress Scene */}
         {scene === 'stress' && (
-          <group rotation={[0, 0, visual.seesawTilt * 0.5]}>
-            <mesh position={[0, -2.2, 0]}>
-              <boxGeometry args={[4, 0.15, 0.5]} />
-              <meshStandardMaterial color="#6B7280" />
-            </mesh>
-            <mesh position={[-1.8, -1.8, 0]}>
-              <sphereGeometry args={[0.3]} />
-              <meshStandardMaterial color="#EF4444" /> {/* Sympathetic */}
-            </mesh>
-            <mesh position={[1.8, -1.8, 0]}>
-              <sphereGeometry args={[0.3]} />
-              <meshStandardMaterial color="#10B981" /> {/* Parasympathetic */}
-            </mesh>
-          </group>
+          <StressAutonomicSeesaw
+            seesawTilt={visual.seesawTilt}
+          />
         )}
 
-        {/* Micro-particle effects (Mitochondrial / Glymphatic / Cytokine emission) */}
-        <Sparkles count={visual.particleDensity} scale={4} size={2} speed={visual.pulseSpeed} color={visual.coreColor} />
+        <HealthParticleField
+          particleDensity={visual.particleDensity}
+          pulseSpeed={visual.pulseSpeed}
+          coreColor={visual.coreColor}
+        />
       </Float>
     </group>
   );
