@@ -3,13 +3,10 @@ import type {
   State,
 } from '@/state/PillarsStateTypes';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
-import {
-  sceneToPillar,
-} from '@/lib/state/pillarsMappings';
 import { createPillarsState } from '@/lib/state/createPillarsState';
-import { createManualOverlay } from '@/lib/state/createManualOverlay';
-import { updatePillarParameter } from '@/lib/state/updatePillarParameter';
 import { applyCanonicalPresetToState } from '@/lib/state/applyCanonicalPresetToState';
+import { setSceneState } from '@/lib/state/setSceneState';
+import { updateManualParameterState } from '@/lib/state/updateManualParameterState';
 
 // ============================================================================
 // 1. PRESET MAPPINGS & CLINICAL STATE MACHINE REDUCER
@@ -19,13 +16,10 @@ import { applyCanonicalPresetToState } from '@/lib/state/applyCanonicalPresetToS
 function stateMachineReducer(state: State, action: PillarsAction): State {
   switch (action.type) {
     case 'SET_SCENE':
-      return {
-        ...state,
-        activeScene: action.payload,
-        activePillar: sceneToPillar(action.payload),
-        activePreset: null,
-        overlay: createManualOverlay(),
-      };
+      return setSceneState(
+        state,
+        action.payload
+      );
     case 'APPLY_CANONICAL_PRESET':
       return applyCanonicalPresetToState(
         state,
@@ -36,16 +30,11 @@ function stateMachineReducer(state: State, action: PillarsAction): State {
       return { ...state, renderMode: action.payload };
 
     case 'UPDATE_PARAM':
-      return {
-        ...state,
-        parameters: updatePillarParameter(
-          state.parameters,
-          action.payload.key,
-          action.payload.value
-        ),
-        activePreset: null,
-        overlay: createManualOverlay(),
-      };
+      return updateManualParameterState(
+        state,
+        action.payload.key,
+        action.payload.value
+      );
     default:
       return state;
   }
