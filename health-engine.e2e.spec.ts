@@ -1,11 +1,78 @@
 import { test, expect, type Request, type Route } from '@playwright/test';
 import { FALLBACK_PRESETS } from './lib/presets/fallback';
 
+type DrawCounts = { points: number; triangles: number; lines: number };
+
 test.describe('Healthcrest production regression', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await expect(page.getByText('HEALTH OPTIMISATION')).toBeVisible();
   });
+
+  for (const pixelRatio of [1, 2]) {
+    test.describe(`render quality at ${pixelRatio}x pixel density`, () => {
+      test.use({ deviceScaleFactor: pixelRatio, viewport: { width: 390, height: 844 } });
+
+      test('Lite 3D reduces actual graphics work and restores High detail', async ({ page }) => {
+        await page.addInitScript(() => {
+          const counts = { points: 0, triangles: 0, lines: 0 };
+          Object.defineProperty(window, '__healthcrestDrawCounts', { value: counts });
+          for (const prototype of [WebGLRenderingContext.prototype, WebGL2RenderingContext.prototype]) {
+            for (const method of ['drawArrays', 'drawElements'] as const) {
+              const original = prototype[method];
+              Object.defineProperty(prototype, method, {
+                value: function (this: WebGLRenderingContext, ...args: number[]) {
+                  const mode = args[0];
+                  const count = args[method === 'drawElements' ? 1 : 2];
+                  if (mode === this.POINTS) counts.points = count;
+                  if (mode === this.TRIANGLES) counts.triangles = count;
+                  if (mode === this.LINES) counts.lines = count;
+                  return Reflect.apply(original, this, args);
+                },
+              });
+            }
+          }
+        });
+        await page.goto('/?render-quality-test=1');
+        const canvas = page.locator('canvas');
+        await expect(canvas).toBeVisible();
+        const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+        await sleep.scrollIntoViewIfNeeded();
+        await sleep.fill('7.5');
+
+        const drawCounts = () => page.evaluate(() =>
+          (window as unknown as { __healthcrestDrawCounts: DrawCounts }).__healthcrestDrawCounts
+        );
+        const bufferRatio = () => canvas.evaluate((element: HTMLCanvasElement) => element.width / element.clientWidth);
+        await expect.poll(async () => {
+          const counts = await drawCounts();
+          return counts.points > 0 && counts.triangles > 0 && counts.lines > 0;
+        }).toBe(true);
+        await expect.poll(bufferRatio).toBeCloseTo(pixelRatio, 1);
+        const high = await drawCounts();
+        const originalCanvas = await canvas.elementHandle();
+
+        await page.getByRole('button', { name: /lite 3d/i }).click();
+        await expect.poll(bufferRatio).toBeCloseTo(1, 1);
+        await expect.poll(async () => {
+          const lite = await drawCounts();
+          return lite.points < high.points && lite.triangles < high.triangles && lite.lines < high.lines;
+        }).toBe(true);
+        await test.info().attach('render-workload.json', {
+          body: JSON.stringify({ pixelRatio, high, lite: await drawCounts() }),
+          contentType: 'application/json',
+        });
+        await expect(sleep).toHaveValue('7.5');
+        expect(await originalCanvas!.evaluate((element) => element === document.querySelector('canvas'))).toBe(true);
+
+        await page.getByRole('button', { name: /high 3d/i }).click();
+        await expect.poll(bufferRatio).toBeCloseTo(pixelRatio, 1);
+        await expect.poll(drawCounts).toEqual(high);
+        await expect(sleep).toHaveValue('7.5');
+        expect(await originalCanvas!.evaluate((element) => element === document.querySelector('canvas'))).toBe(true);
+      });
+    });
+  }
 
   for (const viewport of [{ width: 1280, height: 720 }, { width: 320, height: 568 }]) {
     for (const scenario of [

@@ -37,6 +37,7 @@ export function HealthEngineScene({
       <InteractiveBodyEngineMesh
         params={state.parameters}
         scene={state.activeScene}
+        lite={state.renderMode === 'lite-3d'}
       />
 
       <OrbitControls

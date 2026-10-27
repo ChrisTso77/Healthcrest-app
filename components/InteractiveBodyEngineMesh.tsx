@@ -11,7 +11,13 @@ import { deriveVisualState } from '@/lib/visuals/deriveVisualState';
 import { StressAutonomicSeesaw } from '@/components/StressAutonomicSeesaw';
 import { HealthParticleField } from '@/components/HealthParticleField';
 
-export function InteractiveBodyEngineMesh({ params, scene }: { params: PillarParameters; scene: SceneId }) {
+type InteractiveBodyEngineMeshProps = {
+  params: PillarParameters;
+  scene: SceneId;
+  lite?: boolean;
+};
+
+export function InteractiveBodyEngineMesh({ params, scene, lite = false }: InteractiveBodyEngineMeshProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const visual = deriveVisualState(params, scene);
@@ -32,13 +38,13 @@ export function InteractiveBodyEngineMesh({ params, scene }: { params: PillarPar
       <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
         {/* Central Core Metaphor */}
         <mesh ref={coreRef} position={[0, 0, 0]}>
-          <sphereGeometry args={[1, 32, 32]} />
+          <sphereGeometry args={[1, lite ? 16 : 32, lite ? 16 : 32]} />
           <meshStandardMaterial color={visual.coreColor} emissive={visual.coreColor} emissiveIntensity={visual.glowIntensity} roughness={0.2} />
         </mesh>
 
         {/* Outer Dynamic Biological Lattice */}
         <mesh ref={meshRef} position={[0, 0, 0]}>
-          <icosahedronGeometry args={[1.8, 2]} />
+          <icosahedronGeometry args={[1.8, lite ? 1 : 2]} />
           <MeshWobbleMaterial
             wireframe
             color={visual.coreColor}
@@ -54,7 +60,7 @@ export function InteractiveBodyEngineMesh({ params, scene }: { params: PillarPar
         )}
 
         <HealthParticleField
-          particleDensity={visual.particleDensity}
+          particleDensity={lite ? Math.ceil(visual.particleDensity * 0.35) : visual.particleDensity}
           pulseSpeed={visual.pulseSpeed}
           coreColor={visual.coreColor}
         />
