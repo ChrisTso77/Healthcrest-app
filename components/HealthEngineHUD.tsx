@@ -331,7 +331,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       {/* ------------------------------------------------------------------ */}
       {/* 4. RETRACTABLE CONTROL DOCK & SLIDERS (BOTTOM DRAWER) */}
       {/* ------------------------------------------------------------------ */}
-      <div className={`absolute bottom-[var(--engine-footer-space,4rem)] inset-x-0 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800/90 transition-all duration-300 z-30 h-[var(--engine-dock-space)] xl:h-[var(--engine-desktop-dock-space)]`}>
+      <div className="absolute bottom-[var(--engine-footer-space,4rem)] inset-x-0 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800/90 transition-all duration-300 z-30 h-[var(--engine-dock-space)] xl:h-[var(--engine-desktop-dock-space)]">
         
         <button
           onClick={onDockToggle}

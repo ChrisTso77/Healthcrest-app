@@ -55,7 +55,7 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
         </div>
         <div className="flex items-center gap-2 text-xs">
           <span className="text-slate-400">Preset status</span>
-          <span style={{ color: coreColor }} className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-slate-950/60 border border-current">
+          <span style={{ color: healthStatus === 'manual' ? '#CBD5E1' : coreColor }} className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-slate-950/60 border border-current">
             {healthStatus.toUpperCase()}
           </span>
         </div>
