@@ -7,6 +7,62 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByText('HEALTH OPTIMISATION')).toBeVisible();
   });
 
+  for (const viewport of [{ width: 1280, height: 720 }, { width: 320, height: 568 }]) {
+    for (const scenario of [
+      {
+        trigger: 'Home & Global Narrative',
+        title: 'THE FOUR PILLARS HEALTH OPTIMISATION PLATFORM',
+        close: 'Close global narrative',
+        content: 'Global narrative content',
+        done: 'Close & Return to 3D Engine',
+      },
+      {
+        trigger: 'Clinical & Legal Disclaimer',
+        title: 'CLINICAL & MEDICO-LEGAL DISCLAIMER',
+        close: 'Close clinical disclaimer',
+        content: 'Clinical disclaimer content',
+        done: 'I Understand & Acknowledge',
+      },
+    ]) {
+      test(`${scenario.trigger} manages modal focus and dismissal at ${viewport.width}px`, async ({ page }) => {
+        await page.setViewportSize(viewport);
+        const trigger = page.getByRole('button', { name: scenario.trigger, exact: true });
+        await trigger.click();
+        const dialog = page.getByRole('dialog', { name: scenario.title, exact: true });
+        const close = dialog.getByRole('button', { name: scenario.close, exact: true });
+        const done = dialog.getByRole('button', { name: scenario.done, exact: true });
+        await expect(dialog).toBeVisible();
+        await expect(close).toBeFocused();
+        await page.keyboard.press('Shift+Tab');
+        await expect(done).toBeFocused();
+        await page.keyboard.press('Tab');
+        await expect(close).toBeFocused();
+
+        // Native modal inertness must reject focus on background engine controls.
+        await page.locator('input[type="range"]').nth(1).evaluate((input) => input.focus());
+        await expect(close).toBeFocused();
+        if (viewport.width === 320) {
+          const content = dialog.getByRole('region', { name: scenario.content, exact: true });
+          await content.focus();
+          await page.keyboard.press('End');
+          await expect.poll(() => content.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+        }
+        await page.keyboard.press('Escape');
+        await expect(dialog).toHaveCount(0);
+        await expect(trigger).toBeFocused();
+
+        await trigger.click();
+        await close.click();
+        await expect(dialog).toHaveCount(0);
+        await expect(trigger).toBeFocused();
+        await trigger.click();
+        await done.click();
+        await expect(dialog).toHaveCount(0);
+        await expect(trigger).toBeFocused();
+      });
+    }
+  }
+
   for (const viewport of [
     { width: 320, height: 568 },
     { width: 390, height: 844 },
@@ -48,9 +104,6 @@ test.describe('Healthcrest production regression', () => {
       await dock.click();
       await expect(dock).toHaveAttribute('aria-expanded', 'false');
       await expect(page.getByText('7.5h Restorative', { exact: true })).toBeVisible();
-      await page.getByRole('button', { name: /Clinical & Legal Disclaimer/i }).click();
-      await expect(page.getByRole('heading', { name: /CLINICAL & MEDICO-LEGAL DISCLAIMER/i })).toBeVisible();
-
       const controls = [navigation, page.getByRole('group', { name: 'Render mode' }), page.locator('footer')];
       for (const control of controls) {
         const box = await control.boundingBox();
@@ -58,6 +111,8 @@ test.describe('Healthcrest production regression', () => {
         expect(box!.x).toBeGreaterThanOrEqual(0);
         expect(box!.x + box!.width).toBeLessThanOrEqual(viewport.width);
       }
+      await page.getByRole('button', { name: /Clinical & Legal Disclaimer/i }).click();
+      await expect(page.getByRole('dialog', { name: /CLINICAL & MEDICO-LEGAL DISCLAIMER/i })).toBeVisible();
     });
   }
 

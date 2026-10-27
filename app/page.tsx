@@ -20,6 +20,7 @@ import {
 // Import local components and state machine types
 import { HealthEngineHUD } from '@/components/HealthEngineHUD';
 import { HealthEngineViewport } from '@/components/HealthEngineViewport';
+import { ModalDialog } from '@/components/ModalDialog';
 import type {
   CameraState,
   CanonicalScenarioPreset,
@@ -221,17 +222,17 @@ export default function FourPillarsHealthEnginePage() {
       {/* 4. HOME PAGE & GLOBAL NARRATIVE DRAWER / MODAL */}
       {/* ------------------------------------------------------------------ */}
       {isNarrativeOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6">
-          <div className="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        <ModalDialog labelledBy="global-narrative-title" onClose={() => setIsNarrativeOpen(false)} className="sm:p-6">
+          <div className="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
             
             {/* Modal Header */}
-            <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/60">
+            <div className="shrink-0 p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/60">
               <div className="flex items-center space-x-3">
                 <div className="p-2 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400">
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-base font-semibold tracking-wide text-slate-100">
+                  <h2 id="global-narrative-title" className="text-base font-semibold tracking-wide text-slate-100">
                     THE FOUR PILLARS HEALTH OPTIMISATION PLATFORM
                   </h2>
                   <p className="text-[11px] font-mono text-slate-400">
@@ -240,6 +241,7 @@ export default function FourPillarsHealthEnginePage() {
                 </div>
               </div>
               <button
+                aria-label="Close global narrative"
                 onClick={() => setIsNarrativeOpen(false)}
                 className="p-1.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
               >
@@ -248,7 +250,7 @@ export default function FourPillarsHealthEnginePage() {
             </div>
 
             {/* Modal Scrollable Body */}
-            <div className="p-6 space-y-6 overflow-y-auto text-xs text-slate-300 leading-relaxed font-sans">
+            <div role="region" aria-label="Global narrative content" tabIndex={0} className="min-h-0 p-6 space-y-6 overflow-y-auto text-xs text-slate-300 leading-relaxed font-sans focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400">
               
               {/* Bottom Line Highlight Box */}
               <div className="p-4 bg-gradient-to-r from-emerald-500/10 via-slate-900 to-cyan-500/10 border border-emerald-500/30 rounded-2xl space-y-1.5">
@@ -336,7 +338,7 @@ export default function FourPillarsHealthEnginePage() {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 border-t border-slate-800 bg-slate-950/60 flex justify-end">
+            <div className="shrink-0 p-4 border-t border-slate-800 bg-slate-950/60 flex justify-end">
               <button
                 onClick={() => setIsNarrativeOpen(false)}
                 className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-colors shadow-lg shadow-emerald-500/20"
@@ -346,25 +348,26 @@ export default function FourPillarsHealthEnginePage() {
             </div>
 
           </div>
-        </div>
+        </ModalDialog>
       )}
 
       {/* ------------------------------------------------------------------ */}
       {/* 5. MEDICO-LEGAL DISCLAIMER MODAL */}
       {/* ------------------------------------------------------------------ */}
       {isDisclaimerOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+        <ModalDialog labelledBy="clinical-disclaimer-title" onClose={() => setIsDisclaimerOpen(false)}>
+          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85dvh]">
             
             {/* Modal Header */}
-            <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+            <div className="shrink-0 p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
               <div className="flex items-center space-x-2.5">
                 <ShieldAlert className="w-5 h-5 text-amber-400" />
-                <h2 className="text-sm font-semibold tracking-wide text-slate-100">
+                <h2 id="clinical-disclaimer-title" className="text-sm font-semibold tracking-wide text-slate-100">
                   CLINICAL & MEDICO-LEGAL DISCLAIMER
                 </h2>
               </div>
               <button
+                aria-label="Close clinical disclaimer"
                 onClick={() => setIsDisclaimerOpen(false)}
                 className="p-1 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
               >
@@ -373,7 +376,7 @@ export default function FourPillarsHealthEnginePage() {
             </div>
 
             {/* Modal Content Body */}
-            <div className="p-6 space-y-4 overflow-y-auto text-xs text-slate-300 leading-relaxed font-sans">
+            <div role="region" aria-label="Clinical disclaimer content" tabIndex={0} className="min-h-0 p-6 space-y-4 overflow-y-auto text-xs text-slate-300 leading-relaxed font-sans focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400">
               
               <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start space-x-3 text-amber-200">
                 <Info className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
@@ -421,7 +424,7 @@ export default function FourPillarsHealthEnginePage() {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 border-t border-slate-800 bg-slate-950/50 flex justify-end">
+            <div className="shrink-0 p-4 border-t border-slate-800 bg-slate-950/50 flex justify-end">
               <button
                 onClick={() => setIsDisclaimerOpen(false)}
                 className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-colors shadow-lg shadow-emerald-500/20"
@@ -431,7 +434,7 @@ export default function FourPillarsHealthEnginePage() {
             </div>
 
           </div>
-        </div>
+        </ModalDialog>
       )}
     </main>
   );
