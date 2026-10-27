@@ -120,8 +120,10 @@ test('hummingbird loads, pauses, resumes and respects changed motion preferences
 
 test('hummingbird uses supplied static artwork when video fails', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await page.route('**/media/healthcrest-hummingbird.webm', route => route.abort());
+  let attempted = false;
+  await page.route('**/media/healthcrest-hummingbird.webm', route => { attempted = true; return route.abort(); });
   await page.goto('/');
+  await expect.poll(() => attempted).toBe(true);
   await expect(page.locator('.hc-bird video')).toHaveCount(0);
   const still = page.locator('.hc-bird img');
   await expect(still).toBeVisible();
