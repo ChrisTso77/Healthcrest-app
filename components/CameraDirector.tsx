@@ -16,7 +16,7 @@ export function CameraDirector({
   cameraState,
   controlsRef,
 }: CameraDirectorProps) {
-  const { camera } = useThree();
+  const { camera, invalidate } = useThree();
 
   const {
     orbitAzimuth,
@@ -42,8 +42,10 @@ export function CameraDirector({
       controlsRef.current.target.set(0, 0, 0);
       controlsRef.current.update();
     }
+    invalidate();
   }, [
     camera,
+    invalidate,
     orbitAzimuth,
     orbitElevation,
     zoomDistance,

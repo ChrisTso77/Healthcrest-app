@@ -15,14 +15,16 @@ type InteractiveBodyEngineMeshProps = {
   params: PillarParameters;
   scene: SceneId;
   lite?: boolean;
+  reducedMotion?: boolean;
 };
 
-export function InteractiveBodyEngineMesh({ params, scene, lite = false }: InteractiveBodyEngineMeshProps) {
+export function InteractiveBodyEngineMesh({ params, scene, lite = false, reducedMotion = false }: InteractiveBodyEngineMeshProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const visual = deriveVisualState(params, scene);
 
   useFrame((state, delta) => {
+    if (reducedMotion) return;
     if (meshRef.current) {
       meshRef.current.rotation.y += delta * 0.5 * visual.pulseSpeed;
       meshRef.current.rotation.x += delta * 0.2;
@@ -35,7 +37,7 @@ export function InteractiveBodyEngineMesh({ params, scene, lite = false }: Inter
 
   return (
     <group>
-      <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+      <Float enabled={!reducedMotion} speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
         {/* Central Core Metaphor */}
         <mesh ref={coreRef} position={[0, 0, 0]}>
           <sphereGeometry args={[1, lite ? 16 : 32, lite ? 16 : 32]} />
@@ -49,7 +51,7 @@ export function InteractiveBodyEngineMesh({ params, scene, lite = false }: Inter
             wireframe
             color={visual.coreColor}
             factor={visual.meshDistortion}
-            speed={visual.pulseSpeed * 2}
+            speed={reducedMotion ? 0 : visual.pulseSpeed * 2}
           />
         </mesh>
 
@@ -61,7 +63,7 @@ export function InteractiveBodyEngineMesh({ params, scene, lite = false }: Inter
 
         <HealthParticleField
           particleDensity={lite ? Math.ceil(visual.particleDensity * 0.35) : visual.particleDensity}
-          pulseSpeed={visual.pulseSpeed}
+          pulseSpeed={reducedMotion ? 0 : visual.pulseSpeed}
           coreColor={visual.coreColor}
         />
       </Float>

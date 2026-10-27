@@ -1,6 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
+import { useReducedMotion } from "@/lib/accessibility/useReducedMotion";
 
 import type { CameraState } from "@/lib/presets/types";
 import type { State } from "@/state/PillarsStateTypes";
@@ -15,13 +16,17 @@ export default function WebGLCanvasWrapper({
   state,
   cameraState,
 }: WebGLCanvasWrapperProps) {
+  const reducedMotion = useReducedMotion();
+
   return (
     <div
       className="absolute inset-0 bg-slate-950"
+      data-reduced-motion={reducedMotion}
       data-camera-shot={cameraState.activeShotId}
       data-camera-request-revision={cameraState.requestRevision}
     >
       <Canvas
+        frameloop={reducedMotion ? "demand" : "always"}
         camera={{
           position: [0, 0, 5],
           fov: 50,
@@ -33,6 +38,7 @@ export default function WebGLCanvasWrapper({
         <HealthEngineScene
           state={state}
           cameraState={cameraState}
+          reducedMotion={reducedMotion}
         />
       </Canvas>
     </div>
