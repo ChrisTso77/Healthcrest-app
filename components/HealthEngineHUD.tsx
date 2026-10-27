@@ -36,6 +36,8 @@ import {
 } from 'lucide-react';
 
 interface HealthEngineHUDProps {
+  isDockOpen: boolean;
+  onDockToggle: () => void;
   presets?: CanonicalScenarioPreset[];
   activePillar: PillarType;
   renderMode: RenderMode;
@@ -50,6 +52,8 @@ interface HealthEngineHUDProps {
 }
 
 export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
+  isDockOpen,
+  onDockToggle,
   presets = [],
   activePillar,
   renderMode,
@@ -64,7 +68,6 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
 }) => {
   // Navigation & Control States
   const [isDayTime, setIsDayTime] = useState<boolean>(false);
-  const [isDockOpen, setIsDockOpen] = useState<boolean>(true);
   const controlsId = useId();
   const [mobilePanel, setMobilePanel] = useState<'clinical' | 'camera' | null>(null);
 
@@ -328,10 +331,10 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       {/* ------------------------------------------------------------------ */}
       {/* 4. RETRACTABLE CONTROL DOCK & SLIDERS (BOTTOM DRAWER) */}
       {/* ------------------------------------------------------------------ */}
-      <div className={`absolute bottom-[var(--engine-footer-space,4rem)] inset-x-0 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800/90 transition-all duration-300 z-30 xl:bottom-0 ${isDockOpen ? 'h-[min(16rem,35dvh)] xl:h-64' : 'h-10'}`}>
+      <div className={`absolute bottom-[var(--engine-footer-space,4rem)] inset-x-0 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800/90 transition-all duration-300 z-30 h-[var(--engine-dock-space)] xl:h-[var(--engine-desktop-dock-space)]`}>
         
         <button
-          onClick={() => setIsDockOpen(!isDockOpen)}
+          onClick={onDockToggle}
           aria-expanded={isDockOpen}
           className="w-full h-10 px-3 xl:px-6 flex items-center justify-between text-[10px] xl:text-xs font-mono text-slate-400 hover:text-slate-200 border-b border-slate-800/50"
         >

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 /**
  * 2D SVG FALLBACK ENGINE COMPONENT
@@ -18,12 +18,15 @@ export interface FallbackProps {
 }
 
 export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
+  activePillar = 'Systems',
   aerobicMins = 180,
   sleepDuration = 8.0,
   wholeFoodRatio = 75,
   stressLevel = 3,
   healthStatus = 'optimal'
 }) => {
+  const id = useId();
+
   // Status Colors
   const statusColors = {
     optimal: '#10B981', // Emerald
@@ -43,39 +46,54 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
   return (
     <div
       data-testid="health-engine-2d-fallback"
-      className="w-full h-full min-h-[400px] bg-slate-950 flex flex-col items-center justify-center p-6 text-slate-100 rounded-2xl border border-slate-800"
+      className="w-full max-w-2xl mx-auto min-w-0 bg-slate-900/90 p-4 text-slate-100 rounded-2xl border border-slate-800 shadow-2xl sm:p-6"
     >
-      <div className="w-full max-w-2xl bg-slate-900/90 rounded-2xl border border-slate-800/80 p-6 shadow-2xl">
-        
-        {/* Header Title */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
-          <div>
-            <h2 className="text-xs font-mono tracking-widest text-emerald-400 uppercase">TIER 3 RENDERING ACTIVE</h2>
-            <h1 className="text-base font-semibold text-slate-100">Interactive 2D Vector Health Engine</h1>
-          </div>
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+      <div className="flex flex-wrap items-start justify-between gap-3 pb-4 border-b border-slate-800">
+        <div className="min-w-0">
+          <p className="text-xs font-mono tracking-widest text-emerald-400 uppercase">2D OVERVIEW</p>
+          <h2 className="text-base font-semibold text-slate-100">Interactive 2D Vector Health Engine</h2>
+        </div>
+        <div className="flex items-center gap-2 text-xs">
+          <span className="text-slate-400">Preset status</span>
+          <span style={{ color: coreColor }} className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-slate-950/60 border border-current">
             {healthStatus.toUpperCase()}
           </span>
         </div>
+      </div>
+      <p className="mt-3 text-xs text-slate-300">Selected pillar: {activePillar}</p>
 
         {/* Central SVG Canvas */}
-        <svg viewBox="0 0 600 400" className="w-full h-auto overflow-visible">
+        <svg
+          viewBox="0 0 600 400"
+          role="img"
+          aria-labelledby={`${id}-title`}
+          aria-describedby={`${id}-description`}
+          className="w-full h-auto"
+        >
+          <title id={`${id}-title`}>Current parameter illustration</title>
+          <desc id={`${id}-description`}>
+            Selected pillar: {activePillar}. Preset status: {healthStatus}.
+            Aerobic activity: {aerobicMins} minutes per week.
+            Whole food ratio: {wholeFoodRatio} percent.
+            Sleep duration: {sleepDuration} hours per night.
+            Perceived stress: {stressLevel} out of 10.
+          </desc>
           <defs>
             {/* Core Bioluminescent Glow */}
-            <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+            <radialGradient id={`${id}-coreGlow`} cx="50%" cy="50%" r="50%">
               <stop offset="0%" stopColor={coreColor} stopOpacity="0.8" />
               <stop offset="50%" stopColor={coreColor} stopOpacity="0.3" />
               <stop offset="100%" stopColor="#090D16" stopOpacity="0" />
             </radialGradient>
 
             {/* Vascular Gradient */}
-            <linearGradient id="fitnessGrad" x1="0" y1="1" x2="0" y2="0">
+            <linearGradient id={`${id}-fitnessGrad`} x1="0" y1="1" x2="0" y2="0">
               <stop offset="0%" stopColor="#064E3B" />
               <stop offset="100%" stopColor="#10B981" />
             </linearGradient>
 
             {/* Sleep Wave Gradient */}
-            <linearGradient id="sleepGrad" x1="0" y1="0" x2="1" y2="0">
+            <linearGradient id={`${id}-sleepGrad`} x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.2" />
               <stop offset="50%" stopColor="#8B5CF6" stopOpacity="1" />
               <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.2" />
@@ -83,14 +101,14 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
           </defs>
 
           {/* BACKGROUND SYSTEM GRID */}
-          <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+          <pattern id={`${id}-grid`} width="30" height="30" patternUnits="userSpaceOnUse">
             <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1E293B" strokeWidth="0.5" />
           </pattern>
-          <rect width="600" height="400" fill="url(#grid)" rx="12" />
+          <rect width="600" height="400" fill={`url(#${id}-grid)`} rx="12" />
 
           {/* 1. FITNESS VECTOR: Vascular/Muscle Pillar Bar */}
           <g transform="translate(80, 260)">
-            <rect x="-20" y={-fitnessBarHeight} width="40" height={fitnessBarHeight} rx="6" fill="url(#fitnessGrad)" />
+            <rect x="-20" y={-fitnessBarHeight} width="40" height={fitnessBarHeight} rx="6" fill={`url(#${id}-fitnessGrad)`} />
             <text x="0" y="25" textAnchor="middle" fill="#94A3B8" fontSize="11" fontFamily="sans-serif" fontWeight="bold">FITNESS</text>
             <text x="0" y="40" textAnchor="middle" fill="#10B981" fontSize="10" fontFamily="monospace">{aerobicMins}m MVPA</text>
           </g>
@@ -114,7 +132,7 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
             />
             <circle cx="0" cy="0" r="5" fill="#8B5CF6" />
             <text x="0" y="70" textAnchor="middle" fill="#94A3B8" fontSize="11" fontFamily="sans-serif" fontWeight="bold">SLEEP</text>
-            <text x="0" y="85" textAnchor="middle" fill="#8B5CF6" fontSize="10" fontFamily="monospace">{sleepDuration}h Restorative</text>
+            <text x="0" y="85" textAnchor="middle" fill="#8B5CF6" fontSize="10" fontFamily="monospace">{sleepDuration}h / night</text>
           </g>
 
           {/* 4. STRESS VECTOR: Autonomic Gauge */}
@@ -130,7 +148,7 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
 
           {/* CENTRAL VITALITY CORE MESH (CONNECTING SYSTEM) */}
           <g transform="translate(300, 110)">
-            <circle r="50" fill="url(#coreGlow)" />
+            <circle r="50" fill={`url(#${id}-coreGlow)`} />
             <circle r="22" fill="#090D16" stroke={coreColor} strokeWidth="3" />
             <circle r="8" fill={coreColor} />
             <text x="0" y="-32" textAnchor="middle" fill="#F8FAFC" fontSize="12" fontFamily="monospace" fontWeight="bold">VITALITY CORE</text>
@@ -143,21 +161,32 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
           <line x1="500" y1="180" x2="340" y2="110" stroke="#F43F5E" strokeWidth="1.5" strokeOpacity="0.4" strokeDasharray="4 4" />
         </svg>
 
-        {/* Legend Footer */}
-        <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-mono">
-          <span>Mode: Accessible 2D Vector SVG</span>
-          <span>
-            Interdependence Score:{' '}
-            {healthStatus === 'optimal'
-              ? '92/100'
-              : healthStatus === 'warning'
-                ? '64/100'
-                : healthStatus === 'critical'
-                  ? '38/100'
-                  : 'Not classified'}
-          </span>
-        </div>
-      </div>
+      <section aria-labelledby={`${id}-values`} className="border-t border-slate-800 pt-4">
+        <h3 id={`${id}-values`} className="text-sm font-semibold">Current parameter values</h3>
+        <dl className="mt-3 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+          <div>
+            <dt className="text-slate-400">Aerobic activity</dt>
+            <dd className="font-mono text-emerald-300">{aerobicMins} minutes/week</dd>
+          </div>
+          <div>
+            <dt className="text-slate-400">Whole food ratio</dt>
+            <dd className="font-mono text-amber-300">{wholeFoodRatio}%</dd>
+          </div>
+          <div>
+            <dt className="text-slate-400">Sleep duration</dt>
+            <dd className="font-mono text-violet-300">{sleepDuration} hours/night</dd>
+          </div>
+          <div>
+            <dt className="text-slate-400">Perceived stress</dt>
+            <dd className="font-mono text-rose-300">{stressLevel} / 10</dd>
+          </div>
+        </dl>
+      </section>
+      <p className="mt-4 text-xs leading-relaxed text-slate-400">
+        {healthStatus === 'manual'
+          ? 'Manual settings. Select a preset to view its evidence summary.'
+          : 'Educational preset status. View the clinical summary for its evidence.'}
+      </p>
     </div>
   );
 };
