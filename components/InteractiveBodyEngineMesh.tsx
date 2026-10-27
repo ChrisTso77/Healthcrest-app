@@ -50,7 +50,7 @@ export function InteractiveBodyEngineMesh({ params, scene, lite = false, reduced
           <MeshWobbleMaterial
             wireframe
             color={visual.coreColor}
-            factor={reducedMotion ? 0 : visual.meshDistortion}
+            factor={visual.meshDistortion}
             speed={reducedMotion ? 0 : visual.pulseSpeed * 2}
           />
         </mesh>

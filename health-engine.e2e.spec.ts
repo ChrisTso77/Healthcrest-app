@@ -9,7 +9,6 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByText('HEALTH OPTIMISATION')).toBeVisible();
   });
 
-
   for (const initialMotion of ['reduce', 'no-preference'] as const) {
     test(`respects ${initialMotion} on load and live motion preference changes`, async ({ page }) => {
       await page.emulateMedia({ reducedMotion: initialMotion });
