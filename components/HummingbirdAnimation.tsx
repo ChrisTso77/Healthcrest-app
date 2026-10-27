@@ -24,12 +24,12 @@ export function HummingbirdAnimation() {
     <div className="hc-bird">
       <div className="hc-bird-media" role="img" aria-label="Healthcrest hummingbird">
         {reducedMotion || unavailable ? (
-          // The supplied static artwork also serves visitors without JavaScript.
+          // A still from the same video preserves the composition without motion.
           // eslint-disable-next-line @next/next/no-img-element
-          <img src="/media/healthcrest-logo.png" alt="" width={1664} height={940} />
+          <img src="/media/healthcrest-hummingbird-still.jpg" alt="" width={960} height={540} />
         ) : (
-          <video ref={video} src="/media/healthcrest-hummingbird.webm"
-            poster="/media/healthcrest-logo.png" autoPlay={!paused} muted loop playsInline
+          <video ref={video} src="/media/healthcrest-hummingbird-opaque.webm" width={960} height={540}
+            poster="/media/healthcrest-hummingbird-still.jpg" autoPlay={!paused} muted loop playsInline
             preload="metadata" aria-hidden="true" onError={() => setUnavailable(true)} />
         )}
       </div>

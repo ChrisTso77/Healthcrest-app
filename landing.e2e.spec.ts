@@ -18,6 +18,16 @@ test.describe('Healthcrest introduction', () => {
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Small habits\.\s*Connected health\./);
       await expect(page.getByRole('heading', { name: /Prevention starts with understanding/ })).toBeVisible();
       await expect(page.getByRole('navigation', { name: 'Main navigation' })).toBeVisible();
+      const art = await page.locator('.hc-hero-art').boundingBox();
+      const media = await page.locator('.hc-bird-media').boundingBox();
+      const notes = await page.locator('.hc-art-notes').boundingBox();
+      expect(media!.width / media!.height).toBeCloseTo(16 / 9, 2);
+      expect(notes!.y).toBeGreaterThanOrEqual(media!.y + media!.height);
+      for (const note of await page.locator('.hc-art-note').all()) {
+        const box = await note.boundingBox();
+        expect(box!.x).toBeGreaterThanOrEqual(art!.x);
+        expect(box!.x + box!.width).toBeLessThanOrEqual(art!.x + art!.width);
+      }
       await expect(page.locator('canvas')).toHaveCount(0);
       expect(presetRequests).toBe(0);
 
@@ -103,6 +113,22 @@ test('hummingbird loads, pauses, resumes and respects changed motion preferences
   await expect(video).toBeVisible();
   await expect.poll(() => video.evaluate((media: HTMLVideoElement) => media.readyState)).toBeGreaterThanOrEqual(2);
   await expect.poll(() => video.evaluate((media: HTMLVideoElement) => media.currentTime)).toBeGreaterThan(0);
+  expect(await video.evaluate((media: HTMLVideoElement) => media.videoWidth / media.videoHeight)).toBeCloseTo(16 / 9, 3);
+  // The uploaded alpha track removed large pieces of the shield and lettering.
+  // Check decoded pixels, so a playable but transparent/cut-out film fails.
+  expect(await video.evaluate((media: HTMLVideoElement) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 160;
+    canvas.height = 90;
+    const context = canvas.getContext('2d')!;
+    context.drawImage(media, 0, 0, 160, 90);
+    const pixels = context.getImageData(0, 0, 160, 90).data;
+    let minimumAlpha = 255;
+    for (let index = 3; index < pixels.length; index += 4) minimumAlpha = Math.min(minimumAlpha, pixels[index]);
+    return minimumAlpha;
+  })).toBe(255);
+  const frame = await page.locator('.hc-bird-media').boundingBox();
+  expect(frame!.width / frame!.height).toBeCloseTo(16 / 9, 2);
   await page.getByRole('button', { name: 'Pause hummingbird animation', exact: true }).click();
   await expect.poll(() => video.evaluate((media: HTMLVideoElement) => media.paused)).toBe(true);
   const stopped = await video.evaluate((media: HTMLVideoElement) => media.currentTime);
@@ -114,14 +140,15 @@ test('hummingbird loads, pauses, resumes and respects changed motion preferences
   await expect(video).toHaveCount(0);
   const still = page.locator('.hc-bird img');
   await expect(still).toBeVisible();
+  await expect(still).toHaveAttribute('src', '/media/healthcrest-hummingbird-still.jpg');
   await expect.poll(() => still.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
   await expect(page.getByRole('button', { name: /hummingbird animation/ })).toHaveCount(0);
 });
 
-test('hummingbird uses supplied static artwork when video fails', async ({ page }) => {
+test('hummingbird uses a matching video still when video fails', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   let attempted = false;
-  await page.route('**/media/healthcrest-hummingbird.webm', route => { attempted = true; return route.abort(); });
+  await page.route('**/media/healthcrest-hummingbird-opaque.webm', route => { attempted = true; return route.abort(); });
   await page.goto('/');
   await expect.poll(() => attempted).toBe(true);
   await expect(page.locator('.hc-bird video')).toHaveCount(0);

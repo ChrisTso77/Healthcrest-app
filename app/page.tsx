@@ -52,8 +52,10 @@ export default function HealthcrestHomePage() {
             <div className="hc-art-orbit hc-art-orbit-one" aria-hidden="true" />
             <div className="hc-art-orbit hc-art-orbit-two" aria-hidden="true" />
             <div className="hc-hummingbird-stage" id="hummingbird-stage"><HummingbirdAnimation /></div>
-            <span className="hc-art-note hc-art-note-one">Understand the science</span>
-            <span className="hc-art-note hc-art-note-two">Put it into practice</span>
+            <div className="hc-art-notes">
+              <span className="hc-art-note">Understand the science</span>
+              <span className="hc-art-note">Put it into practice</span>
+            </div>
             <figcaption>Care begins with understanding.</figcaption>
           </figure>
         </section>
