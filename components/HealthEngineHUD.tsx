@@ -66,6 +66,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
   const [isDayTime, setIsDayTime] = useState<boolean>(false);
   const [isDockOpen, setIsDockOpen] = useState<boolean>(true);
   const controlsId = useId();
+  const [mobilePanel, setMobilePanel] = useState<'clinical' | 'camera' | null>(null);
 
   const availablePresets =
     resolveAvailablePresets(presets);
@@ -122,7 +123,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
 
   return (
     <div
-      className="relative w-full h-screen bg-transparent text-slate-100 font-sans overflow-hidden select-none"
+      className="relative w-full h-dvh xl:h-screen bg-transparent text-slate-100 font-sans overflow-hidden select-none"
       data-alcohol-units={parameters.alcoholUnits}
     >
 
@@ -131,21 +132,44 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       {/* ------------------------------------------------------------------ */}
       {/* 1. TOP HEADER NAVIGATION BAR */}
       {/* ------------------------------------------------------------------ */}
-      <header className="absolute top-0 inset-x-0 h-16 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-6 flex items-center justify-between z-30">
+      <header className="absolute top-0 inset-x-0 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-3 py-2 flex flex-wrap items-center justify-between gap-2 z-50 xl:z-30 xl:h-16 xl:flex-nowrap xl:gap-0 xl:px-6 xl:py-0">
         
         {/* Brand Logo & Platform Title */}
-        <div className="flex items-center space-x-3">
+        <div className="flex min-w-0 items-center space-x-3">
           <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
             <Activity className="w-5 h-5 text-emerald-400" />
           </div>
-          <div>
-            <h1 className="text-sm font-semibold tracking-wide text-slate-100">HEALTH OPTIMISATION</h1>
-            <p className="text-[10px] font-mono text-slate-400 tracking-wider">THE FOUR PILLARS ENGINE v2</p>
+          <div className="min-w-0">
+            <h1 className="text-xs xl:text-sm font-semibold tracking-wide text-slate-100">HEALTH OPTIMISATION</h1>
+            <p className="text-[9px] xl:text-[10px] font-mono text-slate-400 tracking-wider">THE FOUR PILLARS ENGINE v2</p>
           </div>
         </div>
 
+        <div className="flex shrink-0 gap-2 xl:hidden">
+          <button
+            type="button"
+            aria-label="Clinical summary"
+            aria-expanded={mobilePanel === 'clinical'}
+            aria-controls={`${controlsId}-clinical-panel`}
+            onClick={() => setMobilePanel((panel) => panel === 'clinical' ? null : 'clinical')}
+            className="flex size-9 items-center justify-center rounded-lg border border-slate-700 text-emerald-300"
+          >
+            <ShieldCheck className="size-4" />
+          </button>
+          <button
+            type="button"
+            aria-label="Camera controls"
+            aria-expanded={mobilePanel === 'camera'}
+            aria-controls={`${controlsId}-camera-panel`}
+            onClick={() => setMobilePanel((panel) => panel === 'camera' ? null : 'camera')}
+            className="flex size-9 items-center justify-center rounded-lg border border-slate-700 text-cyan-300"
+          >
+            <Camera className="size-4" />
+          </button>
+        </div>
+
         {/* Pillar Selector Tabs */}
-        <nav aria-label="Health pillars" className="hidden md:flex items-center space-x-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800/80">
+        <nav aria-label="Health pillars" className="grid w-full grid-cols-5 gap-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800/80 xl:flex xl:w-auto">
           {(['Fitness', 'Nutrition', 'Sleep', 'Stress', 'Systems'] as PillarType[]).map((pillar) => (
             <button
               key={pillar}
@@ -153,23 +177,23 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
               onClick={() => {
                 onPillarChange?.(pillar);
               }}
-              className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 ${
+              className={`flex min-h-9 min-w-0 items-center justify-center gap-1 px-0.5 py-1.5 rounded-lg text-[10px] font-medium transition-all duration-150 xl:min-h-0 xl:gap-2 xl:px-3 xl:text-xs ${
                 activePillar === pillar
                   ? 'bg-slate-800 text-slate-100 shadow-sm border border-slate-700/50'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'
               }`}
             >
-              {pillarIcons[pillar]}
+              <span className="hidden xl:inline-flex">{pillarIcons[pillar]}</span>
               <span>{pillar}</span>
             </button>
           ))}
         </nav>
 
         {/* Lighting & Rendering Switcher */}
-        <div className="flex items-center space-x-3">
+        <div className="flex w-full items-center justify-between gap-3 xl:w-auto">
           <button
             onClick={() => setIsDayTime(!isDayTime)}
-            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-amber-400 transition-colors"
+            className="min-h-9 p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-amber-400 transition-colors xl:min-h-0"
             title="Toggle Circadian Lighting Mode"
           >
             {isDayTime ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-violet-400" />}
@@ -183,7 +207,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                 onClick={() => {
                   onRenderModeChange?.(mode);
                 }}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-mono capitalize transition-all ${
+                className={`min-h-9 px-2.5 py-1 rounded-md text-[11px] font-mono capitalize transition-all xl:min-h-0 ${
                   renderMode === mode
                     ? 'bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/30'
                     : 'text-slate-400 hover:text-slate-200'
@@ -199,7 +223,12 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       {/* ------------------------------------------------------------------ */}
       {/* 2. FLOATING CLINICAL HUD CARD (TOP-LEFT) */}
       {/* ------------------------------------------------------------------ */}
-      <div className="absolute top-20 left-6 w-80 bg-slate-900/80 backdrop-blur-md border border-slate-800/90 rounded-2xl p-4 shadow-2xl z-20">
+      <div
+        id={`${controlsId}-clinical-panel`}
+        role="region"
+        aria-label="Clinical summary"
+        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-800/90 rounded-2xl p-4 shadow-2xl z-40 ${mobilePanel === 'clinical' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-6 xl:right-auto xl:w-80 xl:max-h-none xl:bg-slate-900/80 xl:z-20`}
+      >
         <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
           <div className="flex items-center space-x-2">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
@@ -255,7 +284,12 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       {/* ------------------------------------------------------------------ */}
       {/* 3. STORYBOARD CAMERA DIRECTOR & TOUCH SHOTS (RIGHT FLOATING PANEL) */}
       {/* ------------------------------------------------------------------ */}
-      <div className="absolute top-20 right-6 w-60 bg-slate-900/80 backdrop-blur-md border border-slate-800/90 rounded-2xl p-3 shadow-2xl z-20">
+      <div
+        id={`${controlsId}-camera-panel`}
+        role="region"
+        aria-label="Camera controls"
+        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-800/90 rounded-2xl p-3 shadow-2xl z-40 ${mobilePanel === 'camera' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-auto xl:right-6 xl:w-60 xl:max-h-none xl:bg-slate-900/80 xl:z-20`}
+      >
         <div className="flex items-center space-x-2 pb-2.5 border-b border-slate-800/80 mb-2">
           <Camera className="w-3.5 h-3.5 text-cyan-400" />
           <span className="text-xs font-mono tracking-wider uppercase text-slate-300">SCENE 5 CAMERA DIRECTOR</span>
@@ -294,16 +328,19 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       {/* ------------------------------------------------------------------ */}
       {/* 4. RETRACTABLE CONTROL DOCK & SLIDERS (BOTTOM DRAWER) */}
       {/* ------------------------------------------------------------------ */}
-      <div className={`absolute bottom-0 inset-x-0 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800/90 transition-all duration-300 z-30 ${isDockOpen ? 'h-64' : 'h-10'}`}>
+      <div className={`absolute bottom-[var(--engine-footer-space,4rem)] inset-x-0 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800/90 transition-all duration-300 z-30 xl:bottom-0 ${isDockOpen ? 'h-[min(16rem,35dvh)] xl:h-64' : 'h-10'}`}>
         
         <button
           onClick={() => setIsDockOpen(!isDockOpen)}
           aria-expanded={isDockOpen}
-          className="w-full h-10 px-6 flex items-center justify-between text-xs font-mono text-slate-400 hover:text-slate-200 border-b border-slate-800/50"
+          className="w-full h-10 px-3 xl:px-6 flex items-center justify-between text-[10px] xl:text-xs font-mono text-slate-400 hover:text-slate-200 border-b border-slate-800/50"
         >
           <div className="flex items-center space-x-2">
             <Sliders className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="tracking-wider uppercase">PARAMETER CONTROLS & SLEEP LADDER PRESETS</span>
+            <span className="tracking-wider uppercase">
+              <span className="xl:hidden">Parameters & presets</span>
+              <span className="hidden xl:inline">PARAMETER CONTROLS & SLEEP LADDER PRESETS</span>
+            </span>
           </div>
           <div className="flex items-center space-x-1">
             <span>{isDockOpen ? 'COLLAPSE' : 'EXPAND'}</span>
@@ -312,10 +349,10 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         </button>
 
         {isDockOpen && (
-          <div className="p-5 grid grid-cols-1 md:grid-cols-12 gap-6 h-52 overflow-y-auto">
+          <div className="pointer-events-auto p-3 xl:p-5 grid grid-cols-1 xl:grid-cols-12 gap-4 xl:gap-6 h-[calc(100%_-_2.5rem)] xl:h-52 overflow-y-auto">
             
             {/* Left Col: Scenario Presets List */}
-            <div className="md:col-span-4 space-y-2 border-r border-slate-800/80 pr-4">
+            <div className="xl:col-span-4 space-y-2 border-b pb-3 xl:pb-0 xl:border-b-0 xl:border-r border-slate-800/80 xl:pr-4">
               <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">PRESET SCENARIOS & SLEEP LADDER</span>
               <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
                 {availablePresets.map((preset) => (
@@ -341,7 +378,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             </div>
 
             {/* Right Col: Live Parameter Sliders */}
-            <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="xl:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
               
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
