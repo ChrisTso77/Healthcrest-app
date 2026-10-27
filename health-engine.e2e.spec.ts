@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Request } from '@playwright/test';
 
 test.describe('Healthcrest production regression', () => {
   test.beforeEach(async ({ page }) => {
@@ -433,6 +433,57 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.locator('canvas')).toBeVisible();
   });
 
+
+  for (const scenario of [
+    { name: 'failed CMS request', status: 503, body: '{"error":"unavailable"}' },
+    { name: 'malformed CMS JSON', status: 200, body: '{invalid' },
+    { name: 'invalid CMS response', status: 200, body: '{"success":false}' },
+    { name: 'empty CMS preset list', status: 200, body: '{"success":true,"data":[]}' },
+  ]) {
+    test(`keeps fallback presets interactive after ${scenario.name}`, async ({ page }) => {
+      await page.route('**/api/presets', (route) => route.fulfill({
+        status: scenario.status,
+        contentType: 'application/json',
+        body: scenario.body,
+      }));
+
+      await page.goto('/?cms-failure-test=1');
+      await expect(page.getByRole('status')).toHaveText(
+        'CMS presets unavailable — using local evidence presets.'
+      );
+
+      await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+      await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
+      await expect(page.getByText('Structural Imbalance: Sleep & Stress Failure')).toBeVisible();
+
+      await page.getByRole('button', { name: /2d canvas/i }).click();
+      await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+      await expect(page.getByText('4.5h Restorative', { exact: true })).toBeVisible();
+    });
+  }
+
+  test('times out a stalled CMS request while fallback controls remain usable', async ({ page }) => {
+    let stalledRequest: Request | undefined;
+    let aborted = false;
+    page.on('requestfailed', (request) => {
+      if (request === stalledRequest) aborted = true;
+    });
+    await page.route('**/api/presets', (route) => {
+      // Leave the request pending so the application's own timeout must cancel it.
+      stalledRequest = route.request();
+    });
+
+    await page.goto('/?cms-timeout-test=1');
+    await expect.poll(() => stalledRequest !== undefined).toBe(true);
+    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
+    await expect(page.getByRole('status')).toHaveText(
+      'CMS presets unavailable — using local evidence presets.',
+      { timeout: 15_000 }
+    );
+    await expect.poll(() => aborted).toBe(true);
+    await expect(page.getByText('Structural Imbalance: Sleep & Stress Failure')).toBeVisible();
+  });
 
   test('warning preset synchronizes reducer state into 2D fallback', async ({ page }) => {
     await page.route('**/api/presets', async (route) => {

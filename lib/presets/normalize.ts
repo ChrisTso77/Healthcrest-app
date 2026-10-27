@@ -1,36 +1,28 @@
 import type {
   CanonicalScenarioPreset,
+  EvidenceLevel,
   HealthStatus,
   PillarType,
 } from './types';
 
-type SanityPreset = {
-  _id?: string;
-  slug?: string;
-  title?: string;
-  healthStatus?: string;
-  evidenceLevel?: string;
-  parameters?: {
-    aerobicMins?: number;
-    strengthDays?: number;
-    sleepDuration?: number;
-    wholeFoodRatio?: number;
-    stressLevel?: number;
-    alcoholUnits?: number;
-  };
-  narrativeOverlay?: {
-    headline?: string;
-    outcomes?: string[];
-  };
-  pillar?: {
-    title?: string;
-    slug?: string;
-  };
-  cameraShot?: string;
-};
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
 
-function normalizePillar(value?: string): PillarType | null {
-  const key = value?.trim().toLowerCase();
+function nonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function isEvidenceLevel(value: unknown): value is EvidenceLevel {
+  return value === 'Guideline-level' ||
+    value === 'High-quality review' ||
+    value === 'Emerging' ||
+    value === 'Emerging / Review' ||
+    value === 'Experimental';
+}
+
+function normalizePillar(value: unknown): PillarType | null {
+  const key = typeof value === 'string' ? value.trim().toLowerCase() : undefined;
 
   switch (key) {
     case 'fitness':
@@ -49,8 +41,8 @@ function normalizePillar(value?: string): PillarType | null {
   }
 }
 
-function normalizeStatus(value?: string): HealthStatus | null {
-  const key = value?.trim().toLowerCase();
+function normalizeStatus(value: unknown): HealthStatus | null {
+  const key = typeof value === 'string' ? value.trim().toLowerCase() : undefined;
 
   if (key === 'optimal') return 'optimal';
   if (key === 'warning') return 'warning';
@@ -64,25 +56,31 @@ function finiteNumber(value: unknown): value is number {
 }
 
 export function normalizeSanityPreset(
-  raw: SanityPreset
+  raw: unknown
 ): CanonicalScenarioPreset | null {
+  if (!isRecord(raw) || !isRecord(raw.pillar)) return null;
+
   const pillar = normalizePillar(
     raw.pillar?.title ?? raw.pillar?.slug
   );
 
   const status = normalizeStatus(raw.healthStatus);
   const p = raw.parameters;
+  const narrative = raw.narrativeOverlay;
 
   if (
-    !raw._id ||
-    !raw.slug ||
-    !raw.title ||
+    !nonEmptyString(raw._id) ||
+    !nonEmptyString(raw.slug) ||
+    !nonEmptyString(raw.title) ||
     !pillar ||
     !status ||
-    !raw.evidenceLevel ||
-    !raw.narrativeOverlay?.headline ||
-    !Array.isArray(raw.narrativeOverlay.outcomes) ||
-    !p ||
+    !isEvidenceLevel(raw.evidenceLevel) ||
+    !isRecord(narrative) ||
+    !nonEmptyString(narrative.headline) ||
+    !Array.isArray(narrative.outcomes) ||
+    !narrative.outcomes.every((outcome): outcome is string => typeof outcome === 'string') ||
+    (raw.cameraShot != null && typeof raw.cameraShot !== 'string') ||
+    !isRecord(p) ||
     !finiteNumber(p.aerobicMins) ||
     !finiteNumber(p.strengthDays) ||
     !finiteNumber(p.sleepDuration) ||
@@ -99,8 +97,7 @@ export function normalizeSanityPreset(
     title: raw.title,
     pillar,
     status,
-    evidenceLevel:
-      raw.evidenceLevel as CanonicalScenarioPreset['evidenceLevel'],
+    evidenceLevel: raw.evidenceLevel,
     parameters: {
       aerobicMins: p.aerobicMins,
       strengthDays: p.strengthDays,
@@ -109,9 +106,9 @@ export function normalizeSanityPreset(
       stressLevel: p.stressLevel,
       alcoholUnits: p.alcoholUnits,
     },
-    headline: raw.narrativeOverlay.headline,
-    outcomes: raw.narrativeOverlay.outcomes,
-    cameraShot: raw.cameraShot,
+    headline: narrative.headline,
+    outcomes: narrative.outcomes,
+    cameraShot: typeof raw.cameraShot === 'string' ? raw.cameraShot : undefined,
   };
 }
 
@@ -121,7 +118,7 @@ export function normalizeSanityPresets(
   if (!Array.isArray(input)) return [];
 
   return input
-    .map((item) => normalizeSanityPreset(item as SanityPreset))
+    .map(normalizeSanityPreset)
     .filter(
       (preset): preset is CanonicalScenarioPreset =>
         preset !== null
