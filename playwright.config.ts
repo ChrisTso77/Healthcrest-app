@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: '.',
-  testMatch: /health-engine\.e2e\.spec\.ts/,
+  testMatch: /(?:health-engine|landing)\.e2e\.spec\.ts/,
   timeout: 30_000,
   expect: {
     timeout: 10_000,

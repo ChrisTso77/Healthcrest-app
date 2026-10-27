@@ -84,7 +84,7 @@ jobs:
           NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
 
       - name: Run Playwright E2E Test Suite
-        run: npx playwright test health-engine.e2e.spec.ts
+        run: npx playwright test
         env:
           CI: true
 
