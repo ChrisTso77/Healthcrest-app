@@ -28,7 +28,7 @@ export default function WebGLCanvasWrapper({
           near: 0.1,
           far: 100,
         }}
-        dpr={[1, 2]}
+        dpr={state.renderMode === 'lite-3d' ? 1 : [1, 2]}
       >
         <HealthEngineScene
           state={state}
