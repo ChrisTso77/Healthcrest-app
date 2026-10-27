@@ -1,0 +1,467 @@
+'use client';
+
+import { useState, useEffect, useReducer, type CSSProperties } from 'react';
+import {
+  ShieldAlert,
+  Info,
+  X,
+  Activity,
+  Layers,
+  CheckCircle2,
+  AlertTriangle,
+  BookOpen,
+  Sparkles,
+  Apple,
+  Moon,
+  Brain,
+  Scale
+} from 'lucide-react';
+
+// Import local components and state machine types
+import { HealthEngineHUD } from '@/components/HealthEngineHUD';
+import { HealthEngineViewport } from '@/components/HealthEngineViewport';
+import { ModalDialog } from '@/components/ModalDialog';
+import { HealthEngineGuide } from '@/components/HealthEngineGuide';
+import type { SceneId } from '@/state/PillarsStateTypes';
+import type {
+  CameraState,
+  CanonicalScenarioPreset,
+} from '@/lib/presets/types';
+import {
+  pillarsReducer,
+  initialPillarsState
+} from '@/state/PillarsStateMachine';
+
+type HealthEngineAppProps = { initialScene?: SceneId };
+
+export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) {
+  // Master State Machine Driven by Reducer
+  const [state, dispatch] = useReducer(
+    pillarsReducer,
+    initialScene,
+    (scene) => scene
+      ? pillarsReducer(initialPillarsState, { type: 'SET_SCENE', payload: scene })
+      : initialPillarsState
+  );
+
+  const [cameraState, setCameraState] = useState<CameraState>({
+    orbitAzimuth: 45,
+    orbitElevation: 20,
+    zoomDistance: 1.0,
+    activeShotId: 'shot-1-orbit',
+    isGesturing: false,
+    requestRevision: 0,
+  });
+
+  // UI Control States
+  const [isDockOpen, setIsDockOpen] = useState(true);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
+  const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
+  const [isNarrativeOpen, setIsNarrativeOpen] = useState<boolean>(false);
+  const [presetsList, setPresetsList] = useState<CanonicalScenarioPreset[]>([]);
+  const [apiError, setApiError] = useState<string | null>(null);
+  const [presetLoadAttempt, setPresetLoadAttempt] = useState(0);
+  const [isRetryingPresets, setIsRetryingPresets] = useState(false);
+
+  // Fetch on mount and on explicit retries without resetting the engine state.
+  useEffect(() => {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 10_000);
+    let active = true;
+
+    async function fetchPresets() {
+      try {
+        const res = await fetch('/api/presets', { signal: controller.signal });
+        if (!res.ok) {
+          throw new Error(`API error: ${res.status} ${res.statusText}`);
+        }
+        const json = await res.json();
+        const presets = json?.success === true && Array.isArray(json.data)
+          ? json.data
+          : Array.isArray(json) ? json : null;
+
+        if (!presets || presets.length === 0) {
+          throw new Error('CMS returned no usable preset list');
+        }
+
+        if (active) {
+          setPresetsList(presets);
+          setApiError(null);
+        }
+      } catch (err: unknown) {
+        if (!active) return;
+        console.warn('Failed to load presets from /api/presets, using local fallback presets:', err);
+        setApiError('CMS presets unavailable — using local evidence presets.');
+      } finally {
+        window.clearTimeout(timeout);
+        if (active) setIsRetryingPresets(false);
+      }
+    }
+
+    fetchPresets();
+
+    return () => {
+      active = false;
+      window.clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [presetLoadAttempt]);
+
+  return (
+    <main
+      style={{
+        '--engine-footer-space': apiError ? '7rem' : '4rem',
+        '--engine-dock-space': isDockOpen ? 'min(16rem,35dvh)' : '2.5rem',
+        '--engine-desktop-dock-space': isDockOpen ? '16rem' : '2.5rem',
+      } as CSSProperties}
+      className="relative w-full h-dvh bg-slate-950 text-slate-100 font-sans overflow-hidden select-none xl:h-screen"
+    >
+      {/* ------------------------------------------------------------------ */}
+      {/* 1. VISUAL VIEWPORT LAYER */}
+      {/* ------------------------------------------------------------------ */}
+      <HealthEngineViewport
+        state={state}
+        cameraState={cameraState}
+        onWebGLError={() => dispatch({ type: 'SET_RENDER_MODE', payload: '2d-canvas' })}
+      />
+
+      {/* ------------------------------------------------------------------ */}
+      {/* 2. OVERLAY HUD INTERFACE */}
+      {/* ------------------------------------------------------------------ */}
+      <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
+        <HealthEngineHUD
+        onGuideOpen={() => setIsGuideOpen(true)}
+        isDockOpen={isDockOpen}
+        onDockToggle={() => setIsDockOpen((open) => !open)}
+        presets={presetsList}
+        activePillar={state.activePillar}
+        renderMode={state.renderMode}
+        activePresetId={state.activePreset}
+        camera={cameraState}
+        parameters={{
+          aerobicMins: state.parameters.aerobicVolume,
+          strengthDays: state.parameters.resistanceDays,
+          sleepDuration: state.parameters.sleepDuration,
+          wholeFoodRatio: state.parameters.wholeFoodRatio,
+          stressLevel: state.parameters.perceivedStress,
+          alcoholUnits: state.parameters.alcoholUnits,
+        }}
+        onCameraChange={setCameraState}
+        onPillarChange={(pillar) => {
+          const sceneMap = {
+            Fitness: "fitness",
+            Nutrition: "nutrition",
+            Sleep: "sleep",
+            Stress: "stress",
+            Systems: "system",
+          } as const;
+
+          dispatch({
+            type: "SET_SCENE",
+            payload: sceneMap[pillar],
+          });
+        }}
+        onRenderModeChange={(mode) => {
+          dispatch({
+            type: "SET_RENDER_MODE",
+            payload: mode,
+          });
+        }}
+        onParameterChange={(key, value) => {
+          const parameterMap = {
+            aerobicMins: "aerobicVolume",
+            strengthDays: "resistanceDays",
+            sleepDuration: "sleepDuration",
+            wholeFoodRatio: "wholeFoodRatio",
+            stressLevel: "perceivedStress",
+          } as const;
+
+          const mappedKey = parameterMap[key as keyof typeof parameterMap];
+
+          if (mappedKey) {
+            dispatch({
+              type: "UPDATE_PARAM",
+              payload: { key: mappedKey, value },
+            });
+          }
+        }}
+        onPresetLoad={(preset) => {
+          dispatch({
+            type: "APPLY_CANONICAL_PRESET",
+            payload: preset,
+          });
+        }}
+      />
+      </div>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* 3. FOOTER & NARRATIVE / MEDICO-LEGAL ACTION BAR */}
+      {/* ------------------------------------------------------------------ */}
+      <footer className="absolute bottom-2 inset-x-3 z-40 grid grid-cols-2 gap-2 max-h-24 overflow-y-auto text-[10px] font-mono text-slate-400 xl:bottom-1 xl:left-auto xl:right-6 xl:flex xl:items-center xl:gap-3 xl:max-h-none xl:overflow-visible xl:text-[11px]">
+        {apiError && (
+          <div className="col-span-2 flex min-w-0 items-center gap-2">
+            <span role="status" className="flex min-w-0 flex-1 items-center space-x-1 text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+              <AlertTriangle className="w-3 h-3 shrink-0" />
+              <span>{apiError}</span>
+            </span>
+            <button
+              type="button"
+              disabled={isRetryingPresets}
+              onClick={() => {
+                setIsRetryingPresets(true);
+                setPresetLoadAttempt((attempt) => attempt + 1);
+              }}
+              className="shrink-0 px-2 py-1 rounded border border-amber-500/40 text-amber-300 hover:bg-amber-500/10 disabled:opacity-50 disabled:cursor-wait"
+            >
+              {isRetryingPresets ? 'Retrying…' : 'Retry presets'}
+            </button>
+          </div>
+        )}
+
+        {/* Global Narrative Trigger */}
+        <button
+          onClick={() => setIsNarrativeOpen(true)}
+          className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-emerald-500/20 border border-emerald-500/40 hover:border-emerald-400 text-emerald-300 hover:text-emerald-200 transition-all shadow-lg pointer-events-auto"
+        >
+          <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+          <span>Home & Global Narrative</span>
+        </button>
+
+        {/* Disclaimer Trigger */}
+        <button
+          onClick={() => setIsDisclaimerOpen(true)}
+          className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-emerald-400 transition-all shadow-lg pointer-events-auto"
+        >
+          <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
+          <span>Clinical & Legal Disclaimer</span>
+        </button>
+      </footer>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* 4. HOME PAGE & GLOBAL NARRATIVE DRAWER / MODAL */}
+      {isGuideOpen && (
+        <HealthEngineGuide
+          state={state}
+          presets={presetsList}
+          onClose={() => setIsGuideOpen(false)}
+        />
+      )}
+      {/* ------------------------------------------------------------------ */}
+      {isNarrativeOpen && (
+        <ModalDialog labelledBy="global-narrative-title" onClose={() => setIsNarrativeOpen(false)} className="sm:p-6">
+          <div className="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
+            
+            {/* Modal Header */}
+            <div className="shrink-0 p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/60">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 id="global-narrative-title" className="text-base font-semibold tracking-wide text-slate-100">
+                    THE FOUR PILLARS HEALTH OPTIMISATION PLATFORM
+                  </h2>
+                  <p className="text-[11px] font-mono text-slate-400">
+                    Global Narrative & Clinical Reference Framework
+                  </p>
+                </div>
+              </div>
+              <button
+                aria-label="Close global narrative"
+                onClick={() => setIsNarrativeOpen(false)}
+                className="p-1.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Scrollable Body */}
+            <div role="region" aria-label="Global narrative content" tabIndex={0} className="min-h-0 p-6 space-y-6 overflow-y-auto text-xs text-slate-300 leading-relaxed font-sans focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400">
+              
+              {/* Bottom Line Highlight Box */}
+              <div className="p-4 bg-gradient-to-r from-emerald-500/10 via-slate-900 to-cyan-500/10 border border-emerald-500/30 rounded-2xl space-y-1.5">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 flex items-center space-x-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>The Bottom Line</span>
+                </span>
+                <p className="text-xs font-medium text-slate-100 leading-relaxed">
+                  Health optimisation is an evidence-based approach that distils six core lifestyle principles into four practical, interconnected pillars—Fitness, Nutrition, Sleep, and Stress Regulation. Rather than treating these as isolated habits, our framework models them as a single biological system where strengthening one pillar protects the whole, while neglecting one quietly undermines the rest.
+                </p>
+              </div>
+
+              {/* The Four Core Pillars Section */}
+              <div className="space-y-4">
+                <h3 className="text-xs font-mono font-bold tracking-wider uppercase text-slate-400 border-b border-slate-800 pb-2 flex items-center space-x-2">
+                  <Layers className="w-4 h-4 text-cyan-400" />
+                  <span>The Four Core Pillars</span>
+                </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  
+                  {/* Fitness */}
+                  <div className="p-4 bg-slate-950/50 border border-slate-800/80 rounded-xl space-y-2">
+                    <div className="flex items-center space-x-2 text-emerald-400 font-semibold text-xs">
+                      <Activity className="w-4 h-4" />
+                      <span>1. Fitness & Movement</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-relaxed">
+                      The Fitness Pillar focuses on structured cardiorespiratory movement, functional physical activity, and minimising prolonged sedentary behaviour. Physical activity serves as a primary stimulus for expanding functional capacity, improving cardiovascular elasticity, and reducing the risk of chronic conditions such as type 2 diabetes and cardiovascular disease. To maintain baseline health, UK Chief Medical Officers (CMO) guidance recommends accumulating at least 150 minutes of moderate-intensity activity (or 75 minutes of vigorous activity) each week, alongside muscle-strengthening exercises on two or more days.
+                    </p>
+                  </div>
+
+                  {/* Nutrition */}
+                  <div className="p-4 bg-slate-950/50 border border-slate-800/80 rounded-xl space-y-2">
+                    <div className="flex items-center space-x-2 text-amber-400 font-semibold text-xs">
+                      <Apple className="w-4 h-4" />
+                      <span>2. Nutrition</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-relaxed">
+                      The Nutrition Pillar centres on a whole-food, plant-predominant pattern of eating that limits ultra-processed foods and prioritises nutrient-dense ingredients. Nutritious eating plays a pivotal role in maintaining metabolic stability, supporting gut microbiome diversity, and reducing long-term cardiovascular and metabolic disease risks. In line with NHS Eatwell guidance, a foundational daily practice includes consuming at least five portions of fruit and vegetables, opting for wholegrain starchy carbohydrates, and maintaining hydration with 6 to 8 glasses of fluid.
+                    </p>
+                  </div>
+
+                  {/* Sleep */}
+                  <div className="p-4 bg-slate-950/50 border border-slate-800/80 rounded-xl space-y-2">
+                    <div className="flex items-center space-x-2 text-violet-400 font-semibold text-xs">
+                      <Moon className="w-4 h-4" />
+                      <span>3. Sleep</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-relaxed">
+                      The Sleep Pillar focuses on establishing restorative sleep patterns, prioritising duration, timing, efficiency, and consistent sleep architecture. Quality sleep is fundamental to physiological recovery, immune system function, metabolic regulation, and emotional resilience. Grounded in lifestyle medicine consensus, adults should aim for 7 to 9 hours of quality sleep per night to safeguard cardiometabolic and mental health.
+                    </p>
+                  </div>
+
+                  {/* Stress */}
+                  <div className="p-4 bg-slate-950/50 border border-slate-800/80 rounded-xl space-y-2">
+                    <div className="flex items-center space-x-2 text-rose-400 font-semibold text-xs">
+                      <Brain className="w-4 h-4" />
+                      <span>4. Stress Regulation</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-relaxed">
+                      The Stress Regulation Pillar encompasses evidence-based cognitive and behavioural strategies—such as mindfulness, breathing techniques, and relaxation practices—designed to manage allostatic load. Managing stress matters because chronic psychological strain dysregulates cortisol levels and sympathetic nervous system activity, quietly undermining gains achieved in physical fitness, nutrition, and sleep recovery. Incorporating routine relaxation and mindfulness practices serves as a crucial intervention to down-regulate sympathetic arousal, lower blood pressure, and reduce anxiety.
+                    </p>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Clinical Alignment & Reference Standards */}
+              <div className="space-y-3 pt-2 border-t border-slate-800">
+                <h3 className="text-xs font-mono font-bold tracking-wider uppercase text-slate-400 flex items-center space-x-2">
+                  <Scale className="w-4 h-4 text-emerald-400" />
+                  <span>Clinical Alignment & Reference Standards</span>
+                </h3>
+                
+                <p className="text-[11px] text-slate-300 leading-relaxed">
+                  This health optimisation framework is fully aligned with the six foundational pillars of lifestyle medicine: nutrition, physical activity, sleep, stress management, avoidance of risky substances, and social connection. Rather than siloing substance risk reduction (such as alcohol moderation and smoking cessation) and social connectedness into separate standalone areas, they are integrated across all four pillars as cross-cutting factors that directly influence overall resilience.
+                </p>
+
+                <p className="text-[11px] text-slate-300 leading-relaxed">
+                  Official UK public health guidance—including NHS “Live Well” guidance, UK Chief Medical Officers’ physical activity guidelines, and NICE evidence standards—serves as a primary reference point across our content and scenario models. However, all materials, visualisations, and interactive tools provided on this platform are designed strictly for educational and informational purposes. They are not intended to diagnose, treat, or replace individual clinical advice, and you should always consult a qualified healthcare professional regarding any medical concerns or before embarking on a new health regimen.
+                </p>
+              </div>
+
+            </div>
+
+            {/* Modal Footer */}
+            <div className="shrink-0 p-4 border-t border-slate-800 bg-slate-950/60 flex justify-end">
+              <button
+                onClick={() => setIsNarrativeOpen(false)}
+                className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-colors shadow-lg shadow-emerald-500/20"
+              >
+                Close & Return to 3D Engine
+              </button>
+            </div>
+
+          </div>
+        </ModalDialog>
+      )}
+
+      {/* ------------------------------------------------------------------ */}
+      {/* 5. MEDICO-LEGAL DISCLAIMER MODAL */}
+      {/* ------------------------------------------------------------------ */}
+      {isDisclaimerOpen && (
+        <ModalDialog labelledBy="clinical-disclaimer-title" onClose={() => setIsDisclaimerOpen(false)}>
+          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85dvh]">
+            
+            {/* Modal Header */}
+            <div className="shrink-0 p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+              <div className="flex items-center space-x-2.5">
+                <ShieldAlert className="w-5 h-5 text-amber-400" />
+                <h2 id="clinical-disclaimer-title" className="text-sm font-semibold tracking-wide text-slate-100">
+                  CLINICAL & MEDICO-LEGAL DISCLAIMER
+                </h2>
+              </div>
+              <button
+                aria-label="Close clinical disclaimer"
+                onClick={() => setIsDisclaimerOpen(false)}
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Content Body */}
+            <div role="region" aria-label="Clinical disclaimer content" tabIndex={0} className="min-h-0 p-6 space-y-4 overflow-y-auto text-xs text-slate-300 leading-relaxed font-sans focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400">
+              
+              <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start space-x-3 text-amber-200">
+                <Info className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                <p className="text-[11px] font-medium leading-snug">
+                  The Four Pillars Health Optimisation Platform is an interactive educational tool designed to demonstrate lifestyle medicine principles. It does not provide medical diagnoses or treatment plans.
+                </p>
+              </div>
+
+              <section className="space-y-1.5">
+                <h3 className="text-xs font-semibold text-slate-100 uppercase font-mono tracking-wider">
+                  1. Educational Purpose Only
+                </h3>
+                <p>
+                  All contents of this platform—including text, 3D bio-visualisations, scenario presets, parameter sliders, evidence summaries, and HUD overlays—are provided strictly for educational and informational purposes. They do not constitute personalized medical advice.
+                </p>
+              </section>
+
+              <section className="space-y-1.5">
+                <h3 className="text-xs font-semibold text-slate-100 uppercase font-mono tracking-wider">
+                  2. No Doctor-Patient Relationship
+                </h3>
+                <p>
+                  Interaction with this website or its underlying state models does not create a doctor-patient or therapeutic relationship between you and the platform developers, clinical reviewers, or affiliated institutions.
+                </p>
+              </section>
+
+              <section className="space-y-1.5">
+                <h3 className="text-xs font-semibold text-slate-100 uppercase font-mono tracking-wider">
+                  3. Emergency Medical Protocol
+                </h3>
+                <p>
+                  This platform is not equipped for emergency care. If you are experiencing acute chest pain, shortness of breath, severe pain, or a medical emergency, immediately call local emergency services (999 UK / 911 US / 112 EU) or visit the nearest emergency department.
+                </p>
+              </section>
+
+              <section className="space-y-1.5">
+                <h3 className="text-xs font-semibold text-slate-100 uppercase font-mono tracking-wider">
+                  4. Clinical Triage & Physical Activity
+                </h3>
+                <p>
+                  Before commencing any new exercise regime or changing dietary habits, complete an appropriate physical readiness evaluation (e.g. PAR-Q+) or consult a registered physician or lifestyle medicine practitioner.
+                </p>
+              </section>
+
+            </div>
+
+            {/* Modal Footer */}
+            <div className="shrink-0 p-4 border-t border-slate-800 bg-slate-950/50 flex justify-end">
+              <button
+                onClick={() => setIsDisclaimerOpen(false)}
+                className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-colors shadow-lg shadow-emerald-500/20"
+              >
+                I Understand & Acknowledge
+              </button>
+            </div>
+
+          </div>
+        </ModalDialog>
+      )}
+    </main>
+  );
+}

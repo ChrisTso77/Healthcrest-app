@@ -1,4 +1,5 @@
 import { useId, useState, type FC, type ReactNode } from 'react';
+import Link from 'next/link';
 import type {
   CanonicalPresetParameters,
   CanonicalScenarioPreset,
@@ -142,7 +143,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       <header className="absolute top-0 inset-x-0 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-3 py-2 flex flex-wrap items-center justify-between gap-2 z-50 xl:z-30 xl:h-16 xl:flex-nowrap xl:gap-0 xl:px-6 xl:py-0">
         
         {/* Brand Logo & Platform Title */}
-        <div className="flex min-w-0 items-center space-x-3">
+        <Link href="/" aria-label="Healthcrest home" className="pointer-events-auto flex min-w-0 items-center space-x-3 rounded-lg focus-visible:outline-2 focus-visible:outline-emerald-400">
           <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
             <Activity className="w-5 h-5 text-emerald-400" />
           </div>
@@ -150,7 +151,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             <h1 className="text-xs xl:text-sm font-semibold tracking-wide text-slate-100">HEALTH OPTIMISATION</h1>
             <p className="text-[9px] xl:text-[10px] font-mono text-slate-400 tracking-wider">EXPLORE EVERYDAY HABITS</p>
           </div>
-        </div>
+        </Link>
 
         <div className="flex shrink-0 gap-2 xl:hidden">
           <button
