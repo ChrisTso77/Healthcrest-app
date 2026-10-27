@@ -9,6 +9,86 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByText('HEALTH OPTIMISATION')).toBeVisible();
   });
 
+  test('pillar goals lead to contextual habit guidance without resetting the engine', async ({ page }) => {
+    await page.route('**/api/presets', (route) => route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
+    }));
+    await page.goto('/?pillar-health-guide-test=1');
+    const canvas = page.locator('canvas');
+    await expect(canvas).toBeVisible();
+    const originalCanvas = await canvas.elementHandle();
+    const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+    await sleep.fill('7.5');
+
+    for (const [pillar, goal, source] of [
+      ['Fitness', 'Move more and build capacity', 'https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/'],
+      ['Nutrition', 'Build a balanced eating pattern', 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/'],
+      ['Sleep', 'Support sleep and recovery', 'https://www.nhs.uk/conditions/insomnia/'],
+      ['Stress', 'Make room for coping and recovery', 'https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/feelings-and-symptoms/stress/'],
+      ['Systems', 'Connect the habits', 'https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/five-steps-to-mental-wellbeing/'],
+    ]) {
+      await page.getByRole('navigation', { name: 'Health pillars' })
+        .getByRole('button', { name: pillar, exact: true }).click();
+      const summary = page.getByRole('region', { name: 'Scenario summary', exact: true });
+      const goalCard = summary.getByRole('region', { name: 'Health goal', exact: true });
+      await expect(goalCard.getByRole('heading', { name: goal, exact: true })).toBeVisible();
+      const why = goalCard.getByRole('button', { name: 'Why this matters', exact: true });
+      await why.click();
+      const dialog = page.getByRole('dialog', { name: 'Understand this view', exact: true });
+      await expect(dialog.getByRole('heading', { name: `${pillar}: ${goal}`, exact: true })).toBeVisible();
+      await expect(dialog.getByRole('link')).toHaveAttribute('href', source);
+      await expect(dialog.getByText('7.5 hours/night', { exact: true })).toBeVisible();
+      await expect(dialog).toContainText('Manual settings: no evidence preset is currently applied.');
+      await dialog.getByText('How this scene responds', { exact: true }).click();
+      if (pillar === 'Systems') {
+        await expect(dialog.getByText(/Nutrition and strength do not change its combined colour/)).toBeVisible();
+      }
+      await page.keyboard.press('Escape');
+      await expect(dialog).toHaveCount(0);
+      await expect(why).toBeFocused();
+      await expect(sleep).toHaveValue('7.5');
+      expect(await originalCanvas!.evaluate((element) => element === document.querySelector('canvas'))).toBe(true);
+    }
+  });
+
+  test('guide explains experimental evidence and follows manual changes on a phone', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    await page.route('**/api/presets', (route) => route.fulfill({ status: 503, body: 'unavailable' }));
+    await page.goto('/?guide-evidence-test=1');
+    const experimental = page.getByRole('button', { name: /Sleep Rung 4: Acoustic Delta/i });
+    await experimental.click();
+    const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+    await expect(sleep).toHaveValue('8.5');
+    const guide = page.getByRole('button', { name: 'Guide: understand this view', exact: true });
+    await guide.click();
+    const dialog = page.getByRole('dialog', { name: 'Understand this view', exact: true });
+    const selected = dialog.getByRole('group', { name: 'Selected scenario', exact: true });
+    await expect(selected).toContainText('Sleep Rung 4: Acoustic Delta & Flush');
+    await expect(selected).toContainText('Experimental');
+    await expect(selected).toContainText('Exploratory content. It does not establish a proven health intervention or a routine recommendation.');
+    await expect(dialog.getByRole('region', { name: 'Current pillar' })).toContainText('Choose a consistent getting-up time');
+    const content = dialog.getByRole('region', { name: 'Health guide content', exact: true });
+    expect(await content.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+    await page.keyboard.press('Escape');
+    await expect(experimental).toHaveAttribute('aria-pressed', 'true');
+    await expect(guide).toBeFocused();
+
+    await sleep.scrollIntoViewIfNeeded();
+    await sleep.fill('7.5');
+    await page.getByRole('button', { name: /2d canvas/i }).click();
+    await guide.click();
+    await expect(selected).toHaveCount(0);
+    await expect(dialog).toContainText('Manual settings: no evidence preset is currently applied.');
+    await expect(dialog.getByText('7.5 hours/night', { exact: true })).toBeVisible();
+    await dialog.getByText('Visual cues and unfamiliar terms', { exact: true }).click();
+    await expect(dialog.getByText('Heart-rate variability: variation in the time between heartbeats. This app does not measure it.', { exact: true })).toBeVisible();
+    await dialog.getByRole('button', { name: 'Close & explore', exact: true }).click();
+    await expect(page.getByRole('button', { name: /2d canvas/i })).toHaveAttribute('aria-pressed', 'true');
+    await expect(sleep).toHaveValue('7.5');
+  });
+
   test('2D overview exposes current values and preset status without invented scores', async ({ page }) => {
     await page.route('**/api/presets', (route) => route.fulfill({
       status: 200,
@@ -32,7 +112,7 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
 
     for (const [name, value] of [
-      ['Aerobic Activity (MVPA)', '220'],
+      ['Weekly aerobic activity', '220'],
       ['Whole Food Ratio', '75'],
       ['Sleep Duration', '7.5'],
       ['Perceived Stress Level', '3'],
@@ -94,7 +174,7 @@ test.describe('Healthcrest production regression', () => {
 
       const overview = page.getByRole('region', { name: '2D health overview', exact: true });
       const dock = page.getByRole('button', {
-        name: /PARAMETER CONTROLS & SLEEP LADDER PRESETS|Parameters & presets/i,
+        name: /Explore habits & scenarios/i,
       });
       const expectClearLayout = async () => {
         await expect.poll(async () => {
@@ -313,6 +393,13 @@ test.describe('Healthcrest production regression', () => {
         done: 'Close & Return to 3D Engine',
       },
       {
+        trigger: 'Guide: understand this view',
+        title: 'Understand this view',
+        close: 'Close health guide',
+        content: 'Health guide content',
+        done: 'Close & explore',
+      },
+      {
         trigger: 'Clinical & Legal Disclaimer',
         title: 'CLINICAL & MEDICO-LEGAL DISCLAIMER',
         close: 'Close clinical disclaimer',
@@ -376,12 +463,12 @@ test.describe('Healthcrest production regression', () => {
         await expect(button).toHaveAttribute('aria-pressed', 'true');
       }
 
-      const clinicalToggle = page.getByRole('button', { name: 'Clinical summary', exact: true });
+      const clinicalToggle = page.getByRole('button', { name: 'Scenario summary', exact: true });
       const cameraToggle = page.getByRole('button', { name: 'Camera controls', exact: true });
       await clinicalToggle.click();
-      await expect(page.getByRole('region', { name: 'Clinical summary' })).toBeVisible();
+      await expect(page.getByRole('region', { name: 'Scenario summary' })).toBeVisible();
       await cameraToggle.click();
-      await expect(page.getByRole('region', { name: 'Clinical summary' })).toBeHidden();
+      await expect(page.getByRole('region', { name: 'Scenario summary' })).toBeHidden();
       await page.getByRole('button', { name: /Shot 3: Core Deformation/i }).click();
       await cameraToggle.click();
       await expect(page.getByRole('region', { name: 'Camera controls' })).toBeHidden();
@@ -396,7 +483,7 @@ test.describe('Healthcrest production regression', () => {
       expect(slider).not.toBeNull();
       expect(slider!.y + slider!.height).toBeLessThan(footer!.y);
 
-      const dock = page.getByRole('button', { name: /Parameters & presets/i });
+      const dock = page.getByRole('button', { name: /Explore habits & scenarios/i });
       await dock.click();
       await expect(dock).toHaveAttribute('aria-expanded', 'false');
       await expect(page.getByText('7.5h / night', { exact: true })).toBeVisible();
@@ -495,12 +582,12 @@ test.describe('Healthcrest production regression', () => {
   });
 
   test('exposes named sliders with guidance and supports keyboard parameter changes', async ({ page }) => {
-    for (const name of ['Aerobic Activity (MVPA)', 'Sleep Duration', 'Whole Food Ratio', 'Perceived Stress Level']) {
+    for (const name of ['Weekly aerobic activity', 'Sleep Duration', 'Whole Food Ratio', 'Perceived Stress Level']) {
       await expect(page.getByRole('slider', { name, exact: true })).toBeVisible();
     }
 
     const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
-    await expect(sleep).toHaveAccessibleDescription('AASM Target: 7.0–9.0 hrs/night');
+    await expect(sleep).toHaveAccessibleDescription('Adults often need 7–9 hours; quality and routine also matter.');
     await sleep.fill('7.5');
     await sleep.focus();
     await page.keyboard.press('ArrowRight');
@@ -537,7 +624,7 @@ test.describe('Healthcrest production regression', () => {
     await page.keyboard.press('ArrowRight');
     await expect(failure).toHaveAttribute('aria-pressed', 'false');
 
-    const dock = page.getByRole('button', { name: /PARAMETER CONTROLS & SLEEP LADDER PRESETS/ });
+    const dock = page.getByRole('button', { name: /Explore habits & scenarios/ });
     await expect(dock).toHaveAttribute('aria-expanded', 'true');
     await dock.focus();
     await page.keyboard.press('Enter');

@@ -16,13 +16,14 @@ import {
   resolveAvailablePresets,
 } from '@/lib/presets/presetSelection';
 import { createPresetLoadPlan } from '@/lib/presets/createPresetLoadPlan';
+import { PARAMETER_GUIDES, PILLAR_GUIDES } from '@/lib/education/healthGuide';
 import {
   Activity,
   Apple,
   Moon,
   Brain,
   Layers,
-  Sun,
+  BookOpen,
   ShieldAlert,
   ShieldCheck,
   CheckCircle2,
@@ -36,6 +37,7 @@ import {
 } from 'lucide-react';
 
 interface HealthEngineHUDProps {
+  onGuideOpen: () => void;
   isDockOpen: boolean;
   onDockToggle: () => void;
   presets?: CanonicalScenarioPreset[];
@@ -52,6 +54,7 @@ interface HealthEngineHUDProps {
 }
 
 export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
+  onGuideOpen,
   isDockOpen,
   onDockToggle,
   presets = [],
@@ -66,8 +69,9 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
   onPresetLoad,
   onCameraChange,
 }) => {
+  const pillarGuide = PILLAR_GUIDES[activePillar];
+
   // Navigation & Control States
-  const [isDayTime, setIsDayTime] = useState<boolean>(false);
   const controlsId = useId();
   const [mobilePanel, setMobilePanel] = useState<'clinical' | 'camera' | null>(null);
 
@@ -144,14 +148,14 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
           </div>
           <div className="min-w-0">
             <h1 className="text-xs xl:text-sm font-semibold tracking-wide text-slate-100">HEALTH OPTIMISATION</h1>
-            <p className="text-[9px] xl:text-[10px] font-mono text-slate-400 tracking-wider">THE FOUR PILLARS ENGINE v2</p>
+            <p className="text-[9px] xl:text-[10px] font-mono text-slate-400 tracking-wider">EXPLORE EVERYDAY HABITS</p>
           </div>
         </div>
 
         <div className="flex shrink-0 gap-2 xl:hidden">
           <button
             type="button"
-            aria-label="Clinical summary"
+            aria-label="Scenario summary"
             aria-expanded={mobilePanel === 'clinical'}
             aria-controls={`${controlsId}-clinical-panel`}
             onClick={() => setMobilePanel((panel) => panel === 'clinical' ? null : 'clinical')}
@@ -192,14 +196,16 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
           ))}
         </nav>
 
-        {/* Lighting & Rendering Switcher */}
+        {/* Guide & Rendering Switcher */}
         <div className="flex w-full items-center justify-between gap-3 xl:w-auto">
           <button
-            onClick={() => setIsDayTime(!isDayTime)}
-            className="min-h-9 p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-amber-400 transition-colors xl:min-h-0"
-            title="Toggle Circadian Lighting Mode"
+            type="button"
+            aria-label="Guide: understand this view"
+            onClick={onGuideOpen}
+            className="inline-flex min-h-9 shrink-0 items-center gap-1 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-1.5 text-[10px] text-emerald-300 hover:bg-emerald-500/20 xl:min-h-0"
           >
-            {isDayTime ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-violet-400" />}
+            <BookOpen className="size-3.5" />
+            <span>Guide</span>
           </button>
 
           <div role="group" aria-label="Render mode" className="flex items-center bg-slate-950/80 p-1 rounded-lg border border-slate-800 text-xs">
@@ -229,13 +235,14 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       <div
         id={`${controlsId}-clinical-panel`}
         role="region"
-        aria-label="Clinical summary"
-        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-800/90 rounded-2xl p-4 shadow-2xl z-40 ${mobilePanel === 'clinical' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-6 xl:right-auto xl:w-80 xl:max-h-none xl:bg-slate-900/80 xl:z-20`}
+        aria-label="Scenario summary"
+        tabIndex={0}
+        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-800/90 rounded-2xl p-4 shadow-2xl z-40 ${mobilePanel === 'clinical' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-6 xl:right-auto xl:w-80 xl:max-h-[calc(100dvh_-_var(--engine-footer-space,4rem)_-_var(--engine-desktop-dock-space,16rem)_-_6rem)] xl:bg-slate-900/80 xl:z-20`}
       >
         <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
           <div className="flex items-center space-x-2">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span className="text-xs font-mono tracking-wider uppercase text-slate-300">CLINICAL HUD</span>
+            <span className="text-xs font-mono tracking-wider uppercase text-slate-300">SCENARIO SUMMARY</span>
           </div>
           
           {activePreset ? (
@@ -250,21 +257,35 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
           )}
         </div>
 
+
+        <section aria-label="Health goal" className="mt-3 space-y-2 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3 text-xs leading-relaxed">
+          <h3 className="font-semibold text-emerald-300">{pillarGuide.heading}</h3>
+          <p className="text-slate-300">{pillarGuide.goal}</p>
+          <p className="text-slate-300"><strong>One possible first step: </strong>{pillarGuide.firstStep}</p>
+          <button type="button" onClick={onGuideOpen} className="text-emerald-300 underline underline-offset-4">
+            Why this matters
+          </button>
+        </section>
+
+        <p className="mt-3 text-[10px] leading-relaxed text-slate-400">
+          Scenario labels and notes describe educational examples, not personal predictions.
+        </p>
+
         <div className="mt-3 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono text-slate-400">EVIDENCE LEVEL</span>
+            <span className="text-[10px] font-mono text-slate-400">EVIDENCE LABEL</span>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700/50">
               {activePreset?.evidenceLevel ?? 'Manual state'}
             </span>
           </div>
 
           <h3 className="text-xs font-semibold text-slate-100 leading-snug">
-            {activePreset?.headline ?? 'Manual pillar and parameter configuration'}
+            {activePreset?.headline ?? 'Explore your own habit settings'}
           </h3>
 
           <div className="pt-2 border-t border-slate-800/60 space-y-1.5">
             <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
-              {activePreset ? 'Key Health Outcomes:' : 'State Mode:'}
+              {activePreset ? 'Scenario notes:' : 'Your settings:'}
             </span>
 
             {activePreset ? (
@@ -277,7 +298,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             ) : (
               <div className="flex items-start space-x-2 text-[11px] text-slate-300">
                 <span className="text-cyan-400 font-bold">•</span>
-                <span>No evidence preset is currently applied.</span>
+                <span>Your sliders define a manual scenario.</span>
               </div>
             )}
           </div>
@@ -291,11 +312,11 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         id={`${controlsId}-camera-panel`}
         role="region"
         aria-label="Camera controls"
-        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-800/90 rounded-2xl p-3 shadow-2xl z-40 ${mobilePanel === 'camera' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-auto xl:right-6 xl:w-60 xl:max-h-none xl:bg-slate-900/80 xl:z-20`}
+        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-800/90 rounded-2xl p-3 shadow-2xl z-40 ${mobilePanel === 'camera' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-auto xl:right-6 xl:w-60 xl:max-h-[calc(100dvh_-_var(--engine-footer-space,4rem)_-_var(--engine-desktop-dock-space,16rem)_-_6rem)] xl:bg-slate-900/80 xl:z-20`}
       >
         <div className="flex items-center space-x-2 pb-2.5 border-b border-slate-800/80 mb-2">
           <Camera className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="text-xs font-mono tracking-wider uppercase text-slate-300">SCENE 5 CAMERA DIRECTOR</span>
+          <span className="text-xs font-mono tracking-wider uppercase text-slate-300">CAMERA VIEWS</span>
         </div>
 
         <div className="space-y-1.5">
@@ -341,8 +362,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
           <div className="flex items-center space-x-2">
             <Sliders className="w-3.5 h-3.5 text-emerald-400" />
             <span className="tracking-wider uppercase">
-              <span className="xl:hidden">Parameters & presets</span>
-              <span className="hidden xl:inline">PARAMETER CONTROLS & SLEEP LADDER PRESETS</span>
+              Explore habits & scenarios
             </span>
           </div>
           <div className="flex items-center space-x-1">
@@ -356,7 +376,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             
             {/* Left Col: Scenario Presets List */}
             <div className="xl:col-span-4 space-y-2 border-b pb-3 xl:pb-0 xl:border-b-0 xl:border-r border-slate-800/80 xl:pr-4">
-              <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">PRESET SCENARIOS & SLEEP LADDER</span>
+              <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Try an example scenario</span>
               <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
                 {availablePresets.map((preset) => (
                   <button
@@ -385,7 +405,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
               
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <label htmlFor={`${controlsId}-aerobic`} className="font-medium text-slate-300">Aerobic Activity (MVPA)</label>
+                  <label htmlFor={`${controlsId}-aerobic`} className="font-medium text-slate-300">{PARAMETER_GUIDES.aerobic.label}</label>
                   <span className="font-mono text-emerald-400">{parameters.aerobicMins} mins/wk</span>
                 </div>
                 <input
@@ -400,12 +420,12 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   onChange={(e) => handleParamChange('aerobicMins', Number(e.target.value))}
                   className="w-full accent-emerald-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
-                <span id={`${controlsId}-aerobic-guidance`} className="text-[9px] font-mono text-slate-500 block">Guideline Target: 150–300 mins/week</span>
+                <span id={`${controlsId}-aerobic-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.aerobic.hint}</span>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <label htmlFor={`${controlsId}-sleep`} className="font-medium text-slate-300">Sleep Duration</label>
+                  <label htmlFor={`${controlsId}-sleep`} className="font-medium text-slate-300">{PARAMETER_GUIDES.sleep.label}</label>
                   <span className="font-mono text-violet-400">{parameters.sleepDuration} hrs/night</span>
                 </div>
                 <input
@@ -420,12 +440,12 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   onChange={(e) => handleParamChange('sleepDuration', Number(e.target.value))}
                   className="w-full accent-violet-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
-                <span id={`${controlsId}-sleep-guidance`} className="text-[9px] font-mono text-slate-500 block">AASM Target: 7.0–9.0 hrs/night</span>
+                <span id={`${controlsId}-sleep-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.sleep.hint}</span>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <label htmlFor={`${controlsId}-nutrition`} className="font-medium text-slate-300">Whole Food Ratio</label>
+                  <label htmlFor={`${controlsId}-nutrition`} className="font-medium text-slate-300">{PARAMETER_GUIDES.nutrition.label}</label>
                   <span className="font-mono text-amber-400">{parameters.wholeFoodRatio}%</span>
                 </div>
                 <input
@@ -440,12 +460,12 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   onChange={(e) => handleParamChange('wholeFoodRatio', Number(e.target.value))}
                   className="w-full accent-amber-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
-                <span id={`${controlsId}-nutrition-guidance`} className="text-[9px] font-mono text-slate-500 block">ACLM Target: Plant-predominant whole foods</span>
+                <span id={`${controlsId}-nutrition-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.nutrition.hint}</span>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <label htmlFor={`${controlsId}-stress`} className="font-medium text-slate-300">Perceived Stress Level</label>
+                  <label htmlFor={`${controlsId}-stress`} className="font-medium text-slate-300">{PARAMETER_GUIDES.stress.label}</label>
                   <span className="font-mono text-rose-400">{parameters.stressLevel} / 10</span>
                 </div>
                 <input
@@ -460,7 +480,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   onChange={(e) => handleParamChange('stressLevel', Number(e.target.value))}
                   className="w-full accent-rose-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
-                <span id={`${controlsId}-stress-guidance`} className="text-[9px] font-mono text-slate-500 block">Target: Active parasympathetic buffering</span>
+                <span id={`${controlsId}-stress-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.stress.hint}</span>
               </div>
 
             </div>
