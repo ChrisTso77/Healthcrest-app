@@ -38,7 +38,9 @@ test.describe('Healthcrest production regression', () => {
       await why.click();
       const dialog = page.getByRole('dialog', { name: 'Understand this view', exact: true });
       await expect(dialog.getByRole('heading', { name: `${pillar}: ${goal}`, exact: true })).toBeVisible();
-      await expect(dialog.getByRole('link')).toHaveAttribute('href', source);
+      await expect(dialog.getByRole('link', { name: /^NHS:/ })).toHaveAttribute('href', source);
+      await expect(dialog.getByRole('link', { name: 'Make a manageable next step', exact: true }))
+        .toHaveAttribute('href', pillar === 'Systems' ? '/next-step' : '/next-step?pillar=' + pillar.toLowerCase());
       await expect(dialog.getByText('7.5 hours/night', { exact: true })).toBeVisible();
       await expect(dialog).toContainText('Manual settings: no evidence preset is currently applied.');
       await dialog.getByText('How this scene responds', { exact: true }).click();

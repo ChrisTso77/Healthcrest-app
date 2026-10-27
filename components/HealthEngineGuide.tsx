@@ -1,6 +1,7 @@
 'use client';
 
 import { X } from 'lucide-react';
+import Link from 'next/link';
 import { ModalDialog } from '@/components/ModalDialog';
 import type { CanonicalScenarioPreset } from '@/lib/presets/types';
 import type { State } from '@/state/PillarsStateTypes';
@@ -49,6 +50,10 @@ export function HealthEngineGuide({ state, presets, onClose }: HealthEngineGuide
             <p>{pillar.goal}</p>
             <p><strong className="text-slate-100">One possible first step: </strong>{pillar.firstStep}</p>
             <p>{pillar.guidance}</p>
+            <Link prefetch={false} href={state.activePillar === 'Systems' ? '/next-step' : '/next-step?pillar=' + state.activePillar.toLowerCase()}
+              className="inline-block rounded-lg border border-emerald-500/40 px-3 py-2 font-semibold text-emerald-300 hover:bg-emerald-500/10">
+              Make a manageable next step
+            </Link>
             <a href={pillar.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-emerald-300 underline underline-offset-4">
               {pillar.sourceLabel} (opens in a new tab)
             </a>

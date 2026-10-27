@@ -40,6 +40,11 @@ export function LandingEnginePreview() {
         <Link prefetch={false} className="hc-button hc-button-light" href={`/engine?pillar=${selected.slug}`}>
           Explore {selected.label.toLowerCase()} in the engine <ArrowUpRight size={18} aria-hidden="true" />
         </Link>
+        <p>
+          <Link prefetch={false} className="hc-text-link" href={'/next-step?pillar=' + selected.slug}>
+            Make a manageable next step
+          </Link>
+        </p>
       </div>
       <div className="hc-preview-map">
         <svg viewBox="0 0 420 340" role="img" aria-labelledby={`${id}-title`} aria-describedby={`${id}-description`}>
