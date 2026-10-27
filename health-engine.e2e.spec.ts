@@ -1,4 +1,5 @@
-import { test, expect, type Request } from '@playwright/test';
+import { test, expect, type Request, type Route } from '@playwright/test';
+import { FALLBACK_PRESETS } from './lib/presets/fallback';
 
 test.describe('Healthcrest production regression', () => {
   test.beforeEach(async ({ page }) => {
@@ -483,6 +484,66 @@ test.describe('Healthcrest production regression', () => {
     );
     await expect.poll(() => aborted).toBe(true);
     await expect(page.getByText('Structural Imbalance: Sleep & Stress Failure')).toBeVisible();
+  });
+
+  test('retries CMS loading without losing manual parameters or render mode', async ({ page }) => {
+    let attempts = 0;
+    let pendingRetry: Route | undefined;
+    const recoveredPreset = {
+      ...FALLBACK_PRESETS[0],
+      id: 'recovered-cms-preset',
+      slug: 'recovered-cms-preset',
+      title: 'Recovered CMS Preset',
+    };
+    await page.route('**/api/presets', (route) => {
+      attempts += 1;
+      if (attempts === 1) {
+        return route.fulfill({ status: 503, body: 'unavailable' });
+      }
+      pendingRetry = route;
+    });
+
+    await page.goto('/?cms-recovery-test=1');
+    await expect(page.getByRole('status')).toBeVisible();
+    const sleepSlider = page.locator('input[type="range"]').nth(1);
+    await sleepSlider.fill('7.5');
+    await page.getByRole('button', { name: /2d canvas/i }).click();
+
+    await page.getByRole('button', { name: 'Retry presets', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Retrying…', exact: true })).toBeDisabled();
+    await expect.poll(() => pendingRetry !== undefined).toBe(true);
+    expect(attempts).toBe(2);
+    await pendingRetry!.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ success: true, data: [recoveredPreset] }),
+    });
+
+    await expect(page.getByRole('status')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /Recovered CMS Preset/i })).toBeVisible();
+    await expect(sleepSlider).toHaveValue('7.5');
+    await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+    await expect(page.getByRole('button', { name: /Retry presets|Retrying…/ })).toHaveCount(0);
+  });
+
+  test('allows another retry when the CMS is still unavailable', async ({ page }) => {
+    let attempts = 0;
+    await page.route('**/api/presets', (route) => {
+      attempts += 1;
+      return route.fulfill({ status: 503, body: 'unavailable' });
+    });
+
+    await page.goto('/?cms-retry-failure-test=1');
+    const retry = page.getByRole('button', { name: 'Retry presets', exact: true });
+    await expect(retry).toBeEnabled();
+    for (const expectedAttempts of [2, 3]) {
+      await retry.click();
+      await expect.poll(() => attempts).toBe(expectedAttempts);
+      await expect(retry).toBeEnabled();
+      await expect(page.getByRole('status')).toBeVisible();
+    }
+    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
   });
 
   test('warning preset synchronizes reducer state into 2D fallback', async ({ page }) => {

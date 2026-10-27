@@ -47,8 +47,10 @@ export default function FourPillarsHealthEnginePage() {
   const [isNarrativeOpen, setIsNarrativeOpen] = useState<boolean>(false);
   const [presetsList, setPresetsList] = useState<CanonicalScenarioPreset[]>([]);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [presetLoadAttempt, setPresetLoadAttempt] = useState(0);
+  const [isRetryingPresets, setIsRetryingPresets] = useState(false);
 
-  // Fetch Preset Scenarios from Next.js App Router API (/api/presets) on mount
+  // Fetch on mount and on explicit retries without resetting the engine state.
   useEffect(() => {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 10_000);
@@ -69,13 +71,17 @@ export default function FourPillarsHealthEnginePage() {
           throw new Error('CMS returned no usable preset list');
         }
 
-        if (active) setPresetsList(presets);
+        if (active) {
+          setPresetsList(presets);
+          setApiError(null);
+        }
       } catch (err: unknown) {
         if (!active) return;
         console.warn('Failed to load presets from /api/presets, using local fallback presets:', err);
         setApiError('CMS presets unavailable — using local evidence presets.');
       } finally {
         window.clearTimeout(timeout);
+        if (active) setIsRetryingPresets(false);
       }
     }
 
@@ -86,7 +92,7 @@ export default function FourPillarsHealthEnginePage() {
       window.clearTimeout(timeout);
       controller.abort();
     };
-  }, []);
+  }, [presetLoadAttempt]);
 
   return (
     <main className="relative w-full h-screen bg-slate-950 text-slate-100 font-sans overflow-hidden select-none">
@@ -169,10 +175,23 @@ export default function FourPillarsHealthEnginePage() {
       {/* ------------------------------------------------------------------ */}
       <footer className="absolute bottom-1 right-6 z-40 flex items-center space-x-3 text-[11px] font-mono text-slate-400">
         {apiError && (
-          <span role="status" className="flex items-center space-x-1 text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-            <AlertTriangle className="w-3 h-3" />
-            <span>{apiError}</span>
-          </span>
+          <div className="flex items-center space-x-2">
+            <span role="status" className="flex items-center space-x-1 text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+              <AlertTriangle className="w-3 h-3" />
+              <span>{apiError}</span>
+            </span>
+            <button
+              type="button"
+              disabled={isRetryingPresets}
+              onClick={() => {
+                setIsRetryingPresets(true);
+                setPresetLoadAttempt((attempt) => attempt + 1);
+              }}
+              className="px-2 py-1 rounded border border-amber-500/40 text-amber-300 hover:bg-amber-500/10 disabled:opacity-50 disabled:cursor-wait"
+            >
+              {isRetryingPresets ? 'Retrying…' : 'Retry presets'}
+            </button>
+          </div>
         )}
 
         {/* Global Narrative Trigger */}
