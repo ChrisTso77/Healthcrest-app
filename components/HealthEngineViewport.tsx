@@ -81,7 +81,12 @@ function toFallbackHealthStatus(
 
 function FallbackViewport({ state }: Pick<HealthEngineViewportProps, "state">) {
   return (
-    <div className="absolute inset-0 z-0 flex items-center justify-center overflow-auto bg-slate-950 p-6">
+    <div
+      role="region"
+      aria-label="2D health overview"
+      tabIndex={0}
+      className="absolute inset-x-3 top-44 bottom-[calc(var(--engine-footer-space,4rem)_+_var(--engine-dock-space,16rem)_+_0.75rem)] z-0 overflow-y-auto transition-[bottom] duration-300 overscroll-contain rounded-2xl bg-slate-950 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400 xl:top-20 xl:left-[22rem] xl:right-[17rem] xl:bottom-[calc(var(--engine-footer-space,4rem)_+_var(--engine-desktop-dock-space,16rem)_+_0.75rem)]"
+    >
       <HealthEngine2DFallback
         activePillar={state.activePillar}
         aerobicMins={state.parameters.aerobicVolume}

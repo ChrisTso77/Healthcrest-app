@@ -44,6 +44,7 @@ export default function FourPillarsHealthEnginePage() {
   });
 
   // UI Control States
+  const [isDockOpen, setIsDockOpen] = useState(true);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
   const [isNarrativeOpen, setIsNarrativeOpen] = useState<boolean>(false);
   const [presetsList, setPresetsList] = useState<CanonicalScenarioPreset[]>([]);
@@ -97,7 +98,11 @@ export default function FourPillarsHealthEnginePage() {
 
   return (
     <main
-      style={{ '--engine-footer-space': apiError ? '7rem' : '4rem' } as CSSProperties}
+      style={{
+        '--engine-footer-space': apiError ? '7rem' : '4rem',
+        '--engine-dock-space': isDockOpen ? 'min(16rem,35dvh)' : '2.5rem',
+        '--engine-desktop-dock-space': isDockOpen ? '16rem' : '2.5rem',
+      } as CSSProperties}
       className="relative w-full h-dvh bg-slate-950 text-slate-100 font-sans overflow-hidden select-none xl:h-screen"
     >
       {/* ------------------------------------------------------------------ */}
@@ -114,6 +119,8 @@ export default function FourPillarsHealthEnginePage() {
       {/* ------------------------------------------------------------------ */}
       <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
         <HealthEngineHUD
+        isDockOpen={isDockOpen}
+        onDockToggle={() => setIsDockOpen((open) => !open)}
         presets={presetsList}
         activePillar={state.activePillar}
         renderMode={state.renderMode}

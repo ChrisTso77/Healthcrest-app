@@ -9,6 +9,144 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByText('HEALTH OPTIMISATION')).toBeVisible();
   });
 
+  test('2D overview exposes current values and preset status without invented scores', async ({ page }) => {
+    await page.route('**/api/presets', (route) => route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
+    }));
+    await page.goto('/?accessible-2d-overview-test=1');
+    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await page.getByRole('button', { name: /2d canvas/i }).click();
+
+    const overview = page.getByRole('region', { name: '2D health overview', exact: true });
+    const illustration = overview.getByRole('img', { name: 'Current parameter illustration', exact: true });
+    await expect(illustration).toHaveAccessibleDescription(
+      /Selected pillar: Systems\. Preset status: warning\..*Sleep duration: 4\.5 hours per night/
+    );
+    await expect(overview.getByText('WARNING', { exact: true })).toBeVisible();
+    await expect(overview.getByRole('definition')).toHaveText([
+      '300 minutes/week', '50%', '4.5 hours/night', '8 / 10',
+    ]);
+    await expect(overview).not.toContainText(/Interdependence Score|92\/100|64\/100|38\/100|Restorative/);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+
+    for (const [name, value] of [
+      ['Aerobic Activity (MVPA)', '220'],
+      ['Whole Food Ratio', '75'],
+      ['Sleep Duration', '7.5'],
+      ['Perceived Stress Level', '3'],
+    ]) {
+      await page.getByRole('slider', { name, exact: true }).fill(value);
+    }
+    await page.getByRole('button', { name: 'Sleep', exact: true }).click();
+    await expect(overview.getByText('MANUAL', { exact: true })).toBeVisible();
+    await expect(overview.getByRole('definition')).toHaveText([
+      '220 minutes/week', '75%', '7.5 hours/night', '3 / 10',
+    ]);
+    await expect(illustration).toHaveAccessibleDescription(
+      /Selected pillar: Sleep\. Preset status: manual\..*Aerobic activity: 220 minutes per week\..*Whole food ratio: 75 percent\..*Sleep duration: 7\.5 hours per night\..*Perceived stress: 3 out of 10/
+    );
+
+    for (const mode of [/lite 3d/i, /high 3d/i, /2d canvas/i]) {
+      await page.getByRole('button', { name: mode }).click();
+    }
+    await expect(overview.getByRole('definition')).toHaveText([
+      '220 minutes/week', '75%', '7.5 hours/night', '3 / 10',
+    ]);
+  });
+
+  for (const viewport of [
+    { width: 320, height: 568 },
+    { width: 390, height: 844 },
+    { width: 1280, height: 720 },
+  ]) {
+    test(`2D overview stays reachable with dock and CMS notices at ${viewport.width}px`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      let attempts = 0;
+      await page.route('**/api/presets', (route) => {
+        attempts += 1;
+        return route.fulfill({
+          status: attempts === 1 ? 503 : 200,
+          contentType: 'application/json',
+          body: JSON.stringify(attempts === 1
+            ? { error: 'unavailable' }
+            : { success: true, data: FALLBACK_PRESETS }),
+        });
+      });
+      // Include automatic graphics fallback in the smallest viewport.
+      if (viewport.width === 320) {
+        await page.addInitScript(() => {
+          const getContext = HTMLCanvasElement.prototype.getContext;
+          Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+            value: function (this: HTMLCanvasElement, type: string, ...args: unknown[]) {
+              if (type === 'webgl' || type === 'webgl2' || type === 'experimental-webgl') return null;
+              return Reflect.apply(getContext, this, [type, ...args]);
+            },
+          });
+        });
+      }
+      await page.goto('/?2d-layout-test=1');
+      await expect(page.getByRole('status')).toBeVisible();
+      if (viewport.width !== 320) {
+        await page.getByRole('button', { name: /2d canvas/i }).click();
+      }
+
+      const overview = page.getByRole('region', { name: '2D health overview', exact: true });
+      const dock = page.getByRole('button', {
+        name: /PARAMETER CONTROLS & SLEEP LADDER PRESETS|Parameters & presets/i,
+      });
+      const expectClearLayout = async () => {
+        await expect.poll(async () => {
+          const regionBox = await overview.boundingBox();
+          const headerBox = await page.locator('header').boundingBox();
+          const dockBox = await dock.locator('..').boundingBox();
+          const footerBox = await page.locator('footer').boundingBox();
+          if (!regionBox || !headerBox || !dockBox || !footerBox) return false;
+          return regionBox.height > 32
+            && regionBox.x >= 0
+            && regionBox.x + regionBox.width <= viewport.width
+            && regionBox.y >= headerBox.y + headerBox.height
+            && regionBox.y + regionBox.height <= dockBox.y
+            && dockBox.y + dockBox.height <= footerBox.y;
+        }).toBe(true);
+        expect(await overview.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+      };
+      await expectClearLayout();
+      const expandedDockHeight = (await overview.boundingBox())!.height;
+      await overview.focus();
+      await expect(overview).toBeFocused();
+      await page.keyboard.press('End');
+      await expect.poll(() => overview.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+      await page.keyboard.press('Home');
+      await expect.poll(() => overview.evaluate((element) => element.scrollTop)).toBe(0);
+
+      await dock.click();
+      await expect(dock).toHaveAttribute('aria-expanded', 'false');
+      await expect.poll(async () => (await overview.boundingBox())!.height).toBeGreaterThan(expandedDockHeight + 60);
+      await expectClearLayout();
+      const value = overview.getByRole('definition').last();
+      await value.scrollIntoViewIfNeeded();
+      expect(await value.evaluate((element) => {
+        const box = element.getBoundingClientRect();
+        return element.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2));
+      })).toBe(true);
+      await test.info().attach('2d-overview.png', {
+        body: await page.screenshot(),
+        contentType: 'image/png',
+      });
+
+      const beforeRecovery = (await overview.boundingBox())!.height;
+      await page.getByRole('button', { name: 'Retry presets', exact: true }).click();
+      await expect(page.getByRole('status')).toHaveCount(0);
+      await expect.poll(async () => (await overview.boundingBox())!.height).toBeGreaterThan(beforeRecovery + 30);
+      await expectClearLayout();
+      await dock.click();
+      await expect(dock).toHaveAttribute('aria-expanded', 'true');
+      await expectClearLayout();
+    });
+  }
+
   for (const initialMotion of ['reduce', 'no-preference'] as const) {
     test(`respects ${initialMotion} on load and live motion preference changes`, async ({ page }) => {
       await page.emulateMedia({ reducedMotion: initialMotion });
@@ -92,7 +230,7 @@ test.describe('Healthcrest production regression', () => {
       await expect(renderer).toHaveAttribute('data-reduced-motion', 'true');
       await expectIdle();
       await page.getByRole('button', { name: /2d canvas/i }).click();
-      await expect(page.getByText('6h Restorative', { exact: true })).toBeVisible();
+      await expect(page.getByText('6h / night', { exact: true })).toBeVisible();
       await page.getByRole('button', { name: /high 3d/i }).click();
       await expect(canvas).toBeVisible();
       await expectIdle();
@@ -261,7 +399,7 @@ test.describe('Healthcrest production regression', () => {
       const dock = page.getByRole('button', { name: /Parameters & presets/i });
       await dock.click();
       await expect(dock).toHaveAttribute('aria-expanded', 'false');
-      await expect(page.getByText('7.5h Restorative', { exact: true })).toBeVisible();
+      await expect(page.getByText('7.5h / night', { exact: true })).toBeVisible();
       const controls = [navigation, page.getByRole('group', { name: 'Render mode' }), page.locator('footer')];
       for (const control of controls) {
         const box = await control.boundingBox();
@@ -373,7 +511,7 @@ test.describe('Healthcrest production regression', () => {
     await render2d.focus();
     await page.keyboard.press('Space');
     await expect(render2d).toHaveAttribute('aria-pressed', 'true');
-    await expect(page.getByText('8h Restorative', { exact: true })).toBeVisible();
+    await expect(page.getByText('8h / night', { exact: true })).toBeVisible();
   });
 
   test('exposes control selections and dock state during keyboard navigation', async ({ page }) => {
@@ -444,7 +582,7 @@ test.describe('Healthcrest production regression', () => {
     await page.getByRole('button', { name: /high 3d/i }).click();
     await expect(mode2d).toHaveClass(/border-emerald-500\/30/);
     await expect(sleepSlider).toHaveValue('7.5');
-    await expect(page.getByText('7.5h Restorative', { exact: true })).toBeVisible();
+    await expect(page.getByText('7.5h / night', { exact: true })).toBeVisible();
   });
 
   test('uses the interactive 2D engine when its 3D module cannot load', async ({ page }) => {
@@ -467,7 +605,7 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByText('INITIALISING 3D HEALTH ENGINE...')).toHaveCount(0);
 
     await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
-    await expect(page.getByText('4.5h Restorative', { exact: true })).toBeVisible();
+    await expect(page.getByText('4.5h / night', { exact: true })).toBeVisible();
   });
 
   test('render mode controls stay synchronized with the rendered viewport', async ({ page }) => {
@@ -640,7 +778,7 @@ test.describe('Healthcrest production regression', () => {
     ).toBeVisible();
 
     await expect(
-      fallback.getByText('Not classified', { exact: false })
+      fallback.getByText('Manual settings. Select a preset to view its evidence summary.', { exact: true })
     ).toBeVisible();
 
     await expect(
@@ -861,7 +999,7 @@ test.describe('Healthcrest production regression', () => {
 
       await page.getByRole('button', { name: /2d canvas/i }).click();
       await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
-      await expect(page.getByText('4.5h Restorative', { exact: true })).toBeVisible();
+      await expect(page.getByText('4.5h / night', { exact: true })).toBeVisible();
     });
   }
 
@@ -1011,7 +1149,7 @@ test.describe('Healthcrest production regression', () => {
     ).toBeVisible();
 
     await expect(
-      page.getByText('4.5h Restorative', { exact: true })
+      page.getByText('4.5h / night', { exact: true })
     ).toBeVisible();
 
     await expect(
