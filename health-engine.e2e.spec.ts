@@ -7,6 +7,93 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByText('HEALTH OPTIMISATION')).toBeVisible();
   });
 
+  for (const viewport of [
+    { width: 320, height: 568 },
+    { width: 390, height: 844 },
+    { width: 768, height: 1024 },
+    { width: 1024, height: 768 },
+  ]) {
+    test(`compact layout keeps engine controls usable at ${viewport.width}px`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await page.goto('/?compact-layout-test=1');
+      const navigation = page.getByRole('navigation', { name: 'Health pillars' });
+      await expect(navigation).toBeVisible();
+      for (const pillar of ['Fitness', 'Nutrition', 'Sleep', 'Stress', 'Systems']) {
+        const button = navigation.getByRole('button', { name: pillar, exact: true });
+        await button.click();
+        await expect(button).toHaveAttribute('aria-pressed', 'true');
+      }
+
+      const clinicalToggle = page.getByRole('button', { name: 'Clinical summary', exact: true });
+      const cameraToggle = page.getByRole('button', { name: 'Camera controls', exact: true });
+      await clinicalToggle.click();
+      await expect(page.getByRole('region', { name: 'Clinical summary' })).toBeVisible();
+      await cameraToggle.click();
+      await expect(page.getByRole('region', { name: 'Clinical summary' })).toBeHidden();
+      await page.getByRole('button', { name: /Shot 3: Core Deformation/i }).click();
+      await cameraToggle.click();
+      await expect(page.getByRole('region', { name: 'Camera controls' })).toBeHidden();
+
+      await page.getByRole('button', { name: /2d canvas/i }).click();
+      const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+      await sleep.scrollIntoViewIfNeeded();
+      await sleep.fill('7.5');
+      const footer = await page.locator('footer').boundingBox();
+      const slider = await sleep.boundingBox();
+      expect(footer).not.toBeNull();
+      expect(slider).not.toBeNull();
+      expect(slider!.y + slider!.height).toBeLessThan(footer!.y);
+
+      const dock = page.getByRole('button', { name: /Parameters & presets/i });
+      await dock.click();
+      await expect(dock).toHaveAttribute('aria-expanded', 'false');
+      await expect(page.getByText('7.5h Restorative', { exact: true })).toBeVisible();
+      await page.getByRole('button', { name: /Clinical & Legal Disclaimer/i }).click();
+      await expect(page.getByRole('heading', { name: /CLINICAL & MEDICO-LEGAL DISCLAIMER/i })).toBeVisible();
+
+      const controls = [navigation, page.getByRole('group', { name: 'Render mode' }), page.locator('footer')];
+      for (const control of controls) {
+        const box = await control.boundingBox();
+        expect(box).not.toBeNull();
+        expect(box!.x).toBeGreaterThanOrEqual(0);
+        expect(box!.x + box!.width).toBeLessThanOrEqual(viewport.width);
+      }
+    });
+  }
+
+  test('keeps mobile CMS recovery and parameter controls reachable', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    let attempts = 0;
+    await page.route('**/api/presets', (route) => {
+      attempts += 1;
+      return route.fulfill({
+        status: attempts === 1 ? 503 : 200,
+        contentType: 'application/json',
+        body: JSON.stringify(attempts === 1
+          ? { error: 'unavailable' }
+          : { success: true, data: [FALLBACK_PRESETS[0]] }),
+      });
+    });
+    await page.goto('/?mobile-cms-recovery-test=1');
+    await expect(page.getByRole('status')).toBeVisible();
+    const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+    await sleep.scrollIntoViewIfNeeded();
+    await sleep.fill('7.5');
+    const footer = await page.locator('footer').boundingBox();
+    const slider = await sleep.boundingBox();
+    expect(slider!.y + slider!.height).toBeLessThan(footer!.y);
+
+    const retry = page.getByRole('button', { name: 'Retry presets', exact: true });
+    const retryBox = await retry.boundingBox();
+    expect(retryBox!.x).toBeGreaterThanOrEqual(0);
+    expect(retryBox!.x + retryBox!.width).toBeLessThanOrEqual(320);
+    expect(retryBox!.y + retryBox!.height).toBeLessThanOrEqual(568);
+    await retry.click();
+    await expect(page.getByRole('status')).toHaveCount(0);
+    await expect(sleep).toHaveValue('7.5');
+    expect(attempts).toBe(2);
+  });
+
   test('renders the WebGL health engine', async ({ page }) => {
     const canvas = page.locator('canvas');
 

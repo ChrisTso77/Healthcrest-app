@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer, type CSSProperties } from 'react';
 import {
   ShieldAlert,
   Info,
@@ -95,7 +95,10 @@ export default function FourPillarsHealthEnginePage() {
   }, [presetLoadAttempt]);
 
   return (
-    <main className="relative w-full h-screen bg-slate-950 text-slate-100 font-sans overflow-hidden select-none">
+    <main
+      style={{ '--engine-footer-space': apiError ? '7rem' : '4rem' } as CSSProperties}
+      className="relative w-full h-dvh bg-slate-950 text-slate-100 font-sans overflow-hidden select-none xl:h-screen"
+    >
       {/* ------------------------------------------------------------------ */}
       {/* 1. VISUAL VIEWPORT LAYER */}
       {/* ------------------------------------------------------------------ */}
@@ -174,11 +177,11 @@ export default function FourPillarsHealthEnginePage() {
       {/* ------------------------------------------------------------------ */}
       {/* 3. FOOTER & NARRATIVE / MEDICO-LEGAL ACTION BAR */}
       {/* ------------------------------------------------------------------ */}
-      <footer className="absolute bottom-1 right-6 z-40 flex items-center space-x-3 text-[11px] font-mono text-slate-400">
+      <footer className="absolute bottom-2 inset-x-3 z-40 grid grid-cols-2 gap-2 max-h-24 overflow-y-auto text-[10px] font-mono text-slate-400 xl:bottom-1 xl:left-auto xl:right-6 xl:flex xl:items-center xl:gap-3 xl:max-h-none xl:overflow-visible xl:text-[11px]">
         {apiError && (
-          <div className="flex items-center space-x-2">
-            <span role="status" className="flex items-center space-x-1 text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-              <AlertTriangle className="w-3 h-3" />
+          <div className="col-span-2 flex min-w-0 items-center gap-2">
+            <span role="status" className="flex min-w-0 flex-1 items-center space-x-1 text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+              <AlertTriangle className="w-3 h-3 shrink-0" />
               <span>{apiError}</span>
             </span>
             <button
@@ -188,7 +191,7 @@ export default function FourPillarsHealthEnginePage() {
                 setIsRetryingPresets(true);
                 setPresetLoadAttempt((attempt) => attempt + 1);
               }}
-              className="px-2 py-1 rounded border border-amber-500/40 text-amber-300 hover:bg-amber-500/10 disabled:opacity-50 disabled:cursor-wait"
+              className="shrink-0 px-2 py-1 rounded border border-amber-500/40 text-amber-300 hover:bg-amber-500/10 disabled:opacity-50 disabled:cursor-wait"
             >
               {isRetryingPresets ? 'Retrying…' : 'Retry presets'}
             </button>
