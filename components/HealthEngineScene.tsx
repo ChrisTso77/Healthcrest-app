@@ -12,11 +12,13 @@ import { InteractiveBodyEngineMesh } from "@/components/InteractiveBodyEngineMes
 type HealthEngineSceneProps = {
   state: State;
   cameraState: CameraState;
+  reducedMotion: boolean;
 };
 
 export function HealthEngineScene({
   state,
   cameraState,
+  reducedMotion,
 }: HealthEngineSceneProps) {
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
 
@@ -38,11 +40,13 @@ export function HealthEngineScene({
         params={state.parameters}
         scene={state.activeScene}
         lite={state.renderMode === 'lite-3d'}
+        reducedMotion={reducedMotion}
       />
 
       <OrbitControls
         ref={controlsRef}
         makeDefault
+        enableDamping={!reducedMotion}
         enableRotate
         enableZoom
         enablePan={false}

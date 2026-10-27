@@ -9,6 +9,83 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByText('HEALTH OPTIMISATION')).toBeVisible();
   });
 
+
+  for (const initialMotion of ['reduce', 'no-preference'] as const) {
+    test(`respects ${initialMotion} on load and live motion preference changes`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: initialMotion });
+      await page.addInitScript(() => {
+        let draws = 0;
+        Object.defineProperty(window, '__healthcrestDraws', { get: () => draws });
+        for (const method of ['drawArrays', 'drawElements'] as const) {
+          const original = WebGL2RenderingContext.prototype[method];
+          Object.defineProperty(WebGL2RenderingContext.prototype, method, {
+            value: function (this: WebGL2RenderingContext, ...args: number[]) {
+              draws += 1;
+              return Reflect.apply(original, this, args);
+            },
+          });
+        }
+      });
+      await page.goto('/?motion-preference-test=1');
+      const canvas = page.locator('canvas');
+      const renderer = page.locator('[data-reduced-motion]');
+      const drawCount = () => page.evaluate(() =>
+        (window as unknown as { __healthcrestDraws: number }).__healthcrestDraws
+      );
+      // Sample over time to distinguish an idle renderer from automatic animation.
+      const expectIdle = async () => {
+        await expect.poll(async () => {
+          const before = await drawCount();
+          await page.waitForTimeout(250);
+          return await drawCount() === before;
+        }).toBe(true);
+      };
+      await expect(canvas).toBeVisible();
+      await expect.poll(drawCount).toBeGreaterThan(0);
+      const originalCanvas = await canvas.elementHandle();
+      const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+      await sleep.fill('7.5');
+
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await expect(renderer).toHaveAttribute('data-reduced-motion', 'true');
+      await expectIdle();
+      const beforeEdit = await drawCount();
+      await sleep.fill('6');
+      await expect.poll(drawCount).toBeGreaterThan(beforeEdit);
+      await expectIdle();
+
+      const beforeCamera = await drawCount();
+      await page.getByRole('button', { name: /Shot 3: Core Deformation/i }).click();
+      await expect.poll(drawCount).toBeGreaterThan(beforeCamera);
+      await expectIdle();
+
+      await page.getByRole('button', { name: /lite 3d/i }).click();
+      await expectIdle();
+      await expect(sleep).toHaveValue('6');
+      expect(await originalCanvas!.evaluate((element) => element === document.querySelector('canvas'))).toBe(true);
+      await expect.poll(() => page.evaluate(() =>
+        document.getAnimations().filter((animation) => animation.playState === 'running').length
+      )).toBe(0);
+
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+      await expect(renderer).toHaveAttribute('data-reduced-motion', 'false');
+      const beforeResume = await drawCount();
+      await expect.poll(drawCount).toBeGreaterThan(beforeResume + 20);
+      await expect(sleep).toHaveValue('6');
+      expect(await originalCanvas!.evaluate((element) => element === document.querySelector('canvas'))).toBe(true);
+
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await expect(renderer).toHaveAttribute('data-reduced-motion', 'true');
+      await expectIdle();
+      await page.getByRole('button', { name: /2d canvas/i }).click();
+      await expect(page.getByText('6h Restorative', { exact: true })).toBeVisible();
+      await page.getByRole('button', { name: /high 3d/i }).click();
+      await expect(canvas).toBeVisible();
+      await expectIdle();
+      await expect(sleep).toHaveValue('6');
+    });
+  }
+
   for (const pixelRatio of [1, 2]) {
     test.describe(`render quality at ${pixelRatio}x pixel density`, () => {
       test.use({ deviceScaleFactor: pixelRatio, viewport: { width: 390, height: 844 } });
