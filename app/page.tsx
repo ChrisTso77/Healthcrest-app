@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Activity, Apple, ArrowDown, ArrowUpRight, Brain, Moon } from 'lucide-react';
 import { LandingEnginePreview } from '@/components/LandingEnginePreview';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
+import { HummingbirdAnimation } from '@/components/HummingbirdAnimation';
 import './landing.css';
 
 export const metadata: Metadata = {
@@ -22,7 +23,11 @@ export default function HealthcrestHomePage() {
     <div className="hc-landing" id="top">
       <a className="hc-skip-link" href="#main-content">Skip to content</a>
       <header className="hc-header">
-        <Link href="/" aria-label="Healthcrest home" className="hc-wordmark">Healthcrest<span aria-hidden="true">.</span></Link>
+        <Link href="/" aria-label="Healthcrest home" className="hc-brand">
+          {/* Preserve the supplied artwork without cropping its wordmark or tagline. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/media/healthcrest-logo.png" alt="HealthCrest — Optimising health" width={1664} height={940} />
+        </Link>
         <nav className="hc-navigation" aria-label="Main navigation">
           <a href="#purpose">Our purpose</a>
           <a href="#pillars">Four pillars</a>
@@ -46,7 +51,7 @@ export default function HealthcrestHomePage() {
           <figure className="hc-hero-art" aria-label="A connected approach to everyday health">
             <div className="hc-art-orbit hc-art-orbit-one" aria-hidden="true" />
             <div className="hc-art-orbit hc-art-orbit-two" aria-hidden="true" />
-            <div className="hc-hummingbird-stage" id="hummingbird-stage" aria-hidden="true" />
+            <div className="hc-hummingbird-stage" id="hummingbird-stage"><HummingbirdAnimation /></div>
             <span className="hc-art-note hc-art-note-one">Understand the science</span>
             <span className="hc-art-note hc-art-note-two">Put it into practice</span>
             <figcaption>Care begins with understanding.</figcaption>
@@ -127,7 +132,11 @@ export default function HealthcrestHomePage() {
       </main>
 
       <footer className="hc-footer">
-        <Link href="/" className="hc-wordmark" aria-label="Healthcrest home">Healthcrest<span aria-hidden="true">.</span></Link>
+        <Link href="/" aria-label="Healthcrest home" className="hc-brand">
+          {/* Preserve the supplied artwork without cropping its wordmark or tagline. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/media/healthcrest-logo.png" alt="HealthCrest — Optimising health" width={1664} height={940} />
+        </Link>
         <p>Evidence-informed understanding. Practical everyday care.</p>
         <p className="hc-footer-note">Educational information for adults. Adapt ideas to your health, ability and circumstances, alongside appropriate clinical advice.</p>
       </footer>

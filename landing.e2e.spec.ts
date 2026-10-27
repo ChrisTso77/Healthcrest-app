@@ -90,3 +90,52 @@ test.describe('Healthcrest introduction', () => {
     await expect(page.getByRole('slider', { name: 'Sleep Duration', exact: true })).toHaveValue('8');
   });
 });
+
+test('hummingbird loads, pauses, resumes and respects changed motion preferences', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const logos = page.locator('.hc-brand img');
+  await expect(logos).toHaveCount(2);
+  for (const logo of await logos.all()) {
+    await expect.poll(() => logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+  }
+  const video = page.locator('.hc-bird video');
+  await expect(video).toBeVisible();
+  await expect.poll(() => video.evaluate((media: HTMLVideoElement) => media.readyState)).toBeGreaterThanOrEqual(2);
+  await expect.poll(() => video.evaluate((media: HTMLVideoElement) => media.currentTime)).toBeGreaterThan(0);
+  await page.getByRole('button', { name: 'Pause hummingbird animation', exact: true }).click();
+  await expect.poll(() => video.evaluate((media: HTMLVideoElement) => media.paused)).toBe(true);
+  const stopped = await video.evaluate((media: HTMLVideoElement) => media.currentTime);
+  await page.waitForTimeout(250);
+  expect(await video.evaluate((media: HTMLVideoElement) => media.currentTime)).toBeCloseTo(stopped, 1);
+  await page.getByRole('button', { name: 'Play hummingbird animation', exact: true }).click();
+  await expect.poll(() => video.evaluate((media: HTMLVideoElement) => media.paused)).toBe(false);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(video).toHaveCount(0);
+  const still = page.locator('.hc-bird img');
+  await expect(still).toBeVisible();
+  await expect.poll(() => still.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+  await expect(page.getByRole('button', { name: /hummingbird animation/ })).toHaveCount(0);
+});
+
+test('hummingbird uses supplied static artwork when video fails', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.route('**/media/healthcrest-hummingbird.webm', route => route.abort());
+  await page.goto('/');
+  await expect(page.locator('.hc-bird video')).toHaveCount(0);
+  const still = page.locator('.hc-bird img');
+  await expect(still).toBeVisible();
+  await expect.poll(() => still.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+});
+
+test('branding and static hero remain available without JavaScript', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, baseURL });
+  const page = await context.newPage();
+  await page.goto('/');
+  await expect(page.locator('.hc-brand img')).toHaveCount(2);
+  const still = page.locator('.hc-bird img');
+  await expect(still).toBeVisible();
+  await expect.poll(() => still.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+  await expect(page.locator('video')).toHaveCount(0);
+  await context.close();
+});

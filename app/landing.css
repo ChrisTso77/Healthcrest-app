@@ -149,3 +149,18 @@
   .hc-art-orbit-two { width: 210px; height: 210px; }
   .hc-button { padding-left: 19px; padding-right: 19px; font-size: 13px; }
 }
+
+.hc-brand { display: block; flex-shrink: 0; width: 220px; }
+.hc-brand img { display: block; width: 100%; height: auto; }
+.hc-header { flex-wrap: wrap; }
+.hc-bird { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+.hc-bird-media { width: 100%; min-height: 0; flex: 1; display: flex; align-items: center; justify-content: center; }
+.hc-bird-media img, .hc-bird-media video { display: block; width: 100%; height: 100%; object-fit: contain; }
+.hc-bird-toggle { position: relative; z-index: 2; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 16px; border: 1px solid #8b9d7d; border-radius: 999px; background: #f8f7f0; color: #183b2d; font: inherit; font-size: 12px; cursor: pointer; }
+.hc-art-note { pointer-events: none; }
+@media (max-width: 700px) {
+  .hc-header { justify-content: center; }
+  .hc-header .hc-brand { width: 200px; }
+  .hc-header-cta { margin-left: 0; }
+  .hc-footer .hc-brand { width: min(280px, 100%); }
+}
