@@ -21,6 +21,7 @@ import {
 import { HealthEngineHUD } from '@/components/HealthEngineHUD';
 import { HealthEngineViewport } from '@/components/HealthEngineViewport';
 import { ModalDialog } from '@/components/ModalDialog';
+import { HealthEngineGuide } from '@/components/HealthEngineGuide';
 import type {
   CameraState,
   CanonicalScenarioPreset,
@@ -45,6 +46,7 @@ export default function FourPillarsHealthEnginePage() {
 
   // UI Control States
   const [isDockOpen, setIsDockOpen] = useState(true);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
   const [isNarrativeOpen, setIsNarrativeOpen] = useState<boolean>(false);
   const [presetsList, setPresetsList] = useState<CanonicalScenarioPreset[]>([]);
@@ -119,6 +121,7 @@ export default function FourPillarsHealthEnginePage() {
       {/* ------------------------------------------------------------------ */}
       <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
         <HealthEngineHUD
+        onGuideOpen={() => setIsGuideOpen(true)}
         isDockOpen={isDockOpen}
         onDockToggle={() => setIsDockOpen((open) => !open)}
         presets={presetsList}
@@ -227,6 +230,13 @@ export default function FourPillarsHealthEnginePage() {
 
       {/* ------------------------------------------------------------------ */}
       {/* 4. HOME PAGE & GLOBAL NARRATIVE DRAWER / MODAL */}
+      {isGuideOpen && (
+        <HealthEngineGuide
+          state={state}
+          presets={presetsList}
+          onClose={() => setIsGuideOpen(false)}
+        />
+      )}
       {/* ------------------------------------------------------------------ */}
       {isNarrativeOpen && (
         <ModalDialog labelledBy="global-narrative-title" onClose={() => setIsNarrativeOpen(false)} className="sm:p-6">

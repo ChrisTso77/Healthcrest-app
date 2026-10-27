@@ -16,7 +16,7 @@ export const CAMERA_SHOTS: readonly CameraShot[] = [
     azimuth: 45,
     elevation: 20,
     zoom: 1.0,
-    desc: 'Wide panoramic orbit around balanced tetrapod core',
+    desc: 'A wide view of the whole model',
   },
   {
     id: 'shot-2-failure',
@@ -24,7 +24,7 @@ export const CAMERA_SHOTS: readonly CameraShot[] = [
     azimuth: 135,
     elevation: 35,
     zoom: 1.4,
-    desc: 'Dolly-in focus on buckling sleep & stress legs',
+    desc: 'An angled, closer view of the model',
   },
   {
     id: 'shot-3-macro',
@@ -32,7 +32,7 @@ export const CAMERA_SHOTS: readonly CameraShot[] = [
     azimuth: 0,
     elevation: 10,
     zoom: 2.2,
-    desc: 'Macro view of geodesic core vertex displacement',
+    desc: 'A close-up of the central shape',
   },
   {
     id: 'shot-4-resonance',
@@ -40,7 +40,7 @@ export const CAMERA_SHOTS: readonly CameraShot[] = [
     azimuth: 220,
     elevation: 50,
     zoom: 0.8,
-    desc: 'High isometric overview of social resonance dome',
+    desc: 'A raised overview from another angle',
   },
 ];
 
