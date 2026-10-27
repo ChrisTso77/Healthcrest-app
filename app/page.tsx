@@ -102,6 +102,7 @@ export default function FourPillarsHealthEnginePage() {
       <HealthEngineViewport
         state={state}
         cameraState={cameraState}
+        onWebGLError={() => dispatch({ type: 'SET_RENDER_MODE', payload: '2d-canvas' })}
       />
 
       {/* ------------------------------------------------------------------ */}

@@ -68,6 +68,54 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.locator('canvas')).toBeVisible();
   });
 
+  test('automatically uses 2D when WebGL is unavailable and preserves controls on retry', async ({ page }) => {
+    await page.addInitScript(() => {
+      const getContext = HTMLCanvasElement.prototype.getContext;
+      Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+        value: function (this: HTMLCanvasElement, type: string, ...args: unknown[]) {
+          if (type === 'webgl' || type === 'webgl2' || type === 'experimental-webgl') return null;
+          return Reflect.apply(getContext, this, [type, ...args]);
+        },
+      });
+    });
+    await page.goto('/?webgl-unavailable-test=1');
+
+    const mode2d = page.getByRole('button', { name: /2d canvas/i });
+    await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+    await expect(mode2d).toHaveClass(/border-emerald-500\/30/);
+    await expect(page.locator('canvas')).toHaveCount(0);
+
+    const sleepSlider = page.locator('input[type="range"]').nth(1);
+    await sleepSlider.fill('7.5');
+    await page.getByRole('button', { name: /high 3d/i }).click();
+    await expect(mode2d).toHaveClass(/border-emerald-500\/30/);
+    await expect(sleepSlider).toHaveValue('7.5');
+    await expect(page.getByText('7.5h Restorative', { exact: true })).toBeVisible();
+  });
+
+  test('uses the interactive 2D engine when its 3D module cannot load', async ({ page }) => {
+    let blocked3dModule = false;
+    await page.route('**/_next/static/chunks/*.js', async (route) => {
+      const response = await route.fetch();
+      if ((await response.text()).includes('data-camera-request-revision')) {
+        blocked3dModule = true;
+        await route.abort('failed');
+      } else {
+        await route.fulfill({ response });
+      }
+    });
+    await page.goto('/?webgl-module-failure-test=1');
+
+    await expect.poll(() => blocked3dModule).toBe(true);
+    await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+    await expect(page.getByRole('button', { name: /2d canvas/i }))
+      .toHaveClass(/border-emerald-500\/30/);
+    await expect(page.getByText('INITIALISING 3D HEALTH ENGINE...')).toHaveCount(0);
+
+    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await expect(page.getByText('4.5h Restorative', { exact: true })).toBeVisible();
+  });
+
   test('render mode controls stay synchronized with the rendered viewport', async ({ page }) => {
     const high3d = page.getByRole('button', { name: /high 3d/i });
     const lite3d = page.getByRole('button', { name: /lite 3d/i });
