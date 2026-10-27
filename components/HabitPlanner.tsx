@@ -91,7 +91,7 @@ export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) 
           <div className="hc-plan-field">
             <label htmlFor={id + '-action'}>One manageable action</label>
             <p id={id + '-action-help'}>Make it small enough to fit your health, ability and circumstances.</p>
-            <textarea id={id + '-action'} rows={3} maxLength={300} value={draft.action}
+            <textarea id={id + '-action'} required rows={3} maxLength={300} value={draft.action}
               aria-describedby={id + '-action-help'} onChange={event => update('action', event.target.value)} />
           </div>
           <div className="hc-plan-field">
