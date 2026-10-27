@@ -1,0 +1,25 @@
+name: Inspect supplied hummingbird media
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/inspect-media.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install media inspection tool
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Inspect original video frames
+        shell: python
+        run: |
+          import subprocess, json, base64
+          source = 'public/media/healthcrest-hummingbird.webm'
+          meta = json.loads(subprocess.check_output(['ffprobe','-v','quiet','-show_streams','-show_format','-of','json',source]))
+          print('MEDIA_METADATA=' + json.dumps(meta))
+          duration = float(meta['format']['duration'])
+          for index, fraction in enumerate([0.1, 0.5, 0.9]):
+              frame = subprocess.check_output(['ffmpeg','-v','error','-c:v','libvpx-vp9','-ss',str(duration*fraction),'-i',source,'-vf','scale=480:-2','-frames:v','1','-f','image2pipe','-vcodec','png','-'])
+              print('MEDIA_FRAME_' + str(index) + '=' + base64.b64encode(frame).decode())
