@@ -1,4 +1,4 @@
-import { useState, type FC, type ReactNode } from 'react';
+import { useId, useState, type FC, type ReactNode } from 'react';
 import type {
   CanonicalPresetParameters,
   CanonicalScenarioPreset,
@@ -65,6 +65,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
   // Navigation & Control States
   const [isDayTime, setIsDayTime] = useState<boolean>(false);
   const [isDockOpen, setIsDockOpen] = useState<boolean>(true);
+  const controlsId = useId();
 
   const availablePresets =
     resolveAvailablePresets(presets);
@@ -144,10 +145,11 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         </div>
 
         {/* Pillar Selector Tabs */}
-        <nav className="hidden md:flex items-center space-x-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800/80">
+        <nav aria-label="Health pillars" className="hidden md:flex items-center space-x-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800/80">
           {(['Fitness', 'Nutrition', 'Sleep', 'Stress', 'Systems'] as PillarType[]).map((pillar) => (
             <button
               key={pillar}
+              aria-pressed={activePillar === pillar}
               onClick={() => {
                 onPillarChange?.(pillar);
               }}
@@ -173,10 +175,11 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             {isDayTime ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-violet-400" />}
           </button>
 
-          <div className="flex items-center bg-slate-950/80 p-1 rounded-lg border border-slate-800 text-xs">
+          <div role="group" aria-label="Render mode" className="flex items-center bg-slate-950/80 p-1 rounded-lg border border-slate-800 text-xs">
             {(['high-3d', 'lite-3d', '2d-canvas'] as RenderMode[]).map((mode) => (
               <button
                 key={mode}
+                aria-pressed={renderMode === mode}
                 onClick={() => {
                   onRenderModeChange?.(mode);
                 }}
@@ -262,6 +265,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
           {CAMERA_SHOTS.map((shot) => (
             <button
               key={shot.id}
+              aria-pressed={camera.activeShotId === shot.id}
               onClick={() => applyCameraShot(shot.id)}
               className={`w-full text-left p-2 rounded-lg text-xs font-medium transition-all flex flex-col border ${
                 camera.activeShotId === shot.id
@@ -294,6 +298,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         
         <button
           onClick={() => setIsDockOpen(!isDockOpen)}
+          aria-expanded={isDockOpen}
           className="w-full h-10 px-6 flex items-center justify-between text-xs font-mono text-slate-400 hover:text-slate-200 border-b border-slate-800/50"
         >
           <div className="flex items-center space-x-2">
@@ -316,6 +321,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                 {availablePresets.map((preset) => (
                   <button
                     key={preset.id}
+                    aria-pressed={activePreset?.id === preset.id}
                     onClick={() => loadPreset(preset)}
                     className={`w-full text-left p-2 rounded-lg text-xs transition-all border ${
                       activePreset?.id === preset.id
@@ -339,10 +345,13 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
               
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <span className="font-medium text-slate-300">Aerobic Activity (MVPA)</span>
+                  <label htmlFor={`${controlsId}-aerobic`} className="font-medium text-slate-300">Aerobic Activity (MVPA)</label>
                   <span className="font-mono text-emerald-400">{parameters.aerobicMins} mins/wk</span>
                 </div>
                 <input
+                  id={`${controlsId}-aerobic`}
+                  aria-describedby={`${controlsId}-aerobic-guidance`}
+                  aria-valuetext={`${parameters.aerobicMins} minutes per week`}
                   type="range"
                   min="0"
                   max="400"
@@ -351,15 +360,18 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   onChange={(e) => handleParamChange('aerobicMins', Number(e.target.value))}
                   className="w-full accent-emerald-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
-                <span className="text-[9px] font-mono text-slate-500 block">Guideline Target: 150–300 mins/week</span>
+                <span id={`${controlsId}-aerobic-guidance`} className="text-[9px] font-mono text-slate-500 block">Guideline Target: 150–300 mins/week</span>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <span className="font-medium text-slate-300">Sleep Duration</span>
+                  <label htmlFor={`${controlsId}-sleep`} className="font-medium text-slate-300">Sleep Duration</label>
                   <span className="font-mono text-violet-400">{parameters.sleepDuration} hrs/night</span>
                 </div>
                 <input
+                  id={`${controlsId}-sleep`}
+                  aria-describedby={`${controlsId}-sleep-guidance`}
+                  aria-valuetext={`${parameters.sleepDuration} hours per night`}
                   type="range"
                   min="4"
                   max="10"
@@ -368,15 +380,18 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   onChange={(e) => handleParamChange('sleepDuration', Number(e.target.value))}
                   className="w-full accent-violet-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
-                <span className="text-[9px] font-mono text-slate-500 block">AASM Target: 7.0–9.0 hrs/night</span>
+                <span id={`${controlsId}-sleep-guidance`} className="text-[9px] font-mono text-slate-500 block">AASM Target: 7.0–9.0 hrs/night</span>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <span className="font-medium text-slate-300">Whole Food Ratio</span>
+                  <label htmlFor={`${controlsId}-nutrition`} className="font-medium text-slate-300">Whole Food Ratio</label>
                   <span className="font-mono text-amber-400">{parameters.wholeFoodRatio}%</span>
                 </div>
                 <input
+                  id={`${controlsId}-nutrition`}
+                  aria-describedby={`${controlsId}-nutrition-guidance`}
+                  aria-valuetext={`${parameters.wholeFoodRatio} percent`}
                   type="range"
                   min="0"
                   max="100"
@@ -385,15 +400,18 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   onChange={(e) => handleParamChange('wholeFoodRatio', Number(e.target.value))}
                   className="w-full accent-amber-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
-                <span className="text-[9px] font-mono text-slate-500 block">ACLM Target: Plant-predominant whole foods</span>
+                <span id={`${controlsId}-nutrition-guidance`} className="text-[9px] font-mono text-slate-500 block">ACLM Target: Plant-predominant whole foods</span>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <span className="font-medium text-slate-300">Perceived Stress Level</span>
+                  <label htmlFor={`${controlsId}-stress`} className="font-medium text-slate-300">Perceived Stress Level</label>
                   <span className="font-mono text-rose-400">{parameters.stressLevel} / 10</span>
                 </div>
                 <input
+                  id={`${controlsId}-stress`}
+                  aria-describedby={`${controlsId}-stress-guidance`}
+                  aria-valuetext={`${parameters.stressLevel} out of 10`}
                   type="range"
                   min="1"
                   max="10"
@@ -402,7 +420,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   onChange={(e) => handleParamChange('stressLevel', Number(e.target.value))}
                   className="w-full accent-rose-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
-                <span className="text-[9px] font-mono text-slate-500 block">Target: Active parasympathetic buffering</span>
+                <span id={`${controlsId}-stress-guidance`} className="text-[9px] font-mono text-slate-500 block">Target: Active parasympathetic buffering</span>
               </div>
 
             </div>

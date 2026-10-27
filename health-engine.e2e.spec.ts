@@ -56,6 +56,60 @@ test.describe('Healthcrest production regression', () => {
     await expect(stress).toHaveValue('4');
   });
 
+  test('exposes named sliders with guidance and supports keyboard parameter changes', async ({ page }) => {
+    for (const name of ['Aerobic Activity (MVPA)', 'Sleep Duration', 'Whole Food Ratio', 'Perceived Stress Level']) {
+      await expect(page.getByRole('slider', { name, exact: true })).toBeVisible();
+    }
+
+    const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+    await expect(sleep).toHaveAccessibleDescription('AASM Target: 7.0–9.0 hrs/night');
+    await sleep.fill('7.5');
+    await sleep.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(sleep).toHaveValue('8');
+    await expect(sleep).toHaveAttribute('aria-valuetext', '8 hours per night');
+
+    const render2d = page.getByRole('button', { name: /2d canvas/i });
+    await render2d.focus();
+    await page.keyboard.press('Space');
+    await expect(render2d).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByText('8h Restorative', { exact: true })).toBeVisible();
+  });
+
+  test('exposes control selections and dock state during keyboard navigation', async ({ page }) => {
+    const sleep = page.getByRole('button', { name: 'Sleep', exact: true });
+    await sleep.focus();
+    await page.keyboard.press('Enter');
+    await expect(sleep).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByRole('button', { name: 'Systems', exact: true }))
+      .toHaveAttribute('aria-pressed', 'false');
+
+    const macro = page.getByRole('button', { name: /Shot 3: Core Deformation/i });
+    await macro.focus();
+    await page.keyboard.press('Enter');
+    await expect(macro).toHaveAttribute('aria-pressed', 'true');
+
+    const failure = page.getByRole('button', { name: /Single-Pillar Failure/i });
+    await failure.focus();
+    await page.keyboard.press('Enter');
+    await expect(failure).toHaveAttribute('aria-pressed', 'true');
+    const sleepSlider = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+    await expect(sleepSlider).toHaveAttribute('aria-valuetext', '4.5 hours per night');
+    await sleepSlider.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(failure).toHaveAttribute('aria-pressed', 'false');
+
+    const dock = page.getByRole('button', { name: /PARAMETER CONTROLS & SLEEP LADDER PRESETS/ });
+    await expect(dock).toHaveAttribute('aria-expanded', 'true');
+    await dock.focus();
+    await page.keyboard.press('Enter');
+    await expect(dock).toHaveAttribute('aria-expanded', 'false');
+    await expect(sleepSlider).toHaveCount(0);
+    await page.keyboard.press('Space');
+    await expect(dock).toHaveAttribute('aria-expanded', 'true');
+    await expect(sleepSlider).toHaveValue('5');
+  });
+
   test('switches between WebGL and 2D fallback', async ({ page }) => {
     await page.getByRole('button', { name: /2d canvas/i }).click();
 
