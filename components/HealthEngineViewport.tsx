@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { Layers } from "lucide-react";
+import { Component, type ReactNode } from "react";
 
 import type { CameraState } from "@/lib/presets/types";
 import type { State } from "@/state/PillarsStateTypes";
@@ -10,7 +11,31 @@ import { HealthEngine2DFallback } from "@/components/HealthEngine2DFallback";
 type HealthEngineViewportProps = {
   state: State;
   cameraState: CameraState;
+  onWebGLError: () => void;
 };
+
+type WebGLErrorBoundaryProps = {
+  children: ReactNode;
+  fallback: ReactNode;
+  onError: () => void;
+};
+
+class WebGLErrorBoundary extends Component<WebGLErrorBoundaryProps, { failed: boolean }> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  componentDidCatch(error: Error) {
+    console.warn("3D health engine unavailable; switching to 2D:", error);
+    this.props.onError();
+  }
+
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
+}
 
 function CanvasPlaceholder() {
   return (
@@ -31,15 +56,8 @@ function CanvasPlaceholder() {
   );
 }
 
-function WebGLLoadErrorFallback() {
-  return <CanvasPlaceholder />;
-}
-
 const WebGLCanvasWrapper = dynamic(
-  () =>
-    import("@/app/WebGLCanvasWrapper").catch(
-      () => WebGLLoadErrorFallback
-    ),
+  () => import("@/app/WebGLCanvasWrapper"),
   {
     ssr: false,
     loading: () => <CanvasPlaceholder />,
@@ -61,33 +79,42 @@ function toFallbackHealthStatus(
   }
 }
 
+function FallbackViewport({ state }: Pick<HealthEngineViewportProps, "state">) {
+  return (
+    <div className="absolute inset-0 z-0 flex items-center justify-center overflow-auto bg-slate-950 p-6">
+      <HealthEngine2DFallback
+        activePillar={state.activePillar}
+        aerobicMins={state.parameters.aerobicVolume}
+        sleepDuration={state.parameters.sleepDuration}
+        wholeFoodRatio={state.parameters.wholeFoodRatio}
+        stressLevel={state.parameters.perceivedStress}
+        healthStatus={toFallbackHealthStatus(
+          state.overlay.status
+        )}
+      />
+    </div>
+  );
+}
+
 export function HealthEngineViewport({
   state,
   cameraState,
+  onWebGLError,
 }: HealthEngineViewportProps) {
+  const fallback = <FallbackViewport state={state} />;
+
   if (state.renderMode === "2d-canvas") {
-    return (
-      <div className="absolute inset-0 z-0 flex items-center justify-center overflow-auto bg-slate-950 p-6">
-        <HealthEngine2DFallback
-          activePillar={state.activePillar}
-          aerobicMins={state.parameters.aerobicVolume}
-          sleepDuration={state.parameters.sleepDuration}
-          wholeFoodRatio={state.parameters.wholeFoodRatio}
-          stressLevel={state.parameters.perceivedStress}
-          healthStatus={toFallbackHealthStatus(
-            state.overlay.status
-          )}
-        />
-      </div>
-    );
+    return fallback;
   }
 
   return (
-    <div className="absolute inset-0 z-0">
-      <WebGLCanvasWrapper
-        state={state}
-        cameraState={cameraState}
-      />
-    </div>
+    <WebGLErrorBoundary fallback={fallback} onError={onWebGLError}>
+      <div className="absolute inset-0 z-0">
+        <WebGLCanvasWrapper
+          state={state}
+          cameraState={cameraState}
+        />
+      </div>
+    </WebGLErrorBoundary>
   );
 }

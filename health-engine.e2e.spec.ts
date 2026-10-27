@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Request, type Route } from '@playwright/test';
+import { FALLBACK_PRESETS } from './lib/presets/fallback';
 
 test.describe('Healthcrest production regression', () => {
   test.beforeEach(async ({ page }) => {
@@ -65,6 +66,54 @@ test.describe('Healthcrest production regression', () => {
     await page.getByRole('button', { name: /high 3d/i }).click();
 
     await expect(page.locator('canvas')).toBeVisible();
+  });
+
+  test('automatically uses 2D when WebGL is unavailable and preserves controls on retry', async ({ page }) => {
+    await page.addInitScript(() => {
+      const getContext = HTMLCanvasElement.prototype.getContext;
+      Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+        value: function (this: HTMLCanvasElement, type: string, ...args: unknown[]) {
+          if (type === 'webgl' || type === 'webgl2' || type === 'experimental-webgl') return null;
+          return Reflect.apply(getContext, this, [type, ...args]);
+        },
+      });
+    });
+    await page.goto('/?webgl-unavailable-test=1');
+
+    const mode2d = page.getByRole('button', { name: /2d canvas/i });
+    await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+    await expect(mode2d).toHaveClass(/border-emerald-500\/30/);
+    await expect(page.locator('canvas')).toHaveCount(0);
+
+    const sleepSlider = page.locator('input[type="range"]').nth(1);
+    await sleepSlider.fill('7.5');
+    await page.getByRole('button', { name: /high 3d/i }).click();
+    await expect(mode2d).toHaveClass(/border-emerald-500\/30/);
+    await expect(sleepSlider).toHaveValue('7.5');
+    await expect(page.getByText('7.5h Restorative', { exact: true })).toBeVisible();
+  });
+
+  test('uses the interactive 2D engine when its 3D module cannot load', async ({ page }) => {
+    let blocked3dModule = false;
+    await page.route('**/_next/static/chunks/*.js', async (route) => {
+      const response = await route.fetch();
+      if ((await response.text()).includes('data-camera-request-revision')) {
+        blocked3dModule = true;
+        await route.abort('failed');
+      } else {
+        await route.fulfill({ response });
+      }
+    });
+    await page.goto('/?webgl-module-failure-test=1');
+
+    await expect.poll(() => blocked3dModule).toBe(true);
+    await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+    await expect(page.getByRole('button', { name: /2d canvas/i }))
+      .toHaveClass(/border-emerald-500\/30/);
+    await expect(page.getByText('INITIALISING 3D HEALTH ENGINE...')).toHaveCount(0);
+
+    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await expect(page.getByText('4.5h Restorative', { exact: true })).toBeVisible();
   });
 
   test('render mode controls stay synchronized with the rendered viewport', async ({ page }) => {
@@ -433,6 +482,117 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.locator('canvas')).toBeVisible();
   });
 
+
+  for (const scenario of [
+    { name: 'failed CMS request', status: 503, body: '{"error":"unavailable"}' },
+    { name: 'malformed CMS JSON', status: 200, body: '{invalid' },
+    { name: 'invalid CMS response', status: 200, body: '{"success":false}' },
+    { name: 'empty CMS preset list', status: 200, body: '{"success":true,"data":[]}' },
+  ]) {
+    test(`keeps fallback presets interactive after ${scenario.name}`, async ({ page }) => {
+      await page.route('**/api/presets', (route) => route.fulfill({
+        status: scenario.status,
+        contentType: 'application/json',
+        body: scenario.body,
+      }));
+
+      await page.goto('/?cms-failure-test=1');
+      await expect(page.getByRole('status')).toHaveText(
+        'CMS presets unavailable — using local evidence presets.'
+      );
+
+      await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+      await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
+      await expect(page.getByText('Structural Imbalance: Sleep & Stress Failure')).toBeVisible();
+
+      await page.getByRole('button', { name: /2d canvas/i }).click();
+      await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+      await expect(page.getByText('4.5h Restorative', { exact: true })).toBeVisible();
+    });
+  }
+
+  test('times out a stalled CMS request while fallback controls remain usable', async ({ page }) => {
+    let stalledRequest: Request | undefined;
+    let aborted = false;
+    page.on('requestfailed', (request) => {
+      if (request === stalledRequest) aborted = true;
+    });
+    await page.route('**/api/presets', (route) => {
+      // Leave the request pending so the application's own timeout must cancel it.
+      stalledRequest = route.request();
+    });
+
+    await page.goto('/?cms-timeout-test=1');
+    await expect.poll(() => stalledRequest !== undefined).toBe(true);
+    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
+    await expect(page.getByRole('status')).toHaveText(
+      'CMS presets unavailable — using local evidence presets.',
+      { timeout: 15_000 }
+    );
+    await expect.poll(() => aborted).toBe(true);
+    await expect(page.getByText('Structural Imbalance: Sleep & Stress Failure')).toBeVisible();
+  });
+
+  test('retries CMS loading without losing manual parameters or render mode', async ({ page }) => {
+    let attempts = 0;
+    let pendingRetry: Route | undefined;
+    const recoveredPreset = {
+      ...FALLBACK_PRESETS[0],
+      id: 'recovered-cms-preset',
+      slug: 'recovered-cms-preset',
+      title: 'Recovered CMS Preset',
+    };
+    await page.route('**/api/presets', (route) => {
+      attempts += 1;
+      if (attempts === 1) {
+        return route.fulfill({ status: 503, body: 'unavailable' });
+      }
+      pendingRetry = route;
+    });
+
+    await page.goto('/?cms-recovery-test=1');
+    await expect(page.getByRole('status')).toBeVisible();
+    const sleepSlider = page.locator('input[type="range"]').nth(1);
+    await sleepSlider.fill('7.5');
+    await page.getByRole('button', { name: /2d canvas/i }).click();
+
+    await page.getByRole('button', { name: 'Retry presets', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Retrying…', exact: true })).toBeDisabled();
+    await expect.poll(() => pendingRetry !== undefined).toBe(true);
+    expect(attempts).toBe(2);
+    await pendingRetry!.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ success: true, data: [recoveredPreset] }),
+    });
+
+    await expect(page.getByRole('status')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /Recovered CMS Preset/i })).toBeVisible();
+    await expect(sleepSlider).toHaveValue('7.5');
+    await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+    await expect(page.getByRole('button', { name: /Retry presets|Retrying…/ })).toHaveCount(0);
+  });
+
+  test('allows another retry when the CMS is still unavailable', async ({ page }) => {
+    let attempts = 0;
+    await page.route('**/api/presets', (route) => {
+      attempts += 1;
+      return route.fulfill({ status: 503, body: 'unavailable' });
+    });
+
+    await page.goto('/?cms-retry-failure-test=1');
+    const retry = page.getByRole('button', { name: 'Retry presets', exact: true });
+    await expect(retry).toBeEnabled();
+    for (const expectedAttempts of [2, 3]) {
+      await retry.click();
+      await expect.poll(() => attempts).toBe(expectedAttempts);
+      await expect(retry).toBeEnabled();
+      await expect(page.getByRole('status')).toBeVisible();
+    }
+    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
+  });
 
   test('warning preset synchronizes reducer state into 2D fallback', async ({ page }) => {
     await page.route('**/api/presets', async (route) => {
