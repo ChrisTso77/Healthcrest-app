@@ -17,10 +17,13 @@ jobs:
         run: |
           import subprocess, json, base64, hashlib
           source = 'public/media/healthcrest-hummingbird.webm'
-          subprocess.run(['ffmpeg','-v','error','-c:v','libvpx-vp9','-i',source,'-vf','scale=960:-2,format=yuv420p','-c:v','libvpx-vp9','-deadline','good','-cpu-used','4','-threads','2','-crf','30','-b:v','0','-an','/tmp/hummingbird-opaque.webm'],check=True)
+          subprocess.run(['ffmpeg','-v','error','-c:v','libvpx-vp9','-i',source,'-vf','scale=960:-2,format=yuv420p','-c:v','libvpx-vp9','-deadline','good','-cpu-used','4','-threads','2','-crf','30','-b:v','0','-an','-map_metadata','-1','-map_metadata:s:v','-1','/tmp/hummingbird-opaque.webm'],check=True)
           subprocess.run(['ffmpeg','-v','error','-ss','4.986','-i','/tmp/hummingbird-opaque.webm','-frames:v','1','-q:v','3','/tmp/hummingbird-still.jpg'],check=True)
           # Compare the original transparency on the actual light page background.
-          original = subprocess.check_output(['ffmpeg','-v','error','-c:v','libvpx-vp9','-ss','4.986','-i',source,'-filter_complex','[0:v]format=rgba[fg];color=c=0xf8f7f0:s=1280x720[bg];[bg][fg]overlay=shortest=1,scale=480:-2','-frames:v','1','-f','image2pipe','-vcodec','mjpeg','-'])
+          original = subprocess.check_output(['ffmpeg','-v','error','-c:v','libvpx-vp9','-ss','4.986','-i',source,'-filter_complex','[0:v]setpts=PTS-STARTPTS,format=rgba[fg];color=c=0xf8f7f0:s=1280x720[bg];[bg][fg]overlay=shortest=1,scale=480:-2','-frames:v','1','-f','image2pipe','-vcodec','mjpeg','-'])
+          for label, path in [('SOURCE',source),('OUTPUT','/tmp/hummingbird-opaque.webm')]:
+              rgba = subprocess.check_output(['ffmpeg','-v','error','-c:v','libvpx-vp9','-ss','4.986','-i',path,'-vf','scale=160:90','-frames:v','1','-f','rawvideo','-pix_fmt','rgba','-'])
+              print('MEDIA_ALPHA_' + label + '=' + json.dumps({'min':min(rgba[3::4]),'max':max(rgba[3::4]),'transparent_pixels':sum(a<255 for a in rgba[3::4])}))
           print('MEDIA_ORIGINAL_LIGHT=' + base64.b64encode(original).decode())
           for kind, path in [('VIDEO','/tmp/hummingbird-opaque.webm'),('POSTER','/tmp/hummingbird-still.jpg')]:
               data = open(path,'rb').read()
