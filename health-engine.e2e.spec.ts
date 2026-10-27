@@ -42,6 +42,13 @@ test.describe('Healthcrest production regression', () => {
       };
       await expect(canvas).toBeVisible();
       await expect.poll(drawCount).toBeGreaterThan(0);
+      await expect(renderer).toHaveAttribute('data-reduced-motion', String(initialMotion === 'reduce'));
+      if (initialMotion === 'reduce') {
+        await expectIdle();
+      } else {
+        const beforeAnimation = await drawCount();
+        await expect.poll(drawCount).toBeGreaterThan(beforeAnimation + 20);
+      }
       const originalCanvas = await canvas.elementHandle();
       const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
       await sleep.fill('7.5');
@@ -52,6 +59,14 @@ test.describe('Healthcrest production regression', () => {
       const beforeEdit = await drawCount();
       await sleep.fill('6');
       await expect.poll(drawCount).toBeGreaterThan(beforeEdit);
+      await expectIdle();
+
+      const beforeGesture = await drawCount();
+      await page.mouse.move(620, 280);
+      await page.mouse.down();
+      await page.mouse.move(700, 320, { steps: 5 });
+      await page.mouse.up();
+      await expect.poll(drawCount).toBeGreaterThan(beforeGesture);
       await expectIdle();
 
       const beforeCamera = await drawCount();
