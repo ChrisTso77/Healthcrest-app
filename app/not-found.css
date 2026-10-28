@@ -1,0 +1,10 @@
+.hc-not-found { padding-top: 64px; padding-bottom: 80px; min-height: 60vh; }
+.hc-not-found h1 { font-size: clamp(3rem, 8vw, 5.5rem); overflow-wrap: anywhere; }
+.hc-not-found > p { max-width: 660px; margin-top: 24px; color: var(--hc-muted); }
+.hc-not-found > p a { text-decoration: underline; text-underline-offset: 4px; }
+.hc-not-found-links { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px; max-width: 760px; margin-top: 32px; }
+.hc-not-found-links a { min-height: 44px; max-width: 100%; overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .hc-not-found { padding-top: 44px; padding-bottom: 56px; }
+  .hc-not-found-links { align-items: flex-start; flex-direction: column; gap: 16px; }
+}
