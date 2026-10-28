@@ -25,9 +25,10 @@ export default function Page() {
         </section>
         <section aria-labelledby="approach-title">
           <h2 id="approach-title">How to read our content</h2>
-          <p>We link general adult habit guidance to named NHS resources. Scenario descriptions distinguish everyday guidance from research examples and explain what each cited source supports and where its findings stop.</p>
+          <p>We use relevant sources from public-health organisations and academic institutions, including the NHS, World Health Organization, US Centers for Disease Control and Prevention, and Harvard’s The Nutrition Source. References are chosen for their relevance, population and purpose. Scenario descriptions distinguish everyday guidance from research examples and explain what each cited source supports and where its findings stop.</p>
+          <p>Public-health information, academic teaching tools and individual studies serve different purposes. Where sources use different populations or frameworks, we explain the distinction. Local clinical advice and service arrangements remain important.</p>
           <p>The Habit Explorer uses illustrations and example settings. Its colours, shapes and labels do not measure your body, predict your health or provide a diagnosis. A reference supporting a habit does not validate the visual model.</p>
-          <p><strong>NHS habit references last checked:</strong> <time dateTime="2026-10-28">28 October 2026</time>. This date records a source check; it is not a claim of independent clinical review or clinical validation.</p>
+          <p><strong>Guide references last checked:</strong> <time dateTime="2026-10-28">28 October 2026</time>. This date records a source check; it is not a claim of independent clinical review or clinical validation.</p>
           <p>Start with <Link href="/learn" prefetch={false} className="hc-text-link">the guidance and references</Link>, or <Link href="/engine" prefetch={false} className="hc-text-link">try the Habit Explorer</Link>.</p>
         </section>
       </main>

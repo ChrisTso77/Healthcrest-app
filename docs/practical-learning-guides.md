@@ -30,3 +30,7 @@ New article routes are excluded by the existing explicit optional-measurement al
 Unit tests cover catalogue/source integrity, complete pillar coverage, safe route lookup, search text and matching metadata/schema/sitemap URLs. Browser tests exercise all four guides with and without JavaScript, actual section/reference anchors, article metadata, search-to-guide-to-planner continuity, saved-plan independence, urgent-help links, 404/input handling, keyboard layouts at 320–1440px and measurement exclusion.
 
 The complete existing regression suite, production build, lint/types, dependency audit, disabled-preview measurement test and mobile lab audits remain release checks.
+
+## International reference expansion
+
+The guides include scoped WHO, CDC and Harvard perspectives alongside the original sources. Source cards identify publishers and the type of information. See docs/editorial-sources.md for the owner's ongoing preference and source-selection policy. These additions do not replace local urgent-help routes or validate the visual model.

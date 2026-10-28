@@ -111,6 +111,7 @@ export default async function LearningGuidePage({ params, searchParams }: Props)
               {guide.sources.map(source => (
                 <li key={source.id} id={'source-' + source.id} tabIndex={-1}>
                   <a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}<span className="hc-visually-hidden"> (opens in a new tab)</span></a>
+                  <p><strong>Source context:</strong> {source.publisher} · {source.kind}</p>
                   <p><strong>Supports:</strong> {source.supports}</p>
                   <p><strong>Scope:</strong> {source.scope}</p>
                 </li>
