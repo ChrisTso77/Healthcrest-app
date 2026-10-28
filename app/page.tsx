@@ -126,6 +126,7 @@ export default function HealthcrestHomePage() {
           <h2 id="return-title">Keep one next step to return to.</h2>
           <p>Make a seven-day plan, note what helps and choose your next adjustment. Save it on this device if you choose. No account or email subscription needed.</p>
           <Link href="/next-step#saved-draft-controls" prefetch={false} className="hc-text-link">Make or restore a habit plan <ArrowUpRight size={16} aria-hidden="true" /></Link>
+          <p><Link href="/next-step#return-to-plan" prefetch={false} className="hc-text-link">Return to my plan <ArrowUpRight size={16} aria-hidden="true" /></Link></p>
           <p><Link href="/next-step#seven-day-plan" prefetch={false} className="hc-text-link">Try a seven-day habit plan <ArrowUpRight size={16} aria-hidden="true" /></Link></p>
         </section>
 

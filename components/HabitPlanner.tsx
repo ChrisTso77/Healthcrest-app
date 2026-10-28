@@ -34,6 +34,8 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
     return initial;
   });
   const [status, setStatus] = useState('');
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
+  const [confirmReturn, setConfirmReturn] = useState(false);
   const id = useId();
   const option = options.find(item => item.key === selected)!;
   const guide = PILLAR_GUIDES[selected];
@@ -42,6 +44,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
   function update<K extends keyof Draft>(field: K, value: Draft[K]) {
     setDrafts(current => ({ ...current, [selected]: { ...current[selected], [field]: value } }));
     setStatus('');
+    setUnsavedChanges(true);
   }
 
   function saveDraft() {
@@ -49,30 +52,43 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
       const raw = JSON.stringify({ version: 3, selected, drafts });
       if (!parseSavedHabitDraft(raw)) throw new Error('Invalid draft');
       window.localStorage.setItem(HABIT_DRAFT_KEY, raw);
+      setUnsavedChanges(false);
       setStatus('Saved draft on this device. Save again after making changes.');
     } catch {
       setStatus('Saving is unavailable in this browser. You can download your plan instead.');
     }
   }
 
-  function restoreDraft() {
+  function restoreDraft(openWeek = false) {
     try {
       const saved = parseSavedHabitDraft(window.localStorage.getItem(HABIT_DRAFT_KEY));
       if (!saved) {
         setStatus('No compatible saved draft was found. Your current edits are unchanged.');
+        if (openWeek) requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#return-to-plan button')?.focus());
         return;
       }
       setDrafts(saved.drafts);
       setSelected(saved.selected);
+      setUnsavedChanges(false);
+      setConfirmReturn(false);
+      if (openWeek) requestAnimationFrame(() => {
+        const target = saved.drafts[saved.selected].week
+          ? document.getElementById('seven-day-plan')
+          : document.getElementById(id + '-action');
+        target?.focus();
+        target?.scrollIntoView({ block: 'start' });
+      });
       setStatus('Saved draft restored, including your drafts for all four pillars.');
     } catch {
       setStatus('Saved drafts are unavailable in this browser. Your current edits are unchanged.');
+      if (openWeek) requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#return-to-plan button')?.focus());
     }
   }
 
   function removeSavedDraft() {
     try {
       window.localStorage.removeItem(HABIT_DRAFT_KEY);
+      setUnsavedChanges(true);
       setStatus('Saved draft removed from this browser. Your current edits are unchanged.');
     } catch {
       setStatus('The saved draft could not be removed in this browser. Your current edits are unchanged.');
@@ -116,7 +132,22 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
 
   return (
     <div className="hc-plan">
-      <noscript><style>{'.hc-week-start { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
+      <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
+      <section id="return-to-plan" tabIndex={-1} aria-labelledby={id + '-return-title'} className="hc-plan-return">
+        <h2 id={id + '-return-title'}>Return to your plan</h2>
+        <p>Choose Restore my plan to read the saved copy on this device and open its selected week. Restoring replaces the drafts currently on this page. Plans stay in this browser and do not sync between devices.</p>
+        <div className="hc-plan-return-actions">
+          {!confirmReturn ? <button type="button" onClick={() => { if (unsavedChanges) { setConfirmReturn(true); requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#return-to-plan [role="group"] button')?.focus()); } else restoreDraft(true); }}>Restore my plan</button> : (
+            <div role="group" aria-label="Restore confirmation">
+              <p>Replace your current page edits with the saved plan? Save or download first if you want to keep these edits.</p>
+              <button type="button" onClick={() => { setConfirmReturn(false); requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#return-to-plan button')?.focus()); }}>Keep my edits</button>
+              <button type="button" onClick={() => { setConfirmReturn(false); restoreDraft(true); }}>Replace edits and restore</button>
+            </div>
+          )}
+          <a href="#seven-day-plan">Go to the current week on this page</a>
+        </div>
+        <p className="hc-plan-unsaved" aria-live="polite">{unsavedChanges ? 'You have page changes to save. Choose Save on this device to keep them.' : 'Saving is manual. Save again after editing your plan or check-ins.'}</p>
+      </section>
       <div role="group" aria-label="Choose a habit pillar" className="hc-plan-choices">
         {options.map(item => (
           <button key={item.key} type="button" aria-pressed={selected === item.key}
@@ -159,7 +190,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
             <textarea id={id + '-reflection'} rows={4} maxLength={500} value={draft.reflection}
               aria-describedby={id + '-reflection-help'} onChange={event => update('reflection', event.target.value)} />
           </div>
-          <HabitWeekPlan key={selected} week={draft.week} draft={draft}
+          <HabitWeekPlan key={selected} week={draft.week} draft={draft} onSave={saveDraft} hasUnsavedChanges={unsavedChanges}
             onChange={week => update('week', week)}
             onUseNextAction={action => { update('action', action); document.getElementById(id + '-action')?.focus(); }} />
           <section id="saved-draft-controls" tabIndex={-1} aria-label="Keep your draft" className="hc-plan-keep">
@@ -168,7 +199,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
             <p className="hc-plan-storage">Restore replaces the drafts currently on this page. Remove clears only the saved copy and keeps your current edits.</p>
             <div className="hc-plan-save-actions">
               <button type="button" onClick={saveDraft}>Save on this device</button>
-              <button type="button" onClick={restoreDraft}>Restore saved draft</button>
+              <button type="button" onClick={() => restoreDraft()}>Restore saved draft</button>
               <button type="button" onClick={removeSavedDraft}>Remove saved draft</button>
             </div>
             <p className="hc-plan-storage">Without saving, drafts are discarded when you leave or reload. You can also download a plan to keep a separate copy.</p>

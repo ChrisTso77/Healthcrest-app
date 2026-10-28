@@ -72,3 +72,15 @@
 .hc-week-confirm { padding: 16px; background: #f2f1e5; border: 1px solid #a7b594; border-radius: 10px; margin-top: 16px; }
 .hc-week-confirm button + button { margin-left: 8px; }
 @media (max-width: 400px) { .hc-week-action { padding: 14px; } .hc-week-confirm button { width: 100%; } .hc-week-confirm button + button { margin-left: 0; } }
+
+.hc-plan-return { margin-bottom: 30px; padding: 24px; background: #eaf0de; border: 1px solid #b5c6a1; border-radius: 14px; scroll-margin-top: 24px; }
+.hc-plan-return h2 { font-size: 28px; margin-bottom: 14px; }
+.hc-plan-return p { font-size: 14px; line-height: 1.75; max-width: 780px; }
+.hc-plan-return-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 18px; }
+.hc-plan-return-actions button { min-height: 44px; padding: 10px 14px; border-radius: 9px; border: 1px solid #7c906b; background: #fffef9; color: var(--hc-ink); font: inherit; cursor: pointer; }
+.hc-plan-return-actions button + button { margin-left: 10px; }
+.hc-plan-return-actions a { font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
+.hc-plan-return .hc-plan-unsaved { margin-top: 18px; font-weight: 600; }
+.hc-week-quick-save { margin-top: 22px; padding: 18px; border-radius: 10px; background: #eaf0de; }
+#return-to-plan:focus-visible, .hc-plan-return-actions button:focus-visible, .hc-plan-return-actions a:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
+@media (max-width: 400px) { .hc-plan-return { padding: 20px 16px; } .hc-plan-return-actions button + button { margin-left: 0; margin-top: 10px; } }

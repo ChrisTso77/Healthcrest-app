@@ -3,7 +3,9 @@
 import { useId, useRef, useState, type FormEvent } from 'react';
 import { createHabitWeek, DAY_CHOICES, formatDay, localDate, weekDayDate, type HabitDay, type HabitWeek } from '@/lib/education/habitWeek';
 
-export function HabitWeekPlan({ week, draft, onChange, onUseNextAction }: {
+export function HabitWeekPlan({ week, draft, onChange, onUseNextAction, onSave, hasUnsavedChanges }: {
+  onSave: () => void;
+  hasUnsavedChanges: boolean;
   week: HabitWeek | null;
   draft: { action: string; cue: string; support: string };
   onChange: (week: HabitWeek | null) => void;
@@ -95,6 +97,11 @@ export function HabitWeekPlan({ week, draft, onChange, onUseNextAction }: {
             <label htmlFor={id + '-next'}>An action I might try next <span>(optional)</span></label>
             <textarea id={id + '-next'} rows={2} maxLength={300} value={week.nextAction} onChange={event => onChange({ ...week, nextAction: event.target.value })} />
             <button type="button" disabled={!week.nextAction.trim()} onClick={() => onUseNextAction(week.nextAction.trim())}>Use this action in my draft</button>
+          </div>
+          <div className="hc-week-quick-save">
+            <p>{hasUnsavedChanges ? 'Your latest changes are on this page. Save to keep them on this device.' : 'Save again whenever you change a check-in or review.'}</p>
+            <button type="button" onClick={onSave}>Save week and all drafts</button>
+            <p className="hc-plan-storage">This saves the drafts and current weeks for all four pillars in this browser.</p>
           </div>
           <p className="hc-plan-storage">Choose Save on this device below to keep this week with your drafts. Save again after editing. This page keeps one current week per pillar.</p>
           {!confirmClear ? <button type="button" ref={clearButton} onClick={() => setConfirmClear(true)}>Clear this week to start another</button> : (
