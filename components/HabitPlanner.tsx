@@ -2,6 +2,7 @@
 
 import { useId, useState } from 'react';
 import Link from 'next/link';
+import { HabitPlanEvidence } from '@/components/HabitPlanEvidence';
 import { HabitPlanBackup } from '@/components/HabitPlanBackup';
 import { HabitPlanPrint } from '@/components/HabitPlanPrint';
 import { HabitWeekPlan } from '@/components/HabitWeekPlan';
@@ -208,6 +209,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
           <span className="hc-eyebrow">Make it your own</span>
           <h2 id={id + '-draft'}>My {option.label.toLowerCase()} next step</h2>
           <p id={id + '-scope'}>The starter is an idea to adapt, not a recommendation calculated from your Habit Explorer settings.</p>
+          <a href="#habit-plan-evidence" className="hc-plan-evidence-jump">Read the evidence for this habit</a>
           <div className="hc-plan-field">
             <label htmlFor={id + '-action'}>One manageable action</label>
             <p id={id + '-action-help'}>Make it small enough to fit your health, ability and circumstances.</p>
@@ -274,6 +276,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
             <ArrowUpRight size={16} aria-hidden="true" />
           </a>
           {selected === 'Stress' && <UrgentSupport />}
+          <HabitPlanEvidence pillar={selected} actionId={id + '-action'} />
           <p>The Habit Explorer helps you explore examples. Its colours and scenario labels do not measure your body or determine this plan.</p>
           <Link href={'/engine?pillar=' + option.slug} prefetch={false} className="hc-text-link">
             Explore {option.label.toLowerCase()} in the Habit Explorer <ArrowUpRight size={16} aria-hidden="true" />
