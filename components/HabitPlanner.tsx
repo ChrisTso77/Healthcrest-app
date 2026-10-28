@@ -16,10 +16,10 @@ const options = [
 
 function initialDrafts(): Record<HabitPillar, Draft> {
   return {
-    Fitness: { action: options[0].starter, cue: '', support: '' },
-    Nutrition: { action: options[1].starter, cue: '', support: '' },
-    Sleep: { action: options[2].starter, cue: '', support: '' },
-    Stress: { action: options[3].starter, cue: '', support: '' },
+    Fitness: { action: options[0].starter, cue: '', support: '', reflection: '' },
+    Nutrition: { action: options[1].starter, cue: '', support: '', reflection: '' },
+    Sleep: { action: options[2].starter, cue: '', support: '', reflection: '' },
+    Stress: { action: options[3].starter, cue: '', support: '', reflection: '' },
   };
 }
 
@@ -39,7 +39,7 @@ export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) 
 
   function saveDraft() {
     try {
-      const raw = JSON.stringify({ version: 1, selected, drafts });
+      const raw = JSON.stringify({ version: 2, selected, drafts });
       if (!parseSavedHabitDraft(raw)) throw new Error('Invalid draft');
       window.localStorage.setItem(HABIT_DRAFT_KEY, raw);
       setStatus('Saved draft on this device. Save again after making changes.');
@@ -87,6 +87,7 @@ export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) 
       'Review after trying it: How did it fit my routine? What made it easier or harder? What would I adjust?',
       'An interrupted routine is a reason to adapt, not a failed health score.',
       '',
+      ...(draft.reflection.trim() ? ['My reflection: ' + draft.reflection.trim(), ''] : []),
       'General guidance: ' + guide.guidance,
       guide.sourceLabel,
       guide.sourceUrl,
@@ -144,9 +145,15 @@ export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) 
             <h3>Try it, then reflect</h3>
             <p>How did it fit your routine? What made it easier or harder? What would you adjust? An interrupted routine is a reason to adapt, not a failed health score.</p>
           </div>
+          <div className="hc-plan-field">
+            <label htmlFor={id + '-reflection'}>What did I learn? <span>(optional)</span></label>
+            <p id={id + '-reflection-help'}>After trying the habit, note what helped, what got in the way and one adjustment you might try.</p>
+            <textarea id={id + '-reflection'} rows={4} maxLength={500} value={draft.reflection}
+              aria-describedby={id + '-reflection-help'} onChange={event => update('reflection', event.target.value)} />
+          </div>
           <section aria-label="Keep your draft" className="hc-plan-keep">
             <h3>Keep your draft</h3>
-            <p className="hc-plan-storage">Choose Save on this device to keep all four pillar drafts in this browser. They do not sync to other devices. Saving is manual: save again after editing.</p>
+            <p className="hc-plan-storage">Choose Save on this device to keep all four pillar drafts and their reflection notes in this browser. They do not sync to other devices. Saving is manual: save again after editing.</p>
             <p className="hc-plan-storage">Restore replaces the drafts currently on this page. Remove clears only the saved copy and keeps your current edits.</p>
             <div className="hc-plan-save-actions">
               <button type="button" onClick={saveDraft}>Save on this device</button>
