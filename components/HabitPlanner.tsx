@@ -2,10 +2,11 @@
 
 import { useId, useState } from 'react';
 import Link from 'next/link';
+import { HabitPlanPrint } from '@/components/HabitPlanPrint';
 import { HabitWeekPlan } from '@/components/HabitWeekPlan';
 import { weekDownloadLines } from '@/lib/education/habitWeek';
 import { UrgentSupport } from '@/components/UrgentSupport';
-import { Download, ArrowUpRight } from 'lucide-react';
+import { Download, Printer, ArrowUpRight } from 'lucide-react';
 import { HABIT_DRAFT_KEY, parseSavedHabitDraft, type HabitPillar, type HabitDraft as Draft } from '@/lib/education/habitDraft';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
@@ -95,6 +96,15 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
     }
   }
 
+  function printPlan() {
+    if (!draft.action.trim() && !draft.week) return;
+    try {
+      window.print();
+    } catch {
+      setStatus('Printing is unavailable in this browser. You can download your plan instead.');
+    }
+  }
+
   function download() {
     if (!draft.action.trim() && !draft.week) return;
     const text = [
@@ -132,7 +142,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
 
   return (
     <div className="hc-plan">
-      <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
+      <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save, .hc-plan-print-button { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
       <section id="return-to-plan" tabIndex={-1} aria-labelledby={id + '-return-title'} className="hc-plan-return">
         <h2 id={id + '-return-title'}>Return to your plan</h2>
         <p>Choose Restore my plan to read the saved copy on this device and open its selected week. Restoring replaces the drafts currently on this page. Plans stay in this browser and do not sync between devices.</p>
@@ -204,9 +214,15 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
             </div>
             <p className="hc-plan-storage">Without saving, drafts are discarded when you leave or reload. You can also download a plan to keep a separate copy.</p>
           </section>
-          <button type="button" className="hc-button hc-button-primary" onClick={download} disabled={!draft.action.trim() && !draft.week}>
-            Download my next step <Download size={18} aria-hidden="true" />
-          </button>
+          <div className="hc-plan-export-actions">
+            <button type="button" className="hc-button hc-button-primary" onClick={download} disabled={!draft.action.trim() && !draft.week}>
+              Download my next step <Download size={18} aria-hidden="true" />
+            </button>
+            <button type="button" className="hc-button hc-plan-print-button" onClick={printPlan} disabled={!draft.action.trim() && !draft.week} aria-describedby={id + '-print-help'}>
+              Print my plan <Printer size={18} aria-hidden="true" />
+            </button>
+          </div>
+          <p id={id + '-print-help'} className="hc-plan-storage">Print the current draft and check-ins for this pillar, including page edits. Choose a printer or Save as PDF if your browser offers it. Printing does not save your browser draft.</p>
           <p role="status" className="hc-plan-status">{status}</p>
         </section>
 
@@ -226,6 +242,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
           </Link>
         </aside>
       </div>
+      <HabitPlanPrint label={option.label} draft={draft} />
     </div>
   );
 }
