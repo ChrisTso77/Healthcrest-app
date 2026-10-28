@@ -98,6 +98,6 @@ export const ENGINE_GLOSSARY = [
   ['CBT-I', 'Cognitive behavioural therapy for insomnia: a structured approach to thoughts and behaviours that keep sleep problems going.'],
   ['Circadian', 'Relating to the roughly 24-hour body clock and daily rhythms.'],
   ['HRV', 'Heart-rate variability: variation in the time between heartbeats. This app does not measure it.'],
-  ['Allostatic resilience', 'Scenario wording about coping with demands and recovering. The app does not calculate or measure this capacity.'],
-  ['Shield, fog, micro-cracks and resonance', 'Storytelling terms used in some scenario notes. They are not observations of hormones, tissue damage or a physical structure in your body.'],
+  ['Allostatic resilience', 'A term about coping with demands and recovering. The app does not calculate or measure this capacity.'],
+  ['Shield, fog, micro-cracks and resonance', 'Visual-metaphor terms used in earlier scenario copy. They are not observations of hormones, tissue damage or a physical structure in your body.'],
 ] as const;

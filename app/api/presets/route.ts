@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@sanity/client';
 import { REVIEWED_NARRATIVE } from '@/lib/presets/reviewedContent';
-import { normalizeSanityPresets } from '@/lib/presets/normalize';
+import { normalizePillar, normalizeSanityPresets } from '@/lib/presets/normalize';
 
 /**
  * NEXT.JS APP ROUTER API ROUTE (v3)
  * Path: app/api/presets/route.ts or app/api/presets/[slug]/route.ts
  * 
- * Fetches Scenario Presets, Scene 5 Storyboards, Sleep Ladder data, and Global Narrative from Sanity CMS
+ * Fetches scenario parameters and storyboards from Sanity CMS and applies repository-reviewed educational content
  * and formats them for consumption by PillarsStateMachine.tsx, HealthEngineHUD.tsx, and page.tsx
  */
 
@@ -124,6 +124,9 @@ export async function GET(request: NextRequest) {
         );
       }
 
+      const rawPillar = typeof targetScene.associatedPillar === 'object' && targetScene.associatedPillar !== null
+        ? targetScene.associatedPillar as Record<string, unknown> : {};
+      const pillarTitle = normalizePillar(rawPillar.title ?? rawPillar.slug);
       const reviewed = normalizeSanityPresets(
         (Array.isArray(targetScene.presets) ? targetScene.presets : []).map(preset =>
           typeof preset === 'object' && preset !== null
@@ -133,6 +136,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: true, data: {
         _id: targetScene._id,
         sceneNumber: targetScene.sceneNumber,
+        associatedPillar: pillarTitle ? { _id: rawPillar._id, title: pillarTitle, slug: pillarTitle.toLowerCase() } : null,
         title: 'Illustrative storyboard',
         visualMetaphor: 'Selected example settings, not a measurement or prediction of health.',
         presets: reviewed,

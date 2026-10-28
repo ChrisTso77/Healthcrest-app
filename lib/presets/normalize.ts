@@ -23,7 +23,7 @@ function isEvidenceLevel(value: unknown): value is EvidenceLevel {
     value === 'Experimental' || value === 'Unreviewed';
 }
 
-function normalizePillar(value: unknown): PillarType | null {
+export function normalizePillar(value: unknown): PillarType | null {
   const key = typeof value === 'string' ? value.trim().toLowerCase() : undefined;
 
   switch (key) {

@@ -350,7 +350,7 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
                 </div>
               </div>
 
-              {/* Clinical Alignment & Reference Standards */}
+              {/* Guidance sources and model limits */}
               <div className="space-y-3 pt-2 border-t border-slate-800">
                 <h3 className="text-xs font-mono font-bold tracking-wider uppercase text-slate-400 flex items-center space-x-2">
                   <Scale className="w-4 h-4 text-emerald-400" />
