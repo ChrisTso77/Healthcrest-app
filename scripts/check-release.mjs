@@ -98,9 +98,11 @@ try {
       ensure(final.origin === origin && final.pathname === path, 'Public page redirected away from its expected deployment path: ' + path);
       ensure(response.headers()['referrer-policy'] === 'no-referrer', 'Missing no-referrer header: ' + path);
       ensure((await page.title()).includes('Healthcrest'), 'Missing Healthcrest title: ' + path);
-      ensure(await page.locator('link[rel="canonical"]').getAttribute('href') === canonicalOrigin + path, 'Incorrect canonical: ' + path);
+      const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
+      ensure(canonical && new URL(canonical).href === new URL(path, canonicalOrigin).href, 'Incorrect canonical: ' + path);
       ensure((await page.locator('meta[name="description"]').getAttribute('content'))?.trim(), 'Missing description: ' + path);
-      ensure(await page.locator('meta[property="og:url"]').getAttribute('content') === canonicalOrigin + path, 'Incorrect sharing URL: ' + path);
+      const sharingUrl = await page.locator('meta[property="og:url"]').getAttribute('content');
+      ensure(sharingUrl && new URL(sharingUrl).href === new URL(path, canonicalOrigin).href, 'Incorrect sharing URL: ' + path);
       const hrefs = await page.locator('a[href]').evaluateAll(nodes => nodes.map(node => node.getAttribute('href')));
       for (const href of hrefs) {
         const link = new URL(href, page.url());
