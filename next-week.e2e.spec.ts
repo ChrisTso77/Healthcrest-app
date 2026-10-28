@@ -113,7 +113,7 @@ test('invalid action cannot replace the current week and leap-day dates remain s
   await start(page, '2024-02-21');
   await prepare(page).click();
   await review(page, '   ', '2024-02-29');
-  await expect(page.getByRole('alert')).toContainText('valid start date and a manageable action');
+  await expect(page.locator('.hc-week-next').getByRole('alert')).toContainText('valid start date and a manageable action');
   await expect(confirmation(page)).toHaveCount(0);
   await expect(action(page)).toHaveValue('Keep this week.');
   await review(page, 'A new action.', '2024-02-29');

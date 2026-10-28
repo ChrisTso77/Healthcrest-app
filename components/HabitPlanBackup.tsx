@@ -18,6 +18,7 @@ export function HabitPlanBackup({ onDownload, onImport, onStatus }: {
   const [reading, setReading] = useState(false);
   const [candidate, setCandidate] = useState<{ saved: SavedHabitDraft; name: string } | null>(null);
   useEffect(() => () => { sequence.current += 1; }, []);
+  useEffect(() => { if (candidate) previewHeading.current?.focus(); }, [candidate]);
 
   async function readBackup(file: File | undefined) {
     const request = ++sequence.current;
@@ -44,7 +45,6 @@ export function HabitPlanBackup({ onDownload, onImport, onStatus }: {
       }
       setCandidate({ saved, name: file.name.slice(0, 180) + (file.name.length > 180 ? '…' : '') });
       onStatus('Backup checked. Review its summary before replacing your page drafts.');
-      requestAnimationFrame(() => previewHeading.current?.focus());
     } catch {
       if (request !== sequence.current) return;
       setReading(false);
