@@ -141,7 +141,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             <Activity className="w-5 h-5 text-emerald-400" />
           </div>
           <div className="min-w-0">
-            <h1 className="text-xs xl:text-sm font-semibold tracking-wide text-slate-100">HEALTH OPTIMISATION</h1>
+            <h1 className="text-xs xl:text-sm font-semibold tracking-wide text-slate-100">HABIT EXPLORER</h1>
             <p className="text-[9px] xl:text-[10px] font-mono text-slate-400 tracking-wider">EXPLORE EVERYDAY HABITS</p>
           </div>
         </Link>

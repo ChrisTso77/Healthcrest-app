@@ -2,6 +2,7 @@
 
 import { useId, useState } from 'react';
 import Link from 'next/link';
+import { UrgentSupport } from '@/components/UrgentSupport';
 import { Download, ArrowUpRight } from 'lucide-react';
 import { HABIT_DRAFT_KEY, parseSavedHabitDraft, type HabitPillar, type HabitDraft as Draft } from '@/lib/education/habitDraft';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
@@ -92,7 +93,7 @@ export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) 
       guide.sourceLabel,
       guide.sourceUrl,
       '',
-      'This is my chosen habit idea, not a prescription generated from engine settings.',
+      'This is my chosen habit idea, not a prescription generated from Habit Explorer settings.',
       'General educational information for adults. Adapt to health, ability and circumstances alongside appropriate clinical care.',
     ].join('\n');
     const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
@@ -122,7 +123,7 @@ export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) 
         <section aria-labelledby={id + '-draft'} className="hc-plan-draft">
           <span className="hc-eyebrow">Make it your own</span>
           <h2 id={id + '-draft'}>My {option.label.toLowerCase()} next step</h2>
-          <p id={id + '-scope'}>The starter is an idea to adapt, not a recommendation calculated from your engine settings.</p>
+          <p id={id + '-scope'}>The starter is an idea to adapt, not a recommendation calculated from your Habit Explorer settings.</p>
           <div className="hc-plan-field">
             <label htmlFor={id + '-action'}>One manageable action</label>
             <p id={id + '-action-help'}>Make it small enough to fit your health, ability and circumstances.</p>
@@ -151,7 +152,7 @@ export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) 
             <textarea id={id + '-reflection'} rows={4} maxLength={500} value={draft.reflection}
               aria-describedby={id + '-reflection-help'} onChange={event => update('reflection', event.target.value)} />
           </div>
-          <section aria-label="Keep your draft" className="hc-plan-keep">
+          <section id="saved-draft-controls" tabIndex={-1} aria-label="Keep your draft" className="hc-plan-keep">
             <h3>Keep your draft</h3>
             <p className="hc-plan-storage">Choose Save on this device to keep all four pillar drafts and their reflection notes in this browser. They do not sync to other devices. Saving is manual: save again after editing.</p>
             <p className="hc-plan-storage">Restore replaces the drafts currently on this page. Remove clears only the saved copy and keeps your current edits.</p>
@@ -177,9 +178,10 @@ export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) 
             {guide.sourceLabel}<span className="hc-visually-hidden"> (opens in a new tab)</span>
             <ArrowUpRight size={16} aria-hidden="true" />
           </a>
-          <p>The engine helps you explore examples. Its colours and scenario labels do not measure your body or determine this plan.</p>
+          {selected === 'Stress' && <UrgentSupport />}
+          <p>The Habit Explorer helps you explore examples. Its colours and scenario labels do not measure your body or determine this plan.</p>
           <Link href={'/engine?pillar=' + option.slug} prefetch={false} className="hc-text-link">
-            Explore {option.label.toLowerCase()} in the engine <ArrowUpRight size={16} aria-hidden="true" />
+            Explore {option.label.toLowerCase()} in the Habit Explorer <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
         </aside>
       </div>

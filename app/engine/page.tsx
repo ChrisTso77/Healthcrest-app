@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/siteMetadata';
 import HealthEngineApp from '@/components/HealthEngineApp';
 import type { SceneId } from '@/state/PillarsStateTypes';
 
-export const metadata: Metadata = {
-  title: 'Explore the engine | Healthcrest',
-  description: 'Explore the connections between movement, food, sleep and stress through an interactive educational health engine.',
-};
+export const metadata = pageMetadata(
+  "Habit Explorer | Healthcrest",
+  "Explore the connections between movement, food, sleep and stress through an interactive educational Habit Explorer.",
+  '/engine',
+);
 
 export default async function EnginePage({
   searchParams,

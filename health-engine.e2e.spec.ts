@@ -6,10 +6,10 @@ type DrawCounts = { points: number; triangles: number; lines: number };
 test.describe('Healthcrest production regression', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/engine');
-    await expect(page.getByText('HEALTH OPTIMISATION')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'HABIT EXPLORER', exact: true })).toBeVisible();
   });
 
-  test('pillar goals lead to contextual habit guidance without resetting the engine', async ({ page }) => {
+  test('pillar goals lead to contextual habit guidance without resetting the Habit Explorer', async ({ page }) => {
     await page.route('**/api/presets', (route) => route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -39,6 +39,11 @@ test.describe('Healthcrest production regression', () => {
       const dialog = page.getByRole('dialog', { name: 'Understand this view', exact: true });
       await expect(dialog.getByRole('heading', { name: `${pillar}: ${goal}`, exact: true })).toBeVisible();
       await expect(dialog.getByRole('link', { name: /^NHS:/ })).toHaveAttribute('href', source);
+      if (pillar === 'Stress') {
+        const urgent = dialog.getByRole('complementary', { name: 'Urgent mental health support' });
+        await expect(urgent).toBeVisible();
+        await expect(urgent.getByRole('link', { name: '116 123', exact: true })).toHaveAttribute('href', 'tel:116123');
+      }
       await expect(dialog.getByRole('link', { name: 'Make a manageable next step', exact: true }))
         .toHaveAttribute('href', pillar === 'Systems' ? '/next-step' : '/next-step?pillar=' + pillar.toLowerCase());
       await expect(dialog.getByText('7.5 hours/night', { exact: true })).toBeVisible();
@@ -389,10 +394,10 @@ test.describe('Healthcrest production regression', () => {
     for (const scenario of [
       {
         trigger: 'Home & Global Narrative',
-        title: 'THE FOUR PILLARS HEALTH OPTIMISATION PLATFORM',
+        title: 'HEALTH THROUGH EVERYDAY HABITS',
         close: 'Close global narrative',
         content: 'Global narrative content',
-        done: 'Close & Return to 3D Engine',
+        done: 'Close & Return to the Habit Explorer',
       },
       {
         trigger: 'Guide: understand this view',
@@ -641,7 +646,7 @@ test.describe('Healthcrest production regression', () => {
     await page.getByRole('button', { name: /2d canvas/i }).click();
 
     await expect(
-      page.getByText('Interactive 2D Vector Health Engine')
+      page.getByText('Habit Explorer · 2D view')
     ).toBeVisible();
 
     await page.getByRole('button', { name: /high 3d/i }).click();
@@ -662,7 +667,7 @@ test.describe('Healthcrest production regression', () => {
     await page.goto('/engine?webgl-unavailable-test=1');
 
     const mode2d = page.getByRole('button', { name: /2d canvas/i });
-    await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+    await expect(page.getByText('Habit Explorer · 2D view')).toBeVisible();
     await expect(mode2d).toHaveClass(/border-emerald-500\/30/);
     await expect(page.locator('canvas')).toHaveCount(0);
 
@@ -688,10 +693,10 @@ test.describe('Healthcrest production regression', () => {
     await page.goto('/engine?webgl-module-failure-test=1');
 
     await expect.poll(() => blocked3dModule).toBe(true);
-    await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+    await expect(page.getByText('Habit Explorer · 2D view')).toBeVisible();
     await expect(page.getByRole('button', { name: /2d canvas/i }))
       .toHaveClass(/border-emerald-500\/30/);
-    await expect(page.getByText('INITIALISING 3D HEALTH ENGINE...')).toHaveCount(0);
+    await expect(page.getByText('LOADING HABIT EXPLORER...')).toHaveCount(0);
 
     await page.getByRole('button', { name: /Short sleep and higher stress example/i }).click();
     await expect(page.getByText('4.5h / night', { exact: true })).toBeVisible();
@@ -711,7 +716,7 @@ test.describe('Healthcrest production regression', () => {
     await canvas2d.click();
     await expect(canvas2d).toHaveClass(/border-emerald-500\/30/);
     await expect(
-      page.getByText('Interactive 2D Vector Health Engine')
+      page.getByText('Habit Explorer · 2D view')
     ).toBeVisible();
 
     await high3d.click();
@@ -1087,7 +1092,7 @@ test.describe('Healthcrest production regression', () => {
       await expect(page.getByText('Compare a different set of example settings')).toBeVisible();
 
       await page.getByRole('button', { name: /2d canvas/i }).click();
-      await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+      await expect(page.getByText('Habit Explorer · 2D view')).toBeVisible();
       await expect(page.getByText('4.5h / night', { exact: true })).toBeVisible();
     });
   }
@@ -1151,7 +1156,7 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByRole('status')).toHaveCount(0);
     await expect(page.getByRole('button', { name: /Unreviewed Systems example/i })).toBeVisible();
     await expect(sleepSlider).toHaveValue('7.5');
-    await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
+    await expect(page.getByText('Habit Explorer · 2D view')).toBeVisible();
     await expect(page.getByRole('button', { name: /Retry presets|Retrying…/ })).toHaveCount(0);
   });
 
@@ -1226,11 +1231,11 @@ test.describe('Healthcrest production regression', () => {
     await page.getByRole('button', { name: /2d canvas/i }).click();
 
     await expect(
-      page.getByText('Interactive 2D Vector Health Engine')
+      page.getByText('Habit Explorer · 2D view')
     ).toBeVisible();
 
     const fallback = page.getByText(
-      'Interactive 2D Vector Health Engine'
+      'Habit Explorer · 2D view'
     ).locator('..').locator('..');
 
     await expect(

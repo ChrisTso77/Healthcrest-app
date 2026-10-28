@@ -2,6 +2,7 @@
 
 import { X } from 'lucide-react';
 import Link from 'next/link';
+import { UrgentSupport } from '@/components/UrgentSupport';
 import { ScenarioEvidence } from '@/components/ScenarioEvidence';
 import { ModalDialog } from '@/components/ModalDialog';
 import type { CanonicalScenarioPreset } from '@/lib/presets/types';
@@ -62,6 +63,7 @@ export function HealthEngineGuide({ state, presets, onClose }: HealthEngineGuide
             <a href={pillar.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-emerald-300 underline underline-offset-4">
               {pillar.sourceLabel} (opens in a new tab)
             </a>
+            {state.activePillar === 'Stress' && <UrgentSupport dark />}
             <details className="border-t border-emerald-500/20 pt-3">
               <summary className="cursor-pointer font-medium text-slate-100">How this scene responds</summary>
               <p className="mt-2">{pillar.visual}</p>

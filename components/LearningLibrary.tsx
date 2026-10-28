@@ -2,6 +2,7 @@
 
 import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
+import { UrgentSupport, URGENT_SUPPORT_SEARCH_TERMS } from '@/components/UrgentSupport';
 import { ENGINE_GLOSSARY, EVIDENCE_GUIDES, PARAMETER_GUIDES, PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
 const topics = [
@@ -26,7 +27,7 @@ export function LearningLibrary() {
   const id = useId();
   const needle = query.trim().toLowerCase();
   const matches = (...text: string[]) => text.join(' ').toLowerCase().includes(needle);
-  const shownTopics = topics.filter(topic => matches(topic.label, topic.key, ...Object.values(PILLAR_GUIDES[topic.key])));
+  const shownTopics = topics.filter(topic => matches(topic.label, topic.key, ...Object.values(PILLAR_GUIDES[topic.key]), topic.key === 'Stress' ? URGENT_SUPPORT_SEARCH_TERMS : ''));
   const shownTerms = terms.filter(([term, meaning]) => matches(term, meaning));
   const shownEvidence = Object.entries(EVIDENCE_GUIDES).filter(([label, meaning]) => matches(label, meaning));
   const countLabel = (count: number, label: string) => count + ' ' + label + (count === 1 ? '' : 's');
@@ -50,25 +51,26 @@ export function LearningLibrary() {
       {shownTopics.length > 0 && (
         <section aria-labelledby={id + '-topics'} className="hc-learn-section">
           <h2 id={id + '-topics'}>Everyday habit guidance</h2>
-          <p>The NHS references support general habit guidance. The engine’s visual rules are illustrations created for Healthcrest.</p>
+          <p>The NHS references support general habit guidance. The Habit Explorer’s visual rules are illustrations created for Healthcrest.</p>
           <div className="hc-learn-topic-grid">
             {shownTopics.map(topic => {
               const guide = PILLAR_GUIDES[topic.key];
               return (
-                <article key={topic.key} aria-labelledby={id + '-' + topic.slug} className="hc-learn-topic">
+                <article id={'topic-' + topic.slug} key={topic.key} aria-labelledby={id + '-' + topic.slug} className="hc-learn-topic">
                   <h3 id={id + '-' + topic.slug}>{topic.label}</h3>
                   <p className="hc-learn-goal">{guide.goal}</p>
                   <p>{guide.guidance}</p>
                   <p><strong>One possible first step: </strong>{guide.firstStep}</p>
+                  {topic.key === 'Stress' && <UrgentSupport />}
                   <details>
-                    <summary>How the engine illustrates {topic.label.toLowerCase()}</summary>
+                    <summary>How the Habit Explorer illustrates {topic.label.toLowerCase()}</summary>
                     <p>{guide.visual}</p>
                   </details>
                   <a href={guide.sourceUrl} target="_blank" rel="noopener noreferrer" className="hc-text-link">
                     {guide.sourceLabel}<span className="hc-visually-hidden"> (opens in a new tab)</span>
                   </a>
                   <div className="hc-learn-topic-actions">
-                    <Link prefetch={false} href={'/engine?pillar=' + topic.slug} className="hc-text-link">Explore in the engine</Link>
+                    <Link prefetch={false} href={'/engine?pillar=' + topic.slug} className="hc-text-link">Explore in the Habit Explorer</Link>
                     <Link prefetch={false} href={topic.key === 'Systems' ? '/next-step' : '/next-step?pillar=' + topic.slug} className="hc-text-link">Make a next step</Link>
                   </div>
                 </article>
@@ -80,7 +82,7 @@ export function LearningLibrary() {
 
       {shownTerms.length > 0 && (
         <section aria-labelledby={id + '-terms'} className="hc-learn-section">
-          <h2 id={id + '-terms'}>Words used in the engine</h2>
+          <h2 id={id + '-terms'}>Words used in the Habit Explorer</h2>
           <dl className="hc-learn-definitions">
             {shownTerms.map(([term, meaning]) => (
               <div key={term}><dt>{term}</dt><dd>{meaning}</dd></div>
