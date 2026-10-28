@@ -61,6 +61,30 @@ export function parseHabitWeek(value: unknown): HabitWeek | null {
     days, review: value.review, nextAction: value.nextAction };
 }
 
+export const WEEK_SUMMARY_SCOPE = 'Counts describe your own check-ins, not measured health outcomes or a health score.';
+
+export function summarizeHabitWeek(week: HabitWeek) {
+  const chosenDays = week.days.filter(day => day.choice !== '').length;
+  const notesOnlyDays = week.days.filter(day => day.choice === '' && day.note.trim() !== '').length;
+  const blankDays = week.days.filter(day => day.choice === '' && day.note.trim() === '').length;
+  const choices = [...DAY_CHOICES.slice(1), DAY_CHOICES[0]].map(choice => ({
+    value: choice.value,
+    label: choice.value === '' ? 'No choice selected' : choice.label,
+    count: week.days.filter(day => day.choice === choice.value).length,
+  }));
+  return { chosenDays, notesOnlyDays, blankDays, recordedDays: chosenDays + notesOnlyDays, choices };
+}
+
+export function weekSummaryLines(week: HabitWeek): string[] {
+  const summary = summarizeHabitWeek(week);
+  return [
+    'Days with a choice: ' + summary.chosenDays,
+    'Days with notes only: ' + summary.notesOnlyDays,
+    'Blank days: ' + summary.blankDays,
+    ...summary.choices.map(choice => choice.label + ': ' + choice.count),
+  ];
+}
+
 export function weekDownloadLines(week: HabitWeek): string[] {
   return [
     'MY SEVEN-DAY PLAN',
@@ -68,6 +92,10 @@ export function weekDownloadLines(week: HabitWeek): string[] {
     'Action for this week: ' + week.action,
     'When I planned to try it: ' + (week.cue || 'A moment that fits my routine.'),
     'What could help this week: ' + (week.support || 'Keep it manageable.'),
+    '',
+    'WEEK AT A GLANCE',
+    ...weekSummaryLines(week),
+    WEEK_SUMMARY_SCOPE,
     '',
     ...week.days.flatMap((day, index) => [
       'Day ' + (index + 1) + ' (' + weekDayDate(week.startDate, index) + '): ' + DAY_CHOICES.find(item => item.value === day.choice)!.label,

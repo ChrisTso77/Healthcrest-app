@@ -133,3 +133,23 @@
 .hc-week-next h5:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
 .hc-week-next .hc-week-confirm button { margin-left: 0; margin-right: 8px; }
 @media (max-width: 400px) { .hc-week-next { padding: 16px; } .hc-week-next .hc-week-confirm button { margin-right: 0; } }
+
+.hc-week-summary { margin-top: 20px; padding: 18px; border: 1px solid #b5c6a1; border-radius: 12px; background: #f2f4e9; }
+.hc-week-summary h4 { font-size: 19px; line-height: 1.4; }
+.hc-week-summary p { margin-top: 12px; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+.hc-week-summary-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+.hc-week-summary-facts > div { display: flex; flex-direction: column; min-width: 0; padding: 8px; border: 1px solid #c5d1b7; border-radius: 8px; }
+.hc-week-summary-facts dt { font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.hc-week-summary-facts dd { margin: auto 0 0; padding-top: 8px; font-size: 24px; font-weight: 600; }
+.hc-week-summary-choices { margin-top: 16px; }
+.hc-week-summary-choices > button { min-height: 44px; padding: 10px 0; font-size: 14px; cursor: pointer; }
+.hc-week-choice-counts { margin-top: 16px; }
+.hc-week-choice-counts > div { display: grid; grid-template-columns: minmax(0, 1fr) 54px; gap: 12px; margin-top: 14px; }
+.hc-week-choice-counts dt { min-width: 0; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+.hc-week-choice-counts dd { margin: 0; text-align: right; font-size: 13px; }
+.hc-week-count-track { display: block; height: 7px; margin-top: 6px; background: #dce3cf; border-radius: 4px; overflow: hidden; }
+.hc-week-count-track > span { display: block; height: 100%; background: #627b4b; }
+.hc-week-summary-jump { margin-top: 18px; }
+.hc-week-summary-choices > button:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
+@media (max-width: 400px) { .hc-week-summary { padding: 14px; } .hc-week-summary-facts > div { padding: 6px; } }
+@media print { .hc-print-week-summary ul { list-style: none; padding: 0; } .hc-print-week-summary li + li { margin-top: 3pt; } }

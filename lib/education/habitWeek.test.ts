@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { createHabitWeek, formatDay, isWeekStart, localDate, parseHabitWeek, weekDayDate, weekDownloadLines } from './habitWeek';
+import { createHabitWeek, formatDay, isWeekStart, localDate, parseHabitWeek, weekDayDate, weekDownloadLines, summarizeHabitWeek, weekSummaryLines } from './habitWeek';
 
 const action = { action: 'Read quietly — ゆっくり', cue: 'After brushing my teeth.', support: 'Choose a shorter book.' };
 const valid = () => createHabitWeek('2026-10-28', action);
@@ -68,5 +68,55 @@ describe('stored week trust boundary', () => {
     expect(text).toContain('Day 7 (2026-11-03): Not recorded');
     expect(text).toContain('A quiet corner made it easier.');
     expect(text).toContain('Read one page after brushing my teeth.');
+  });
+});
+
+describe('weekly records summary', () => {
+  test('a fresh week has seven blank days and no recorded check-ins', () => {
+    const result = summarizeHabitWeek(valid());
+    expect(result).toMatchObject({ chosenDays: 0, notesOnlyDays: 0, blankDays: 7, recordedDays: 0 });
+    expect(result.choices.find(choice => choice.value === '')!.count).toBe(7);
+    expect(result.choices.reduce((total, choice) => total + choice.count, 0)).toBe(7);
+  });
+
+  test('notes-only days are recorded once and whitespace alone remains blank', () => {
+    const week = valid();
+    week.days[0] = { choice: 'tried', note: '' };
+    week.days[1] = { choice: 'adapted', note: 'A smaller action fitted.' };
+    week.days[2] = { choice: 'rest', note: '' };
+    week.days[3] = { choice: 'not-tried', note: '' };
+    week.days[4] = { choice: '', note: 'A note — ゆっくり' };
+    week.days[5] = { choice: '', note: ' \n\t ' };
+    const result = summarizeHabitWeek(week);
+    expect(result).toMatchObject({ chosenDays: 4, notesOnlyDays: 1, blankDays: 2, recordedDays: 5 });
+    expect(Object.fromEntries(result.choices.map(choice => [choice.value, choice.count]))).toEqual({
+      tried: 1, adapted: 1, rest: 1, 'not-tried': 1, '': 3,
+    });
+    expect(result.chosenDays + result.notesOnlyDays + result.blankDays).toBe(7);
+    expect(weekSummaryLines(week)).toContain('Days with notes only: 1');
+    expect(weekDownloadLines(week)).toContain('No choice selected: 3');
+  });
+
+  test('changing a note-only day to a choice or blank does not double-count it', () => {
+    const week = valid();
+    week.days[0].note = 'One note.';
+    expect(summarizeHabitWeek(week)).toMatchObject({ chosenDays: 0, notesOnlyDays: 1, recordedDays: 1, blankDays: 6 });
+    week.days[0].choice = 'rest';
+    expect(summarizeHabitWeek(week)).toMatchObject({ chosenDays: 1, notesOnlyDays: 0, recordedDays: 1, blankDays: 6 });
+    week.days[0] = { choice: '', note: '' };
+    expect(summarizeHabitWeek(week)).toMatchObject({ chosenDays: 0, notesOnlyDays: 0, recordedDays: 0, blankDays: 7 });
+  });
+
+  test('summarizing and exporting frozen records leaves the source notes and choices unchanged', () => {
+    const week = valid();
+    week.days[6] = { choice: 'adapted', note: 'Keep this exact note.' };
+    const raw = JSON.stringify(week);
+    week.days.forEach(day => Object.freeze(day));
+    Object.freeze(week.days);
+    Object.freeze(week);
+    summarizeHabitWeek(week);
+    weekSummaryLines(week);
+    weekDownloadLines(week);
+    expect(JSON.stringify(week)).toBe(raw);
   });
 });

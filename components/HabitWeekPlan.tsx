@@ -1,8 +1,9 @@
 'use client';
 
+import { HabitWeekSummary } from '@/components/HabitWeekSummary';
 import { HabitWeekRollover } from '@/components/HabitWeekRollover';
 import { useId, useRef, useState, type FormEvent } from 'react';
-import { createHabitWeek, DAY_CHOICES, formatDay, localDate, weekDayDate, type HabitDay, type HabitWeek } from '@/lib/education/habitWeek';
+import { createHabitWeek, summarizeHabitWeek, DAY_CHOICES, formatDay, localDate, weekDayDate, type HabitDay, type HabitWeek } from '@/lib/education/habitWeek';
 
 export function HabitWeekPlan({ week, draft, onChange, onUseNextAction, onSave, hasUnsavedChanges, onStartNextWeek, onDownloadBackup }: {
   onStartNextWeek: (week: HabitWeek) => void;
@@ -43,7 +44,17 @@ export function HabitWeekPlan({ week, draft, onChange, onUseNextAction, onSave, 
     requestAnimationFrame(() => startButton.current?.focus());
   }
 
-  const recorded = week?.days.filter(day => day.choice !== '' || day.note.trim()).length ?? 0;
+  function openDay(index: number) {
+    if (!week || !Number.isInteger(index) || index < 0 || index >= week.days.length) return;
+    const details = document.getElementById(id + '-day-' + index);
+    if (details instanceof HTMLDetailsElement) {
+      details.open = true;
+      document.getElementById(id + '-day-' + index + '-choice')?.focus();
+      details.scrollIntoView({ block: 'center' });
+    }
+  }
+
+  const recorded = week ? summarizeHabitWeek(week).recordedDays : 0;
   return (
     <section id="seven-day-plan" tabIndex={-1} aria-labelledby={id + '-title'} className="hc-week">
       <span className="hc-eyebrow">Try, notice, adjust</span>
@@ -69,13 +80,14 @@ export function HabitWeekPlan({ week, draft, onChange, onUseNextAction, onSave, 
             <p>The action shown here stays attached to these check-ins. You can edit the draft above for a future plan.</p>
           </div>
           <p>{recorded} of 7 days have a check-in. Check in after a day, or leave it blank. You can adapt the action, choose rest or seek support.</p>
+          <HabitWeekSummary week={week} onOpenDay={openDay} />
           <ol className="hc-week-days" aria-label="Seven daily check-ins">
             {week.days.map((day, index) => {
               const date = weekDayDate(week.startDate, index);
               const dayId = id + '-day-' + index;
               return (
                 <li key={index}>
-                  <details>
+                  <details id={dayId}>
                     <summary><span>Day {index + 1} · <time dateTime={date}>{formatDay(date)}</time></span><span>{DAY_CHOICES.find(item => item.value === day.choice)!.label}{day.choice === '' && day.note.trim() ? ' · note added' : ''}</span></summary>
                     <div className="hc-week-day-fields">
                       <label htmlFor={dayId + '-choice'}>Day {index + 1}: what happened?</label>
