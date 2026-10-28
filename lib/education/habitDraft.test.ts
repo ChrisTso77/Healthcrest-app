@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import { createHabitWeek } from './habitWeek';
+import { createHabitWeek, type HabitWeek } from './habitWeek';
 import { parseSavedHabitDraft } from './habitDraft';
 
 const valid = () => ({
   version: 3, selected: 'Sleep',
   drafts: Object.fromEntries(['Fitness', 'Nutrition', 'Sleep', 'Stress'].map(pillar =>
-    [pillar, { action: 'Read quietly — ゆっくり', cue: '', support: 'Ask a friend', reflection: '', week: null }])),
+    [pillar, { action: 'Read quietly — ゆっくり', cue: '', support: 'Ask a friend', reflection: '', week: null as HabitWeek | null }])),
 });
 
 describe('saved habit draft validation', () => {
@@ -85,8 +85,8 @@ describe('seven-day storage compatibility', () => {
   test('requires a null or valid week in version 3', () => {
     for (const week of [undefined, {}, [], 'bad', { startDate: '2026-02-30' }]) {
       const data = valid();
-      data.drafts.Sleep.week = week;
-      expect(parseSavedHabitDraft(JSON.stringify(data))).toBeNull();
+      const raw = JSON.stringify({ ...data, drafts: { ...data.drafts, Sleep: { ...data.drafts.Sleep, week } } });
+      expect(parseSavedHabitDraft(raw)).toBeNull();
     }
   });
   test('accepts maximum escaped text across all four weeks and returns independent copies', () => {
@@ -107,6 +107,6 @@ describe('seven-day storage compatibility', () => {
     const parsed = parseSavedHabitDraft(raw);
     expect(parsed).toEqual(data);
     parsed!.drafts.Sleep.week!.days[0].note = 'Changed copy';
-    expect(data.drafts.Sleep.week.days[0].note).not.toBe('Changed copy');
+    expect(data.drafts.Sleep.week!.days[0].note).not.toBe('Changed copy');
   });
 });
