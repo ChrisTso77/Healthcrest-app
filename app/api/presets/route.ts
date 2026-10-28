@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@sanity/client';
+import { REVIEWED_NARRATIVE } from '@/lib/presets/reviewedContent';
 import { normalizeSanityPresets } from '@/lib/presets/normalize';
 
 /**
@@ -87,14 +88,6 @@ type StoryboardScene = {
   [key: string]: unknown;
 };
 
-const GLOBAL_NARRATIVE_QUERY = `
-  *[_type == "globalNarrative"][0] {
-    _id,
-    bottomLine,
-    pillarsSummary,
-    clinicalAlignment
-  }
-`;
 
 export async function GET(request: NextRequest) {
   try {
@@ -105,25 +98,7 @@ export async function GET(request: NextRequest) {
 
     // If query requests global narrative content
     if (narrative) {
-      const globalNarrative = await sanityClient.fetch(
-        GLOBAL_NARRATIVE_QUERY,
-        {},
-        {
-          next: {
-            revalidate: 300,
-            tags: ['global-narrative'],
-          },
-        }
-      );
-
-      if (!globalNarrative) {
-        return NextResponse.json(
-          { error: 'Global narrative content not found in Sanity' },
-          { status: 404 }
-        );
-      }
-
-      return NextResponse.json({ success: true, data: globalNarrative });
+      return NextResponse.json({ success: true, data: REVIEWED_NARRATIVE });
     }
 
     // If query requests a specific scene (e.g. ?scene=5)
@@ -149,7 +124,19 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      return NextResponse.json({ success: true, data: targetScene });
+      const reviewed = normalizeSanityPresets(
+        (Array.isArray(targetScene.presets) ? targetScene.presets : []).map(preset =>
+          typeof preset === 'object' && preset !== null
+            ? { ...preset, pillar: targetScene.associatedPillar }
+            : preset)
+      );
+      return NextResponse.json({ success: true, data: {
+        _id: targetScene._id,
+        sceneNumber: targetScene.sceneNumber,
+        title: 'Illustrative storyboard',
+        visualMetaphor: 'Selected example settings, not a measurement or prediction of health.',
+        presets: reviewed,
+      } });
     }
 
     // If query requests a specific preset by slug

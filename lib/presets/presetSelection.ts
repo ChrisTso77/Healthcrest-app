@@ -1,3 +1,4 @@
+import { applyContentReview } from './reviewedContent';
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
 import type {
   CanonicalScenarioPreset,
@@ -6,9 +7,7 @@ import type {
 export function resolveAvailablePresets(
   presets: CanonicalScenarioPreset[]
 ): CanonicalScenarioPreset[] {
-  return presets.length > 0
-    ? presets
-    : FALLBACK_PRESETS;
+  return (presets.length > 0 ? presets : FALLBACK_PRESETS).map(applyContentReview);
 }
 
 export function resolveActivePreset(
@@ -19,7 +18,7 @@ export function resolveActivePreset(
     return null;
   }
 
-  return (
+  const selected = (
     availablePresets.find(
       (preset) =>
         preset.slug === activePresetId ||
@@ -32,4 +31,5 @@ export function resolveActivePreset(
     ) ??
     null
   );
+  return selected ? applyContentReview(selected) : null;
 }

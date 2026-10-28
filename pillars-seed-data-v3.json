@@ -56,7 +56,7 @@
     {
       "_id": "preset-integrated-harmony",
       "_type": "scenarioPreset",
-      "title": "Integrated Harmony (Scene 5)",
+      "title": "Connected habits example",
       "slug": {
         "_type": "slug",
         "current": "integrated-harmony"
@@ -72,30 +72,44 @@
         "alcoholUnits": 2
       },
       "narrativeOverlay": {
-        "headline": "Maximum Allostatic Resilience & Systemic Equilibrium",
-        "body": "",
+        "headline": "Explore habits together",
+        "body": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
         "outcomes": [
-          "Tetrapod Balance Maintained (0\u00b0 Tilt)",
-          "Low Chronic Disease Hazard Ratio",
-          "Oxytocin Shield Active"
+          "Consider movement, food, sleep and stress together.",
+          "Choose a manageable action that fits your circumstances.",
+          "The display does not measure overall health or biological resilience."
         ]
       },
       "cameraShot": "shot-1-orbit",
       "pillar": {
         "_type": "reference",
         "_ref": "pillar-systems"
+      },
+      "education": {
+        "category": "Illustrative comparison",
+        "checkedOn": "2026-10-28",
+        "limitations": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
+        "sources": [
+          {
+            "title": "NHS: five steps to mental wellbeing",
+            "url": "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/five-steps-to-mental-wellbeing/",
+            "population": "General wellbeing guidance for the public.",
+            "supports": "Activity, connection and manageable everyday actions.",
+            "limitations": "Does not validate a combined health score or these example parameter values."
+          }
+        ]
       }
     },
     {
       "_id": "preset-single-pillar-failure",
       "_type": "scenarioPreset",
-      "title": "Single-Pillar Failure (Scene 5)",
+      "title": "Short sleep and higher stress example",
       "slug": {
         "_type": "slug",
         "current": "single-pillar-failure"
       },
       "healthStatus": "warning",
-      "evidenceLevel": "High-quality review",
+      "evidenceLevel": "Guideline-level",
       "parameters": {
         "aerobicMins": 300,
         "strengthDays": 4,
@@ -105,24 +119,45 @@
         "alcoholUnits": 18
       },
       "narrativeOverlay": {
-        "headline": "Structural Imbalance: Sleep & Stress Failure",
-        "body": "",
+        "headline": "Compare a different set of example settings",
+        "body": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
         "outcomes": [
-          "Platform Tilts 28\u00b0 Off-Axis",
-          "Structural Micro-cracks on Core",
-          "Corrosive Friction Fog Active"
+          "Notice the chosen sleep duration and stress rating.",
+          "The display illustrates inputs; it does not show tissue damage.",
+          "Persistent sleep or stress difficulties may need support."
         ]
       },
       "cameraShot": "shot-2-failure",
       "pillar": {
         "_type": "reference",
         "_ref": "pillar-systems"
+      },
+      "education": {
+        "category": "Illustrative comparison",
+        "checkedOn": "2026-10-28",
+        "limitations": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
+        "sources": [
+          {
+            "title": "NHS: insomnia and sleep habits",
+            "url": "https://www.nhs.uk/conditions/insomnia/",
+            "population": "General adult sleep information; individual needs vary.",
+            "supports": "Sleep routines, bedroom comfort and seeking help for persistent difficulties.",
+            "limitations": "Does not validate the preset values or predict sleep stages, recovery or brain clearance."
+          },
+          {
+            "title": "NHS: help with stress",
+            "url": "https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/feelings-and-symptoms/stress/",
+            "population": "General public advice; persistent difficulties may need professional support.",
+            "supports": "Manageable goals, comfortable breathing and talking with others.",
+            "limitations": "Does not establish changes in blood pressure, inflammation, hormones or heart-rate variability in this app."
+          }
+        ]
       }
     },
     {
       "_id": "preset-uk-cmo-optimal",
       "_type": "scenarioPreset",
-      "title": "UK CMO Optimal Zone",
+      "title": "Movement example: weekly activity",
       "slug": {
         "_type": "slug",
         "current": "uk-cmo-optimal"
@@ -138,24 +173,38 @@
         "alcoholUnits": 4
       },
       "narrativeOverlay": {
-        "headline": "Optimal Functional Capacity & Allostatic Resilience",
-        "body": "",
+        "headline": "Explore weekly movement",
+        "body": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
         "outcomes": [
-          "-35% CVD Mortality Risk",
-          "-40% Type 2 Diabetes Risk",
-          "Enhanced Vascular Elasticity"
+          "Consider activity intensity as well as duration.",
+          "Include strength activity in the wider picture.",
+          "No individual disease-risk reduction is calculated."
         ]
       },
       "cameraShot": "shot-1-orbit",
       "pillar": {
         "_type": "reference",
         "_ref": "pillar-fitness"
+      },
+      "education": {
+        "category": "Everyday guidance",
+        "checkedOn": "2026-10-28",
+        "limitations": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
+        "sources": [
+          {
+            "title": "NHS: activity guidance for adults aged 19–64",
+            "url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/",
+            "population": "Adults aged 19–64; adapt activity to health and ability.",
+            "supports": "Weekly activity, strengthening and reducing prolonged sitting.",
+            "limitations": "Intensity matters. This slider does not convert vigorous minutes and cannot predict individual disease risk."
+          }
+        ]
       }
     },
     {
       "_id": "preset-sleep-rung1-foundations",
       "_type": "scenarioPreset",
-      "title": "Sleep Rung 1: Foundations",
+      "title": "Sleep example: everyday foundations",
       "slug": {
         "_type": "slug",
         "current": "sleep-rung1-foundations"
@@ -171,30 +220,44 @@
         "alcoholUnits": 0
       },
       "narrativeOverlay": {
-        "headline": "7-9h Restorative Sleep & Substance Cut-offs",
-        "body": "",
+        "headline": "Explore sleep duration and routine",
+        "body": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
         "outcomes": [
-          "High-amplitude 24h Circadian Wave",
-          "Lower Cardiometabolic Hazard",
-          "Zero Nocturnal Micro-arousals"
+          "Adults differ in their sleep needs.",
+          "A regular routine can be a practical starting point.",
+          "The example does not establish sleep quality."
         ]
       },
       "cameraShot": "shot-3-macro",
       "pillar": {
         "_type": "reference",
         "_ref": "pillar-sleep"
+      },
+      "education": {
+        "category": "Everyday guidance",
+        "checkedOn": "2026-10-28",
+        "limitations": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
+        "sources": [
+          {
+            "title": "NHS: insomnia and sleep habits",
+            "url": "https://www.nhs.uk/conditions/insomnia/",
+            "population": "General adult sleep information; individual needs vary.",
+            "supports": "Sleep routines, bedroom comfort and seeking help for persistent difficulties.",
+            "limitations": "Does not validate the preset values or predict sleep stages, recovery or brain clearance."
+          }
+        ]
       }
     },
     {
       "_id": "preset-sleep-rung2-behavioral",
       "_type": "scenarioPreset",
-      "title": "Sleep Rung 2: Behavioral & CBT-I",
+      "title": "Sleep example: routines and support",
       "slug": {
         "_type": "slug",
         "current": "sleep-rung2-behavioral"
       },
       "healthStatus": "optimal",
-      "evidenceLevel": "High-quality review",
+      "evidenceLevel": "Guideline-level",
       "parameters": {
         "aerobicMins": 150,
         "strengthDays": 2,
@@ -204,30 +267,44 @@
         "alcoholUnits": 0
       },
       "narrativeOverlay": {
-        "headline": "Morning Light Anchors & Stimulus Control",
-        "body": "",
+        "headline": "Consider habits and support for sleep difficulties",
+        "body": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
         "outcomes": [
-          "Phase-aligned Circadian Clock",
-          "Reduced Sleep Onset Latency",
-          "Adenosine Sleep Pressure Optimization"
+          "Explore a consistent getting-up time.",
+          "CBT for insomnia involves structured care, not a slider setting.",
+          "Seek help when persistent difficulties affect daily life."
         ]
       },
       "cameraShot": "shot-3-macro",
       "pillar": {
         "_type": "reference",
         "_ref": "pillar-sleep"
+      },
+      "education": {
+        "category": "Everyday guidance",
+        "checkedOn": "2026-10-28",
+        "limitations": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
+        "sources": [
+          {
+            "title": "NHS: insomnia and sleep habits",
+            "url": "https://www.nhs.uk/conditions/insomnia/",
+            "population": "General adult sleep information; individual needs vary.",
+            "supports": "Sleep routines, bedroom comfort and seeking help for persistent difficulties.",
+            "limitations": "Does not validate the preset values or predict sleep stages, recovery or brain clearance."
+          }
+        ]
       }
     },
     {
       "_id": "preset-sleep-rung3-circadian",
       "_type": "scenarioPreset",
-      "title": "Sleep Rung 3: Thermal & Chrono",
+      "title": "Sleep example: bedroom environment",
       "slug": {
         "_type": "slug",
         "current": "sleep-rung3-circadian"
       },
       "healthStatus": "optimal",
-      "evidenceLevel": "Emerging / Review",
+      "evidenceLevel": "Guideline-level",
       "parameters": {
         "aerobicMins": 180,
         "strengthDays": 3,
@@ -237,24 +314,38 @@
         "alcoholUnits": 0
       },
       "narrativeOverlay": {
-        "headline": "Pre-bed Thermal Drop & Blue-Light Shielding",
-        "body": "",
+        "headline": "Consider a comfortable sleep environment",
+        "body": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
         "outcomes": [
-          "Deep Slow-Wave (N3) Expansion",
-          "Melatonin Secretion Protection",
-          "Vagal HRV Tone Recovery"
+          "Think about comfort, darkness and quiet.",
+          "The app does not measure sleep stages or hormones.",
+          "This example is not an advanced sleep protocol."
         ]
       },
       "cameraShot": "shot-3-macro",
       "pillar": {
         "_type": "reference",
         "_ref": "pillar-sleep"
+      },
+      "education": {
+        "category": "Everyday guidance",
+        "checkedOn": "2026-10-28",
+        "limitations": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
+        "sources": [
+          {
+            "title": "NHS: insomnia and sleep habits",
+            "url": "https://www.nhs.uk/conditions/insomnia/",
+            "population": "General adult sleep information; individual needs vary.",
+            "supports": "Sleep routines, bedroom comfort and seeking help for persistent difficulties.",
+            "limitations": "Does not validate the preset values or predict sleep stages, recovery or brain clearance."
+          }
+        ]
       }
     },
     {
       "_id": "preset-sleep-rung4-experimental",
       "_type": "scenarioPreset",
-      "title": "Sleep Rung 4: Acoustic Delta & Flush",
+      "title": "Research example: timed sound during sleep",
       "slug": {
         "_type": "slug",
         "current": "sleep-rung4-experimental"
@@ -270,30 +361,51 @@
         "alcoholUnits": 0
       },
       "narrativeOverlay": {
-        "headline": "Acoustic Pink-Noise Delta & Glymphatic Flush",
-        "body": "",
+        "headline": "Read a research example, not a routine recommendation",
+        "body": "Early laboratory research is not routine advice. The preset values do not reproduce a study protocol or establish a personal benefit.",
         "outcomes": [
-          "Amplified Slow Delta Oscillations",
-          "Bioluminescent Glymphatic Clearance",
-          "Peak Recovery Readiness"
+          "Laboratory studies used sound timed to measured brain activity.",
+          "Reported memory findings differ between studies.",
+          "The app delivers no stimulation and predicts no memory or recovery benefit."
         ]
       },
       "cameraShot": "shot-3-macro",
       "pillar": {
         "_type": "reference",
         "_ref": "pillar-sleep"
+      },
+      "education": {
+        "category": "Research example",
+        "checkedOn": "2026-10-28",
+        "limitations": "Early laboratory research is not routine advice. The preset values do not reproduce a study protocol or establish a personal benefit.",
+        "sources": [
+          {
+            "title": "Papalambros et al. (2017): acoustic stimulation study",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/28337134/",
+            "population": "13 cognitively healthy adults aged 60–84; one stimulation and one sham night.",
+            "supports": "EEG-timed sound pulses were studied for sleep rhythms and word recall.",
+            "limitations": "Small laboratory crossover study. Whole-night slow-wave activity was similar; interval effects and recall findings do not establish home-use benefit or brain clearance."
+          },
+          {
+            "title": "Henin et al. (2019): acoustic stimulation replication",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6831893/",
+            "population": "12 healthy adults in a nap experiment and 19 in an overnight experiment; inclusion ages 18–30.",
+            "supports": "Sleep-rhythm changes were observed without better performance on the tested memory tasks.",
+            "limitations": "Different tasks and protocols limit generalisation. Results do not establish a reliable memory benefit or an insomnia treatment."
+          }
+        ]
       }
     },
     {
       "_id": "preset-active-vagal-reset",
       "_type": "scenarioPreset",
-      "title": "Active Parasympathetic Reset",
+      "title": "Stress example: coping and support",
       "slug": {
         "_type": "slug",
         "current": "active-vagal-reset"
       },
       "healthStatus": "optimal",
-      "evidenceLevel": "High-quality review",
+      "evidenceLevel": "Guideline-level",
       "parameters": {
         "aerobicMins": 150,
         "strengthDays": 2,
@@ -303,18 +415,32 @@
         "alcoholUnits": 0
       },
       "narrativeOverlay": {
-        "headline": "Parasympathetic Dominance & Expanded HRV",
-        "body": "",
+        "headline": "Explore manageable ways to cope",
+        "body": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
         "outcomes": [
-          "Vagus Nerve Stimulation",
-          "Normalised Blood Pressure",
-          "Suppressed Pro-inflammatory Cytokines"
+          "Try a comfortable coping practice or seek support.",
+          "A chosen stress rating is a personal description.",
+          "The app does not measure nervous-system activity or clinical outcomes."
         ]
       },
       "cameraShot": "shot-4-resonance",
       "pillar": {
         "_type": "reference",
         "_ref": "pillar-stress"
+      },
+      "education": {
+        "category": "Everyday guidance",
+        "checkedOn": "2026-10-28",
+        "limitations": "These are illustrative settings, not personal targets. Sources support the general habit guidance, not the visual rules or a predicted outcome.",
+        "sources": [
+          {
+            "title": "NHS: help with stress",
+            "url": "https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/feelings-and-symptoms/stress/",
+            "population": "General public advice; persistent difficulties may need professional support.",
+            "supports": "Manageable goals, comfortable breathing and talking with others.",
+            "limitations": "Does not establish changes in blood pressure, inflammation, hormones or heart-rate variability in this app."
+          }
+        ]
       }
     }
   ],
@@ -322,8 +448,8 @@
   "globalNarrative": {
     "_id": "global-narrative",
     "_type": "globalNarrative",
-    "bottomLine": "Health outcomes reflect the interaction of the four pillars.",
-    "pillarsSummary": "Fitness, nutrition, sleep, and stress work together.",
-    "clinicalAlignment": "Educational content; not individual medical advice."
+    "bottomLine": "Explore everyday habits and choose a manageable next step.",
+    "pillarsSummary": "Movement, food, sleep and stress are connected topics; the engine illustrates selected settings.",
+    "clinicalAlignment": "NHS references support general habit guidance. The visual model does not diagnose health or predict individual outcomes."
   }
 }

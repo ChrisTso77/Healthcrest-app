@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 
 // Import local components and state machine types
+import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 import { HealthEngineHUD } from '@/components/HealthEngineHUD';
 import { HealthEngineViewport } from '@/components/HealthEngineViewport';
 import { ModalDialog } from '@/components/ModalDialog';
@@ -285,7 +286,7 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
                   <span>The Bottom Line</span>
                 </span>
                 <p className="text-xs font-medium text-slate-100 leading-relaxed">
-                  Health optimisation is an evidence-based approach that distils six core lifestyle principles into four practical, interconnected pillars—Fitness, Nutrition, Sleep, and Stress Regulation. Rather than treating these as isolated habits, our framework models them as a single biological system where strengthening one pillar protects the whole, while neglecting one quietly undermines the rest.
+                  Healthcrest helps people explore everyday movement, food, sleep and stress through educational examples. The engine illustrates selected inputs; it does not model the body as a complete biological system or predict health outcomes.
                 </p>
               </div>
 
@@ -305,7 +306,8 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
                       <span>1. Fitness & Movement</span>
                     </div>
                     <p className="text-[11px] text-slate-300 leading-relaxed">
-                      The Fitness Pillar focuses on structured cardiorespiratory movement, functional physical activity, and minimising prolonged sedentary behaviour. Physical activity serves as a primary stimulus for expanding functional capacity, improving cardiovascular elasticity, and reducing the risk of chronic conditions such as type 2 diabetes and cardiovascular disease. To maintain baseline health, UK Chief Medical Officers (CMO) guidance recommends accumulating at least 150 minutes of moderate-intensity activity (or 75 minutes of vigorous activity) each week, alongside muscle-strengthening exercises on two or more days.
+                      {PILLAR_GUIDES.Fitness.guidance}
+                      <a href={PILLAR_GUIDES.Fitness.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-2 block text-emerald-300 underline">{PILLAR_GUIDES.Fitness.sourceLabel} (opens in a new tab)</a>
                     </p>
                   </div>
 
@@ -316,7 +318,8 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
                       <span>2. Nutrition</span>
                     </div>
                     <p className="text-[11px] text-slate-300 leading-relaxed">
-                      The Nutrition Pillar centres on a whole-food, plant-predominant pattern of eating that limits ultra-processed foods and prioritises nutrient-dense ingredients. Nutritious eating plays a pivotal role in maintaining metabolic stability, supporting gut microbiome diversity, and reducing long-term cardiovascular and metabolic disease risks. In line with NHS Eatwell guidance, a foundational daily practice includes consuming at least five portions of fruit and vegetables, opting for wholegrain starchy carbohydrates, and maintaining hydration with 6 to 8 glasses of fluid.
+                      {PILLAR_GUIDES.Nutrition.guidance}
+                      <a href={PILLAR_GUIDES.Nutrition.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-2 block text-emerald-300 underline">{PILLAR_GUIDES.Nutrition.sourceLabel} (opens in a new tab)</a>
                     </p>
                   </div>
 
@@ -327,7 +330,8 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
                       <span>3. Sleep</span>
                     </div>
                     <p className="text-[11px] text-slate-300 leading-relaxed">
-                      The Sleep Pillar focuses on establishing restorative sleep patterns, prioritising duration, timing, efficiency, and consistent sleep architecture. Quality sleep is fundamental to physiological recovery, immune system function, metabolic regulation, and emotional resilience. Grounded in lifestyle medicine consensus, adults should aim for 7 to 9 hours of quality sleep per night to safeguard cardiometabolic and mental health.
+                      {PILLAR_GUIDES.Sleep.guidance}
+                      <a href={PILLAR_GUIDES.Sleep.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-2 block text-emerald-300 underline">{PILLAR_GUIDES.Sleep.sourceLabel} (opens in a new tab)</a>
                     </p>
                   </div>
 
@@ -338,7 +342,8 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
                       <span>4. Stress Regulation</span>
                     </div>
                     <p className="text-[11px] text-slate-300 leading-relaxed">
-                      The Stress Regulation Pillar encompasses evidence-based cognitive and behavioural strategies—such as mindfulness, breathing techniques, and relaxation practices—designed to manage allostatic load. Managing stress matters because chronic psychological strain dysregulates cortisol levels and sympathetic nervous system activity, quietly undermining gains achieved in physical fitness, nutrition, and sleep recovery. Incorporating routine relaxation and mindfulness practices serves as a crucial intervention to down-regulate sympathetic arousal, lower blood pressure, and reduce anxiety.
+                      {PILLAR_GUIDES.Stress.guidance}
+                      <a href={PILLAR_GUIDES.Stress.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-2 block text-emerald-300 underline">{PILLAR_GUIDES.Stress.sourceLabel} (opens in a new tab)</a>
                     </p>
                   </div>
 
@@ -353,11 +358,11 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
                 </h3>
                 
                 <p className="text-[11px] text-slate-300 leading-relaxed">
-                  This health optimisation framework is fully aligned with the six foundational pillars of lifestyle medicine: nutrition, physical activity, sleep, stress management, avoidance of risky substances, and social connection. Rather than siloing substance risk reduction (such as alcohol moderation and smoking cessation) and social connectedness into separate standalone areas, they are integrated across all four pillars as cross-cutting factors that directly influence overall resilience.
+                  The four topics are a starting point for learning. Social connection, avoiding tobacco and reducing alcohol-related harm also matter. The current animation does not represent all of these factors.
                 </p>
 
                 <p className="text-[11px] text-slate-300 leading-relaxed">
-                  Official UK public health guidance—including NHS “Live Well” guidance, UK Chief Medical Officers’ physical activity guidelines, and NICE evidence standards—serves as a primary reference point across our content and scenario models. However, all materials, visualisations, and interactive tools provided on this platform are designed strictly for educational and informational purposes. They are not intended to diagnose, treat, or replace individual clinical advice, and you should always consult a qualified healthcare professional regarding any medical concerns or before embarking on a new health regimen.
+                  NHS references support the general habit guidance linked above. Example slider values, colour rules and shapes are authored illustrations, not clinically validated thresholds or predictions. Research examples have separate sources and limitations in the Guide.
                 </p>
               </div>
 

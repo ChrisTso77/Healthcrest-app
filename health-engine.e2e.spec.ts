@@ -59,7 +59,7 @@ test.describe('Healthcrest production regression', () => {
     await page.setViewportSize({ width: 320, height: 568 });
     await page.route('**/api/presets', (route) => route.fulfill({ status: 503, body: 'unavailable' }));
     await page.goto('/engine?guide-evidence-test=1');
-    const experimental = page.getByRole('button', { name: /Sleep Rung 4: Acoustic Delta/i });
+    const experimental = page.getByRole('button', { name: /Research example: timed sound/i });
     await experimental.click();
     const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
     await expect(sleep).toHaveValue('8.5');
@@ -67,7 +67,7 @@ test.describe('Healthcrest production regression', () => {
     await guide.click();
     const dialog = page.getByRole('dialog', { name: 'Understand this view', exact: true });
     const selected = dialog.getByRole('group', { name: 'Selected scenario', exact: true });
-    await expect(selected).toContainText('Sleep Rung 4: Acoustic Delta & Flush');
+    await expect(selected).toContainText('Research example: timed sound during sleep');
     await expect(selected).toContainText('Experimental');
     await expect(selected).toContainText('Exploratory content. It does not establish a proven health intervention or a routine recommendation.');
     await expect(dialog.getByRole('region', { name: 'Current pillar' })).toContainText('Choose a consistent getting-up time');
@@ -98,15 +98,15 @@ test.describe('Healthcrest production regression', () => {
       body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
     }));
     await page.goto('/engine?accessible-2d-overview-test=1');
-    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await page.getByRole('button', { name: /Short sleep and higher stress example/i }).click();
     await page.getByRole('button', { name: /2d canvas/i }).click();
 
     const overview = page.getByRole('region', { name: '2D health overview', exact: true });
     const illustration = overview.getByRole('img', { name: 'Current parameter illustration', exact: true });
     await expect(illustration).toHaveAccessibleDescription(
-      /Selected pillar: Systems\. Preset status: warning\..*Sleep duration: 4\.5 hours per night/
+      /Selected pillar: Systems\. Scenario: example settings\..*Sleep duration: 4\.5 hours per night/
     );
-    await expect(overview.getByText('WARNING', { exact: true })).toBeVisible();
+    await expect(overview.getByText('EXAMPLE', { exact: true })).toBeVisible();
     await expect(overview.getByRole('definition')).toHaveText([
       '300 minutes/week', '50%', '4.5 hours/night', '8 / 10',
     ]);
@@ -127,7 +127,7 @@ test.describe('Healthcrest production regression', () => {
       '220 minutes/week', '75%', '7.5 hours/night', '3 / 10',
     ]);
     await expect(illustration).toHaveAccessibleDescription(
-      /Selected pillar: Sleep\. Preset status: manual\..*Aerobic activity: 220 minutes per week\..*Whole food ratio: 75 percent\..*Sleep duration: 7\.5 hours per night\..*Perceived stress: 3 out of 10/
+      /Selected pillar: Sleep\. Scenario: manual settings\..*Aerobic activity: 220 minutes per week\..*Whole food ratio: 75 percent\..*Sleep duration: 7\.5 hours per night\..*Perceived stress: 3 out of 10/
     );
 
     for (const mode of [/lite 3d/i, /high 3d/i, /2d canvas/i]) {
@@ -616,7 +616,7 @@ test.describe('Healthcrest production regression', () => {
     await page.keyboard.press('Enter');
     await expect(macro).toHaveAttribute('aria-pressed', 'true');
 
-    const failure = page.getByRole('button', { name: /Single-Pillar Failure/i });
+    const failure = page.getByRole('button', { name: /Short sleep and higher stress example/i });
     await failure.focus();
     await page.keyboard.press('Enter');
     await expect(failure).toHaveAttribute('aria-pressed', 'true');
@@ -693,7 +693,7 @@ test.describe('Healthcrest production regression', () => {
       .toHaveClass(/border-emerald-500\/30/);
     await expect(page.getByText('INITIALISING 3D HEALTH ENGINE...')).toHaveCount(0);
 
-    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await page.getByRole('button', { name: /Short sleep and higher stress example/i }).click();
     await expect(page.getByText('4.5h / night', { exact: true })).toBeVisible();
   });
 
@@ -721,7 +721,7 @@ test.describe('Healthcrest production regression', () => {
 
   test('active pillar control stays synchronized with canonical state', async ({ page }) => {
     const sleepPreset = page.getByRole('button', {
-      name: /Sleep Rung 1/i,
+      name: /Sleep example: everyday foundations/i,
     });
 
     await sleepPreset.click();
@@ -746,14 +746,14 @@ test.describe('Healthcrest production regression', () => {
 
   test('active preset presentation follows canonical reducer state', async ({ page }) => {
     const sleepPreset = page.getByRole('button', {
-      name: /Sleep Rung 1/i,
+      name: /Sleep example: everyday foundations/i,
     });
 
     await sleepPreset.click();
 
     await expect(sleepPreset).toHaveClass(/border-emerald-500\/50/);
     await expect(
-      page.getByText('7-9h Restorative Sleep & Substance Cut-offs')
+      page.getByText('Explore sleep duration and routine')
     ).toBeVisible();
 
     await page.getByRole('button', {
@@ -767,13 +767,13 @@ test.describe('Healthcrest production regression', () => {
 
   test('manual pillar selection does not leave a stale preset selected', async ({ page }) => {
     const integratedPreset = page.getByRole('button', {
-      name: /Integrated Harmony/i,
+      name: /Connected habits example/i,
     });
 
     await integratedPreset.click();
 
     await expect(
-      page.getByText('Maximum Allostatic Resilience & Systemic Equilibrium')
+      page.getByText('Explore habits together')
     ).toBeVisible();
 
     await page.getByRole('button', {
@@ -799,13 +799,13 @@ test.describe('Healthcrest production regression', () => {
     await expect(hud).toHaveAttribute('data-alcohol-units', '2');
 
     await page.getByRole('button', {
-      name: /Single-Pillar Failure/i,
+      name: /Short sleep and higher stress example/i,
     }).click();
 
     await expect(hud).toHaveAttribute('data-alcohol-units', '18');
 
     await page.getByRole('button', {
-      name: /Sleep Rung 1/i,
+      name: /Sleep example: everyday foundations/i,
     }).click();
 
     await expect(hud).toHaveAttribute('data-alcohol-units', '0');
@@ -815,7 +815,7 @@ test.describe('Healthcrest production regression', () => {
     const sliders = page.getByRole('slider');
 
     await page.getByRole('button', {
-      name: /Sleep Rung 1/i,
+      name: /Sleep example: everyday foundations/i,
     }).click();
 
     await expect(sliders.nth(0)).toHaveValue('150');
@@ -829,7 +829,7 @@ test.describe('Healthcrest production regression', () => {
 
   test('manual parameter change clears the active preset', async ({ page }) => {
     const integratedPreset = page.getByRole('button', {
-      name: /Integrated Harmony/i,
+      name: /Connected habits example/i,
     });
 
     await integratedPreset.click();
@@ -848,7 +848,7 @@ test.describe('Healthcrest production regression', () => {
 
   test('manual changes clear stale preset status in 2D fallback', async ({ page }) => {
     await page.getByRole('button', {
-      name: /Single-Pillar Failure/i,
+      name: /Short sleep and higher stress example/i,
     }).click();
 
     await page.getByRole('button', {
@@ -871,7 +871,7 @@ test.describe('Healthcrest production regression', () => {
     ).toBeVisible();
 
     await expect(
-      fallback.getByText('WARNING', { exact: true })
+      fallback.getByText('EXAMPLE', { exact: true })
     ).toHaveCount(0);
   });
 
@@ -891,7 +891,7 @@ test.describe('Healthcrest production regression', () => {
     );
 
     await page.getByRole('button', {
-      name: /Sleep Rung 1/i,
+      name: /Sleep example: everyday foundations/i,
     }).click();
 
     const macroShot = page.getByRole('button', {
@@ -965,13 +965,13 @@ test.describe('Healthcrest production regression', () => {
 
   test('preset selection keeps WebGL alive', async ({ page }) => {
     await page
-      .getByRole('button', { name: /Integrated Harmony/i })
+      .getByRole('button', { name: /Connected habits example/i })
       .click();
 
     await expect(page.locator('canvas')).toBeVisible();
 
     await page
-      .getByRole('button', { name: /Sleep Rung 1/i })
+      .getByRole('button', { name: /Sleep example: everyday foundations/i })
       .click();
 
     await expect(page.locator('canvas')).toBeVisible();
@@ -989,14 +989,14 @@ test.describe('Healthcrest production regression', () => {
 
   test('Sanity preset synchronizes clinical state and camera', async ({ page }) => {
     const preset = page.getByRole('button', {
-      name: /Integrated Harmony/i,
+      name: /Connected habits example/i,
     });
 
     await expect(preset).toBeVisible();
     await preset.click();
 
     await expect(
-      page.getByText('Maximum Allostatic Resilience & Systemic Equilibrium')
+      page.getByText('Explore habits together')
     ).toBeVisible();
 
     await expect(
@@ -1050,14 +1050,14 @@ test.describe('Healthcrest production regression', () => {
     expect(intercepted).toBeTruthy();
 
     const preset = page.getByRole('button', {
-      name: /CMS Only Test Preset/i
+      name: /Unreviewed Sleep example/i
     });
 
     await expect(preset).toBeVisible();
     await preset.click();
 
     await expect(
-      page.getByText('CMS-only preset loaded successfully')
+      page.getByText('Example settings awaiting content review')
     ).toBeVisible();
 
     await expect(page.locator('canvas')).toBeVisible();
@@ -1082,9 +1082,9 @@ test.describe('Healthcrest production regression', () => {
         'CMS presets unavailable — using local evidence presets.'
       );
 
-      await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+      await page.getByRole('button', { name: /Short sleep and higher stress example/i }).click();
       await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
-      await expect(page.getByText('Structural Imbalance: Sleep & Stress Failure')).toBeVisible();
+      await expect(page.getByText('Compare a different set of example settings')).toBeVisible();
 
       await page.getByRole('button', { name: /2d canvas/i }).click();
       await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
@@ -1105,14 +1105,14 @@ test.describe('Healthcrest production regression', () => {
 
     await page.goto('/engine?cms-timeout-test=1');
     await expect.poll(() => stalledRequest !== undefined).toBe(true);
-    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await page.getByRole('button', { name: /Short sleep and higher stress example/i }).click();
     await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
     await expect(page.getByRole('status')).toHaveText(
       'CMS presets unavailable — using local evidence presets.',
       { timeout: 15_000 }
     );
     await expect.poll(() => aborted).toBe(true);
-    await expect(page.getByText('Structural Imbalance: Sleep & Stress Failure')).toBeVisible();
+    await expect(page.getByText('Compare a different set of example settings')).toBeVisible();
   });
 
   test('retries CMS loading without losing manual parameters or render mode', async ({ page }) => {
@@ -1149,7 +1149,7 @@ test.describe('Healthcrest production regression', () => {
     });
 
     await expect(page.getByRole('status')).toHaveCount(0);
-    await expect(page.getByRole('button', { name: /Recovered CMS Preset/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /Unreviewed Systems example/i })).toBeVisible();
     await expect(sleepSlider).toHaveValue('7.5');
     await expect(page.getByText('Interactive 2D Vector Health Engine')).toBeVisible();
     await expect(page.getByRole('button', { name: /Retry presets|Retrying…/ })).toHaveCount(0);
@@ -1171,7 +1171,7 @@ test.describe('Healthcrest production regression', () => {
       await expect(retry).toBeEnabled();
       await expect(page.getByRole('status')).toBeVisible();
     }
-    await page.getByRole('button', { name: /Single-Pillar Failure/i }).click();
+    await page.getByRole('button', { name: /Short sleep and higher stress example/i }).click();
     await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
   });
 
@@ -1213,14 +1213,14 @@ test.describe('Healthcrest production regression', () => {
     });
 
     const preset = page.getByRole('button', {
-      name: /Warning State Test Preset/i
+      name: /Unreviewed Systems example/i
     });
 
     await expect(preset).toBeVisible();
     await preset.click();
 
     await expect(
-      page.getByText('Warning state synchronization test')
+      page.getByText('Example settings awaiting content review')
     ).toBeVisible();
 
     await page.getByRole('button', { name: /2d canvas/i }).click();
@@ -1234,7 +1234,7 @@ test.describe('Healthcrest production regression', () => {
     ).locator('..').locator('..');
 
     await expect(
-      fallback.getByText('WARNING', { exact: true })
+      fallback.getByText('EXAMPLE', { exact: true })
     ).toBeVisible();
 
     await expect(
@@ -1258,7 +1258,7 @@ test.describe('Inline setting explanations', () => {
       body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
     }));
     await page.goto('/engine');
-    const preset = page.getByRole('button', { name: /Integrated Harmony/i });
+    const preset = page.getByRole('button', { name: /Connected habits example/i });
     await preset.click();
     const canvas = await page.locator('canvas').elementHandle();
     const initialValues = await page.getByRole('slider').evaluateAll(elements =>
@@ -1348,5 +1348,63 @@ test.describe('Inline setting explanations', () => {
     await expect(page).toHaveURL(/\/next-step\?pillar=sleep$/);
     await expect(page.getByRole('group', { name: 'Choose a habit pillar' })
       .getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  });
+});
+
+
+test.describe('Reviewed scenario evidence', () => {
+  test('stale CMS copy is replaced while sources, scope and parameters remain available', async ({ page }) => {
+    await page.route('**/api/presets', route => route.fulfill({
+      status: 200, contentType: 'application/json',
+      body: JSON.stringify({ success: true, data: [{ ...FALLBACK_PRESETS[2],
+        title: 'Guaranteed disease prevention', headline: 'Oxytocin Shield Active',
+        outcomes: ['-35% CVD Mortality Risk'], education: undefined,
+      }] }),
+    }));
+    await page.goto('/engine');
+    await page.getByRole('button', { name: /Movement example: weekly activity/i }).click();
+    await expect(page.getByRole('slider', { name: 'Weekly aerobic activity', exact: true })).toHaveValue('180');
+    await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
+    const dialog = page.getByRole('dialog', { name: 'Understand this view' });
+    const sources = dialog.getByRole('region', { name: 'Scenario sources and limits', exact: true });
+    await expect(sources).toContainText('Adults aged 19–64');
+    await expect(sources).toContainText('cannot predict individual disease risk');
+    await expect(sources.getByRole('link', { name: /^NHS: activity guidance/ })).toHaveAttribute('href', /physical-activity-guidelines/);
+    await expect(dialog).not.toContainText(/Oxytocin Shield|Guaranteed disease prevention|35%/);
+  });
+
+  test('research is a separate group with primary studies and explicit limitations', async ({ page }) => {
+    await page.route('**/api/presets', route => route.fulfill({
+      status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
+    }));
+    await page.goto('/engine');
+    const research = page.getByRole('group', { name: 'Research examples — not routine advice', exact: true });
+    const example = research.getByRole('button', { name: /Research example: timed sound during sleep/ });
+    await example.click();
+    await expect(page.getByRole('group', { name: 'Everyday examples', exact: true })
+      .getByRole('button', { name: /Research example/ })).toHaveCount(0);
+    await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
+    const dialog = page.getByRole('dialog', { name: 'Understand this view' });
+    await expect(dialog).toContainText('Early laboratory research is not routine advice');
+    await expect(dialog).toContainText('13 cognitively healthy adults aged 60–84');
+    await expect(dialog).toContainText('without better performance');
+    await expect(dialog.getByRole('link', { name: /Papalambros/ })).toHaveAttribute('href', 'https://pubmed.ncbi.nlm.nih.gov/28337134/');
+    await expect(dialog.getByRole('link', { name: /Henin/ })).toHaveAttribute('href', 'https://pmc.ncbi.nlm.nih.gov/articles/PMC6831893/');
+  });
+
+  test('unknown CMS claims are withheld and clearly labelled awaiting review', async ({ page }) => {
+    await page.route('**/api/presets', route => route.fulfill({
+      status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, data: [{
+        ...FALLBACK_PRESETS[0], id: 'unknown', slug: 'unknown', title: 'Miracle cure',
+        headline: 'Guaranteed recovery', outcomes: ['Stop prescribed treatment'],
+      }] }),
+    }));
+    await page.goto('/engine');
+    await page.getByRole('group', { name: 'Awaiting content review', exact: true })
+      .getByRole('button', { name: /Unreviewed Systems example/ }).click();
+    await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
+    const dialog = page.getByRole('dialog', { name: 'Understand this view' });
+    await expect(dialog.getByRole('group', { name: 'Selected scenario', exact: true })).toContainText('Unreviewed');
+    await expect(dialog).not.toContainText(/Miracle cure|Guaranteed recovery|Stop prescribed treatment/);
   });
 });

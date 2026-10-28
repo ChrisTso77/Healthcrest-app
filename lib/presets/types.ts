@@ -35,7 +35,8 @@ export type EvidenceLevel =
   | 'High-quality review'
   | 'Emerging'
   | 'Emerging / Review'
-  | 'Experimental';
+  | 'Experimental'
+  | 'Unreviewed';
 
 export interface CanonicalPresetParameters {
   aerobicMins: number;
@@ -57,4 +58,12 @@ export interface CanonicalScenarioPreset {
   headline: string;
   outcomes: string[];
   cameraShot?: string;
+  education?: ScenarioEducation;
+}
+
+export interface ScenarioEducation {
+  category: 'Everyday guidance' | 'Illustrative comparison' | 'Research example' | 'Awaiting review';
+  checkedOn?: string;
+  limitations: string;
+  sources: Array<{ title: string; url: string; population: string; supports: string; limitations: string }>;
 }

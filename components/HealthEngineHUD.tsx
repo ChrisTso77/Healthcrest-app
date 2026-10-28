@@ -1,10 +1,10 @@
 import { useId, useState, type FC, type ReactNode } from 'react';
 import Link from 'next/link';
+import { ScenarioEvidence } from '@/components/ScenarioEvidence';
 import { ParameterExplanation } from '@/components/ParameterExplanation';
 import type {
   CanonicalPresetParameters,
   CanonicalScenarioPreset,
-  HealthStatus,
   PillarType,
   RenderMode,
   CameraState,
@@ -26,10 +26,7 @@ import {
   Brain,
   Layers,
   BookOpen,
-  ShieldAlert,
   ShieldCheck,
-  CheckCircle2,
-  AlertTriangle,
   Sliders,
   ChevronUp,
   ChevronDown,
@@ -124,11 +121,6 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
     Systems: <Layers className="w-4 h-4 text-cyan-400" />
   };
 
-  const statusBadge: Record<HealthStatus, { label: string; bg: string; text: string; border: string; icon: ReactNode }> = {
-    optimal: { label: 'OPTIMAL', bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30', icon: <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> },
-    warning: { label: 'WARNING', bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/30', icon: <AlertTriangle className="w-3.5 h-3.5 text-amber-400" /> },
-    critical: { label: 'CRITICAL', bg: 'bg-rose-500/10', text: 'text-rose-400', border: 'border-rose-500/30', icon: <ShieldAlert className="w-3.5 h-3.5 text-rose-400" /> }
-  };
 
   return (
     <div
@@ -248,9 +240,8 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
           </div>
           
           {activePreset ? (
-            <div className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold border ${statusBadge[activePreset.status].bg} ${statusBadge[activePreset.status].text} ${statusBadge[activePreset.status].border}`}>
-              {statusBadge[activePreset.status].icon}
-              <span>{statusBadge[activePreset.status].label}</span>
+            <div className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2 py-1 text-[10px] font-medium text-cyan-200">
+              {activePreset.education?.category}
             </div>
           ) : (
             <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold border bg-slate-800 text-slate-300 border-slate-700">
@@ -270,7 +261,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         </section>
 
         <p className="mt-3 text-[10px] leading-relaxed text-slate-400">
-          Scenario labels and notes describe educational examples, not personal predictions.
+          Example settings illustrate the model. Their colours and internal status labels are not health assessments.
         </p>
 
         <div className="mt-3 space-y-2">
@@ -304,6 +295,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
               </div>
             )}
           </div>
+          {activePreset && <ScenarioEvidence preset={activePreset} />}
         </div>
       </div>
 
@@ -379,25 +371,23 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             {/* Left Col: Scenario Presets List */}
             <div className="xl:col-span-4 space-y-2 border-b pb-3 xl:pb-0 xl:border-b-0 xl:border-r border-slate-800/80 xl:pr-4">
               <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Try an example scenario</span>
-              <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
-                {availablePresets.map((preset) => (
-                  <button
-                    key={preset.id}
-                    aria-pressed={activePreset?.id === preset.id}
-                    onClick={() => loadPreset(preset)}
-                    className={`w-full text-left p-2 rounded-lg text-xs transition-all border ${
-                      activePreset?.id === preset.id
-                        ? 'bg-slate-800 border-emerald-500/50 text-slate-100 shadow-md'
-                        : 'bg-slate-950/40 border-slate-800/80 text-slate-400 hover:bg-slate-800/40 hover:text-slate-200'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold truncate">{preset.title}</span>
-                      <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded ${statusBadge[preset.status].bg} ${statusBadge[preset.status].text}`}>
-                        {preset.status}
-                      </span>
-                    </div>
-                  </button>
+              <div className="space-y-3 max-h-40 overflow-y-auto pr-1">
+                {[
+                  { label: 'Everyday examples', items: availablePresets.filter(p => p.education?.category === 'Everyday guidance' || p.education?.category === 'Illustrative comparison') },
+                  { label: 'Research examples — not routine advice', items: availablePresets.filter(p => p.education?.category === 'Research example') },
+                  { label: 'Awaiting content review', items: availablePresets.filter(p => p.education?.category === 'Awaiting review') },
+                ].filter(group => group.items.length > 0).map(group => (
+                  <div key={group.label} role="group" aria-label={group.label} className="space-y-1.5">
+                    <p className="text-[10px] font-semibold text-slate-300">{group.label}</p>
+                    {group.items.map(preset => (
+                      <button key={preset.id} type="button" aria-pressed={activePreset?.id === preset.id}
+                        onClick={() => loadPreset(preset)}
+                        className={`w-full rounded-lg border p-2 text-left text-xs transition-all ${activePreset?.id === preset.id ? 'bg-slate-800 border-emerald-500/50 text-slate-100 shadow-md' : 'bg-slate-950/40 border-slate-800/80 text-slate-400 hover:bg-slate-800/40 hover:text-slate-200'}`}>
+                        <span className="block font-semibold">{preset.title}</span>
+                        <span className="mt-1 block text-[10px] text-cyan-300">{preset.education?.category}</span>
+                      </button>
+                    ))}
+                  </div>
                 ))}
               </div>
             </div>

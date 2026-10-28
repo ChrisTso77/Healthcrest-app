@@ -1,6 +1,6 @@
 import type { EvidenceLevel, PillarType } from '@/lib/presets/types';
 
-// General adult guidance reviewed against the linked NHS sources on 2026-10-27.
+// General adult guidance checked against the linked NHS sources on 2026-10-28.
 // Visual explanations describe this app's illustrative model, not clinical rules.
 export const PILLAR_GUIDES = {
   Fitness: {
@@ -82,7 +82,8 @@ export const PARAMETER_GUIDES = {
 } as const;
 
 export const EVIDENCE_GUIDES: Record<EvidenceLevel, string> = {
-  'Guideline-level': 'Tagged as drawing on published guidance. Check the source, its audience and how it applies to the scenario.',
+  'Guideline-level': 'General habit guidance is linked to published guidance. This label does not validate the example parameter values or visual rules.',
+  Unreviewed: 'Content has not been checked against the reviewed catalogue. Clinical wording and unsupported evidence tags are withheld.',
   'High-quality review': 'Tagged as drawing on a research review. Relevance depends on the studies and how their findings are used.',
   Emerging: 'Early or developing evidence; conclusions may change.',
   'Emerging / Review': 'Developing evidence or a review of it; check the original research and its limits.',

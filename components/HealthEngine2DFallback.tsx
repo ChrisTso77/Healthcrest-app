@@ -54,9 +54,9 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
           <h2 className="text-base font-semibold text-slate-100">Interactive 2D Vector Health Engine</h2>
         </div>
         <div className="flex items-center gap-2 text-xs">
-          <span className="text-slate-400">Preset status</span>
+          <span className="text-slate-400">Scenario</span>
           <span style={{ color: healthStatus === 'manual' ? '#CBD5E1' : coreColor }} className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-slate-950/60 border border-current">
-            {healthStatus.toUpperCase()}
+            {healthStatus === 'manual' ? 'MANUAL' : 'EXAMPLE'}
           </span>
         </div>
       </div>
@@ -72,7 +72,7 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
         >
           <title id={`${id}-title`}>Current parameter illustration</title>
           <desc id={`${id}-description`}>
-            Selected pillar: {activePillar}. Preset status: {healthStatus}.
+            Selected pillar: {activePillar}. Scenario: {healthStatus === 'manual' ? 'manual settings' : 'example settings'}.
             Aerobic activity: {aerobicMins} minutes per week.
             Whole food ratio: {wholeFoodRatio} percent.
             Sleep duration: {sleepDuration} hours per night.
@@ -185,7 +185,7 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
       <p className="mt-4 text-xs leading-relaxed text-slate-400">
         {healthStatus === 'manual'
           ? 'Manual settings. Select a preset to view its evidence summary.'
-          : 'Educational preset status. View the clinical summary for its evidence.'}
+          : 'Illustrative example. Open the scenario summary for sources and limits.'}
       </p>
     </div>
   );
