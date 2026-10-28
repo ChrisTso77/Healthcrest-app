@@ -35,3 +35,10 @@
   .hc-plan-draft, .hc-plan-guidance { padding: 22px 18px; }
   .hc-plan h2 { font-size: 28px; }
 }
+
+.hc-plan-keep { margin-top: 24px; padding-top: 22px; border-top: 1px solid #d4dcc7; }
+.hc-plan-keep h3 { font-size: 16px; font-weight: 600; }
+.hc-plan-keep p { margin-top: 12px; color: var(--hc-muted); }
+.hc-plan-save-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.hc-plan-save-actions button { min-height: 44px; padding: 10px 14px; border: 1px solid #8b9d7d; border-radius: 10px; background: #f8f7f0; color: var(--hc-ink); font: inherit; font-size: 13px; cursor: pointer; }
+.hc-plan-save-actions button:hover { background: #eaf0de; }

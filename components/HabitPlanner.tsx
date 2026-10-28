@@ -3,11 +3,10 @@
 import { useId, useState } from 'react';
 import Link from 'next/link';
 import { Download, ArrowUpRight } from 'lucide-react';
-import type { PillarType } from '@/lib/presets/types';
+import { HABIT_DRAFT_KEY, parseSavedHabitDraft, type HabitPillar, type HabitDraft as Draft } from '@/lib/education/habitDraft';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
-export type HabitPillar = Exclude<PillarType, 'Systems'>;
-type Draft = { action: string; cue: string; support: string };
+export type { HabitPillar } from '@/lib/education/habitDraft';
 const options = [
   { key: 'Fitness', slug: 'fitness', label: 'Movement', starter: 'Try a manageable walk or another activity I enjoy.', cue: 'For example: after lunch, on a day that suits me.' },
   { key: 'Nutrition', slug: 'nutrition', label: 'Food', starter: 'Add vegetables, beans or a higher-fibre food to one familiar meal.', cue: 'For example: when I prepare my evening meal.' },
@@ -36,6 +35,41 @@ export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) 
   function update(field: keyof Draft, value: string) {
     setDrafts(current => ({ ...current, [selected]: { ...current[selected], [field]: value } }));
     setStatus('');
+  }
+
+  function saveDraft() {
+    try {
+      const raw = JSON.stringify({ version: 1, selected, drafts });
+      if (!parseSavedHabitDraft(raw)) throw new Error('Invalid draft');
+      window.localStorage.setItem(HABIT_DRAFT_KEY, raw);
+      setStatus('Saved draft on this device. Save again after making changes.');
+    } catch {
+      setStatus('Saving is unavailable in this browser. You can download your plan instead.');
+    }
+  }
+
+  function restoreDraft() {
+    try {
+      const saved = parseSavedHabitDraft(window.localStorage.getItem(HABIT_DRAFT_KEY));
+      if (!saved) {
+        setStatus('No compatible saved draft was found. Your current edits are unchanged.');
+        return;
+      }
+      setDrafts(saved.drafts);
+      setSelected(saved.selected);
+      setStatus('Saved draft restored, including your drafts for all four pillars.');
+    } catch {
+      setStatus('Saved drafts are unavailable in this browser. Your current edits are unchanged.');
+    }
+  }
+
+  function removeSavedDraft() {
+    try {
+      window.localStorage.removeItem(HABIT_DRAFT_KEY);
+      setStatus('Saved draft removed from this browser. Your current edits are unchanged.');
+    } catch {
+      setStatus('The saved draft could not be removed in this browser. Your current edits are unchanged.');
+    }
   }
 
   function download() {
@@ -110,7 +144,17 @@ export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) 
             <h3>Try it, then reflect</h3>
             <p>How did it fit your routine? What made it easier or harder? What would you adjust? An interrupted routine is a reason to adapt, not a failed health score.</p>
           </div>
-          <p className="hc-plan-storage">Your draft stays in this page while you explore its pillars. It is not saved when you leave or reload. Download it if you want to keep it.</p>
+          <section aria-label="Keep your draft" className="hc-plan-keep">
+            <h3>Keep your draft</h3>
+            <p className="hc-plan-storage">Choose Save on this device to keep all four pillar drafts in this browser. They do not sync to other devices. Saving is manual: save again after editing.</p>
+            <p className="hc-plan-storage">Restore replaces the drafts currently on this page. Remove clears only the saved copy and keeps your current edits.</p>
+            <div className="hc-plan-save-actions">
+              <button type="button" onClick={saveDraft}>Save on this device</button>
+              <button type="button" onClick={restoreDraft}>Restore saved draft</button>
+              <button type="button" onClick={removeSavedDraft}>Remove saved draft</button>
+            </div>
+            <p className="hc-plan-storage">Without saving, drafts are discarded when you leave or reload. You can also download a plan to keep a separate copy.</p>
+          </section>
           <button type="button" className="hc-button hc-button-primary" onClick={download} disabled={!draft.action.trim()}>
             Download my next step <Download size={18} aria-hidden="true" />
           </button>

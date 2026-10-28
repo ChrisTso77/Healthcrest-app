@@ -99,3 +99,87 @@ test('unknown plan pillar is safe and server guidance remains available without 
   await expect(page.getByRole('link', { name: /NHS: adult physical activity guidance/ })).toHaveAttribute('href', /www.nhs.uk\/live-well\/exercise/);
   await context.close();
 });
+
+
+test('device saving restores all pillar drafts and the saved selection after reloading', async ({ page }) => {
+  await page.goto('/next-step?pillar=nutrition');
+  const action = page.getByLabel('One manageable action', { exact: true });
+  await action.fill('Add beans to lunch.');
+  await page.getByRole('group', { name: 'Choose a habit pillar' }).getByRole('button', { name: 'Sleep', exact: true }).click();
+  await action.fill('Read quietly before bed.');
+  await page.getByLabel('When will I try it?', { exact: false }).fill('After brushing my teeth.');
+  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Saved draft on this device.');
+  await page.reload();
+  // Loading the page never silently overwrites its initial pillar with stored data.
+  await expect(action).toHaveValue(/Add vegetables/);
+  await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await expect(action).toHaveValue('Read quietly before bed.');
+  await expect(page.getByLabel('When will I try it?', { exact: false })).toHaveValue('After brushing my teeth.');
+  await expect(page.getByRole('group', { name: 'Choose a habit pillar' }).getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await action.fill('An unsaved change.');
+  await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await expect(action).toHaveValue('Read quietly before bed.');
+  await page.getByRole('group', { name: 'Choose a habit pillar' }).getByRole('button', { name: 'Food', exact: true }).click();
+  await expect(action).toHaveValue('Add beans to lunch.');
+});
+
+test('editing alone never persists a plan', async ({ page }) => {
+  await page.goto('/next-step');
+  const action = page.getByLabel('One manageable action', { exact: true });
+  await action.fill('This draft was not saved.');
+  await page.reload();
+  await expect(action).not.toHaveValue('This draft was not saved.');
+  await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('No compatible saved draft was found.');
+});
+
+test('removing saved drafts keeps current edits and unrelated browser storage', async ({ page }) => {
+  await page.goto('/next-step');
+  await page.evaluate(() => localStorage.setItem('unrelated-preference', 'keep'));
+  const action = page.getByLabel('One manageable action', { exact: true });
+  await action.fill('My current habit.');
+  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove saved draft', exact: true }).click();
+  await expect(action).toHaveValue('My current habit.');
+  expect(await page.evaluate(() => localStorage.getItem('unrelated-preference'))).toBe('keep');
+  await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('No compatible saved draft was found.');
+  await expect(action).toHaveValue('My current habit.');
+});
+
+test('damaged saved data never replaces current edits', async ({ page }) => {
+  await page.goto('/next-step?pillar=sleep');
+  const action = page.getByLabel('One manageable action', { exact: true });
+  await action.fill('Keep this current draft.');
+  for (const raw of ['{broken', JSON.stringify({ version: 999, selected: 'Sleep', drafts: {} })]) {
+    await page.evaluate(value => localStorage.setItem('healthcrest.habit-draft.v1', value), raw);
+    await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+    await expect(page.getByRole('status')).toContainText('No compatible saved draft was found.');
+    await expect(action).toHaveValue('Keep this current draft.');
+  }
+});
+
+test('blocked browser storage leaves editing and download available', async ({ page }) => {
+  await page.addInitScript(() => {
+    for (const method of ['getItem', 'setItem', 'removeItem']) {
+      Object.defineProperty(Storage.prototype, method, {
+        configurable: true,
+        value: () => { throw new DOMException('Storage blocked', 'SecurityError'); },
+      });
+    }
+  });
+  await page.goto('/next-step?pillar=sleep');
+  const action = page.getByLabel('One manageable action', { exact: true });
+  await action.fill('Read quietly before bed.');
+  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Saving is unavailable');
+  await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Saved drafts are unavailable');
+  await page.getByRole('button', { name: 'Remove saved draft', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('could not be removed');
+  await expect(action).toHaveValue('Read quietly before bed.');
+  const downloading = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download my next step', exact: true }).click();
+  expect((await downloading).suggestedFilename()).toBe('healthcrest-next-step.txt');
+});
