@@ -43,7 +43,7 @@ export function LearningLibrary() {
           {query && <button type="button" onClick={() => { setQuery(''); input.current?.focus(); }}>Clear search</button>}
         </div>
       </div>
-      <noscript><p className="hc-model-note">Search needs JavaScript. All topics, terms and references are available below without searching.</p></noscript>
+      <noscript className="hc-learn-no-script"><p className="hc-model-note">Search needs JavaScript. All topics, terms and references are available below without searching.</p></noscript>
       <p role="status" className="hc-learn-result-count">{countLabel(shownTopics.length, 'topic')}, {countLabel(shownTerms.length, 'term')} and {countLabel(shownEvidence.length, 'evidence label')} found.</p>
       {total === 0 && <p className="hc-model-note">No matching guidance. Try a broader word such as sleep or movement, or clear the search to browse everything.</p>}
 

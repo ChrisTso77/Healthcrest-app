@@ -84,7 +84,8 @@ test('learning topics and definitions are readable without JavaScript', async ({
   await page.goto('/learn');
   await expect(page.getByRole('article')).toHaveCount(5);
   await expect(page.getByText('HRV', { exact: true })).toBeVisible();
-  await expect(page.getByText('Search needs JavaScript.', { exact: false })).toBeVisible();
+  await expect(page.locator('.hc-learn-no-script')).toBeVisible();
+  await expect(page.locator('.hc-learn-no-script')).toContainText('Search needs JavaScript.');
   await expect(page.getByRole('article', { name: 'Sleep', exact: true }).getByRole('link', { name: /^NHS:/ }))
     .toHaveAttribute('href', 'https://www.nhs.uk/conditions/insomnia/');
   await context.close();
