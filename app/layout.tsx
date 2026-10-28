@@ -1,9 +1,10 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import { pageMetadata, SITE_URL, SITE_DESCRIPTION, WEBSITE_SCHEMA } from "@/lib/siteMetadata";
 
-export const metadata: Metadata = {
-  title: "Healthcrest",
-  description: "Understand everyday habits and explore practical, evidence-informed ways to care for your health.",
+export const metadata = {
+  ...pageMetadata('Healthcrest', SITE_DESCRIPTION, '/'),
+  metadataBase: new URL(SITE_URL),
+  authors: [{ name: 'Chris Tsoto', url: SITE_URL + '/about' }],
 };
 
 export default function RootLayout({
@@ -13,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA).replace(/</g, '\\u003c') }} />
+        {children}
+      </body>
     </html>
   );
 }

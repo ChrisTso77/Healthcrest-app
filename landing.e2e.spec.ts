@@ -61,11 +61,11 @@ test.describe('Healthcrest introduction', () => {
     });
   }
 
-  test('preview opens the selected pillar and the engine links home', async ({ page }) => {
+  test('preview opens the selected pillar and the Habit Explorer links home', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('group', { name: 'Preview pillars' })
       .getByRole('button', { name: 'Sleep', exact: true }).click();
-    await page.getByRole('link', { name: 'Explore sleep in the engine', exact: true }).click();
+    await page.getByRole('link', { name: 'Explore sleep in the Habit Explorer', exact: true }).click();
     await expect(page).toHaveURL(/\/engine\?pillar=sleep$/);
     await expect(page.getByRole('navigation', { name: 'Health pillars' })
       .getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
@@ -107,8 +107,10 @@ test('hummingbird loads, pauses, resumes and respects changed motion preferences
   const logos = page.locator('.hc-brand img');
   await expect(logos).toHaveCount(2);
   for (const logo of await logos.all()) {
+    await logo.scrollIntoViewIfNeeded();
     await expect.poll(() => logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
   }
+  await page.locator('.hc-bird-media').scrollIntoViewIfNeeded();
   const video = page.locator('.hc-bird video');
   await expect(video).toBeVisible();
   await expect.poll(() => video.evaluate((media: HTMLVideoElement) => media.readyState)).toBeGreaterThanOrEqual(2);
@@ -167,4 +169,96 @@ test('branding and static hero remain available without JavaScript', async ({ br
   await expect.poll(() => still.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
   await expect(page.locator('video')).toHaveCount(0);
   await context.close();
+});
+
+test('public navigation explains authorship and offers a working contact route', async ({ page }) => {
+  await page.goto('/');
+  const nav = page.getByRole('navigation', { name: 'Main navigation' });
+  await expect(nav.getByRole('link')).toHaveText(['Learn', 'Habit Explorer', 'About', 'Contact']);
+  await expect(page.getByRole('link', { name: 'Try the Habit Explorer', exact: true }).first()).toHaveAttribute('href', '/engine');
+  await expect(page.locator('#engine-preview')).toBeVisible();
+  expect(await page.locator('#engine-preview').evaluate(node => Boolean(node.compareDocumentPosition(document.querySelector('#purpose')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
+  await nav.getByRole('link', { name: 'About', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('About Healthcrest');
+  await expect(page.locator('main')).toContainText('Chris Tsoto');
+  await expect(page.locator('main')).toContainText('2055329');
+  await expect(page.locator('main time')).toHaveAttribute('dateTime', '2026-10-28');
+  await expect(page.locator('main')).toContainText('not a claim of independent clinical review');
+  await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Contact', exact: true }).click();
+  await expect(page.getByRole('link', { name: 'chris@healthcrest.uk', exact: true })).toHaveAttribute('href', 'mailto:chris@healthcrest.uk');
+});
+
+test('start-here questions reach the relevant guidance and saved-plan controls remain manual', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: /How much activity do adults need/ }).click();
+  await expect(page).toHaveURL(/\/learn#topic-fitness$/);
+  await expect(page.locator('#topic-fitness')).toBeInViewport();
+  await page.getByRole('navigation', { name: 'Footer navigation' }).getByRole('link', { name: 'Browser storage', exact: true }).click();
+  await expect(page.locator('main')).toContainText('Saving and restoring are manual.');
+  await page.getByRole('link', { name: 'Open the save, restore and remove controls', exact: true }).click();
+  await expect(page).toHaveURL(/\/next-step#saved-draft-controls$/);
+  await expect(page.getByRole('region', { name: 'Keep your draft' })).toBeInViewport();
+  expect(await page.evaluate(() => localStorage.getItem('healthcrest.habit-draft.v1'))).toBeNull();
+});
+
+test('stress guidance exposes local urgent-help routes and keyboard preview selection works', async ({ page }) => {
+  await page.goto('/');
+  const choices = page.getByRole('group', { name: 'Preview pillars' });
+  await choices.getByRole('button', { name: 'Sleep', exact: true }).focus();
+  await page.keyboard.press('Tab');
+  const stress = choices.getByRole('button', { name: 'Stress & support', exact: true });
+  await expect(stress).toBeFocused();
+  await page.keyboard.press('Space');
+  await expect(stress).toHaveAttribute('aria-pressed', 'true');
+  const support = page.locator('#engine-preview').getByRole('complementary', { name: 'Urgent mental health support' });
+  await expect(support).toBeVisible();
+  await expect(support.getByRole('link', { name: '111', exact: true })).toHaveAttribute('href', 'tel:111');
+  await expect(support.getByRole('link', { name: '116 123', exact: true })).toHaveAttribute('href', 'tel:116123');
+  await expect(support.getByRole('link', { name: '999', exact: true })).toHaveAttribute('href', 'tel:999');
+  await page.goto('/learn#topic-stress');
+  await expect(page.locator('#topic-stress').getByRole('complementary', { name: 'Urgent mental health support' })).toBeVisible();
+  await page.goto('/next-step?pillar=stress');
+  await expect(page.getByRole('complementary', { name: 'Urgent mental health support' })).toBeVisible();
+});
+
+test('supplied logo is delivered responsively in a modern image format', async ({ page }) => {
+  await page.goto('/');
+  const logo = page.locator('.hc-header .hc-brand img');
+  await expect(logo).toHaveAttribute('alt', 'Healthcrest');
+  await expect(logo).toHaveAttribute('srcset', /w=/);
+  const response = await page.request.get((await logo.getAttribute('src'))!, {
+    headers: { Accept: 'image/avif,image/webp' },
+  });
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toMatch(/^image\/(avif|webp)/);
+});
+
+test('canonical and sharing metadata use the confirmed domain and publish working discovery files', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://www.healthcrest.uk/');
+  await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', 'https://www.healthcrest.uk/');
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+  const schema = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent())!);
+  expect(schema['@type']).toBe('WebSite');
+  expect(schema.url).toBe('https://www.healthcrest.uk');
+  expect(schema.creator.name).toBe('Chris Tsoto');
+
+  const explorer = await page.request.get('/engine?pillar=sleep');
+  expect(explorer.ok()).toBe(true);
+  expect(await explorer.text()).toContain('rel="canonical" href="https://www.healthcrest.uk/engine"');
+  const sitemap = await page.request.get('/sitemap.xml');
+  expect(sitemap.ok()).toBe(true);
+  const xml = await sitemap.text();
+  for (const path of ['/learn', '/engine', '/next-step', '/about', '/contact', '/storage']) {
+    expect(xml).toContain('<loc>https://www.healthcrest.uk' + path + '</loc>');
+  }
+  const robots = await page.request.get('/robots.txt');
+  expect(await robots.text()).toContain('Sitemap: https://www.healthcrest.uk/sitemap.xml');
+
+  const image = await page.request.get('/opengraph-image');
+  expect(image.status()).toBe(200);
+  expect(image.headers()['content-type']).toContain('image/png');
+  const bytes = await image.body();
+  expect(bytes.readUInt32BE(16)).toBe(1200);
+  expect(bytes.readUInt32BE(20)).toBe(630);
 });

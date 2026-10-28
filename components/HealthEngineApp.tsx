@@ -64,7 +64,7 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
   const [presetLoadAttempt, setPresetLoadAttempt] = useState(0);
   const [isRetryingPresets, setIsRetryingPresets] = useState(false);
 
-  // Fetch on mount and on explicit retries without resetting the engine state.
+  // Fetch on mount and on explicit retries without resetting the Habit Explorer state.
   useEffect(() => {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 10_000);
@@ -260,7 +260,7 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
                 </div>
                 <div>
                   <h2 id="global-narrative-title" className="text-base font-semibold tracking-wide text-slate-100">
-                    THE FOUR PILLARS HEALTH OPTIMISATION PLATFORM
+                    HEALTH THROUGH EVERYDAY HABITS
                   </h2>
                   <p className="text-[11px] font-mono text-slate-400">
                     Global Narrative & Clinical Reference Framework
@@ -286,7 +286,7 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
                   <span>The Bottom Line</span>
                 </span>
                 <p className="text-xs font-medium text-slate-100 leading-relaxed">
-                  Healthcrest helps people explore everyday movement, food, sleep and stress through educational examples. The engine illustrates selected inputs; it does not model the body as a complete biological system or predict health outcomes.
+                  Healthcrest helps people explore everyday movement, food, sleep and stress through educational examples. The Habit Explorer illustrates selected inputs; it does not model the body as a complete biological system or predict health outcomes.
                 </p>
               </div>
 
@@ -374,7 +374,7 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
                 onClick={() => setIsNarrativeOpen(false)}
                 className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-colors shadow-lg shadow-emerald-500/20"
               >
-                Close & Return to 3D Engine
+                Close & Return to the Habit Explorer
               </button>
             </div>
 

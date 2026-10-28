@@ -47,7 +47,7 @@ test('download contains the chosen habit, routine, support and relevant source',
   expect(text).toContain('When I prepare lunch on Tuesday.');
   expect(text).toContain('Keep a tin of beans in the cupboard.');
   expect(text).toContain('https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/');
-  expect(text).toContain('not a prescription generated from engine settings');
+  expect(text).toContain('not a prescription generated from Habit Explorer settings');
   await expect(page.getByRole('status')).toContainText('Plan download started.');
   await action.fill('Try a smaller version.');
   await expect(page.getByRole('status')).toBeEmpty();
@@ -84,7 +84,7 @@ test('engine guide links to its pillar plan and plan links back to that engine v
   await page.getByRole('dialog', { name: 'Understand this view' })
     .getByRole('link', { name: 'Make a manageable next step', exact: true }).click();
   await expect(page).toHaveURL(/\/next-step\?pillar=sleep$/);
-  await page.getByRole('link', { name: 'Explore sleep in the engine', exact: true }).click();
+  await page.getByRole('link', { name: 'Explore sleep in the Habit Explorer', exact: true }).click();
   await expect(page).toHaveURL(/\/engine\?pillar=sleep$/);
   await expect(page.getByRole('navigation', { name: 'Health pillars' })
     .getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');

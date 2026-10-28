@@ -48,7 +48,7 @@ export function ParameterExplanation({ parameter, value, activePillar, renderMod
           <p>{viewMeaning}</p>
           {renderMode !== '2d-canvas' && affects3D && <p>Illustrative rules use ranges, so a small change can leave the same colour. Colour is not a personal health rating.</p>}
         </div>
-        <p className="text-[11px] text-slate-400">The NHS reference supports the general habit guidance. Visual rules are illustrations created for this engine.</p>
+        <p className="text-[11px] text-slate-400">The NHS reference supports the general habit guidance. Visual rules are illustrations created for the Habit Explorer.</p>
         <a href={guidance.sourceUrl} target="_blank" rel="noopener noreferrer"
           className="block rounded text-emerald-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-emerald-400">
           {guidance.sourceLabel} (opens in a new tab)

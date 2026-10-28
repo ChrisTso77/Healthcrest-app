@@ -28,14 +28,14 @@ test('topic guidance leads to the matching planner and engine view', async ({ pa
   await page.goto('/learn');
   const sleep = page.getByRole('article', { name: 'Sleep', exact: true });
   await expect(sleep.getByRole('link', { name: /^NHS:/ })).toHaveAttribute('href', 'https://www.nhs.uk/conditions/insomnia/');
-  await sleep.getByText('How the engine illustrates sleep', { exact: true }).click();
+  await sleep.getByText('How the Habit Explorer illustrates sleep', { exact: true }).click();
   await expect(sleep).toContainText('not sleep stages, brain clearance or measured recovery');
   await sleep.getByRole('link', { name: 'Make a next step', exact: true }).click();
   await expect(page).toHaveURL(/\/next-step\?pillar=sleep$/);
   await expect(page.getByRole('heading', { name: 'My sleep next step', exact: true })).toBeVisible();
   await page.goto('/learn');
   await page.getByRole('article', { name: 'Food', exact: true })
-    .getByRole('link', { name: 'Explore in the engine', exact: true }).click();
+    .getByRole('link', { name: 'Explore in the Habit Explorer', exact: true }).click();
   await expect(page).toHaveURL(/\/engine\?pillar=nutrition$/);
   await expect(page.getByRole('navigation', { name: 'Health pillars' })
     .getByRole('button', { name: 'Nutrition', exact: true })).toHaveAttribute('aria-pressed', 'true');
@@ -45,7 +45,7 @@ test('landing navigation and engine guide expose the learning library', async ({
   await page.goto('/');
   await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Learn', exact: true }).click();
   await expect(page).toHaveURL(/\/learn$/);
-  await page.getByRole('link', { name: 'Explore the engine', exact: true }).click();
+  await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Habit Explorer', exact: true }).click();
   await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
   await page.getByRole('dialog', { name: 'Understand this view' })
     .getByRole('link', { name: 'Browse health topics and terms', exact: true }).click();
@@ -54,7 +54,7 @@ test('landing navigation and engine guide expose the learning library', async ({
 });
 
 for (const width of [320, 390, 768, 1440]) {
-  test('learning library is usable at ' + width + 'px without loading the engine', async ({ page }) => {
+  test('learning library is usable at ' + width + 'px without loading the Habit Explorer', async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     let presetRequests = 0;
     page.on('request', request => {

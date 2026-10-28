@@ -51,7 +51,7 @@ export const HealthEngine2DFallback: React.FC<FallbackProps> = ({
       <div className="flex flex-wrap items-start justify-between gap-3 pb-4 border-b border-slate-800">
         <div className="min-w-0">
           <p className="text-xs font-mono tracking-widest text-emerald-400 uppercase">2D OVERVIEW</p>
-          <h2 className="text-base font-semibold text-slate-100">Interactive 2D Vector Health Engine</h2>
+          <h2 className="text-base font-semibold text-slate-100">Habit Explorer · 2D view</h2>
         </div>
         <div className="flex items-center gap-2 text-xs">
           <span className="text-slate-400">Scenario</span>

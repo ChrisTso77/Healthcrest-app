@@ -174,3 +174,29 @@
 .hc-art-notes { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .hc-art-note { position: static; }
 .hc-hero-art figcaption { position: relative; bottom: auto; width: auto; }
+
+/* Public guidance, trust information and local return path. */
+.hc-footer-links nav { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 12px; font-size: 13px; }
+.hc-footer-links a, .hc-info-main a, .hc-purpose-copy a { text-decoration: underline; text-underline-offset: 4px; }
+.hc-review-note { font-size: 13px; }
+.hc-start, .hc-return { padding-top: 42px; padding-bottom: 42px; }
+.hc-start-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 32px; }
+.hc-start-grid > a { padding: 24px; border: 1px solid #cbd6bf; border-radius: 16px; background: #eff2e6; }
+.hc-start-grid h3 { font-family: Georgia, 'Times New Roman', serif; font-size: 24px; line-height: 1.2; margin-bottom: 16px; }
+.hc-start-grid p { font-size: 14px; }
+.hc-return > p { max-width: 680px; margin: 20px 0; }
+.hc-return h2 { font-size: clamp(2rem, 4vw, 3rem); }
+.hc-urgent-support { padding: 22px; border: 1px solid #a4b893; border-radius: 14px; margin-top: 24px; line-height: 1.7; }
+.hc-urgent-support h3 { font-size: 17px; margin-bottom: 8px; }
+.hc-urgent-support p + p { margin-top: 10px; }
+.hc-urgent-support a { text-decoration: underline; text-underline-offset: 3px; }
+.hc-info-main { padding-top: 48px; padding-bottom: 64px; max-width: 940px; }
+.hc-info-main h1 { font-size: clamp(3rem, 7vw, 5rem); overflow-wrap: anywhere; }
+.hc-info-main > section { margin-top: 40px; }
+.hc-info-main h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 20px; }
+.hc-info-main p + p { margin-top: 18px; }
+.hc-info-main a { overflow-wrap: anywhere; }
+.hc-learn-topic { scroll-margin-top: 24px; }
+#saved-draft-controls { scroll-margin-top: 24px; }
+@media (max-width: 1000px) { .hc-start-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .hc-start-grid { grid-template-columns: 1fr; } }

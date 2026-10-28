@@ -3,6 +3,7 @@
 import { useId, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Activity, Apple, Moon, Brain } from 'lucide-react';
+import { UrgentSupport } from '@/components/UrgentSupport';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
 const pillars = [
@@ -13,7 +14,7 @@ const pillars = [
 ] as const;
 
 export function LandingEnginePreview() {
-  const [selected, setSelected] = useState<(typeof pillars)[number]>(pillars[0]);
+  const [selected, setSelected] = useState<(typeof pillars)[number]>(pillars[2]);
   const id = useId();
   const guide = PILLAR_GUIDES[selected.key];
 
@@ -22,7 +23,7 @@ export function LandingEnginePreview() {
       <div className="hc-preview-intro">
         <span className="hc-eyebrow hc-eyebrow-light">A first look inside</span>
         <h2 id="preview-title">See the connections.<br />Start with one habit.</h2>
-        <p>Choose a pillar for a taste of the guidance inside. The full engine lets you explore example settings, visualise their connections and understand what they mean.</p>
+        <p>Try Sleep below: read an idea for a steadier routine, then open the Habit Explorer to adjust example sleep hours and read how the illustration responds. It does not predict how changing sleep will affect your stress or health.</p>
         <div role="group" aria-label="Preview pillars" className="hc-preview-choices">
           {pillars.map((pillar) => (
             <button key={pillar.key} type="button" aria-pressed={selected.key === pillar.key} onClick={() => setSelected(pillar)}>
@@ -37,8 +38,9 @@ export function LandingEnginePreview() {
           <p>{guide.goal}</p>
           <p><strong>One possible first step:</strong> {guide.firstStep}</p>
         </div>
+        {selected.key === 'Stress' && <UrgentSupport dark />}
         <Link prefetch={false} className="hc-button hc-button-light" href={`/engine?pillar=${selected.slug}`}>
-          Explore {selected.label.toLowerCase()} in the engine <ArrowUpRight size={18} aria-hidden="true" />
+          Explore {selected.label.toLowerCase()} in the Habit Explorer <ArrowUpRight size={18} aria-hidden="true" />
         </Link>
         <p>
           <Link prefetch={false} className="hc-text-link" href={'/next-step?pillar=' + selected.slug}>

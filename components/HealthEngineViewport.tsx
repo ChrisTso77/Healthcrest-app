@@ -46,7 +46,7 @@ function CanvasPlaceholder() {
       </div>
 
       <p className="text-xs font-mono tracking-widest uppercase text-slate-300">
-        INITIALISING 3D HEALTH ENGINE...
+        LOADING HABIT EXPLORER...
       </p>
 
       <p className="text-[10px] font-mono text-slate-500 mt-1">
