@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: '.',
   testMatch: process.env.HEALTHCREST_TEST_MEASUREMENT_OFF === '1'
     ? /telemetry-disabled\.e2e\.spec\.ts/
-    : /(?:health-engine|landing|next-step|habit-week|week-summary|draft-overview|plan-evidence|next-week|setting-comparison|learn|learning-search|learning-guides|movement-options|international-sources|return-plan|print-plan|plan-backup|release-readiness|start|telemetry)\.e2e\.spec\.ts/,
+    : /(?:health-engine|landing|next-step|habit-week|week-summary|draft-overview|plan-evidence|next-week|setting-comparison|learn|learning-search|learning-guides|movement-options|international-sources|return-plan|print-plan|print-guide|plan-backup|release-readiness|start|telemetry)\.e2e\.spec\.ts/,
   timeout: 30_000,
   expect: {
     timeout: 10_000,
