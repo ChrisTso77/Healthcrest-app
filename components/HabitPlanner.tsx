@@ -2,12 +2,13 @@
 
 import { useId, useState } from 'react';
 import Link from 'next/link';
+import { HabitPlanBackup } from '@/components/HabitPlanBackup';
 import { HabitPlanPrint } from '@/components/HabitPlanPrint';
 import { HabitWeekPlan } from '@/components/HabitWeekPlan';
 import { weekDownloadLines } from '@/lib/education/habitWeek';
 import { UrgentSupport } from '@/components/UrgentSupport';
 import { Download, Printer, ArrowUpRight } from 'lucide-react';
-import { HABIT_DRAFT_KEY, parseSavedHabitDraft, type HabitPillar, type HabitDraft as Draft } from '@/lib/education/habitDraft';
+import { HABIT_DRAFT_KEY, parseSavedHabitDraft, type HabitPillar, type HabitDraft as Draft, type SavedHabitDraft } from '@/lib/education/habitDraft';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
 export type { HabitPillar } from '@/lib/education/habitDraft';
@@ -37,6 +38,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
   const [status, setStatus] = useState('');
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [confirmReturn, setConfirmReturn] = useState(false);
+  const [importRevision, setImportRevision] = useState(0);
   const id = useId();
   const option = options.find(item => item.key === selected)!;
   const guide = PILLAR_GUIDES[selected];
@@ -84,6 +86,22 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
       setStatus('Saved drafts are unavailable in this browser. Your current edits are unchanged.');
       if (openWeek) requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#return-to-plan button')?.focus());
     }
+  }
+
+  function importBackup(saved: SavedHabitDraft) {
+    setImportRevision(current => current + 1);
+    setDrafts(saved.drafts);
+    setSelected(saved.selected);
+    setUnsavedChanges(true);
+    setConfirmReturn(false);
+    setStatus('Backup imported into this page. Choose Save on this device to keep it in this browser.');
+    requestAnimationFrame(() => {
+      const target = saved.drafts[saved.selected].week
+        ? document.getElementById('seven-day-plan')
+        : document.getElementById(id + '-action');
+      target?.focus();
+      target?.scrollIntoView({ block: 'start' });
+    });
   }
 
   function removeSavedDraft() {
@@ -142,7 +160,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
 
   return (
     <div className="hc-plan">
-      <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save, .hc-plan-print-button { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
+      <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save, .hc-plan-print-button, .hc-plan-backup { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
       <section id="return-to-plan" tabIndex={-1} aria-labelledby={id + '-return-title'} className="hc-plan-return">
         <h2 id={id + '-return-title'}>Return to your plan</h2>
         <p>Choose Restore my plan to read the saved copy on this device and open its selected week. Restoring replaces the drafts currently on this page. Plans stay in this browser and do not sync between devices.</p>
@@ -200,7 +218,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
             <textarea id={id + '-reflection'} rows={4} maxLength={500} value={draft.reflection}
               aria-describedby={id + '-reflection-help'} onChange={event => update('reflection', event.target.value)} />
           </div>
-          <HabitWeekPlan key={selected} week={draft.week} draft={draft} onSave={saveDraft} hasUnsavedChanges={unsavedChanges}
+          <HabitWeekPlan key={selected + '-' + importRevision} week={draft.week} draft={draft} onSave={saveDraft} hasUnsavedChanges={unsavedChanges}
             onChange={week => update('week', week)}
             onUseNextAction={action => { update('action', action); document.getElementById(id + '-action')?.focus(); }} />
           <section id="saved-draft-controls" tabIndex={-1} aria-label="Keep your draft" className="hc-plan-keep">
@@ -214,6 +232,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
             </div>
             <p className="hc-plan-storage">Without saving, drafts are discarded when you leave or reload. You can also download a plan to keep a separate copy.</p>
           </section>
+          <HabitPlanBackup value={{ version: 3, selected, drafts }} onImport={importBackup} onStatus={setStatus} />
           <div className="hc-plan-export-actions">
             <button type="button" className="hc-button hc-button-primary" onClick={download} disabled={!draft.action.trim() && !draft.week}>
               Download my next step <Download size={18} aria-hidden="true" />

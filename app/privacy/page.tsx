@@ -40,7 +40,7 @@ export default function PrivacyPage() {
         </section>
         <section aria-labelledby="privacy-storage">
           <h2 id="privacy-storage">Your habit drafts stay separate</h2>
-          <p>The planner keeps edits in the current page. Only choosing Save on this device stores drafts, reflection notes and current seven-day plans, including dates, check-ins and weekly reviews, in this browser. Restore and Remove are manual. A downloaded text file is a separate copy you manage.</p>
+          <p>The planner keeps edits in the current page. Only choosing Save on this device stores drafts, reflection notes and current seven-day plans, including dates, check-ins and weekly reviews, in this browser. Restore and Remove are manual. Downloaded text files, JSON backups and printed/PDF copies are separate copies you manage. A backup includes all four pillar drafts and their current weeks. Importing reads your chosen file locally and replaces page edits only after confirmation; it does not upload the file or save it automatically.</p>
           <p><Link href="/storage" prefetch={false} className="hc-text-link">Read the browser-storage explanation</Link>. Changing measurement choices does not remove a saved habit plan.</p>
         </section>
         <section aria-labelledby="privacy-services">
