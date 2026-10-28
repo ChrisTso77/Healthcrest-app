@@ -6,13 +6,13 @@ test('learning search finds acronyms and evidence labels, handles empty results 
   const search = page.getByRole('searchbox', { name: 'Search health topics and terms', exact: true });
   await search.fill('  hRv  ');
   await expect(page.getByRole('status')).toHaveText('0 topics, 1 term and 0 evidence labels found.');
-  await expect(page.getByText( 'HRV', { exact: true })).toBeVisible();
+  await expect(page.getByText('HRV', { exact: true })).toBeVisible();
   await expect(page.getByRole('definition')).toContainText('This app does not measure it.');
   await search.fill('MVPA');
-  await expect(page.getByText( 'MVPA (weekly aerobic activity)', { exact: true })).toBeVisible();
+  await expect(page.getByText('MVPA (weekly aerobic activity)', { exact: true })).toBeVisible();
   await expect(page.getByRole('definition')).toContainText('still allowing conversation');
   await search.fill('Experimental');
-  await expect(page.getByText( 'Experimental', { exact: true })).toBeVisible();
+  await expect(page.getByText('Experimental', { exact: true })).toBeVisible();
   await expect(page.getByRole('definition')).toContainText('does not establish a proven health intervention');
   await search.fill('zzzz-no-matching-guidance');
   await expect(page.getByText(/No matching guidance/)).toBeVisible();
@@ -83,7 +83,7 @@ test('learning topics and definitions are readable without JavaScript', async ({
   const page = await context.newPage();
   await page.goto('/learn');
   await expect(page.getByRole('article')).toHaveCount(5);
-  await expect(page.getByText( 'HRV', { exact: true })).toBeVisible();
+  await expect(page.getByText('HRV', { exact: true })).toBeVisible();
   await expect(page.getByText('Search needs JavaScript.', { exact: false })).toBeVisible();
   await expect(page.getByRole('article', { name: 'Sleep', exact: true }).getByRole('link', { name: /^NHS:/ }))
     .toHaveAttribute('href', 'https://www.nhs.uk/conditions/insomnia/');

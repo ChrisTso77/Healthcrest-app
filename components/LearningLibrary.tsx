@@ -50,7 +50,7 @@ export function LearningLibrary() {
       {shownTopics.length > 0 && (
         <section aria-labelledby={id + '-topics'} className="hc-learn-section">
           <h2 id={id + '-topics'}>Everyday habit guidance</h2>
-          <p>The NHS references support general habit guidance. The engine's visual rules are illustrations created for Healthcrest.</p>
+          <p>The NHS references support general habit guidance. The engine’s visual rules are illustrations created for Healthcrest.</p>
           <div className="hc-learn-topic-grid">
             {shownTopics.map(topic => {
               const guide = PILLAR_GUIDES[topic.key];
