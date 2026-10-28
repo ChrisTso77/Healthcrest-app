@@ -1,0 +1,49 @@
+.hc-guide-main { padding-top: 36px; padding-bottom: 72px; }
+.hc-guide-breadcrumb { display: flex; flex-wrap: wrap; gap: 8px 12px; font-size: 13px; color: var(--hc-muted); margin-bottom: 32px; }
+.hc-guide-breadcrumb a, .hc-guide a { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.hc-guide-header { max-width: 900px; }
+.hc-guide h1 { font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: 1.05; overflow-wrap: anywhere; }
+.hc-guide-summary { margin-top: 24px; font-size: 20px; line-height: 1.65; color: var(--hc-muted); max-width: 780px; }
+.hc-guide-byline, .hc-guide-audience { margin-top: 18px; font-size: 14px; line-height: 1.7; color: var(--hc-muted); max-width: 780px; }
+.hc-guide-takeaways { margin-top: 32px; padding: 24px; background: #eaf0de; border: 1px solid #c7d3b7; border-radius: 14px; max-width: 900px; }
+.hc-guide-takeaways h2 { font-size: 24px; margin-bottom: 12px; }
+.hc-guide ul, .hc-guide ol { padding-left: 22px; }
+.hc-guide li + li { margin-top: 10px; }
+.hc-guide-takeaways ul { list-style: disc; font-size: 16px; line-height: 1.7; }
+.hc-guide-urgent { max-width: 900px; margin-top: 24px; }
+.hc-guide-urgent .hc-urgent-support h2 { font-size: 22px; margin-bottom: 12px; }
+.hc-guide-contents { margin-top: 32px; padding: 22px 0; border-top: 1px solid #d4dcc7; border-bottom: 1px solid #d4dcc7; }
+.hc-guide-contents > p { font-weight: 600; font-size: 15px; margin-bottom: 14px; }
+.hc-guide-contents ul { display: flex; flex-wrap: wrap; gap: 12px 22px; padding: 0; list-style: none; }
+.hc-guide-contents li + li { margin-top: 0; }
+.hc-guide-contents a { font-size: 14px; line-height: 1.6; display: inline-block; padding: 4px 0; }
+.hc-guide-grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 48px; align-items: start; margin-top: 40px; }
+.hc-guide-body { min-width: 0; max-width: 760px; }
+.hc-guide-body > section { scroll-margin-top: 24px; }
+.hc-guide-body > section + section { margin-top: 40px; }
+.hc-guide-body h2, .hc-guide-sources h2, .hc-guide-related h2 { font-size: clamp(1.8rem, 3vw, 2.3rem); line-height: 1.2; margin-bottom: 20px; overflow-wrap: anywhere; }
+.hc-guide-body p, .hc-guide-body li { font-size: 17px; line-height: 1.8; color: var(--hc-muted); overflow-wrap: anywhere; }
+.hc-guide-body p + p { margin-top: 16px; }
+.hc-guide-body .hc-guide-citations { font-size: 13px; margin-top: 14px; }
+.hc-guide-citations a { padding: 4px; }
+.hc-guide-practice { padding: 28px; border-radius: 16px; background: #eff2e6; border: 1px solid #c7d3b7; }
+.hc-guide-practice ul { list-style: disc; margin-top: 20px; }
+.hc-guide-practice h3 { font-size: 20px; line-height: 1.4; margin: 26px 0 12px; }
+.hc-guide-practice .hc-button { text-decoration: none; margin-top: 24px; max-width: 100%; text-align: center; }
+.hc-guide-tools { min-width: 0; display: flex; flex-direction: column; align-items: start; gap: 20px; padding: 24px; border: 1px solid #c7d3b7; border-radius: 16px; background: #fffef9; }
+.hc-guide-tools .hc-eyebrow { margin-bottom: 0; }
+.hc-guide-tools h2 { font-size: 28px; line-height: 1.15; }
+.hc-guide-tools p { font-size: 14px; line-height: 1.7; color: var(--hc-muted); }
+.hc-guide-tools a { font-size: 14px; line-height: 1.6; }
+.hc-guide-tools .hc-guide-tool-note { font-size: 12px; border-top: 1px solid #d4dcc7; padding-top: 16px; }
+.hc-guide-sources { margin-top: 48px; padding-top: 32px; border-top: 1px solid #d4dcc7; max-width: 900px; scroll-margin-top: 24px; }
+.hc-guide-sources > p { font-size: 14px; line-height: 1.8; color: var(--hc-muted); }
+.hc-guide-sources ol { margin: 24px 0; list-style: decimal; }
+.hc-guide-sources li { padding: 12px 0; scroll-margin-top: 24px; font-size: 15px; line-height: 1.7; }
+.hc-guide-sources li p { margin-top: 8px; font-size: 14px; color: var(--hc-muted); }
+.hc-guide-related { margin-top: 40px; padding-top: 30px; border-top: 1px solid #d4dcc7; }
+.hc-guide-related ul { display: grid; gap: 16px; padding: 0; list-style: none; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.hc-guide-related li { min-width: 0; margin: 0 !important; padding: 20px; border-radius: 12px; background: #eff2e6; }
+.hc-guide-related a { font-size: 15px; line-height: 1.6; }
+@media (max-width: 900px) { .hc-guide-grid { grid-template-columns: 1fr; gap: 30px; } .hc-guide-tools { max-width: 760px; } }
+@media (max-width: 700px) { .hc-guide-main { padding-top: 28px; } .hc-guide-practice, .hc-guide-takeaways { padding: 22px 18px; } .hc-guide-related ul { grid-template-columns: 1fr; } .hc-guide-summary { font-size: 18px; } }

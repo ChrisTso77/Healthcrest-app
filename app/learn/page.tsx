@@ -25,7 +25,7 @@ export default async function LearnPage({ searchParams }: {
       <main id="main-content" tabIndex={-1} className="hc-section hc-learn-main">
         <span className="hc-eyebrow">Health through everyday habits</span>
         <h1>Learn the basics.<br /><em>Find your next step.</em></h1>
-        <p className="hc-learn-intro">Explore everyday habits, read the guidance behind them and make sense of words used in the Habit Explorer. Start with a topic or an unfamiliar term.</p>
+        <p className="hc-learn-intro">Explore everyday habits, read the guidance behind them and make sense of words used in the Habit Explorer. Each of the four habit topics includes a practical guide with sources, ideas to adapt and routes to support. Start with a topic or an unfamiliar term.</p>
         <p><Link href="/start" prefetch={false} className="hc-text-link">Not sure where to begin? Find a starting point</Link>.</p>
         {topic && constraint && <aside className="hc-model-note" aria-label="Your guided starting point">
           <p>Your {topic.label.toLowerCase()} journey continues here. <Link href={journeyExplorerHref(topic.key, constraint)} prefetch={false} className="hc-text-link">Open the labelled diagram</Link> or <Link href={journeyPlannerHref(topic.key, constraint)} prefetch={false} className="hc-text-link">adapt your starter idea</Link>.</p>
