@@ -1,9 +1,12 @@
 'use client';
 
+import { HabitWeekRollover } from '@/components/HabitWeekRollover';
 import { useId, useRef, useState, type FormEvent } from 'react';
 import { createHabitWeek, DAY_CHOICES, formatDay, localDate, weekDayDate, type HabitDay, type HabitWeek } from '@/lib/education/habitWeek';
 
-export function HabitWeekPlan({ week, draft, onChange, onUseNextAction, onSave, hasUnsavedChanges }: {
+export function HabitWeekPlan({ week, draft, onChange, onUseNextAction, onSave, hasUnsavedChanges, onStartNextWeek, onDownloadBackup }: {
+  onStartNextWeek: (week: HabitWeek) => void;
+  onDownloadBackup: () => void;
   onSave: () => void;
   hasUnsavedChanges: boolean;
   week: HabitWeek | null;
@@ -98,6 +101,8 @@ export function HabitWeekPlan({ week, draft, onChange, onUseNextAction, onSave, 
             <textarea id={id + '-next'} rows={2} maxLength={300} value={week.nextAction} onChange={event => onChange({ ...week, nextAction: event.target.value })} />
             <button type="button" disabled={!week.nextAction.trim()} onClick={() => onUseNextAction(week.nextAction.trim())}>Use this action in my draft</button>
           </div>
+          <HabitWeekRollover week={week} draft={draft} onDownloadBackup={onDownloadBackup}
+            onStart={next => { setConfirmClear(false); setStartDate(''); setError(''); onStartNextWeek(next); requestAnimationFrame(() => heading.current?.focus()); }} />
           <div className="hc-week-quick-save">
             <p>{hasUnsavedChanges ? 'Your latest changes are on this page. Save to keep them on this device.' : 'Save again whenever you change a check-in or review.'}</p>
             <button type="button" onClick={onSave}>Save week and all drafts</button>
