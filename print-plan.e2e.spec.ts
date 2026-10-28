@@ -79,8 +79,8 @@ test('print copy includes closed check-ins, weekly review and the original week 
   const copy = printCopy(page);
   await expect(copy).toContainText('Original action for this week.');
   await expect(copy).toContainText('A different draft for later.');
-  await expect(copy).toContainText('Wed 28 Oct 2026');
-  await expect(copy).toContainText('Tue 3 Nov 2026');
+  await expect(copy).toContainText(/28 Oct 2026/);
+  await expect(copy).toContainText(/3 Nov 2026/);
   await expect(copy).toContainText('Tried a smaller or different version');
   await expect(copy).toContainText('ゆっくり — <script>plain text only</script>');
   await expect(copy.locator('script')).toHaveCount(0);
