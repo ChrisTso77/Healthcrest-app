@@ -24,9 +24,13 @@ function initialDrafts(): Record<HabitPillar, Draft> {
   };
 }
 
-export function HabitPlanner({ initialPillar }: { initialPillar: HabitPillar }) {
+export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: HabitPillar; initialAction?: string }) {
   const [selected, setSelected] = useState<HabitPillar>(initialPillar);
-  const [drafts, setDrafts] = useState(initialDrafts);
+  const [drafts, setDrafts] = useState(() => {
+    const initial = initialDrafts();
+    if (initialAction) initial[initialPillar].action = initialAction;
+    return initial;
+  });
   const [status, setStatus] = useState('');
   const id = useId();
   const option = options.find(item => item.key === selected)!;

@@ -1,6 +1,6 @@
 import { pageMetadata } from '@/lib/siteMetadata';
 import Link from 'next/link';
-import { Activity, Apple, ArrowDown, ArrowUpRight, Brain, Moon } from 'lucide-react';
+import { Activity, Apple, ArrowUpRight, Brain, Moon } from 'lucide-react';
 import { LandingEnginePreview } from '@/components/LandingEnginePreview';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 import { HummingbirdAnimation } from '@/components/HummingbirdAnimation';
@@ -35,7 +35,7 @@ export default function HealthcrestHomePage() {
             <p className="hc-hero-description">Understand how movement, food, sleep and stress relate to your health—and find practical ways to care for yourself, every day.</p>
             <div className="hc-hero-actions">
               <Link prefetch={false} href="/engine" className="hc-button hc-button-primary">Try the Habit Explorer <ArrowUpRight size={19} aria-hidden="true" /></Link>
-              <a href="#engine-preview" className="hc-text-link">Try a preview <ArrowDown size={15} aria-hidden="true" /></a>
+              <Link href="/start" prefetch={false} className="hc-text-link">Find my starting point <ArrowUpRight size={15} aria-hidden="true" /></Link>
             </div>
             <p className="hc-hero-footnote">An educational space to explore. No account needed.</p>
             <p className="hc-hero-footnote">Created by Chris Tsoto, Clinical Pharmacist, MBA. <Link href="/about" prefetch={false} className="hc-text-link">About &amp; sources</Link></p>

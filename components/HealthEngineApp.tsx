@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 
 // Import local components and state machine types
+import type { JourneyConstraint } from '@/lib/education/startJourney';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 import { HealthEngineHUD } from '@/components/HealthEngineHUD';
 import { HealthEngineViewport } from '@/components/HealthEngineViewport';
@@ -27,22 +28,24 @@ import type { SceneId } from '@/state/PillarsStateTypes';
 import type {
   CameraState,
   CanonicalScenarioPreset,
+  RenderMode,
 } from '@/lib/presets/types';
 import {
   pillarsReducer,
   initialPillarsState
 } from '@/state/PillarsStateMachine';
 
-type HealthEngineAppProps = { initialScene?: SceneId };
+type HealthEngineAppProps = { initialScene?: SceneId; initialRenderMode?: RenderMode; journeyConstraint?: JourneyConstraint };
 
-export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) {
+export default function HealthEngineApp({ initialScene, initialRenderMode, journeyConstraint }: HealthEngineAppProps) {
   // Master State Machine Driven by Reducer
   const [state, dispatch] = useReducer(
     pillarsReducer,
-    initialScene,
-    (scene) => scene
-      ? pillarsReducer(initialPillarsState, { type: 'SET_SCENE', payload: scene })
-      : initialPillarsState
+    { initialScene, initialRenderMode },
+    ({ initialScene: scene, initialRenderMode: mode }) => {
+      const initial = scene ? pillarsReducer(initialPillarsState, { type: 'SET_SCENE', payload: scene }) : initialPillarsState;
+      return mode ? { ...initial, renderMode: mode } : initial;
+    }
   );
 
   const [cameraState, setCameraState] = useState<CameraState>({
@@ -55,6 +58,7 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
   });
 
   // UI Control States
+  const [motionPaused, setMotionPaused] = useState(false);
   const [isDockOpen, setIsDockOpen] = useState(true);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
@@ -123,6 +127,9 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
       <HealthEngineViewport
         state={state}
         cameraState={cameraState}
+        motionPaused={motionPaused}
+        onToggleMotion={() => setMotionPaused(paused => !paused)}
+        onExplain={() => setIsGuideOpen(true)}
         onWebGLError={() => dispatch({ type: 'SET_RENDER_MODE', payload: '2d-canvas' })}
       />
 
@@ -132,6 +139,7 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
       <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
         <HealthEngineHUD
         onGuideOpen={() => setIsGuideOpen(true)}
+        journeyConstraint={journeyConstraint}
         isDockOpen={isDockOpen}
         onDockToggle={() => setIsDockOpen((open) => !open)}
         presets={presetsList}
@@ -243,6 +251,9 @@ export default function HealthEngineApp({ initialScene }: HealthEngineAppProps) 
       {isGuideOpen && (
         <HealthEngineGuide
           state={state}
+          motionPaused={motionPaused}
+          onToggleMotion={() => setMotionPaused(paused => !paused)}
+          journeyConstraint={journeyConstraint}
           presets={presetsList}
           onClose={() => setIsGuideOpen(false)}
         />

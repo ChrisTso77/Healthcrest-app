@@ -31,6 +31,7 @@ export function SiteFooter() {
       <div className="hc-footer-links">
         <p>Health through everyday habits</p>
         <nav aria-label="Footer navigation">
+          <Link href="/start" prefetch={false}>Start here</Link>
           <Link href="/about" prefetch={false}>About &amp; sources</Link>
           <Link href="/contact" prefetch={false}>Contact</Link>
           <Link href="/storage" prefetch={false}>Browser storage</Link>

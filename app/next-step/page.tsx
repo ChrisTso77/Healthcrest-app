@@ -1,3 +1,4 @@
+import { parseJourneyConstraint, journeyAction } from '@/lib/education/startJourney';
 import { pageMetadata } from '@/lib/siteMetadata';
 import { SiteHeader, SiteFooter } from '@/components/SiteChrome';
 import { HabitPlanner, type HabitPillar } from '@/components/HabitPlanner';
@@ -11,9 +12,10 @@ export const metadata = pageMetadata(
 );
 
 export default async function NextStepPage({ searchParams }: {
-  searchParams: Promise<{ pillar?: string | string[] }>;
+  searchParams: Promise<{ pillar?: string | string[]; idea?: string | string[] }>;
 }) {
-  const { pillar } = await searchParams;
+  const { pillar, idea } = await searchParams;
+  const constraint = parseJourneyConstraint(idea);
   let initialPillar: HabitPillar = 'Fitness';
   switch (pillar) {
     case 'nutrition': initialPillar = 'Nutrition'; break;
@@ -28,7 +30,7 @@ export default async function NextStepPage({ searchParams }: {
         <span className="hc-eyebrow">Health through everyday habits</span>
         <h1>One habit.<br /><em>Your next step.</em></h1>
         <p className="hc-plan-intro">Choose a pillar, adapt a starter idea and give it a place in your routine. Start with something manageable; you can adjust it as you learn.</p>
-        <HabitPlanner initialPillar={initialPillar} />
+        <HabitPlanner initialPillar={initialPillar} initialAction={constraint ? journeyAction(initialPillar, constraint) : undefined} />
       </main>
       <SiteFooter />
     </div>

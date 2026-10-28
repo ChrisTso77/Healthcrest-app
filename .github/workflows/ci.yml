@@ -88,6 +88,17 @@ jobs:
         env:
           CI: true
 
+      - name: Audit mobile front-door performance
+        run: node scripts/mobile-performance.mjs
+
+      - name: Upload mobile performance reports
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: mobile-performance
+          path: artifacts/mobile-performance/
+          retention-days: 14
+
       - name: Upload Playwright Test Report on Failure
         uses: actions/upload-artifact@v7
         if: always()

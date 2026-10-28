@@ -1,3 +1,4 @@
+import { journeyPlannerHref, type JourneyConstraint } from '@/lib/education/startJourney';
 import Link from 'next/link';
 import type { PillarType, RenderMode } from '@/lib/presets/types';
 import { PARAMETER_GUIDES, PILLAR_GUIDES } from '@/lib/education/healthGuide';
@@ -10,18 +11,19 @@ const relatedPillar = {
   stress: 'Stress',
 } as const;
 
-export function ParameterExplanation({ parameter, value, activePillar, renderMode }: {
+export function ParameterExplanation({ parameter, value, activePillar, renderMode, journeyConstraint }: {
   parameter: ParameterKey;
   value: string;
   activePillar: PillarType;
   renderMode: RenderMode;
+  journeyConstraint?: JourneyConstraint;
 }) {
   const setting = PARAMETER_GUIDES[parameter];
   const pillar = relatedPillar[parameter];
   const guidance = PILLAR_GUIDES[pillar];
   const affects3D = activePillar === pillar || (activePillar === 'Systems' && parameter !== 'nutrition');
   const viewMeaning = renderMode === '2d-canvas'
-    ? 'The 2D overview labels this setting and illustrates it with a shape. Read the value alongside the guidance; the size of a shape is not a health score.'
+    ? 'The 2D overview labels this setting with a marker on its control scale. Read the value alongside the guidance; scale limits are not health targets.'
     : affects3D
       ? PILLAR_GUIDES[activePillar].visual
       : 'This setting does not change the ' + activePillar + ' 3D scene. Its value still changes in your scenario. Choose the ' + pillar + ' pillar or the 2D overview to explore its illustration.';
@@ -53,7 +55,7 @@ export function ParameterExplanation({ parameter, value, activePillar, renderMod
           className="block rounded text-emerald-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-emerald-400">
           {guidance.sourceLabel} (opens in a new tab)
         </a>
-        <Link prefetch={false} href={'/next-step?pillar=' + pillar.toLowerCase()}
+        <Link prefetch={false} href={journeyPlannerHref(pillar, journeyConstraint)}
           className="inline-block rounded-lg border border-emerald-500/40 px-3 py-2 font-medium text-emerald-300 hover:bg-emerald-500/10 focus-visible:outline-2 focus-visible:outline-emerald-400">
           Plan a manageable next step
         </Link>

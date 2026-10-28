@@ -6,12 +6,16 @@ import { Component, type ReactNode } from "react";
 
 import type { CameraState } from "@/lib/presets/types";
 import type { State } from "@/state/PillarsStateTypes";
+import { SceneVisualKey } from "@/components/SceneVisualKey";
 import { HealthEngine2DFallback } from "@/components/HealthEngine2DFallback";
 
 type HealthEngineViewportProps = {
   state: State;
   cameraState: CameraState;
   onWebGLError: () => void;
+  motionPaused: boolean;
+  onToggleMotion: () => void;
+  onExplain: () => void;
 };
 
 type WebGLErrorBoundaryProps = {
@@ -50,7 +54,7 @@ function CanvasPlaceholder() {
       </p>
 
       <p className="text-[10px] font-mono text-slate-500 mt-1">
-        Compiling WebGL Shaders & Neural Meshes
+        Preparing the interactive illustration
       </p>
     </div>
   );
@@ -105,6 +109,9 @@ export function HealthEngineViewport({
   state,
   cameraState,
   onWebGLError,
+  motionPaused,
+  onToggleMotion,
+  onExplain,
 }: HealthEngineViewportProps) {
   const fallback = <FallbackViewport state={state} />;
 
@@ -118,7 +125,9 @@ export function HealthEngineViewport({
         <WebGLCanvasWrapper
           state={state}
           cameraState={cameraState}
+          motionPaused={motionPaused}
         />
+        <SceneVisualKey state={state} motionPaused={motionPaused} onToggleMotion={onToggleMotion} onExplain={onExplain} />
       </div>
     </WebGLErrorBoundary>
   );

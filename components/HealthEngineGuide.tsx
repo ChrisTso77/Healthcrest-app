@@ -1,5 +1,7 @@
 'use client';
 
+import { SceneVisualExplanation } from '@/components/SceneVisualKey';
+import { journeyPlannerHref, journeyLearnHref, type JourneyConstraint } from '@/lib/education/startJourney';
 import { X } from 'lucide-react';
 import Link from 'next/link';
 import { UrgentSupport } from '@/components/UrgentSupport';
@@ -14,9 +16,12 @@ type HealthEngineGuideProps = {
   state: State;
   presets: CanonicalScenarioPreset[];
   onClose: () => void;
+  motionPaused: boolean;
+  onToggleMotion: () => void;
+  journeyConstraint?: JourneyConstraint;
 };
 
-export function HealthEngineGuide({ state, presets, onClose }: HealthEngineGuideProps) {
+export function HealthEngineGuide({ state, presets, onClose, motionPaused, onToggleMotion, journeyConstraint }: HealthEngineGuideProps) {
   const pillar = PILLAR_GUIDES[state.activePillar];
   const preset = resolveActivePreset(resolveAvailablePresets(presets), state.activePreset);
   const values = [
@@ -47,7 +52,9 @@ export function HealthEngineGuide({ state, presets, onClose }: HealthEngineGuide
             The scenes are illustrations, not measurements of your body.
           </p>
 
-          <Link href="/learn" prefetch={false} className="inline-block rounded-lg border border-emerald-500/40 px-3 py-2 font-medium text-emerald-300 hover:bg-emerald-500/10">
+          <SceneVisualExplanation state={state} motionPaused={motionPaused} onToggleMotion={onToggleMotion} />
+
+          <Link href={journeyLearnHref(state.activePillar, journeyConstraint)} prefetch={false} className="inline-block rounded-lg border border-emerald-500/40 px-3 py-2 font-medium text-emerald-300 hover:bg-emerald-500/10">
             Browse health topics and terms
           </Link>
 
@@ -56,7 +63,7 @@ export function HealthEngineGuide({ state, presets, onClose }: HealthEngineGuide
             <p>{pillar.goal}</p>
             <p><strong className="text-slate-100">One possible first step: </strong>{pillar.firstStep}</p>
             <p>{pillar.guidance}</p>
-            <Link prefetch={false} href={state.activePillar === 'Systems' ? '/next-step' : '/next-step?pillar=' + state.activePillar.toLowerCase()}
+            <Link prefetch={false} href={journeyPlannerHref(state.activePillar, journeyConstraint)}
               className="inline-block rounded-lg border border-emerald-500/40 px-3 py-2 font-semibold text-emerald-300 hover:bg-emerald-500/10">
               Make a manageable next step
             </Link>
@@ -66,7 +73,7 @@ export function HealthEngineGuide({ state, presets, onClose }: HealthEngineGuide
             {state.activePillar === 'Stress' && <UrgentSupport dark />}
             <details className="border-t border-emerald-500/20 pt-3">
               <summary className="cursor-pointer font-medium text-slate-100">How this scene responds</summary>
-              <p className="mt-2">{pillar.visual}</p>
+              <p className="mt-2">{state.renderMode === '2d-canvas' ? 'Each labelled marker shows its corresponding control value. The scale limits do not set a recommended target.' : pillar.visual}</p>
             </details>
           </section>
 

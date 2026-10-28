@@ -257,7 +257,7 @@ test('discovery files list the public pages on the confirmed domain', async ({ p
   const sitemap = await page.request.get('/sitemap.xml');
   expect(sitemap.ok()).toBe(true);
   const xml = await sitemap.text();
-  for (const path of ['/learn', '/engine', '/next-step', '/about', '/contact', '/storage']) {
+  for (const path of ['/start', '/learn', '/engine', '/next-step', '/about', '/contact', '/storage']) {
     expect(xml).toContain('<loc>https://www.healthcrest.uk' + path + '</loc>');
   }
   const robots = await page.request.get('/robots.txt');
