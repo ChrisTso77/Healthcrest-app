@@ -2,6 +2,7 @@
 
 import { useId, useState } from 'react';
 import Link from 'next/link';
+import { HabitDraftOverview } from '@/components/HabitDraftOverview';
 import { HabitPlanEvidence } from '@/components/HabitPlanEvidence';
 import { HabitPlanBackup } from '@/components/HabitPlanBackup';
 import { HabitPlanPrint } from '@/components/HabitPlanPrint';
@@ -179,7 +180,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
 
   return (
     <div className="hc-plan">
-      <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save, .hc-plan-print-button, .hc-plan-backup, .hc-week-next { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
+      <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save, .hc-plan-print-button, .hc-plan-backup, .hc-week-next, .hc-draft-overview { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
       <section id="return-to-plan" tabIndex={-1} aria-labelledby={id + '-return-title'} className="hc-plan-return">
         <h2 id={id + '-return-title'}>Return to your plan</h2>
         <p>Choose Restore my plan to read the saved copy on this device and open its selected week. Restoring replaces the drafts currently on this page. Plans stay in this browser and do not sync between devices.</p>
@@ -203,6 +204,16 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
           </button>
         ))}
       </div>
+
+      <HabitDraftOverview drafts={drafts} pillars={options} selected={selected} onOpen={pillar => {
+        setSelected(pillar);
+        setStatus('');
+        requestAnimationFrame(() => {
+          const target = document.getElementById(id + '-action');
+          target?.focus();
+          target?.scrollIntoView({ block: 'center' });
+        });
+      }} />
 
       <div className="hc-plan-grid">
         <section aria-labelledby={id + '-draft'} className="hc-plan-draft">
