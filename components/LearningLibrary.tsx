@@ -29,6 +29,7 @@ export function LearningLibrary() {
   const shownTopics = topics.filter(topic => matches(topic.label, topic.key, ...Object.values(PILLAR_GUIDES[topic.key])));
   const shownTerms = terms.filter(([term, meaning]) => matches(term, meaning));
   const shownEvidence = Object.entries(EVIDENCE_GUIDES).filter(([label, meaning]) => matches(label, meaning));
+  const countLabel = (count: number, label: string) => count + ' ' + label + (count === 1 ? '' : 's');
   const total = shownTopics.length + shownTerms.length + shownEvidence.length;
 
   return (
@@ -43,7 +44,7 @@ export function LearningLibrary() {
         </div>
       </div>
       <noscript><p className="hc-model-note">Search needs JavaScript. All topics, terms and references are available below without searching.</p></noscript>
-      <p role="status" className="hc-learn-result-count">{shownTopics.length} topics, {shownTerms.length} terms and {shownEvidence.length} evidence labels found.</p>
+      <p role="status" className="hc-learn-result-count">{countLabel(shownTopics.length, 'topic')}, {countLabel(shownTerms.length, 'term')} and {countLabel(shownEvidence.length, 'evidence label')} found.</p>
       {total === 0 && <p className="hc-model-note">No matching guidance. Try a broader word such as sleep or movement, or clear the search to browse everything.</p>}
 
       {shownTopics.length > 0 && (
