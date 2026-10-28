@@ -183,3 +183,58 @@ test('blocked browser storage leaves editing and download available', async ({ p
   await page.getByRole('button', { name: 'Download my next step', exact: true }).click();
   expect((await downloading).suggestedFilename()).toBe('healthcrest-next-step.txt');
 });
+
+
+test('reflection notes follow each pillar and appear in the downloaded plan', async ({ page }) => {
+  await page.goto('/next-step?pillar=sleep');
+  const reflection = page.getByLabel('What did I learn?', { exact: false });
+  await expect(reflection).toHaveValue('');
+  await reflection.fill('Reading helped — I will try a quieter room.');
+  await page.getByRole('group', { name: 'Choose a habit pillar' }).getByRole('button', { name: 'Food', exact: true }).click();
+  await expect(reflection).toHaveValue('');
+  await reflection.fill('Keeping beans ready made lunch easier.');
+  await page.getByRole('group', { name: 'Choose a habit pillar' }).getByRole('button', { name: 'Sleep', exact: true }).click();
+  await expect(reflection).toHaveValue('Reading helped — I will try a quieter room.');
+  const downloading = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download my next step', exact: true }).click();
+  const stream = await (await downloading).createReadStream();
+  if (!stream) throw new Error('Download stream unavailable');
+  const parts: Buffer[] = [];
+  for await (const part of stream) parts.push(Buffer.from(part));
+  const text = Buffer.concat(parts).toString('utf-8');
+  expect(text).toContain('My reflection: Reading helped — I will try a quieter room.');
+  expect(text).not.toContain('Keeping beans ready');
+});
+
+test('saved reflection notes survive reload and restore alongside other pillar drafts', async ({ page }) => {
+  await page.goto('/next-step?pillar=sleep');
+  const reflection = page.getByLabel('What did I learn?', { exact: false });
+  await reflection.fill('A shorter routine fitted better.');
+  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await page.reload();
+  await expect(reflection).toHaveValue('');
+  await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await expect(reflection).toHaveValue('A shorter routine fitted better.');
+  await expect(page.getByLabel('One manageable action', { exact: true })).toHaveValue(/wind-down routine/);
+});
+
+test('earlier saved plans restore with empty reflection notes and upgrade only on explicit save', async ({ page }) => {
+  await page.goto('/next-step');
+  await page.evaluate(() => {
+    const drafts = Object.fromEntries(['Fitness', 'Nutrition', 'Sleep', 'Stress'].map(pillar =>
+      [pillar, { action: 'My earlier ' + pillar + ' action.', cue: 'After lunch.', support: 'Keep it manageable.' }]));
+    localStorage.setItem('healthcrest.habit-draft.v1', JSON.stringify({ version: 1, selected: 'Sleep', drafts }));
+  });
+  await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await expect(page.getByLabel('One manageable action', { exact: true })).toHaveValue('My earlier Sleep action.');
+  await expect(page.getByLabel('When will I try it?', { exact: false })).toHaveValue('After lunch.');
+  await expect(page.getByLabel('What did I learn?', { exact: false })).toHaveValue('');
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('healthcrest.habit-draft.v1')!).version)).toBe(1);
+  await page.getByLabel('What did I learn?', { exact: false }).fill('A useful first attempt.');
+  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('healthcrest.habit-draft.v1')!).version)).toBe(2);
+  await page.reload();
+  await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await expect(page.getByLabel('What did I learn?', { exact: false })).toHaveValue('A useful first attempt.');
+  await expect(page.getByLabel('One manageable action', { exact: true })).toHaveValue('My earlier Sleep action.');
+});

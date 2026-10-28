@@ -2,9 +2,9 @@ import { describe, expect, test } from 'vitest';
 import { parseSavedHabitDraft } from './habitDraft';
 
 const valid = () => ({
-  version: 1, selected: 'Sleep',
+  version: 2, selected: 'Sleep',
   drafts: Object.fromEntries(['Fitness', 'Nutrition', 'Sleep', 'Stress'].map(pillar =>
-    [pillar, { action: 'Read quietly — ゆっくり', cue: '', support: 'Ask a friend' }])),
+    [pillar, { action: 'Read quietly — ゆっくり', cue: '', support: 'Ask a friend', reflection: '' }])),
 });
 
 describe('saved habit draft validation', () => {
@@ -19,7 +19,7 @@ describe('saved habit draft validation', () => {
     }
   });
   test('rejects unknown versions and unexpected pillar names', () => {
-    for (const change of [{ version: 2 }, { selected: '__proto__' }, { selected: 'Systems' }]) {
+    for (const change of [{ version: 3 }, { selected: '__proto__' }, { selected: 'Systems' }]) {
       expect(parseSavedHabitDraft(JSON.stringify({ ...valid(), ...change }))).toBeNull();
     }
   });
@@ -41,5 +41,34 @@ describe('saved habit draft validation', () => {
     const parsed = parseSavedHabitDraft(JSON.stringify({ ...data, unexpected: true }));
     expect(parsed).toEqual(data);
     expect(parsed!.drafts).not.toBe(data.drafts);
+  });
+});
+
+
+describe('reflection storage compatibility', () => {
+  test('migrates earlier drafts without losing their original fields', () => {
+    const data = valid();
+    const legacy = { ...data, version: 1,
+      drafts: Object.fromEntries(Object.entries(data.drafts).map(([pillar, draft]) =>
+        [pillar, { action: draft.action, cue: draft.cue, support: draft.support }])) };
+    expect(parseSavedHabitDraft(JSON.stringify(legacy))).toEqual(data);
+  });
+  test('rejects missing, wrongly typed or oversized reflection notes in the new format', () => {
+    for (const reflection of [undefined, null, 42, 'x'.repeat(501)]) {
+      const data = valid();
+      const raw = JSON.stringify({ ...data, drafts: { ...data.drafts, Sleep: { ...data.drafts.Sleep, reflection } } });
+      expect(parseSavedHabitDraft(raw)).toBeNull();
+    }
+  });
+  test('accepts maximum editor lengths with escaped text but caps oversized payloads', () => {
+    const data = valid();
+    for (const draft of Object.values(data.drafts)) {
+      draft.action = '\u0001'.repeat(300);
+      draft.cue = '\u0001'.repeat(180);
+      draft.support = '\u0001'.repeat(180);
+      draft.reflection = '\u0001'.repeat(500);
+    }
+    expect(parseSavedHabitDraft(JSON.stringify(data))).toEqual(data);
+    expect(parseSavedHabitDraft(JSON.stringify({ ...valid(), extra: 'x'.repeat(40000) }))).toBeNull();
   });
 });
