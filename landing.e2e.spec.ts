@@ -217,7 +217,11 @@ test('stress guidance exposes local urgent-help routes and keyboard preview sele
   await expect(support.getByRole('link', { name: '116 123', exact: true })).toHaveAttribute('href', 'tel:116123');
   await expect(support.getByRole('link', { name: '999', exact: true })).toHaveAttribute('href', 'tel:999');
   await page.goto('/learn#topic-stress');
-  await expect(page.locator('#topic-stress').getByRole('complementary', { name: 'Urgent mental health support' })).toBeVisible();
+  for (const query of ['Samaritans', '111', '116123']) {
+    await page.getByRole('searchbox', { name: 'Search health topics and terms', exact: true }).fill(query);
+    await expect(page.getByRole('article')).toHaveCount(1);
+    await expect(page.locator('#topic-stress').getByRole('complementary', { name: 'Urgent mental health support' })).toBeVisible();
+  }
   await page.goto('/next-step?pillar=stress');
   await expect(page.getByRole('complementary', { name: 'Urgent mental health support' })).toBeVisible();
 });

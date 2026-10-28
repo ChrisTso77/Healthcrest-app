@@ -1,3 +1,5 @@
+export const URGENT_SUPPORT_SEARCH_TERMS = 'urgent help mental health NHS 111 Samaritans 116 123 116123 emergency 999 A&E';
+
 export function UrgentSupport({ dark = false }: { dark?: boolean }) {
   return (
     <aside aria-label="Urgent mental health support" className={dark

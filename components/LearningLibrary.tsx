@@ -2,7 +2,7 @@
 
 import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
-import { UrgentSupport } from '@/components/UrgentSupport';
+import { UrgentSupport, URGENT_SUPPORT_SEARCH_TERMS } from '@/components/UrgentSupport';
 import { ENGINE_GLOSSARY, EVIDENCE_GUIDES, PARAMETER_GUIDES, PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
 const topics = [
@@ -27,7 +27,7 @@ export function LearningLibrary() {
   const id = useId();
   const needle = query.trim().toLowerCase();
   const matches = (...text: string[]) => text.join(' ').toLowerCase().includes(needle);
-  const shownTopics = topics.filter(topic => matches(topic.label, topic.key, ...Object.values(PILLAR_GUIDES[topic.key])));
+  const shownTopics = topics.filter(topic => matches(topic.label, topic.key, ...Object.values(PILLAR_GUIDES[topic.key]), topic.key === 'Stress' ? URGENT_SUPPORT_SEARCH_TERMS : ''));
   const shownTerms = terms.filter(([term, meaning]) => matches(term, meaning));
   const shownEvidence = Object.entries(EVIDENCE_GUIDES).filter(([label, meaning]) => matches(label, meaning));
   const countLabel = (count: number, label: string) => count + ' ' + label + (count === 1 ? '' : 's');
