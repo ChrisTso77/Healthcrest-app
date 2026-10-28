@@ -1,5 +1,5 @@
 import type { HabitDraft } from '@/lib/education/habitDraft';
-import { DAY_CHOICES, formatDay, weekDayDate } from '@/lib/education/habitWeek';
+import { DAY_CHOICES, formatDay, weekDayDate, weekSummaryLines, WEEK_SUMMARY_SCOPE } from '@/lib/education/habitWeek';
 import { SITE_URL } from '@/lib/siteMetadata';
 
 export function HabitPlanPrint({ label, draft }: { label: string; draft: HabitDraft }) {
@@ -30,6 +30,11 @@ export function HabitPlanPrint({ label, draft }: { label: string; draft: HabitDr
         </> : <p>No dated week has been started on this page. Use your draft action above and write a start date: __________________.</p>}
         <p>For each day, you can write: {DAY_CHOICES.filter(choice => choice.value !== '').map(choice => choice.label).join(' · ')}. Leave a day blank if you choose.</p>
       </section>
+      {week && <section className="hc-print-block hc-print-week-summary">
+        <h2>Week at a glance</h2>
+        <ul>{weekSummaryLines(week).map(line => <li key={line}>{line}</li>)}</ul>
+        <p>{WEEK_SUMMARY_SCOPE}</p>
+      </section>}
       <ol className="hc-print-days" aria-label="Paper daily check-ins">
         {days.map((day, index) => <li key={index}>
           <h3>Day {index + 1}{week ? ' · ' + formatDay(weekDayDate(week.startDate, index)) : ''}</h3>
