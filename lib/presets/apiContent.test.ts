@@ -24,9 +24,11 @@ describe('reviewed content API paths', () => {
   });
   test('scene responses curate nested presets and withhold unreviewed storyboard text', async () => {
     fetchMock.mockResolvedValue([{ _id: 'scene-five', sceneNumber: 5, title: 'Guaranteed recovery',
-      visualMetaphor: 'Tissue damage', associatedPillar: { _id: 'pillar-systems', title: 'Systems', slug: 'systems' }, presets: [old] }]);
+      visualMetaphor: 'Tissue damage', associatedPillar: { _id: 'pillar-systems', title: 'Systems', slug: 'systems' }, presets: [{ ...old, visualProps: { coreColor: '#abcdef', particleDensity: 40, claim: 'Guaranteed recovery' } }] }]);
     const body = await (await GET(new NextRequest('https://example.test/api/presets?scene=5'))).json();
     expect(body.data.presets[0].title).toBe('Connected habits example');
+    expect(body.data.presets[0]).toMatchObject({ _id: old._id, healthStatus: old.healthStatus, visualProps: { coreColor: '#abcdef', particleDensity: 40 } });
+    expect(body.data.presets[0].narrativeOverlay.headline).toBe(body.data.presets[0].headline);
     expect(body.data.associatedPillar).toEqual({ _id: 'pillar-systems', title: 'Systems', slug: 'systems' });
     expect(JSON.stringify(body)).not.toMatch(/Guaranteed recovery|Tissue damage|Oxytocin Shield/);
   });

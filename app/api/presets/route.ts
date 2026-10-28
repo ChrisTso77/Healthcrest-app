@@ -89,6 +89,17 @@ type StoryboardScene = {
 };
 
 
+function reviewedVisualProps(raw: unknown): Record<string, string | number> | undefined {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) return undefined;
+  const props = raw as Record<string, unknown>;
+  const result: Record<string, string | number> = {};
+  if (typeof props.coreColor === 'string' && /^#[0-9a-f]{6}$/i.test(props.coreColor)) result.coreColor = props.coreColor;
+  for (const key of ['emissiveIntensity', 'wobbleSpeed', 'wobbleFactor', 'particleDensity']) {
+    if (typeof props[key] === 'number' && Number.isFinite(props[key])) result[key] = props[key];
+  }
+  return result;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -127,8 +138,9 @@ export async function GET(request: NextRequest) {
       const rawPillar = typeof targetScene.associatedPillar === 'object' && targetScene.associatedPillar !== null
         ? targetScene.associatedPillar as Record<string, unknown> : {};
       const pillarTitle = normalizePillar(rawPillar.title ?? rawPillar.slug);
+      const rawScenePresets: unknown[] = Array.isArray(targetScene.presets) ? targetScene.presets : [];
       const reviewed = normalizeSanityPresets(
-        (Array.isArray(targetScene.presets) ? targetScene.presets : []).map(preset =>
+        rawScenePresets.map(preset =>
           typeof preset === 'object' && preset !== null
             ? { ...preset, pillar: targetScene.associatedPillar }
             : preset)
@@ -139,7 +151,20 @@ export async function GET(request: NextRequest) {
         associatedPillar: pillarTitle ? { _id: rawPillar._id, title: pillarTitle, slug: pillarTitle.toLowerCase() } : null,
         title: 'Illustrative storyboard',
         visualMetaphor: 'Selected example settings, not a measurement or prediction of health.',
-        presets: reviewed,
+        presets: reviewed.map(preset => {
+          const original = rawScenePresets.find(raw =>
+            typeof raw === 'object' && raw !== null && '_id' in raw && raw._id === preset.id);
+          const visualProps = typeof original === 'object' && original !== null && 'visualProps' in original
+            ? reviewedVisualProps(original.visualProps) : undefined;
+          return {
+            ...preset,
+            // Preserve the storyboard API aliases used by earlier consumers.
+            _id: preset.id,
+            healthStatus: preset.status,
+            visualProps,
+            narrativeOverlay: { headline: preset.headline, body: preset.education?.limitations, outcomes: preset.outcomes },
+          };
+        }),
       } });
     }
 
