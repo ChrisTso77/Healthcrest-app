@@ -3,7 +3,7 @@ import type { PillarType } from '@/lib/presets/types';
 import type { JourneyConstraint } from './startJourney';
 
 export const GUIDE_SOURCE_CHECKED_ON = '2026-10-28';
-export type GuideSource = { id: string; title: string; url: string; supports: string; scope: string };
+export type GuideSource = { id: string; title: string; url: string; supports: string; scope: string; publisher: string; kind: string };
 export type GuideSection = { id: string; title: string; paragraphs: readonly string[]; sourceIds: readonly string[] };
 export type LearningGuide = {
   slug: string; pillar: HabitPillar; topicLabel: string; title: string; description: string; audience: string;
@@ -88,6 +88,18 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
           "These demonstrations assume a solid chair without wheels, feet flat on the floor and knees at right angles. Ask for help choosing a suitable setup if those assumptions do not fit your seating or movement needs.",
           "Your next step can be finding an appropriate activity or arranging support. Choose a manageable action without copying a routine that does not suit your circumstances."
         ]
+      },
+      {
+        "id": "international-perspective",
+        "title": "A global perspective: WHO",
+        "sourceIds": [
+          "who-activity"
+        ],
+        "paragraphs": [
+          "WHO describes physical activity broadly: it can happen during leisure, transport, work or domestic life. Its examples include walking, cycling and wheeling.",
+          "WHO emphasises that some activity is better than none and that recommendations include people with chronic conditions and disabilities. This broadens the options beyond organised exercise.",
+          "Use age-specific guidance and suitability advice to choose a manageable activity. A global overview and an individual exercise plan serve different purposes."
+        ]
       }
     ],
     "ideas": [
@@ -105,28 +117,45 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
         "title": "NHS: physical activity for adults aged 19–64",
         "url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/",
         "supports": "Weekly aerobic activity, intensity, strengthening activity and adapting exercise to fitness.",
-        "scope": "General guidance for adults aged 19–64; it does not set a personal exercise prescription."
+        "scope": "General guidance for adults aged 19–64; it does not set a personal exercise prescription.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
       },
       {
         "id": "strength",
         "title": "NHS: strength exercises",
         "url": "https://www.nhs.uk/live-well/exercise/strength-exercises/",
         "supports": "Home exercise examples, gradual progression and equipment setup.",
-        "scope": "Read the full demonstrations and adapt activities to your health and ability."
+        "scope": "Read the full demonstrations and adapt activities to your health and ability.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
       },
       {
         "id": "older",
         "title": "NHS: physical activity for older adults",
         "url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-older-adults/",
         "supports": "Daily activity, strength, balance, flexibility and age-appropriate weekly guidance for adults aged 65 and over.",
-        "scope": "Linked for the appropriate age group; this guide does not assess balance or falls risk."
+        "scope": "Linked for the appropriate age group; this guide does not assess balance or falls risk.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
       },
       {
         "id": "sitting",
         "title": "NHS: sitting exercises",
         "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",
         "supports": "Seated demonstrations, gradual progression, chair setup and checking suitability with a care professional.",
-        "scope": "These exercises assume a specified chair setup; they are not a universal routine for every disability or seating need."
+        "scope": "These exercises assume a specified chair setup; they are not a universal routine for every disability or seating need.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
+      },
+      {
+        "id": "who-activity",
+        "title": "WHO: physical activity",
+        "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+        "supports": "Activity across transport, work, leisure and daily life, including people with disabilities.",
+        "scope": "A global public-health overview for different populations; it does not select a personal activity dose.",
+        "publisher": "World Health Organization",
+        "kind": "Global public-health information"
       }
     ]
   },
@@ -183,6 +212,18 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
         "paragraphs": [
           "If you have medical or special dietary requirements, speak with a registered dietitian about adapting the Eatwell Guide. Keep following the eating advice provided for your individual care."
         ]
+      },
+      {
+        "id": "international-perspective",
+        "title": "Another perspective: Harvard’s Healthy Eating Plate",
+        "sourceIds": [
+          "harvard-plate"
+        ],
+        "paragraphs": [
+          "Harvard’s Healthy Eating Plate offers another way to think about meal quality. It highlights vegetables and fruit, whole grains, protein choices such as beans or nuts, and healthy plant oils.",
+          "Its approximate plate proportions are not calorie amounts or fixed daily servings. Harvard explains how the ideas can be used with soups, shared dishes and different cultural food traditions.",
+          "Harvard’s plate and the NHS Eatwell Guide group and present foods differently. Use them as named educational frameworks rather than combining their diagrams into a score. Individual dietary needs still require appropriate advice."
+        ]
       }
     ],
     "ideas": [
@@ -201,14 +242,27 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
         "title": "NHS: the Eatwell Guide",
         "url": "https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/",
         "supports": "Food-group variety, balance over time and adapting advice for dietary or medical needs.",
-        "scope": "General eating guidance, without a personalised meal plan or whole-food percentage target."
+        "scope": "General eating guidance, without a personalised meal plan or whole-food percentage target.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
       },
       {
         "id": "eating",
         "title": "NHS: 8 tips for healthy eating",
         "url": "https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/eight-tips-for-healthy-eating/",
         "supports": "Higher-fibre staples, fruit and vegetables, and everyday food choices.",
-        "scope": "Ideas need adapting to allergies, access, culture, preferences and individual care."
+        "scope": "Ideas need adapting to allergies, access, culture, preferences and individual care.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
+      },
+      {
+        "id": "harvard-plate",
+        "title": "Harvard The Nutrition Source: Healthy Eating Plate",
+        "url": "https://nutritionsource.hsph.harvard.edu/healthy-eating-plate/",
+        "supports": "An academic teaching model emphasising food quality, vegetables, fruit, whole grains, protein choices and healthy plant oils.",
+        "scope": "Created by Harvard nutrition experts and Harvard Health editors; an educational model, not a US government dietary guideline or an individual prescription.",
+        "publisher": "Harvard The Nutrition Source",
+        "kind": "Academic nutrition education"
       }
     ]
   },
@@ -279,6 +333,18 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
           "Speak to a GP if changes to your habits have not helped, problems have lasted for months or poor sleep is making daily life hard to cope with. Assessment may lead to treatment such as cognitive behavioural therapy.",
           "Do not drive when you feel sleepy."
         ]
+      },
+      {
+        "id": "international-perspective",
+        "title": "Another perspective: CDC sleep guidance",
+        "sourceIds": [
+          "cdc-sleep"
+        ],
+        "paragraphs": [
+          "The US Centers for Disease Control and Prevention emphasises both sleep duration and sleep quality. It recommends seven or more hours for adults aged 18–60, seven to nine hours for ages 61–64, and seven to eight hours for ages 65 and over.",
+          "Those age bands are more specific than the general NHS adult range described above. They are population recommendations rather than a test of whether one person’s sleep is adequate.",
+          "CDC advises discussing regular sleep problems with a healthcare provider. Consider how you function during the day and seek help when needed, rather than trying to maximise a duration setting."
+        ]
       }
     ],
     "ideas": [
@@ -295,21 +361,36 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
         "title": "NHS: insomnia",
         "url": "https://www.nhs.uk/conditions/insomnia/",
         "supports": "Adult sleep needs, sleep habits, driving safety and when to see a GP.",
-        "scope": "General information; it does not diagnose the cause of a sleep problem."
+        "scope": "General information; it does not diagnose the cause of a sleep problem.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
       },
       {
         "id": "sleep",
         "title": "NHS Every Mind Matters: sleep problems",
         "url": "https://www.nhs.uk/every-mind-matters/mental-health-issues/sleep/",
         "supports": "Daytime functioning, sleep surroundings and common influences on sleep.",
-        "scope": "Practical support rather than a guarantee that a routine will resolve persistent insomnia."
+        "scope": "Practical support rather than a guarantee that a routine will resolve persistent insomnia.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
       },
       {
         "id": "shifts",
         "title": "HSE: hints and tips for shift workers",
         "url": "https://www.hse.gov.uk/humanfactors/topics/shift-workers.htm",
         "supports": "Finding a suitable sleep schedule and protecting sleep around shifts.",
-        "scope": "Work-pattern advice; the sleep-duration range in this guide follows the NHS references."
+        "scope": "Work-pattern advice; the sleep-duration range in this guide follows the NHS references.",
+        "publisher": "Health and Safety Executive",
+        "kind": "UK workplace guidance"
+      },
+      {
+        "id": "cdc-sleep",
+        "title": "CDC: about sleep",
+        "url": "https://www.cdc.gov/sleep/about/index.html",
+        "supports": "Age-specific sleep recommendations, sleep quality, routines and help for recurring sleep problems.",
+        "scope": "US public-health information; its adult age bands and wording differ from the NHS general adult range.",
+        "publisher": "Centers for Disease Control and Prevention",
+        "kind": "US public-health information"
       }
     ]
   },
@@ -369,6 +450,18 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
           "Speak with a GP if you are struggling to cope or the things you are trying are not helping. NHS talking therapies may also help; the linked NHS page explains routes to support.",
           "Use the urgent-help information near the top of this guide if you need help now or cannot stay safe."
         ]
+      },
+      {
+        "id": "international-perspective",
+        "title": "A global perspective: WHO on coping with stress",
+        "sourceIds": [
+          "who-stress"
+        ],
+        "paragraphs": [
+          "WHO notes that people respond to stressful situations differently. Its coping advice includes keeping a daily routine, connecting with people you trust and making time for suitable activity.",
+          "WHO also suggests limiting news and social-media exposure if it increases your stress. This can be one practical adjustment alongside addressing the pressures you face.",
+          "When coping is difficult, WHO encourages seeking help from a trusted healthcare provider or another trusted person in the community. Use support services appropriate to where you live."
+        ]
       }
     ],
     "ideas": [
@@ -387,35 +480,54 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
         "title": "NHS: getting help with stress",
         "url": "https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/feelings-and-symptoms/stress/",
         "supports": "Small manageable changes, social support and routes to professional help.",
-        "scope": "General coping advice; it does not identify the cause of symptoms or provide therapy."
+        "scope": "General coping advice; it does not identify the cause of symptoms or provide therapy.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
       },
       {
         "id": "breathing",
         "title": "NHS: breathing exercises for stress",
         "url": "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/breathing-exercises-for-stress/",
         "supports": "A comfortable, gentle breathing practice without forcing the breath.",
-        "scope": "One optional coping practice; people can choose a different comfortable activity or seek support."
+        "scope": "One optional coping practice; people can choose a different comfortable activity or seek support.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
       },
       {
         "id": "pressures",
         "title": "NHS: 10 stress busters",
         "url": "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/tips-to-reduce-stress/",
         "supports": "Connection, activity, time for yourself and practical priorities.",
-        "scope": "Ideas to adapt; they do not remove every source of stress."
+        "scope": "Ideas to adapt; they do not remove every source of stress.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
       },
       {
         "id": "urgent",
         "title": "NHS: urgent mental health help",
         "url": "https://www.nhs.uk/nhs-services/mental-health-services/where-to-get-urgent-help-for-mental-health/",
         "supports": "Urgent NHS help and emergency routes when someone cannot stay safe.",
-        "scope": "NHS 111 signposting here is for England; local arrangements differ elsewhere."
+        "scope": "NHS 111 signposting here is for England; local arrangements differ elsewhere.",
+        "publisher": "NHS",
+        "kind": "UK public-health information"
       },
       {
         "id": "samaritans",
         "title": "Samaritans: contact a Samaritan",
         "url": "https://www.samaritans.org/how-we-can-help/contact-samaritan/",
         "supports": "Free listening support by telephone on 116 123, day or night.",
-        "scope": "The telephone service is signposted for the UK and Ireland."
+        "scope": "The telephone service is signposted for the UK and Ireland.",
+        "publisher": "Samaritans",
+        "kind": "Listening-service information"
+      },
+      {
+        "id": "who-stress",
+        "title": "WHO: stress questions and answers",
+        "url": "https://www.who.int/news-room/questions-and-answers/item/stress",
+        "supports": "Varied stress responses, daily routines, connection and seeking support when coping is difficult.",
+        "scope": "Global coping information, not a diagnosis or a substitute for local professional or emergency services.",
+        "publisher": "World Health Organization",
+        "kind": "Global public-health information"
       }
     ]
   }

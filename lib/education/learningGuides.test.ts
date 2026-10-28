@@ -33,13 +33,15 @@ describe('source and discovery contracts', () => {
       expect(new Set(ids).size).toBe(ids.length);
       const targets = [...guide.sections.map(section => section.id), 'try-this-week', 'guide-sources', 'urgent-support'];
       expect(new Set(targets).size).toBe(targets.length);
-      const allowedHosts = ['www.nhs.uk', 'www.hse.gov.uk', 'www.samaritans.org'];
+      const allowedHosts = ['www.nhs.uk', 'www.hse.gov.uk', 'www.samaritans.org', 'www.who.int', 'www.cdc.gov', 'nutritionsource.hsph.harvard.edu'];
       for (const source of guide.sources) {
         const url = new URL(source.url);
         expect(url.protocol).toBe('https:');
         expect(allowedHosts).toContain(url.hostname);
         expect(source.supports.length).toBeGreaterThan(0);
         expect(source.scope.length).toBeGreaterThan(0);
+        expect(source.publisher.length).toBeGreaterThan(0);
+        expect(source.kind.length).toBeGreaterThan(0);
       }
       for (const id of [...guide.sections.flatMap(section => section.sourceIds), ...guide.ideaSourceIds]) {
         expect(ids).toContain(id);
@@ -63,4 +65,18 @@ describe('source and discovery contracts', () => {
       ] });
     });
   }
+});
+
+describe('international perspectives', () => {
+  test.each([
+    ['movement-and-strength', 'who-activity', 'World Health Organization'],
+    ['balanced-meals', 'harvard-plate', 'Harvard The Nutrition Source'],
+    ['sleep-routines', 'cdc-sleep', 'Centers for Disease Control and Prevention'],
+    ['stress-and-support', 'who-stress', 'World Health Organization'],
+  ])('%s connects its perspective to an identified source', (slug, sourceId, publisher) => {
+    const guide = getLearningGuide(slug)!;
+    const perspective = guide.sections.find(section => section.id === 'international-perspective')!;
+    expect(perspective.sourceIds).toContain(sourceId);
+    expect(guide.sources.find(source => source.id === sourceId)?.publisher).toBe(publisher);
+  });
 });
