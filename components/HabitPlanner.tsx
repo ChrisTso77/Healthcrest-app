@@ -64,6 +64,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
       const saved = parseSavedHabitDraft(window.localStorage.getItem(HABIT_DRAFT_KEY));
       if (!saved) {
         setStatus('No compatible saved draft was found. Your current edits are unchanged.');
+        if (openWeek) requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#return-to-plan button')?.focus());
         return;
       }
       setDrafts(saved.drafts);
@@ -80,6 +81,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
       setStatus('Saved draft restored, including your drafts for all four pillars.');
     } catch {
       setStatus('Saved drafts are unavailable in this browser. Your current edits are unchanged.');
+      if (openWeek) requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#return-to-plan button')?.focus());
     }
   }
 

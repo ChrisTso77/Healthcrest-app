@@ -59,11 +59,13 @@ test('unavailable or damaged storage leaves current edits intact', async ({ page
   await page.getByRole('button', { name: 'Restore my plan', exact: true }).click();
   await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('No compatible saved draft');
+  await expect(page.getByRole('button', { name: 'Restore my plan', exact: true })).toBeFocused();
   await expect(page.getByRole('textbox', { name: 'One manageable action', exact: true })).toHaveValue('Keep this edit.');
   await page.evaluate(() => Object.defineProperty(Storage.prototype, 'getItem', { value: () => { throw new DOMException('Blocked', 'SecurityError'); } }));
   await page.getByRole('button', { name: 'Restore my plan', exact: true }).click();
   await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('Saved drafts are unavailable');
+  await expect(page.getByRole('button', { name: 'Restore my plan', exact: true })).toBeFocused();
 });
 for (const width of [320, 390, 768, 1440]) {
   test('return navigation works by keyboard at ' + width + 'px', async ({ page }) => {
