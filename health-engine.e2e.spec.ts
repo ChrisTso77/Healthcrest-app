@@ -1248,3 +1248,105 @@ test.describe('Healthcrest production regression', () => {
 
 });
 
+
+
+test.describe('Inline setting explanations', () => {
+  test('explaining each setting preserves the scenario and updates with manual values', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.route('**/api/presets', route => route.fulfill({
+      status: 200, contentType: 'application/json',
+      body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
+    }));
+    await page.goto('/engine');
+    const preset = page.getByRole('button', { name: /Integrated Harmony/i });
+    await preset.click();
+    const canvas = await page.locator('canvas').elementHandle();
+    const initialValues = await page.getByRole('slider').evaluateAll(elements =>
+      elements.map(element => (element as HTMLInputElement).value));
+    for (const [label, meaning, source, slug] of [
+      ['Weekly aerobic activity', 'MVPA means moderate-to-vigorous physical activity.', 'https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/', 'fitness'],
+      ['Sleep Duration', 'Hours of sleep per night in the scenario.', 'https://www.nhs.uk/conditions/insomnia/', 'sleep'],
+      ['Whole Food Ratio', 'It is not a measured diet-quality score', 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/', 'nutrition'],
+      ['Perceived Stress Level', 'It is not a clinical test', 'https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/feelings-and-symptoms/stress/', 'stress'],
+    ]) {
+      const summary = page.getByLabel('Explain this setting: ' + label, { exact: true });
+      const explanation = page.getByRole('region', { name: label + ' explained', exact: true });
+      await summary.click();
+      await expect(explanation).toContainText(meaning);
+      await expect(explanation.getByRole('link', { name: /^NHS:/ })).toHaveAttribute('href', source);
+      await expect(explanation.getByRole('link', { name: 'Plan a manageable next step', exact: true }))
+        .toHaveAttribute('href', '/next-step?pillar=' + slug);
+      await expect(preset).toHaveAttribute('aria-pressed', 'true');
+      await summary.click();
+    }
+    expect(await page.getByRole('slider').evaluateAll(elements =>
+      elements.map(element => (element as HTMLInputElement).value))).toEqual(initialValues);
+    expect(await canvas!.evaluate(element => element === document.querySelector('canvas'))).toBe(true);
+    await page.getByLabel('Explain this setting: Sleep Duration', { exact: true }).click();
+    await page.getByRole('slider', { name: 'Sleep Duration', exact: true }).fill('7.5');
+    await expect(page.getByRole('region', { name: 'Sleep Duration explained', exact: true }))
+      .toContainText('Chosen scenario value: 7.5 hours per night');
+    await expect(preset).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  test('view explanations distinguish unused 3D inputs, active scenes and 2D', async ({ page }) => {
+    await page.goto('/engine');
+    const explanation = page.getByRole('region', { name: 'Whole Food Ratio explained', exact: true });
+    await page.getByLabel('Explain this setting: Whole Food Ratio', { exact: true }).click();
+    await expect(explanation).toContainText('This setting does not change the Systems 3D scene.');
+    await expect(explanation).toContainText('It does not set a whole-food percentage target');
+    await page.getByRole('navigation', { name: 'Health pillars' }).getByRole('button', { name: 'Nutrition', exact: true }).click();
+    await expect(explanation).toContainText('The nutrition scene responds to food-pattern inputs');
+    await expect(explanation).not.toContainText('This setting does not change');
+    await expect(explanation).toContainText('a small change can leave the same colour');
+    await page.getByRole('button', { name: /lite 3d/i }).click();
+    await expect(explanation).toContainText('The nutrition scene responds to food-pattern inputs');
+    await page.getByRole('button', { name: /2d canvas/i }).click();
+    await expect(explanation).toContainText('The 2D overview labels this setting');
+    await expect(explanation).not.toContainText('The nutrition scene responds');
+    await page.getByRole('slider', { name: 'Whole Food Ratio', exact: true }).fill('65');
+    await expect(explanation).toContainText('Chosen scenario value: 65 percent');
+  });
+
+  for (const viewport of [
+    { width: 320, height: 568 }, { width: 390, height: 844 },
+    { width: 768, height: 1024 }, { width: 1440, height: 900 },
+  ]) {
+    test('inline guidance is keyboard accessible and scrollable at ' + viewport.width + 'px', async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await page.goto('/engine?pillar=sleep');
+      const dock = page.getByRole('region', { name: 'Habit settings and scenarios', exact: true });
+      const summary = page.getByLabel('Explain this setting: Sleep Duration', { exact: true });
+      await summary.scrollIntoViewIfNeeded();
+      await summary.focus();
+      await page.keyboard.press('Enter');
+      const content = page.getByRole('region', { name: 'Sleep Duration explained', exact: true });
+      await expect(content).toContainText('Adults generally need 7–9 hours of sleep');
+      const plan = content.getByRole('link', { name: 'Plan a manageable next step', exact: true });
+      await plan.scrollIntoViewIfNeeded();
+      await expect(plan).toBeVisible();
+      expect(await dock.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+      expect(await content.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+      const box = await plan.boundingBox();
+      expect(box!.x).toBeGreaterThanOrEqual(0);
+      expect(box!.x + box!.width).toBeLessThanOrEqual(viewport.width);
+      expect(box!.y).toBeGreaterThanOrEqual(0);
+      expect(box!.y + box!.height).toBeLessThanOrEqual(viewport.height);
+      await summary.scrollIntoViewIfNeeded();
+      await summary.focus();
+      await page.keyboard.press('Space');
+      await expect(content).toBeHidden();
+      await expect(summary).toBeFocused();
+    });
+  }
+
+  test('a setting explanation opens its own habit plan even from another pillar', async ({ page }) => {
+    await page.goto('/engine?pillar=fitness');
+    await page.getByLabel('Explain this setting: Sleep Duration', { exact: true }).click();
+    await page.getByRole('region', { name: 'Sleep Duration explained', exact: true })
+      .getByRole('link', { name: 'Plan a manageable next step', exact: true }).click();
+    await expect(page).toHaveURL(/\/next-step\?pillar=sleep$/);
+    await expect(page.getByRole('group', { name: 'Choose a habit pillar' })
+      .getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  });
+});

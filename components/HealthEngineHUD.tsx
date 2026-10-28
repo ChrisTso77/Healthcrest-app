@@ -1,5 +1,6 @@
 import { useId, useState, type FC, type ReactNode } from 'react';
 import Link from 'next/link';
+import { ParameterExplanation } from '@/components/ParameterExplanation';
 import type {
   CanonicalPresetParameters,
   CanonicalScenarioPreset,
@@ -373,7 +374,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         </button>
 
         {isDockOpen && (
-          <div className="pointer-events-auto p-3 xl:p-5 grid grid-cols-1 xl:grid-cols-12 gap-4 xl:gap-6 h-[calc(100%_-_2.5rem)] xl:h-52 overflow-y-auto">
+          <div role="region" aria-label="Habit settings and scenarios" tabIndex={0} className="pointer-events-auto p-3 xl:p-5 grid grid-cols-1 xl:grid-cols-12 gap-4 xl:gap-6 h-[calc(100%_-_2.5rem)] xl:h-52 overflow-y-auto focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400">
             
             {/* Left Col: Scenario Presets List */}
             <div className="xl:col-span-4 space-y-2 border-b pb-3 xl:pb-0 xl:border-b-0 xl:border-r border-slate-800/80 xl:pr-4">
@@ -422,6 +423,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   className="w-full accent-emerald-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
                 <span id={`${controlsId}-aerobic-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.aerobic.hint}</span>
+                <ParameterExplanation parameter="aerobic" value={`${parameters.aerobicMins} minutes per week`} activePillar={activePillar} renderMode={renderMode} />
               </div>
 
               <div className="space-y-1">
@@ -442,6 +444,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   className="w-full accent-violet-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
                 <span id={`${controlsId}-sleep-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.sleep.hint}</span>
+                <ParameterExplanation parameter="sleep" value={`${parameters.sleepDuration} hours per night`} activePillar={activePillar} renderMode={renderMode} />
               </div>
 
               <div className="space-y-1">
@@ -462,6 +465,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   className="w-full accent-amber-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
                 <span id={`${controlsId}-nutrition-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.nutrition.hint}</span>
+                <ParameterExplanation parameter="nutrition" value={`${parameters.wholeFoodRatio} percent`} activePillar={activePillar} renderMode={renderMode} />
               </div>
 
               <div className="space-y-1">
@@ -482,6 +486,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   className="w-full accent-rose-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
                 <span id={`${controlsId}-stress-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.stress.hint}</span>
+                <ParameterExplanation parameter="stress" value={`${parameters.stressLevel} out of 10`} activePillar={activePillar} renderMode={renderMode} />
               </div>
 
             </div>
