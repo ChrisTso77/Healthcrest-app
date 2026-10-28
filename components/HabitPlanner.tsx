@@ -264,7 +264,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
             </div>
             <p className="hc-plan-storage">Without saving, drafts are discarded when you leave or reload. You can also download a plan to keep a separate copy.</p>
           </section>
-          <HabitPlanBackup onDownload={downloadBackup} onImport={importBackup} onStatus={setStatus} />
+          <HabitPlanBackup drafts={drafts} onDownload={downloadBackup} onImport={importBackup} onStatus={setStatus} />
           <div className="hc-plan-export-actions">
             <button type="button" className="hc-button hc-button-primary" onClick={download} disabled={!draft.action.trim() && !draft.week}>
               Download my next step <Download size={18} aria-hidden="true" />

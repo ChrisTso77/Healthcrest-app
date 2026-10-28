@@ -185,3 +185,16 @@
 .hc-draft-overview-card button[aria-pressed="true"] { background: #234e37; border-color: #234e37; color: white; }
 @media (max-width: 600px) { .hc-draft-overview-grid { grid-template-columns: 1fr; } }
 @media (max-width: 400px) { .hc-draft-overview > div { padding: 20px 16px; } .hc-draft-overview-card { padding: 16px; } }
+
+.hc-backup-change-count { font-weight: 600; }
+.hc-backup-compare { margin-top: 18px; border: 1px solid #b5c6a1; border-radius: 10px; padding: 14px; background: #fffef9; }
+.hc-backup-compare summary { min-height: 44px; padding: 10px 0; font-size: 14px; line-height: 1.6; cursor: pointer; overflow-wrap: anywhere; }
+.hc-backup-compare summary:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
+.hc-backup-compare article { min-width: 0; margin-top: 20px; padding-top: 18px; border-top: 1px solid #b5c6a1; }
+.hc-backup-compare h5 { font-size: 18px; line-height: 1.5; }
+.hc-backup-compare h6 { font-size: 14px; font-weight: 600; }
+.hc-backup-compare ul { list-style: disc; padding-left: 20px; margin-top: 10px; font-size: 13px; line-height: 1.7; }
+.hc-backup-compare-copies { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+.hc-backup-compare-copies > div { min-width: 0; padding: 12px; border: 1px solid #d4dcc7; border-radius: 8px; }
+.hc-backup-compare-action { white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 600px) { .hc-backup-compare-copies { grid-template-columns: 1fr; } }
