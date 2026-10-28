@@ -1,3 +1,4 @@
+import type { JourneyConstraint } from '@/lib/education/startJourney';
 import { useId, useState, type FC, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ScenarioEvidence } from '@/components/ScenarioEvidence';
@@ -37,6 +38,7 @@ import {
 
 interface HealthEngineHUDProps {
   onGuideOpen: () => void;
+  journeyConstraint?: JourneyConstraint;
   isDockOpen: boolean;
   onDockToggle: () => void;
   presets?: CanonicalScenarioPreset[];
@@ -54,6 +56,7 @@ interface HealthEngineHUDProps {
 
 export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
   onGuideOpen,
+  journeyConstraint,
   isDockOpen,
   onDockToggle,
   presets = [],
@@ -216,7 +219,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
-                {mode.replace('-', ' ')}
+                {mode === '2d-canvas' ? '2D diagram' : mode.replace('-', ' ')}
               </button>
             ))}
           </div>
@@ -413,7 +416,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   className="w-full accent-emerald-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
                 <span id={`${controlsId}-aerobic-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.aerobic.hint}</span>
-                <ParameterExplanation parameter="aerobic" value={`${parameters.aerobicMins} minutes per week`} activePillar={activePillar} renderMode={renderMode} />
+                <ParameterExplanation parameter="aerobic" value={`${parameters.aerobicMins} minutes per week`} activePillar={activePillar} renderMode={renderMode} journeyConstraint={journeyConstraint} />
               </div>
 
               <div className="space-y-1">
@@ -434,7 +437,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   className="w-full accent-violet-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
                 <span id={`${controlsId}-sleep-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.sleep.hint}</span>
-                <ParameterExplanation parameter="sleep" value={`${parameters.sleepDuration} hours per night`} activePillar={activePillar} renderMode={renderMode} />
+                <ParameterExplanation parameter="sleep" value={`${parameters.sleepDuration} hours per night`} activePillar={activePillar} renderMode={renderMode} journeyConstraint={journeyConstraint} />
               </div>
 
               <div className="space-y-1">
@@ -455,7 +458,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   className="w-full accent-amber-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
                 <span id={`${controlsId}-nutrition-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.nutrition.hint}</span>
-                <ParameterExplanation parameter="nutrition" value={`${parameters.wholeFoodRatio} percent`} activePillar={activePillar} renderMode={renderMode} />
+                <ParameterExplanation parameter="nutrition" value={`${parameters.wholeFoodRatio} percent`} activePillar={activePillar} renderMode={renderMode} journeyConstraint={journeyConstraint} />
               </div>
 
               <div className="space-y-1">
@@ -476,7 +479,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                   className="w-full accent-rose-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
                 />
                 <span id={`${controlsId}-stress-guidance`} className="text-[10px] text-slate-400 block">{PARAMETER_GUIDES.stress.hint}</span>
-                <ParameterExplanation parameter="stress" value={`${parameters.stressLevel} out of 10`} activePillar={activePillar} renderMode={renderMode} />
+                <ParameterExplanation parameter="stress" value={`${parameters.stressLevel} out of 10`} activePillar={activePillar} renderMode={renderMode} journeyConstraint={journeyConstraint} />
               </div>
 
             </div>

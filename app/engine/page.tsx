@@ -1,4 +1,5 @@
 import { pageMetadata } from '@/lib/siteMetadata';
+import { parseJourneyConstraint } from '@/lib/education/startJourney';
 import HealthEngineApp from '@/components/HealthEngineApp';
 import type { SceneId } from '@/state/PillarsStateTypes';
 
@@ -11,9 +12,9 @@ export const metadata = pageMetadata(
 export default async function EnginePage({
   searchParams,
 }: {
-  searchParams: Promise<{ pillar?: string | string[] }>;
+  searchParams: Promise<{ pillar?: string | string[]; view?: string | string[]; idea?: string | string[] }>;
 }) {
-  const { pillar } = await searchParams;
+  const { pillar, view, idea } = await searchParams;
   let initialScene: SceneId | undefined;
   switch (pillar) {
     case 'fitness': initialScene = 'fitness'; break;
@@ -23,5 +24,5 @@ export default async function EnginePage({
     case 'systems': initialScene = 'system'; break;
   }
 
-  return <HealthEngineApp initialScene={initialScene} />;
+  return <HealthEngineApp initialScene={initialScene} initialRenderMode={view === '2d' ? '2d-canvas' : undefined} journeyConstraint={parseJourneyConstraint(idea)} />;
 }

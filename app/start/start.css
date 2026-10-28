@@ -1,0 +1,25 @@
+.hc-journey-main { max-width: 1120px; }
+.hc-journey-intro { max-width: 700px; margin-top: 24px !important; font-size: 18px; }
+.hc-journey-form { margin-top: 36px; }
+.hc-journey-form fieldset { min-width: 0; padding: 0; margin: 0 0 28px; border: 0; }
+.hc-journey-form legend { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+.hc-journey-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+.hc-journey-options label { display: flex; align-items: start; gap: 12px; min-width: 0; padding: 18px; border: 1px solid #a4b893; border-radius: 12px; cursor: pointer; }
+.hc-journey-options label:has(input:checked) { background: #e5edda; border-color: #486c33; }
+.hc-journey-options label:focus-within { outline: 3px solid #648c44; outline-offset: 3px; }
+.hc-journey-options input { margin-top: 5px; flex: none; width: 18px; height: 18px; accent-color: #365a28; }
+.hc-journey-options strong, .hc-journey-options strong + span { display: block; }
+.hc-journey-options strong + span { font-size: 14px; margin-top: 6px; }
+.hc-journey-form button { font: inherit; cursor: pointer; border: 0; }
+.hc-journey-small { font-size: 13px; margin-top: 14px !important; }
+.hc-journey-result { scroll-margin-top: 24px; border-top: 1px solid #a4b893; padding-top: 36px; }
+.hc-journey-result > p { max-width: 740px; margin-top: 18px; }
+.hc-journey-goal { font-size: 21px; }
+.hc-journey-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; padding: 0; list-style: none; margin-top: 28px !important; }
+.hc-journey-steps li { min-width: 0; padding: 22px; border: 1px solid #cbd6bf; border-radius: 14px; background: #eff2e6; }
+.hc-journey-steps li > span { display: block; font-size: 12px; margin-bottom: 14px; }
+.hc-journey-steps h3 { font-family: Georgia, serif; font-weight: 400; font-size: 25px; line-height: 1.25; }
+.hc-journey-steps p { margin: 16px 0; font-size: 14px; }
+.hc-journey-steps a { display: inline-block; }
+@media (max-width: 800px) { .hc-journey-steps { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .hc-journey-options { grid-template-columns: 1fr; } }

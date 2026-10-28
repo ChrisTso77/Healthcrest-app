@@ -10,18 +10,22 @@ import { HealthEngineScene } from "@/components/HealthEngineScene";
 type WebGLCanvasWrapperProps = {
   state: State;
   cameraState: CameraState;
+  motionPaused?: boolean;
 };
 
 export default function WebGLCanvasWrapper({
   state,
   cameraState,
+  motionPaused = false,
 }: WebGLCanvasWrapperProps) {
-  const reducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion();
+  const reducedMotion = prefersReducedMotion || motionPaused;
 
   return (
     <div
       className="absolute inset-0 bg-slate-950"
       data-reduced-motion={reducedMotion}
+      data-motion-paused={motionPaused}
       data-camera-shot={cameraState.activeShotId}
       data-camera-request-revision={cameraState.requestRevision}
     >

@@ -1,5 +1,6 @@
 'use client';
 
+import { journeyPlannerHref, journeyExplorerHref, type JourneyConstraint } from '@/lib/education/startJourney';
 import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { UrgentSupport, URGENT_SUPPORT_SEARCH_TERMS } from '@/components/UrgentSupport';
@@ -21,7 +22,7 @@ const terms: ReadonlyArray<readonly [string, string]> = [
   ...ENGINE_GLOSSARY,
 ];
 
-export function LearningLibrary() {
+export function LearningLibrary({ journeyConstraint }: { journeyConstraint?: JourneyConstraint }) {
   const [query, setQuery] = useState('');
   const input = useRef<HTMLInputElement>(null);
   const id = useId();
@@ -70,8 +71,8 @@ export function LearningLibrary() {
                     {guide.sourceLabel}<span className="hc-visually-hidden"> (opens in a new tab)</span>
                   </a>
                   <div className="hc-learn-topic-actions">
-                    <Link prefetch={false} href={'/engine?pillar=' + topic.slug} className="hc-text-link">Explore in the Habit Explorer</Link>
-                    <Link prefetch={false} href={topic.key === 'Systems' ? '/next-step' : '/next-step?pillar=' + topic.slug} className="hc-text-link">Make a next step</Link>
+                    <Link prefetch={false} href={journeyExplorerHref(topic.key, journeyConstraint)} className="hc-text-link">Explore in the Habit Explorer</Link>
+                    <Link prefetch={false} href={journeyPlannerHref(topic.key, journeyConstraint)} className="hc-text-link">Make a next step</Link>
                   </div>
                 </article>
               );

@@ -84,7 +84,7 @@ test.describe('Healthcrest production regression', () => {
 
     await sleep.scrollIntoViewIfNeeded();
     await sleep.fill('7.5');
-    await page.getByRole('button', { name: /2d canvas/i }).click();
+    await page.getByRole('button', { name: /2d diagram/i }).click();
     await guide.click();
     await expect(selected).toHaveCount(0);
     await expect(dialog).toContainText('Manual settings: no evidence preset is currently applied.');
@@ -92,7 +92,7 @@ test.describe('Healthcrest production regression', () => {
     await dialog.getByText('Visual cues and unfamiliar terms', { exact: true }).click();
     await expect(dialog.getByText('Heart-rate variability: variation in the time between heartbeats. This app does not measure it.', { exact: true })).toBeVisible();
     await dialog.getByRole('button', { name: 'Close & explore', exact: true }).click();
-    await expect(page.getByRole('button', { name: /2d canvas/i })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByRole('button', { name: /2d diagram/i })).toHaveAttribute('aria-pressed', 'true');
     await expect(sleep).toHaveValue('7.5');
   });
 
@@ -104,7 +104,7 @@ test.describe('Healthcrest production regression', () => {
     }));
     await page.goto('/engine?accessible-2d-overview-test=1');
     await page.getByRole('button', { name: /Short sleep and higher stress example/i }).click();
-    await page.getByRole('button', { name: /2d canvas/i }).click();
+    await page.getByRole('button', { name: /2d diagram/i }).click();
 
     const overview = page.getByRole('region', { name: '2D health overview', exact: true });
     const illustration = overview.getByRole('img', { name: 'Current parameter illustration', exact: true });
@@ -135,7 +135,7 @@ test.describe('Healthcrest production regression', () => {
       /Selected pillar: Sleep\. Scenario: manual settings\..*Aerobic activity: 220 minutes per week\..*Whole food ratio: 75 percent\..*Sleep duration: 7\.5 hours per night\..*Perceived stress: 3 out of 10/
     );
 
-    for (const mode of [/lite 3d/i, /high 3d/i, /2d canvas/i]) {
+    for (const mode of [/lite 3d/i, /high 3d/i, /2d diagram/i]) {
       await page.getByRole('button', { name: mode }).click();
     }
     await expect(overview.getByRole('definition')).toHaveText([
@@ -176,7 +176,7 @@ test.describe('Healthcrest production regression', () => {
       await page.goto('/engine?2d-layout-test=1');
       await expect(page.getByRole('status')).toBeVisible();
       if (viewport.width !== 320) {
-        await page.getByRole('button', { name: /2d canvas/i }).click();
+        await page.getByRole('button', { name: /2d diagram/i }).click();
       }
 
       const overview = page.getByRole('region', { name: '2D health overview', exact: true });
@@ -286,9 +286,9 @@ test.describe('Healthcrest production regression', () => {
       await expectIdle();
 
       const beforeGesture = await drawCount();
-      await page.mouse.move(620, 280);
+      await page.mouse.move(620, 160);
       await page.mouse.down();
-      await page.mouse.move(700, 320, { steps: 5 });
+      await page.mouse.move(700, 200, { steps: 5 });
       await page.mouse.up();
       await expect.poll(drawCount).toBeGreaterThan(beforeGesture);
       await expectIdle();
@@ -316,7 +316,7 @@ test.describe('Healthcrest production regression', () => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await expect(renderer).toHaveAttribute('data-reduced-motion', 'true');
       await expectIdle();
-      await page.getByRole('button', { name: /2d canvas/i }).click();
+      await page.getByRole('button', { name: /2d diagram/i }).click();
       await expect(page.getByText('6h / night', { exact: true })).toBeVisible();
       await page.getByRole('button', { name: /high 3d/i }).click();
       await expect(canvas).toBeVisible();
@@ -480,7 +480,7 @@ test.describe('Healthcrest production regression', () => {
       await cameraToggle.click();
       await expect(page.getByRole('region', { name: 'Camera controls' })).toBeHidden();
 
-      await page.getByRole('button', { name: /2d canvas/i }).click();
+      await page.getByRole('button', { name: /2d diagram/i }).click();
       const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
       await sleep.scrollIntoViewIfNeeded();
       await sleep.fill('7.5');
@@ -601,7 +601,7 @@ test.describe('Healthcrest production regression', () => {
     await expect(sleep).toHaveValue('8');
     await expect(sleep).toHaveAttribute('aria-valuetext', '8 hours per night');
 
-    const render2d = page.getByRole('button', { name: /2d canvas/i });
+    const render2d = page.getByRole('button', { name: /2d diagram/i });
     await render2d.focus();
     await page.keyboard.press('Space');
     await expect(render2d).toHaveAttribute('aria-pressed', 'true');
@@ -643,7 +643,7 @@ test.describe('Healthcrest production regression', () => {
   });
 
   test('switches between WebGL and 2D fallback', async ({ page }) => {
-    await page.getByRole('button', { name: /2d canvas/i }).click();
+    await page.getByRole('button', { name: /2d diagram/i }).click();
 
     await expect(
       page.getByText('Habit Explorer · 2D view')
@@ -666,7 +666,7 @@ test.describe('Healthcrest production regression', () => {
     });
     await page.goto('/engine?webgl-unavailable-test=1');
 
-    const mode2d = page.getByRole('button', { name: /2d canvas/i });
+    const mode2d = page.getByRole('button', { name: /2d diagram/i });
     await expect(page.getByText('Habit Explorer · 2D view')).toBeVisible();
     await expect(mode2d).toHaveClass(/border-emerald-500\/30/);
     await expect(page.locator('canvas')).toHaveCount(0);
@@ -694,7 +694,7 @@ test.describe('Healthcrest production regression', () => {
 
     await expect.poll(() => blocked3dModule).toBe(true);
     await expect(page.getByText('Habit Explorer · 2D view')).toBeVisible();
-    await expect(page.getByRole('button', { name: /2d canvas/i }))
+    await expect(page.getByRole('button', { name: /2d diagram/i }))
       .toHaveClass(/border-emerald-500\/30/);
     await expect(page.getByText('LOADING HABIT EXPLORER...')).toHaveCount(0);
 
@@ -705,7 +705,7 @@ test.describe('Healthcrest production regression', () => {
   test('render mode controls stay synchronized with the rendered viewport', async ({ page }) => {
     const high3d = page.getByRole('button', { name: /high 3d/i });
     const lite3d = page.getByRole('button', { name: /lite 3d/i });
-    const canvas2d = page.getByRole('button', { name: /2d canvas/i });
+    const canvas2d = page.getByRole('button', { name: /2d diagram/i });
 
     await expect(high3d).toHaveClass(/border-emerald-500\/30/);
 
@@ -862,7 +862,7 @@ test.describe('Healthcrest production regression', () => {
     }).click();
 
     await page.getByRole('button', {
-      name: /2d canvas/i,
+      name: /2d diagram/i,
     }).click();
 
     const fallback = page.getByTestId('health-engine-2d-fallback');
@@ -948,11 +948,11 @@ test.describe('Healthcrest production regression', () => {
       throw new Error('WebGL canvas bounding box unavailable');
     }
 
-    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.move(box.x + box.width / 2, box.y + 160);
     await page.mouse.down();
     await page.mouse.move(
       box.x + box.width / 2 + 80,
-      box.y + box.height / 2 + 40,
+      box.y + 200,
       { steps: 5 }
     );
     await page.mouse.up();
@@ -1091,7 +1091,7 @@ test.describe('Healthcrest production regression', () => {
       await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
       await expect(page.getByText('Compare a different set of example settings')).toBeVisible();
 
-      await page.getByRole('button', { name: /2d canvas/i }).click();
+      await page.getByRole('button', { name: /2d diagram/i }).click();
       await expect(page.getByText('Habit Explorer · 2D view')).toBeVisible();
       await expect(page.getByText('4.5h / night', { exact: true })).toBeVisible();
     });
@@ -1141,7 +1141,7 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByRole('status')).toBeVisible();
     const sleepSlider = page.locator('input[type="range"]').nth(1);
     await sleepSlider.fill('7.5');
-    await page.getByRole('button', { name: /2d canvas/i }).click();
+    await page.getByRole('button', { name: /2d diagram/i }).click();
 
     await page.getByRole('button', { name: 'Retry presets', exact: true }).click();
     await expect(page.getByRole('button', { name: 'Retrying…', exact: true })).toBeDisabled();
@@ -1228,7 +1228,7 @@ test.describe('Healthcrest production regression', () => {
       page.getByText('Example settings awaiting content review')
     ).toBeVisible();
 
-    await page.getByRole('button', { name: /2d canvas/i }).click();
+    await page.getByRole('button', { name: /2d diagram/i }).click();
 
     await expect(
       page.getByText('Habit Explorer · 2D view')
@@ -1247,7 +1247,7 @@ test.describe('Healthcrest production regression', () => {
     ).toBeVisible();
 
     await expect(
-      page.getByText('Lvl 8/10', { exact: true })
+      page.getByRole('region', { name: '2D health overview', exact: true }).getByRole('definition').filter({ hasText: '8 / 10' })
     ).toBeVisible();
   });
 
@@ -1306,7 +1306,7 @@ test.describe('Inline setting explanations', () => {
     await expect(explanation).toContainText('a small change can leave the same colour');
     await page.getByRole('button', { name: /lite 3d/i }).click();
     await expect(explanation).toContainText('The nutrition scene responds to food-pattern inputs');
-    await page.getByRole('button', { name: /2d canvas/i }).click();
+    await page.getByRole('button', { name: /2d diagram/i }).click();
     await expect(explanation).toContainText('The 2D overview labels this setting');
     await expect(explanation).not.toContainText('The nutrition scene responds');
     await page.getByRole('slider', { name: 'Whole Food Ratio', exact: true }).fill('65');
@@ -1413,3 +1413,80 @@ test.describe('Reviewed scenario evidence', () => {
     await expect(dialog).not.toContainText(/Miracle cure|Guaranteed recovery|Stop prescribed treatment/);
   });
 });
+
+test('live visual key explains changes and pause stops automatic drawing without resetting the scene', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.addInitScript(() => {
+    let draws = 0;
+    Object.defineProperty(window, '__journeyDraws', { get: () => draws });
+    for (const method of ['drawArrays', 'drawElements'] as const) {
+      const original = WebGL2RenderingContext.prototype[method];
+      Object.defineProperty(WebGL2RenderingContext.prototype, method, {
+        value: function (this: WebGL2RenderingContext, ...args: number[]) {
+          draws += 1;
+          return Reflect.apply(original, this, args);
+        },
+      });
+    }
+  });
+  await page.route('**/api/presets', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }) }));
+  await page.goto('/engine?pillar=sleep');
+  const canvas = page.locator('canvas');
+  await expect(canvas).toBeVisible();
+  const originalCanvas = await canvas.elementHandle();
+  const slider = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+  await slider.fill('5');
+  const key = page.getByRole('complementary', { name: 'Live visual key', exact: true });
+  await expect(key).toContainText('Violet core · 5h sleep');
+  await key.getByRole('button', { name: 'Explain current illustration', exact: true }).click();
+  const explanation = page.getByRole('region', { name: 'Read the illustration', exact: true });
+  await expect(explanation).toContainText('Violet core');
+  await expect(explanation).toContainText('Dimmer glow');
+  await expect(explanation).toContainText('Sleep duration: 5 hours/night.');
+  await explanation.getByRole('button', { name: 'Pause scene motion', exact: true }).click();
+  const renderer = page.locator('[data-motion-paused]');
+  await expect(renderer).toHaveAttribute('data-motion-paused', 'true');
+  const draws = () => page.evaluate(() => (window as unknown as { __journeyDraws: number }).__journeyDraws);
+  await expect.poll(async () => {
+    const before = await draws();
+    await page.waitForTimeout(250);
+    return await draws() === before;
+  }).toBe(true);
+  await page.keyboard.press('Escape');
+  await slider.fill('7.5');
+  await expect(key).toContainText('Indigo core · 7.5h sleep');
+  await expect(renderer).toHaveAttribute('data-motion-paused', 'true');
+  await key.getByRole('button', { name: 'Resume scene motion', exact: true }).click();
+  const before = await draws();
+  await expect.poll(draws).toBeGreaterThan(before + 20);
+  await expect(slider).toHaveValue('7.5');
+  expect(await originalCanvas!.evaluate(node => node === document.querySelector('canvas'))).toBe(true);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(key.getByRole('button', { name: 'Scene motion is reduced by your device setting', exact: true })).toBeDisabled();
+  await expect(renderer).toHaveAttribute('data-reduced-motion', 'true');
+});
+
+for (const width of [320, 390, 768, 1440]) {
+  test('visual key remains reachable above the dock at ' + width + 'px', async ({ page }) => {
+    await page.setViewportSize({ width, height: width === 320 ? 568 : 900 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.route('**/api/presets', route => route.fulfill({ status: 503, body: 'unavailable' }));
+    await page.goto('/engine?pillar=sleep');
+    const key = page.getByRole('complementary', { name: 'Live visual key', exact: true });
+    await expect(key).toBeVisible();
+    await expect(page.getByRole('status')).toContainText('CMS presets unavailable');
+    const header = (await page.locator('header').boundingBox())!;
+    const keyBox = (await key.boundingBox())!;
+    const dockBox = (await page.getByRole('button', { name: /Explore habits & scenarios/ }).locator('..').boundingBox())!;
+    expect(keyBox.x).toBeGreaterThanOrEqual(0);
+    expect(keyBox.x + keyBox.width).toBeLessThanOrEqual(width);
+    expect(keyBox.y).toBeGreaterThanOrEqual(header.y + header.height);
+    expect(keyBox.y + keyBox.height).toBeLessThanOrEqual(dockBox.y);
+    const explain = key.getByRole('button', { name: 'Explain current illustration', exact: true });
+    await explain.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('region', { name: 'Read the illustration', exact: true })).toContainText('Red does not diagnose harm');
+    await page.keyboard.press('Escape');
+    await expect(explain).toBeFocused();
+  });
+}
