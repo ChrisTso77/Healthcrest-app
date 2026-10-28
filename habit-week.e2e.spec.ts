@@ -240,7 +240,7 @@ test('the planning explanation remains readable without JavaScript', async ({ br
     const page = await context.newPage();
     await page.goto('/next-step?pillar=sleep');
     await expect(page.getByRole('heading', { name: 'Your seven-day habit plan', exact: true })).toBeVisible();
-    await expect(page.getByText(/Seven days is a planning window/)).toBeVisible();
+    await expect(page.locator('#seven-day-plan').getByText(/Seven days is a planning window/)).toBeVisible();
     await expect(page.locator('.hc-week-start')).toBeHidden();
     await expect(page.getByRole('link', { name: /NHS: sleep needs and insomnia support/ })).toBeVisible();
   } finally { await context.close(); }
