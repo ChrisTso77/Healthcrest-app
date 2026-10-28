@@ -213,6 +213,7 @@ test('stress guidance exposes local urgent-help routes and keyboard preview sele
   const support = page.locator('#engine-preview').getByRole('complementary', { name: 'Urgent mental health support' });
   await expect(support).toBeVisible();
   await expect(support.getByRole('link', { name: '111', exact: true })).toHaveAttribute('href', 'tel:111');
+  await expect(support.getByRole('link', { name: '111', exact: true })).toHaveCSS('text-decoration-line', 'underline');
   await expect(support.getByRole('link', { name: '116 123', exact: true })).toHaveAttribute('href', 'tel:116123');
   await expect(support.getByRole('link', { name: '999', exact: true })).toHaveAttribute('href', 'tel:999');
   await page.goto('/learn#topic-stress');
