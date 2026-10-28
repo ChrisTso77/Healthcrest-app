@@ -1,0 +1,36 @@
+name: Production release smoke check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Check live Healthcrest release
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      HEALTHCREST_RELEASE_ORIGIN: https://www.healthcrest.uk
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Verify live public pages and recovery
+        run: npm run test:release
+      - name: Upload release readiness report
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: production-release-readiness
+          path: artifacts/release-readiness/
+          retention-days: 14

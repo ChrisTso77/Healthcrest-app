@@ -21,7 +21,7 @@ function runAudit(url, name) {
     ], { stdio: 'inherit', env: { ...process.env, CHROME_PATH: chromium.executablePath() } });
     const timer = setTimeout(() => { child.kill('SIGTERM'); reject(new Error('Lighthouse audit timed out: ' + name)); }, 180_000);
     child.on('error', error => { clearTimeout(timer); reject(error); });
-    child.on('exit', code => { clearTimeout(timer); code === 0 ? resolve() : reject(new Error('Lighthouse failed for ' + name + ': ' + code)); });
+    child.on('exit', code => { clearTimeout(timer); if (code === 0) resolve(); else reject(new Error('Lighthouse failed for ' + name + ': ' + code)); });
   });
 }
 
