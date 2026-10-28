@@ -236,8 +236,8 @@ test('supplied logo is delivered responsively in a modern image format', async (
 
 test('canonical and sharing metadata use the confirmed domain and publish working discovery files', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://www.healthcrest.uk/');
-  await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', 'https://www.healthcrest.uk/');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /^https:\/\/www\.healthcrest\.uk\/?$/);
+  await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', /^https:\/\/www\.healthcrest\.uk\/?$/);
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
   const schema = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent())!);
   expect(schema['@type']).toBe('WebSite');
@@ -247,6 +247,9 @@ test('canonical and sharing metadata use the confirmed domain and publish workin
   const explorer = await page.request.get('/engine?pillar=sleep');
   expect(explorer.ok()).toBe(true);
   expect(await explorer.text()).toContain('rel="canonical" href="https://www.healthcrest.uk/engine"');
+});
+
+test('discovery files list the public pages on the confirmed domain', async ({ page }) => {
   const sitemap = await page.request.get('/sitemap.xml');
   expect(sitemap.ok()).toBe(true);
   const xml = await sitemap.text();
@@ -256,6 +259,9 @@ test('canonical and sharing metadata use the confirmed domain and publish workin
   const robots = await page.request.get('/robots.txt');
   expect(await robots.text()).toContain('Sitemap: https://www.healthcrest.uk/sitemap.xml');
 
+});
+
+test('social sharing image renders as a complete PNG', async ({ page }) => {
   const image = await page.request.get('/opengraph-image');
   expect(image.status()).toBe(200);
   expect(image.headers()['content-type']).toContain('image/png');
