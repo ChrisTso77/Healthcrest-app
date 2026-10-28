@@ -17,7 +17,7 @@ Source: owner-supplied feedback, 28 October 2026. This is an implementation reco
 
 ## Source and data-flow inventory
 
-The inspected application source has no active analytics integration. lib/health-engine-analytics.ts contains unused adapters; they are not imported or called by the current application. No analytics scripts, browser-cookie writes, session-storage writes or sendBeacon calls were found in the inspected runtime source.
+At the homepage feedback phase (#86), the inspected application source had no active analytics integration. lib/health-engine-analytics.ts contains unused adapters; they are not imported or called by the current application. No analytics scripts, browser-cookie writes, session-storage writes or sendBeacon calls were found in the inspected runtime source.
 
 The planner explicitly saves its four drafts and reflection notes to localStorage under healthcrest.habit-draft.v1. The payload is version 2 and supports version 1 migration on explicit restoration. Save/restore/remove are manual; there is no draft POST endpoint or background upload. A local file download is independent of the saved browser copy.
 
@@ -38,3 +38,7 @@ A real mobile PageSpeed Insights benchmark has not been run in this phase. Do no
 - ICO storage/cookies guidance: https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guide-to-pecr/cookies-and-similar-technologies/
 - Next Image: https://nextjs.org/docs/app/api-reference/components/image
 - Next metadata: https://nextjs.org/docs/app/api-reference/functions/generate-metadata
+
+## Optional measurement follow-up (#89)
+
+The owner confirms the Hobby plan. Both Vercel SDKs are now guarded by a default-off production switch and independent visitor choices on /privacy. Planner/private routes and custom events are excluded; URL query/fragment data is stripped. The previous source/dashboard inventory describes its historical phase, not an inspection of today's deployed settings. See docs/measurement-rollout.md for testing limits, plan eligibility, remaining privacy facts and activation/disable instructions. Full provider/enquiry-processing details remain an operational review draft.

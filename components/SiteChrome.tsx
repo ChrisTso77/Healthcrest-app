@@ -1,3 +1,4 @@
+import { MeasurementNotice } from '@/components/MeasurementChoices';
 import Image from 'next/image';
 import Link from 'next/link';
 import logo from '@/public/media/healthcrest-logo.png';
@@ -20,6 +21,7 @@ export function SiteHeader() {
         <Link href="/about" prefetch={false}>About</Link>
         <Link href="/contact" prefetch={false}>Contact</Link>
       </nav>
+      <MeasurementNotice />
     </header>
   );
 }
@@ -35,6 +37,7 @@ export function SiteFooter() {
           <Link href="/about" prefetch={false}>About &amp; sources</Link>
           <Link href="/contact" prefetch={false}>Contact</Link>
           <Link href="/storage" prefetch={false}>Browser storage</Link>
+          <Link href="/privacy" prefetch={false}>Privacy choices</Link>
         </nav>
       </div>
       <p className="hc-footer-note">Educational information for adults. Adapt ideas to your health, ability and circumstances, alongside appropriate clinical advice.</p>
