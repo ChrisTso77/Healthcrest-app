@@ -19,8 +19,10 @@
 .hc-plan-review { margin-top: 28px; padding: 20px; background: #eaf0de; border-radius: 12px; font-size: 14px; }
 .hc-plan-review h3 { margin-bottom: 8px; font-size: 16px; }
 .hc-plan-storage { font-size: 12px; }
-.hc-plan-draft > button { margin-top: 24px; border: 0; cursor: pointer; font-family: inherit; }
-.hc-plan-draft > button:disabled { opacity: .55; cursor: not-allowed; }
+.hc-plan-export-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.hc-plan-export-actions button { border: 0; cursor: pointer; font-family: inherit; }
+.hc-plan-export-actions .hc-plan-print-button { border: 1px solid #7c906b; background: #f8f7f0; color: var(--hc-ink); }
+.hc-plan-export-actions button:disabled { opacity: .55; cursor: not-allowed; }
 .hc-plan-status { min-height: 24px; font-size: 13px; }
 .hc-plan-guidance { display: grid; gap: 22px; background: #11372b; color: #edf2e7; }
 .hc-plan-guidance .hc-eyebrow { margin: 0; color: #c3d99f; }
@@ -84,3 +86,27 @@
 .hc-week-quick-save { margin-top: 22px; padding: 18px; border-radius: 10px; background: #eaf0de; }
 #return-to-plan:focus-visible, .hc-plan-return-actions button:focus-visible, .hc-plan-return-actions a:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
 @media (max-width: 400px) { .hc-plan-return { padding: 20px 16px; } .hc-plan-return-actions button + button { margin-left: 0; margin-top: 10px; } }
+
+/* Plain-text print copy: no clipped form controls or closed daily disclosures. */
+.hc-plan-print { display: none; }
+@media print {
+  @page { margin: 16mm; }
+  body { background: white; }
+  .hc-plan-page { background: white; color: black; }
+  .hc-plan-page > :not(main),
+  .hc-plan-main > :not(.hc-plan),
+  .hc-plan > :not(.hc-plan-print) { display: none !important; }
+  .hc-plan-main, .hc-plan { margin: 0; padding: 0; max-width: none; }
+  .hc-plan-print { display: block; font: 11pt/1.5 Arial, Helvetica, sans-serif; color: black; overflow-wrap: anywhere; }
+  .hc-plan-print h1 { font: bold 22pt/1.2 Arial, Helvetica, sans-serif; letter-spacing: 0; margin-bottom: 8pt; }
+  .hc-plan-print h2 { font: bold 15pt/1.3 Arial, Helvetica, sans-serif; letter-spacing: 0; margin: 14pt 0 8pt; }
+  .hc-plan-print h3 { font: bold 12pt/1.3 Arial, Helvetica, sans-serif; margin-bottom: 6pt; }
+  .hc-plan-print p + p { margin-top: 6pt; }
+  .hc-print-writing { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .hc-print-note { min-height: 12mm; }
+  .hc-print-block, .hc-print-days li { break-inside: avoid; page-break-inside: avoid; }
+  .hc-print-days { list-style: none; padding: 0; margin: 12pt 0; }
+  .hc-print-days li { padding: 10pt 0; border-bottom: 1px solid #777; min-height: 26mm; }
+  .hc-print-guidance { font-size: 10pt; border-top: 1px solid #777; margin-top: 14pt; padding-top: 6pt; }
+  .hc-plan-print a { text-decoration: underline; color: black; }
+}
