@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect, useReducer, type CSSProperties } from 'react';
 import {
   ShieldAlert,
@@ -115,7 +116,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
   return (
     <main
       style={{
-        '--engine-footer-space': apiError ? '7rem' : '4rem',
+        '--engine-footer-space': apiError ? '8rem' : '5rem',
         '--engine-dock-space': isDockOpen ? 'min(16rem,35dvh)' : '2.5rem',
         '--engine-desktop-dock-space': isDockOpen ? '16rem' : '2.5rem',
       } as CSSProperties}
@@ -244,6 +245,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
           <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
           <span>Clinical & Legal Disclaimer</span>
         </button>
+        <Link href="/privacy" prefetch={false} className="pointer-events-auto col-span-2 justify-self-end rounded px-2 py-1 text-slate-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-emerald-300">Privacy choices</Link>
       </footer>
 
       {/* ------------------------------------------------------------------ */}

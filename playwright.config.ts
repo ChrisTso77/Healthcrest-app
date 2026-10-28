@@ -2,7 +2,9 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: '.',
-  testMatch: /(?:health-engine|landing|next-step|learn|start)\.e2e\.spec\.ts/,
+  testMatch: process.env.HEALTHCREST_TEST_MEASUREMENT_OFF === '1'
+    ? /telemetry-disabled\.e2e\.spec\.ts/
+    : /(?:health-engine|landing|next-step|learn|start|telemetry)\.e2e\.spec\.ts/,
   timeout: 30_000,
   expect: {
     timeout: 10_000,

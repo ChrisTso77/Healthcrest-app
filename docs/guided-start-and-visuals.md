@@ -14,4 +14,8 @@ Sources checked 28 October 2026: the existing NHS movement, Eatwell, insomnia an
 
 Hosted CI runs Lighthouse 13.6.0 in mobile mode on the homepage and /start production build. It publishes HTML/JSON reports and a summary artifact under mobile-performance, retained for 14 days. These are single-run lab measurements on a GitHub runner, not PageSpeed Insights field data or a before/after improvement claim. No score threshold is added; metrics establish a baseline for future work.
 
-The built-app network inventory cannot confirm deployed Vercel dashboard analytics settings. The owner reports Enable buttons in the Vercel analytics tabs, indicating those features are disabled. The privacy notice remains a review draft while retention and other provider-processing details are confirmed.
+The built-app network inventory cannot confirm deployed Vercel dashboard analytics settings. At the guided-start phase (#87), the owner reported Enable buttons in the Vercel analytics tabs, indicating those features were disabled. The privacy notice remains a review draft while retention and other provider-processing details are confirmed.
+
+## Optional measurement follow-up (#89)
+
+The owner confirms the Hobby plan. Both Vercel SDKs are now guarded by a default-off production switch and independent visitor choices on /privacy. Planner/private routes and custom events are excluded; URL query/fragment data is stripped. The previous source/dashboard inventory describes its historical phase, not an inspection of today's deployed settings. See docs/measurement-rollout.md for testing limits, plan eligibility, remaining privacy facts and activation/disable instructions. Full provider/enquiry-processing details remain an operational review draft.
