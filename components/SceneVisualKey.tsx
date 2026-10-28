@@ -3,7 +3,6 @@ import { useId } from 'react';
 import type { State } from '@/state/PillarsStateTypes';
 import { useReducedMotion } from '@/lib/accessibility/useReducedMotion';
 import { explainVisualState } from '@/lib/visuals/explainVisualState';
-import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
 type MotionProps = { motionPaused: boolean; onToggleMotion: () => void };
 
@@ -47,7 +46,7 @@ export function SceneVisualExplanation({ state, ...motion }: { state: State } & 
           <p className="flex items-center gap-2"><span aria-hidden="true" style={{ backgroundColor: visual.colour }} className="size-4 rounded-full" /><strong>{visual.colourName} core</strong> · {visual.glow} · {visual.texture}</p>
           <p>Inputs used by this 3D view:</p>
           <ul className="list-disc space-y-1 pl-5">{visual.inputs.map(input => <li key={input}>{input}</li>)}</ul>
-          <p>{PILLAR_GUIDES[state.activePillar].visual}</p>
+          <p>Open “How this scene responds” below for the rules behind this illustration.</p>
           <p>Read colour together with the input and this key. Red does not diagnose harm; green does not certify health. Glow, wobble and rotation are graphic effects. A small input change may stay within the same visual range.</p>
           <SceneMotionControl {...motion} />
           <p className="text-xs text-slate-400">Pausing stops automatic scene motion while keeping your chosen values and camera controls. Your device’s reduced-motion preference takes priority.</p>

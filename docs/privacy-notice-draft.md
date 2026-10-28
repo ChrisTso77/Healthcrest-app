@@ -11,7 +11,7 @@ Prepared 28 October 2026. This file is not published as a customer-facing privac
 - No account, newsletter signup, payment flow or user-health-data upload endpoint is implemented.
 - The planner keeps current edits in page memory. Only an explicit Save writes the four drafts and reflection notes to localStorage. Restore and Remove are explicit; download creates a separate user-managed text file.
 - Start here puts topic/preference choices in the URL. They can appear in browser history and hosting request logs. It asks for no symptoms or diagnoses and does not upload a habit draft.
-- The source contains no active analytics integration. The owner is unsure whether Vercel Web Analytics/Speed Insights is enabled. A CI lab audit cannot verify the deployed dashboard configuration.
+- The source contains no active analytics integration. The owner reports that the Vercel Analytics/Speed Insights tabs show an Enable button, indicating they are not enabled. This is owner-confirmed information; a CI lab audit cannot independently verify dashboard configuration.
 
 ## Draft public wording supported by current facts
 
@@ -27,7 +27,7 @@ The site is hosted on Vercel and retrieves educational content from Sanity. Prov
 
 ## Decisions required to finish the notice
 
-1. Confirm Vercel Analytics and Speed Insights status and any other deployed scripts. If optional tracking is used, identify its exact purposes, technology, data, retention and applicable choice/consent controls before enabling it.
+1. Keep the owner-confirmed disabled Vercel Analytics/Speed Insights setting and source inventory aligned with the deployed site. Before introducing optional tracking, identify its exact purposes, technology, data, retention and applicable choice/consent controls.
 2. Confirm the exact GoDaddy email product and sub-processors, configured retention and deletion practices.
 3. Record the actual hosting/CMS log retention, recipient categories, international transfers and safeguards.
 4. Decide and document lawful bases for handling enquiries and technical security logs; do not invent a legitimate-interests assessment or consent history.

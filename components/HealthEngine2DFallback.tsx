@@ -67,7 +67,8 @@ export function HealthEngine2DFallback({
           <div><dt className="text-slate-400">Perceived stress</dt><dd className="font-mono text-cyan-200">{stressLevel} / 10</dd></div>
         </dl>
       </section>
-      <p className="mt-4 text-xs leading-relaxed text-slate-400">{healthStatus === 'manual' ? 'Manual settings. Select a preset to view its evidence summary.' : 'Illustrative example. Open the scenario summary for sources and limits.'} Open the Guide to connect these inputs to general habit guidance.</p>
+      <p className="mt-4 text-xs leading-relaxed text-slate-400">{healthStatus === 'manual' ? 'Manual settings. Select a preset to view its evidence summary.' : 'Illustrative example. Open the scenario summary for sources and limits.'}</p>
+      <p className="mt-2 text-xs leading-relaxed text-slate-400">Open the Guide to connect these inputs to general habit guidance.</p>
     </div>
   );
 }
