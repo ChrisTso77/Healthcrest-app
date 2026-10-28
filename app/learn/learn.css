@@ -32,3 +32,8 @@
   .hc-learn-topic-grid, .hc-learn-definitions { grid-template-columns: 1fr; }
   .hc-learn-topic { padding: 24px 20px; }
 }
+
+.hc-learn-topic .hc-learn-match { width: 100%; padding: 16px; border: 1px solid #b5c6a1; border-radius: 10px; background: #eaf0de; color: var(--hc-ink); font-size: 14px; line-height: 1.7; }
+.hc-learn-match strong { display: block; }
+.hc-learn-match a { display: inline-block; min-height: 44px; padding: 8px 0; }
+.hc-learn-match a:focus-visible, .hc-learn-search button:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
