@@ -1,3 +1,4 @@
+import { learningGuideHref } from '@/lib/education/learningGuides';
 import { pageMetadata } from '@/lib/siteMetadata';
 import Link from 'next/link';
 import { Activity, Apple, ArrowUpRight, Brain, Moon } from 'lucide-react';
@@ -114,10 +115,10 @@ export default function HealthcrestHomePage() {
           <span className="hc-eyebrow">Start here</span>
           <h2 id="start-title">A question worth exploring.</h2>
           <div className="hc-start-grid">
-            <Link href="/learn#topic-fitness" prefetch={false}><h3>How much activity do adults need?</h3><p>Understand weekly movement guidance and find an approachable first step.</p></Link>
-            <Link href="/learn#topic-nutrition" prefetch={false}><h3>What does balanced eating mean?</h3><p>Look at everyday food patterns and the NHS Eatwell Guide.</p></Link>
-            <Link href="/learn#topic-sleep" prefetch={false}><h3>Where can I start with sleep?</h3><p>Explore sleep routines, recovery and when to seek support.</p></Link>
-            <Link href="/learn#topic-stress" prefetch={false}><h3>What could help with stress?</h3><p>Find manageable coping ideas and routes to further support.</p></Link>
+            <Link href={learningGuideHref('Fitness')!} prefetch={false}><h3>How much activity do adults need?</h3><p>Understand weekly movement guidance and find an approachable first step.</p></Link>
+            <Link href={learningGuideHref('Nutrition')!} prefetch={false}><h3>What does balanced eating mean?</h3><p>Look at everyday food patterns and the NHS Eatwell Guide.</p></Link>
+            <Link href={learningGuideHref('Sleep')!} prefetch={false}><h3>Where can I start with sleep?</h3><p>Explore sleep routines, recovery and when to seek support.</p></Link>
+            <Link href={learningGuideHref('Stress')!} prefetch={false}><h3>What could help with stress?</h3><p>Find manageable coping ideas and routes to further support.</p></Link>
           </div>
         </section>
 

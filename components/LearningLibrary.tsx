@@ -1,5 +1,6 @@
 'use client';
 
+import { guideForPillar, learningGuideHref, learningGuideSearchText } from '@/lib/education/learningGuides';
 import { journeyPlannerHref, journeyExplorerHref, type JourneyConstraint } from '@/lib/education/startJourney';
 import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -28,7 +29,7 @@ export function LearningLibrary({ journeyConstraint }: { journeyConstraint?: Jou
   const id = useId();
   const needle = query.trim().toLowerCase();
   const matches = (...text: string[]) => text.join(' ').toLowerCase().includes(needle);
-  const shownTopics = topics.filter(topic => matches(topic.label, topic.key, ...Object.values(PILLAR_GUIDES[topic.key]), topic.key === 'Stress' ? URGENT_SUPPORT_SEARCH_TERMS : ''));
+  const shownTopics = topics.filter(topic => matches(topic.label, topic.key, learningGuideSearchText(guideForPillar(topic.key)), ...Object.values(PILLAR_GUIDES[topic.key]), topic.key === 'Stress' ? URGENT_SUPPORT_SEARCH_TERMS : ''));
   const shownTerms = terms.filter(([term, meaning]) => matches(term, meaning));
   const shownEvidence = Object.entries(EVIDENCE_GUIDES).filter(([label, meaning]) => matches(label, meaning));
   const countLabel = (count: number, label: string) => count + ' ' + label + (count === 1 ? '' : 's');
@@ -56,6 +57,7 @@ export function LearningLibrary({ journeyConstraint }: { journeyConstraint?: Jou
           <div className="hc-learn-topic-grid">
             {shownTopics.map(topic => {
               const guide = PILLAR_GUIDES[topic.key];
+              const practicalGuide = learningGuideHref(topic.key, journeyConstraint);
               return (
                 <article id={'topic-' + topic.slug} key={topic.key} aria-labelledby={id + '-' + topic.slug} className="hc-learn-topic">
                   <h3 id={id + '-' + topic.slug}>{topic.label}</h3>
@@ -70,6 +72,7 @@ export function LearningLibrary({ journeyConstraint }: { journeyConstraint?: Jou
                   <a href={guide.sourceUrl} target="_blank" rel="noopener noreferrer" className="hc-text-link">
                     {guide.sourceLabel}<span className="hc-visually-hidden"> (opens in a new tab)</span>
                   </a>
+                  {practicalGuide && <Link prefetch={false} href={practicalGuide} className="hc-text-link">Read the practical guide</Link>}
                   <div className="hc-learn-topic-actions">
                     <Link prefetch={false} href={journeyExplorerHref(topic.key, journeyConstraint)} className="hc-text-link">Explore in the Habit Explorer</Link>
                     <Link prefetch={false} href={journeyPlannerHref(topic.key, journeyConstraint)} className="hc-text-link">Make a next step</Link>
