@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import type { ComparisonStart } from "@/lib/education/settingComparison";
 import { Layers } from "lucide-react";
 import { Component, type ReactNode } from "react";
 
@@ -11,6 +12,8 @@ import { HealthEngine2DFallback } from "@/components/HealthEngine2DFallback";
 
 type HealthEngineViewportProps = {
   state: State;
+  startingPoint: ComparisonStart;
+  onCompare: () => void;
   cameraState: CameraState;
   onWebGLError: () => void;
   motionPaused: boolean;
@@ -83,7 +86,7 @@ function toFallbackHealthStatus(
   }
 }
 
-function FallbackViewport({ state }: Pick<HealthEngineViewportProps, "state">) {
+function FallbackViewport({ state, startingPoint, onCompare }: Pick<HealthEngineViewportProps, "state" | "startingPoint" | "onCompare">) {
   return (
     <div
       role="region"
@@ -92,6 +95,8 @@ function FallbackViewport({ state }: Pick<HealthEngineViewportProps, "state">) {
       className="absolute inset-x-3 top-44 bottom-[calc(var(--engine-footer-space,4rem)_+_var(--engine-dock-space,16rem)_+_0.75rem)] z-0 overflow-y-auto transition-[bottom] duration-300 overscroll-contain rounded-2xl bg-slate-950 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400 xl:top-20 xl:left-[22rem] xl:right-[17rem] xl:bottom-[calc(var(--engine-footer-space,4rem)_+_var(--engine-desktop-dock-space,16rem)_+_0.75rem)]"
     >
       <HealthEngine2DFallback
+        startingPoint={startingPoint}
+        onCompare={onCompare}
         activePillar={state.activePillar}
         aerobicMins={state.parameters.aerobicVolume}
         sleepDuration={state.parameters.sleepDuration}
@@ -107,13 +112,15 @@ function FallbackViewport({ state }: Pick<HealthEngineViewportProps, "state">) {
 
 export function HealthEngineViewport({
   state,
+  startingPoint,
+  onCompare,
   cameraState,
   onWebGLError,
   motionPaused,
   onToggleMotion,
   onExplain,
 }: HealthEngineViewportProps) {
-  const fallback = <FallbackViewport state={state} />;
+  const fallback = <FallbackViewport state={state} startingPoint={startingPoint} onCompare={onCompare} />;
 
   if (state.renderMode === "2d-canvas") {
     return fallback;

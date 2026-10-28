@@ -52,6 +52,8 @@ export function HealthEngineGuide({ state, presets, onClose, motionPaused, onTog
             The scenes are illustrations, not measurements of your body.
           </p>
 
+          <p>The Compare button beside Guide shows your starting and current settings, numerical changes and the related habit guidance. In 2D, a circle marks the starting value and a diamond marks the current value.</p>
+
           <SceneVisualExplanation state={state} motionPaused={motionPaused} onToggleMotion={onToggleMotion} />
 
           <Link href={journeyLearnHref(state.activePillar, journeyConstraint)} prefetch={false} className="inline-block rounded-lg border border-emerald-500/40 px-3 py-2 font-medium text-emerald-300 hover:bg-emerald-500/10">
