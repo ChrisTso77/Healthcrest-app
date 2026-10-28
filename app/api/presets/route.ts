@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@sanity/client';
-import { normalizeSanityPresets } from '@/lib/presets/normalize';
+import { REVIEWED_NARRATIVE } from '@/lib/presets/reviewedContent';
+import { normalizePillar, normalizeSanityPresets } from '@/lib/presets/normalize';
 
 /**
  * NEXT.JS APP ROUTER API ROUTE (v3)
  * Path: app/api/presets/route.ts or app/api/presets/[slug]/route.ts
  * 
- * Fetches Scenario Presets, Scene 5 Storyboards, Sleep Ladder data, and Global Narrative from Sanity CMS
+ * Fetches scenario parameters and storyboards from Sanity CMS and applies repository-reviewed educational content
  * and formats them for consumption by PillarsStateMachine.tsx, HealthEngineHUD.tsx, and page.tsx
  */
 
@@ -87,14 +88,17 @@ type StoryboardScene = {
   [key: string]: unknown;
 };
 
-const GLOBAL_NARRATIVE_QUERY = `
-  *[_type == "globalNarrative"][0] {
-    _id,
-    bottomLine,
-    pillarsSummary,
-    clinicalAlignment
+
+function reviewedVisualProps(raw: unknown): Record<string, string | number> | undefined {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) return undefined;
+  const props = raw as Record<string, unknown>;
+  const result: Record<string, string | number> = {};
+  if (typeof props.coreColor === 'string' && /^#[0-9a-f]{6}$/i.test(props.coreColor)) result.coreColor = props.coreColor;
+  for (const key of ['emissiveIntensity', 'wobbleSpeed', 'wobbleFactor', 'particleDensity']) {
+    if (typeof props[key] === 'number' && Number.isFinite(props[key])) result[key] = props[key];
   }
-`;
+  return result;
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -105,25 +109,7 @@ export async function GET(request: NextRequest) {
 
     // If query requests global narrative content
     if (narrative) {
-      const globalNarrative = await sanityClient.fetch(
-        GLOBAL_NARRATIVE_QUERY,
-        {},
-        {
-          next: {
-            revalidate: 300,
-            tags: ['global-narrative'],
-          },
-        }
-      );
-
-      if (!globalNarrative) {
-        return NextResponse.json(
-          { error: 'Global narrative content not found in Sanity' },
-          { status: 404 }
-        );
-      }
-
-      return NextResponse.json({ success: true, data: globalNarrative });
+      return NextResponse.json({ success: true, data: REVIEWED_NARRATIVE });
     }
 
     // If query requests a specific scene (e.g. ?scene=5)
@@ -149,7 +135,37 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      return NextResponse.json({ success: true, data: targetScene });
+      const rawPillar = typeof targetScene.associatedPillar === 'object' && targetScene.associatedPillar !== null
+        ? targetScene.associatedPillar as Record<string, unknown> : {};
+      const pillarTitle = normalizePillar(rawPillar.title ?? rawPillar.slug);
+      const rawScenePresets: unknown[] = Array.isArray(targetScene.presets) ? targetScene.presets : [];
+      const reviewed = normalizeSanityPresets(
+        rawScenePresets.map(preset =>
+          typeof preset === 'object' && preset !== null
+            ? { ...preset, pillar: targetScene.associatedPillar }
+            : preset)
+      );
+      return NextResponse.json({ success: true, data: {
+        _id: targetScene._id,
+        sceneNumber: targetScene.sceneNumber,
+        associatedPillar: pillarTitle ? { _id: rawPillar._id, title: pillarTitle, slug: pillarTitle.toLowerCase() } : null,
+        title: 'Illustrative storyboard',
+        visualMetaphor: 'Selected example settings, not a measurement or prediction of health.',
+        presets: reviewed.map(preset => {
+          const original = rawScenePresets.find(raw =>
+            typeof raw === 'object' && raw !== null && '_id' in raw && raw._id === preset.id);
+          const visualProps = typeof original === 'object' && original !== null && 'visualProps' in original
+            ? reviewedVisualProps(original.visualProps) : undefined;
+          return {
+            ...preset,
+            // Preserve the storyboard API aliases used by earlier consumers.
+            _id: preset.id,
+            healthStatus: preset.status,
+            visualProps,
+            narrativeOverlay: { headline: preset.headline, body: preset.education?.limitations, outcomes: preset.outcomes },
+          };
+        }),
+      } });
     }
 
     // If query requests a specific preset by slug

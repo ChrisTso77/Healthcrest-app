@@ -9,14 +9,14 @@ import {
 describe('presetSelection', () => {
   test('uses fallback presets when supplied list is empty', () => {
     expect(resolveAvailablePresets([]))
-      .toBe(FALLBACK_PRESETS);
+      .toEqual(FALLBACK_PRESETS);
   });
 
   test('uses supplied presets when available', () => {
     const supplied = [FALLBACK_PRESETS[0]];
 
     expect(resolveAvailablePresets(supplied))
-      .toBe(supplied);
+      .toEqual(supplied);
   });
 
   test('resolves active preset by slug', () => {
@@ -27,7 +27,7 @@ describe('presetSelection', () => {
         FALLBACK_PRESETS,
         preset.slug
       )
-    ).toBe(preset);
+    ).toEqual(preset);
   });
 
   test('resolves active preset by id', () => {
@@ -38,7 +38,7 @@ describe('presetSelection', () => {
         FALLBACK_PRESETS,
         preset.id
       )
-    ).toBe(preset);
+    ).toEqual(preset);
   });
 
   test('falls back to canonical presets when supplied list lacks active preset', () => {
@@ -50,7 +50,7 @@ describe('presetSelection', () => {
         supplied,
         activePreset.slug
       )
-    ).toBe(activePreset);
+    ).toEqual(activePreset);
   });
 
   test('returns null when no active preset is selected', () => {

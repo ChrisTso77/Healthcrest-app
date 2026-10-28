@@ -2,6 +2,7 @@
 
 import { X } from 'lucide-react';
 import Link from 'next/link';
+import { ScenarioEvidence } from '@/components/ScenarioEvidence';
 import { ModalDialog } from '@/components/ModalDialog';
 import type { CanonicalScenarioPreset } from '@/lib/presets/types';
 import type { State } from '@/state/PillarsStateTypes';
@@ -87,17 +88,18 @@ export function HealthEngineGuide({ state, presets, onClose }: HealthEngineGuide
             {preset ? (
               <div role="group" aria-label="Selected scenario" className="space-y-2 rounded-xl border border-slate-800 p-3">
                 <h4 className="font-semibold text-slate-100">{preset.title}</h4>
-                <p>Scenario label: <strong className="capitalize text-slate-100">{preset.status}</strong></p>
+                <p>Scenario type: <strong className="text-slate-100">{preset.education?.category}</strong></p>
                 <p>Evidence label: <strong className="text-slate-100">{preset.evidenceLevel}</strong></p>
                 <p>{EVIDENCE_GUIDES[preset.evidenceLevel]}</p>
+                <ScenarioEvidence preset={preset} expanded />
               </div>
             ) : (
               <p>Manual settings: no evidence preset is currently applied. Editing a slider clears the previous preset label; a manual scenario is not scored.</p>
             )}
             <p>
-              Optimal, Warning and Critical are the scenario author’s labels, not a personal diagnosis.
+              Examples are grouped by their educational purpose, not ranked by health benefit.
               Evidence labels describe how content is tagged in the app; they do not validate every visual effect or outcome statement.
-              Scenario notes can combine visual metaphors with population findings, rather than predictions for an individual.
+              Research examples are separate from everyday guidance. They do not describe a treatment delivered by this app.
             </p>
             <details>
               <summary className="cursor-pointer font-medium text-slate-100">What evidence labels mean</summary>

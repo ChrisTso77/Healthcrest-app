@@ -5,6 +5,8 @@ import type {
   PillarType,
 } from './types';
 
+import { applyContentReview } from './reviewedContent';
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
@@ -18,10 +20,10 @@ function isEvidenceLevel(value: unknown): value is EvidenceLevel {
     value === 'High-quality review' ||
     value === 'Emerging' ||
     value === 'Emerging / Review' ||
-    value === 'Experimental';
+    value === 'Experimental' || value === 'Unreviewed';
 }
 
-function normalizePillar(value: unknown): PillarType | null {
+export function normalizePillar(value: unknown): PillarType | null {
   const key = typeof value === 'string' ? value.trim().toLowerCase() : undefined;
 
   switch (key) {
@@ -91,7 +93,7 @@ export function normalizeSanityPreset(
     return null;
   }
 
-  return {
+  return applyContentReview({
     id: raw._id,
     slug: raw.slug,
     title: raw.title,
@@ -109,7 +111,7 @@ export function normalizeSanityPreset(
     headline: narrative.headline,
     outcomes: narrative.outcomes,
     cameraShot: typeof raw.cameraShot === 'string' ? raw.cameraShot : undefined,
-  };
+  });
 }
 
 export function normalizeSanityPresets(
