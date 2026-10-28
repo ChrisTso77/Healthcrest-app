@@ -85,7 +85,8 @@ test('learning topics and definitions are readable without JavaScript', async ({
   await expect(page.getByRole('article')).toHaveCount(5);
   await expect(page.getByText('HRV', { exact: true })).toBeVisible();
   await expect(page.locator('.hc-learn-no-script')).toBeVisible();
-  await expect(page.locator('.hc-learn-no-script')).toContainText('Search needs JavaScript.');
+  // Playwright's text matcher skips NOSCRIPT, even when scripting is disabled.
+  expect(await page.locator('.hc-learn-no-script').textContent()).toContain('Search needs JavaScript.');
   await expect(page.getByRole('article', { name: 'Sleep', exact: true }).getByRole('link', { name: /^NHS:/ }))
     .toHaveAttribute('href', 'https://www.nhs.uk/conditions/insomnia/');
   await context.close();
