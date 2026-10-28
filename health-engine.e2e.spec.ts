@@ -6,7 +6,7 @@ type DrawCounts = { points: number; triangles: number; lines: number };
 test.describe('Healthcrest production regression', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/engine');
-    await expect(page.getByText('HABIT EXPLORER')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'HABIT EXPLORER', exact: true })).toBeVisible();
   });
 
   test('pillar goals lead to contextual habit guidance without resetting the Habit Explorer', async ({ page }) => {
@@ -39,6 +39,11 @@ test.describe('Healthcrest production regression', () => {
       const dialog = page.getByRole('dialog', { name: 'Understand this view', exact: true });
       await expect(dialog.getByRole('heading', { name: `${pillar}: ${goal}`, exact: true })).toBeVisible();
       await expect(dialog.getByRole('link', { name: /^NHS:/ })).toHaveAttribute('href', source);
+      if (pillar === 'Stress') {
+        const urgent = dialog.getByRole('complementary', { name: 'Urgent mental health support' });
+        await expect(urgent).toBeVisible();
+        await expect(urgent.getByRole('link', { name: '116 123', exact: true })).toHaveAttribute('href', 'tel:116123');
+      }
       await expect(dialog.getByRole('link', { name: 'Make a manageable next step', exact: true }))
         .toHaveAttribute('href', pillar === 'Systems' ? '/next-step' : '/next-step?pillar=' + pillar.toLowerCase());
       await expect(dialog.getByText('7.5 hours/night', { exact: true })).toBeVisible();
