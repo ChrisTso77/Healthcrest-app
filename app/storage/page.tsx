@@ -26,6 +26,11 @@ export default function Page() {
           <p>Choose <strong>Remove saved draft</strong> to delete the planner’s saved copy while keeping your current page edits. This does not delete downloaded files or printed copies; you manage those separately.</p>
           <p><Link href="/next-step#saved-draft-controls" prefetch={false} className="hc-text-link">Open the save, restore and remove controls</Link>.</p>
         </section>
+        <section aria-labelledby="calendar-storage-title">
+          <h2 id="calendar-storage-title">Calendar check-in files</h2>
+          <p>A current seven-day plan can download seven generic calendar reminders after you choose a time. The file contains dates, the chosen time, a Habit check-in title and a public return link. It leaves out your pillar, action and notes. Downloading does not activate alerts or save your plan.</p>
+          <p>If you import the file, your calendar provider may store or sync the entries. Changes or removal in Healthcrest do not update entries already imported. Review dates, time zone and alerts in your calendar, and manage old or duplicate entries there.</p>
+        </section>
         <section aria-labelledby="backup-storage-title">
           <h2 id="backup-storage-title">Backups and moving between devices</h2>
           <p>Choose <strong>Download all-pillar backup</strong> in the planner to keep a JSON file of your current page drafts, notes and current weeks for all four pillars, including unsaved edits. This does not save or change the browser copy.</p>
