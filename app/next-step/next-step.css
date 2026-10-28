@@ -123,3 +123,13 @@
 .hc-backup-preview h4 { font-size: 17px; font-weight: 600; }
 .hc-plan-backup button:focus-visible, .hc-backup-file input:focus-visible, .hc-backup-preview h4:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
 @media (max-width: 400px) { .hc-plan-backup { padding: 16px; } }
+
+.hc-week-next { margin-top: 24px; padding: 20px; border: 1px solid #b5c6a1; border-radius: 12px; background: #f2f4e9; }
+.hc-week-next h4 { font-size: 19px; line-height: 1.4; }
+.hc-week-next h5 { font-size: 17px; font-weight: 600; }
+.hc-week-next p { margin-top: 12px; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+.hc-week-next-backup { margin-top: 16px; padding-top: 4px; border-top: 1px solid #b5c6a1; }
+.hc-week-next-action { white-space: pre-wrap; overflow-wrap: anywhere; font-weight: 600; }
+.hc-week-next h5:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
+.hc-week-next .hc-week-confirm button { margin-left: 0; margin-right: 8px; }
+@media (max-width: 400px) { .hc-week-next { padding: 16px; } .hc-week-next .hc-week-confirm button { margin-right: 0; } }

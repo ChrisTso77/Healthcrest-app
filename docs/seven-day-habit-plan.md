@@ -12,6 +12,10 @@ A weekly review records what helped or got in the way and a possible next action
 
 Clearing requires an inline confirmation, changes only the selected pillar's current page week, and preserves its draft/general reflection. Download before clearing to keep a separate copy. There is one current week per pillar and no automatic archive.
 
+## Preparing another week
+
+Prepare another week adds a reviewable handoff: edit the proposed action/cue/support and start date, keep the current record in an all-pillar backup if wanted, and explicitly confirm replacement. Preparation leaves current records unchanged. Only the selected pillar receives a new week with blank check-ins/review; general reflection and other pillars remain. Save is still manual. There is one current week per pillar, with downloaded backups providing separate records rather than an automatic in-app archive. See docs/planning-another-week.md.
+
 ## Storage, compatibility and boundaries
 
 No automatic save or restore is introduced. Save on this device writes all four drafts and their current weeks to the existing healthcrest.habit-draft.v1 key with payload version 3. Versions 1 and 2 restore into version 3 in memory, preserving existing text and adding week: null; only an explicit Save upgrades stored data.

@@ -6,8 +6,8 @@ import { parseSavedHabitDraft, type SavedHabitDraft } from '@/lib/education/habi
 const MAX_BACKUP_BYTES = 120_000;
 const names = { Fitness: 'Movement', Nutrition: 'Food', Sleep: 'Sleep', Stress: 'Stress & support' } as const;
 
-export function HabitPlanBackup({ value, onImport, onStatus }: {
-  value: SavedHabitDraft;
+export function HabitPlanBackup({ onDownload, onImport, onStatus }: {
+  onDownload: () => void;
   onImport: (saved: SavedHabitDraft) => void;
   onStatus: (message: string) => void;
 }) {
@@ -18,30 +18,7 @@ export function HabitPlanBackup({ value, onImport, onStatus }: {
   const [reading, setReading] = useState(false);
   const [candidate, setCandidate] = useState<{ saved: SavedHabitDraft; name: string } | null>(null);
   useEffect(() => () => { sequence.current += 1; }, []);
-
-  function downloadBackup() {
-    let url: string | undefined;
-    let link: HTMLAnchorElement | undefined;
-    try {
-      const saved = parseSavedHabitDraft(JSON.stringify(value));
-      if (!saved) throw new Error('Invalid backup');
-      url = URL.createObjectURL(new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json;charset=utf-8' }));
-      link = document.createElement('a');
-      link.href = url;
-      link.download = 'healthcrest-plan-backup.json';
-      document.body.appendChild(link);
-      link.click();
-      onStatus('Backup download started for all four pillars. This does not save your browser draft.');
-    } catch {
-      onStatus('Backup download is unavailable in this browser. Your page edits are unchanged; you can try the text download or printing.');
-    } finally {
-      link?.remove();
-      if (url) {
-        const downloadUrl = url;
-        window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
-      }
-    }
-  }
+  useEffect(() => { if (candidate) previewHeading.current?.focus(); }, [candidate]);
 
   async function readBackup(file: File | undefined) {
     const request = ++sequence.current;
@@ -68,7 +45,6 @@ export function HabitPlanBackup({ value, onImport, onStatus }: {
       }
       setCandidate({ saved, name: file.name.slice(0, 180) + (file.name.length > 180 ? '…' : '') });
       onStatus('Backup checked. Review its summary before replacing your page drafts.');
-      requestAnimationFrame(() => previewHeading.current?.focus());
     } catch {
       if (request !== sequence.current) return;
       setReading(false);
@@ -99,7 +75,7 @@ export function HabitPlanBackup({ value, onImport, onStatus }: {
       <h3 id={id + '-title'}>Keep a backup or move your plan</h3>
       <p>Download a backup of the current page drafts, notes and current weeks for all four pillars. You can choose that file in the planner on another device. This is a manual transfer; plans do not sync automatically.</p>
       <p>The backup contains your notes and is not encrypted by Healthcrest. Keep it somewhere suitable for the personal information you include. Deleting a saved browser draft does not delete this file.</p>
-      <button type="button" onClick={downloadBackup}>Download all-pillar backup</button>
+      <button type="button" onClick={onDownload}>Download all-pillar backup</button>
       <div className="hc-backup-file">
         <label htmlFor={id + '-file'}>Choose a Healthcrest backup</label>
         <p id={id + '-file-help'}>Choose a JSON backup up to 120 KB. The file is read in this browser and is not uploaded. Selecting it does not replace your drafts.</p>
