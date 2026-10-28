@@ -10,7 +10,7 @@ type TransportWindow = Window & {
 };
 
 async function transport(page: Page) {
-  const fixture = await readFile(new URL('./e2e/fixtures/measurement-transport.js', import.meta.url), 'utf8');
+  const fixture = await readFile('e2e/fixtures/measurement-transport.js', 'utf8');
   const scripts: string[] = [];
   const sent: Array<{ path: string; body: Record<string, unknown> }> = [];
   await page.route('**/_vercel/**', async route => {
@@ -163,4 +163,35 @@ test('JavaScript-disabled privacy page explains that optional measurement is off
     await expect(page.locator('.hc-privacy-choices form')).toBeHidden();
     await expect(page.locator('script[src*="/_vercel/"]')).toHaveCount(0);
   } finally { await context.close(); }
+});
+
+test('a failed choice write stays off and preserves unrelated draft storage', async ({ page }) => {
+  const network = await transport(page);
+  await seedChoice(page, true, true);
+  await page.goto('/privacy');
+  await expect(page.getByRole('checkbox', { name: /^Allow usage statistics/ })).toBeChecked();
+  await page.evaluate(() => {
+    localStorage.setItem('healthcrest.habit-draft.v1', 'PRIVATE-DRAFT');
+    Object.defineProperty(Storage.prototype, 'setItem', { value: () => { throw new DOMException('Blocked', 'SecurityError'); } });
+  });
+  await page.getByRole('button', { name: 'Keep optional measurement off', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Your browser could not save this choice. Optional measurement is off for this page.');
+  expect(await page.evaluate(() => localStorage.getItem('healthcrest.habit-draft.v1'))).toBe('PRIVATE-DRAFT');
+  expect(await page.evaluate(key => localStorage.getItem(key), MEASUREMENT_CHOICE_KEY)).toBeNull();
+  await page.getByRole('navigation', { name: 'Main navigation', exact: true }).getByRole('link', { name: 'Learn', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Learn the basics');
+  expect(network.scripts).toEqual([]);
+  expect(network.sent).toEqual([]);
+});
+
+test('sensitive incoming referrers block collection and responses suppress outgoing referrers', async ({ page }) => {
+  const network = await transport(page);
+  await seedChoice(page, true, true);
+  await page.addInitScript(() => Object.defineProperty(document, 'referrer', { get: () => location.origin + '/start?pillar=stress&note=private' }));
+  const response = await page.goto('/learn');
+  expect(response?.headers()['referrer-policy']).toBe('no-referrer');
+  await page.getByRole('navigation', { name: 'Main navigation', exact: true }).getByRole('link', { name: 'About', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  expect(network.scripts).toEqual([]);
+  expect(network.sent).toEqual([]);
 });
