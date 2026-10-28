@@ -8,7 +8,7 @@ import './learn.css';
 
 export const metadata = pageMetadata(
   "Learn the basics | Healthcrest",
-  "Explore everyday health habits, NHS references, evidence labels and plain-language explanations of terms used in the Healthcrest Habit Explorer.",
+  "Explore everyday health habits, UK and international references, evidence labels and plain-language explanations of terms used in the Healthcrest Habit Explorer.",
   '/learn',
 );
 

@@ -546,6 +546,7 @@ export function learningGuideHref(pillar: PillarType, constraint?: JourneyConstr
 export function learningGuideSearchText(guide: LearningGuide | undefined): string {
   if (!guide) return '';
   return [guide.title, guide.description, guide.audience, guide.summary, ...guide.takeaways,
-    ...guide.sections.flatMap(section => [section.title, ...section.paragraphs]), ...guide.ideas, guide.reflection]
+    ...guide.sections.flatMap(section => [section.title, ...section.paragraphs]), ...guide.ideas, guide.reflection,
+    ...guide.sources.flatMap(source => [source.title, source.publisher, source.kind, source.supports, source.scope])]
     .join(' ');
 }

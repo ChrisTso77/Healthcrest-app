@@ -1,5 +1,6 @@
 'use client';
 
+import { findGuideSearchMatch, LEARNING_SEARCH_LIMIT, matchesLearningQuery } from '@/lib/education/learningSearch';
 import { guideForPillar, learningGuideHref, learningGuideSearchText } from '@/lib/education/learningGuides';
 import { journeyPlannerHref, journeyExplorerHref, type JourneyConstraint } from '@/lib/education/startJourney';
 import { useId, useRef, useState } from 'react';
@@ -27,8 +28,7 @@ export function LearningLibrary({ journeyConstraint }: { journeyConstraint?: Jou
   const [query, setQuery] = useState('');
   const input = useRef<HTMLInputElement>(null);
   const id = useId();
-  const needle = query.trim().toLowerCase();
-  const matches = (...text: string[]) => text.join(' ').toLowerCase().includes(needle);
+  const matches = (...text: string[]) => matchesLearningQuery(query, ...text);
   const shownTopics = topics.filter(topic => matches(topic.label, topic.key, learningGuideSearchText(guideForPillar(topic.key)), ...Object.values(PILLAR_GUIDES[topic.key]), topic.key === 'Stress' ? URGENT_SUPPORT_SEARCH_TERMS : ''));
   const shownTerms = terms.filter(([term, meaning]) => matches(term, meaning));
   const shownEvidence = Object.entries(EVIDENCE_GUIDES).filter(([label, meaning]) => matches(label, meaning));
@@ -39,25 +39,26 @@ export function LearningLibrary({ journeyConstraint }: { journeyConstraint?: Jou
     <div className="hc-learning-library">
       <div className="hc-learn-search">
         <label htmlFor={id + '-search'}>Search health topics and terms</label>
-        <p id={id + '-help'}>Try sleep, movement, MVPA, HRV or experimental.</p>
+        <p id={id + '-help'}>Try sleep routine, Harvard plate, MVPA, HRV or experimental. Search matches all your words, in any order.</p>
         <div className="hc-learn-search-controls">
-          <input ref={input} id={id + '-search'} type="search" value={query} maxLength={120}
+          <input ref={input} id={id + '-search'} type="search" value={query} maxLength={LEARNING_SEARCH_LIMIT}
             aria-describedby={id + '-help'} onChange={event => setQuery(event.target.value)} />
           {query && <button type="button" onClick={() => { setQuery(''); input.current?.focus(); }}>Clear search</button>}
         </div>
       </div>
       <noscript className="hc-learn-no-script"><p className="hc-model-note">Search needs JavaScript. All topics, terms and references are available below without searching.</p></noscript>
       <p role="status" className="hc-learn-result-count">{countLabel(shownTopics.length, 'topic')}, {countLabel(shownTerms.length, 'term')} and {countLabel(shownEvidence.length, 'evidence label')} found.</p>
-      {total === 0 && <p className="hc-model-note">No matching guidance. Try a broader word such as sleep or movement, or clear the search to browse everything.</p>}
+      {total === 0 && <p className="hc-model-note">No matching guidance. Try fewer words or a broader word such as sleep or movement, or clear the search to browse everything.</p>}
 
       {shownTopics.length > 0 && (
         <section aria-labelledby={id + '-topics'} className="hc-learn-section">
           <h2 id={id + '-topics'}>Everyday habit guidance</h2>
-          <p>The NHS references support general habit guidance. The Habit Explorer’s visual rules are illustrations created for Healthcrest.</p>
+          <p>The practical guides include NHS references and perspectives from WHO, Harvard and CDC, with each source’s scope explained. They support general habit guidance. The Habit Explorer’s visual rules are illustrations created for Healthcrest.</p>
           <div className="hc-learn-topic-grid">
             {shownTopics.map(topic => {
               const guide = PILLAR_GUIDES[topic.key];
               const practicalGuide = learningGuideHref(topic.key, journeyConstraint);
+              const match = findGuideSearchMatch(guideForPillar(topic.key), query);
               return (
                 <article id={'topic-' + topic.slug} key={topic.key} aria-labelledby={id + '-' + topic.slug} className="hc-learn-topic">
                   <h3 id={id + '-' + topic.slug}>{topic.label}</h3>
@@ -73,6 +74,10 @@ export function LearningLibrary({ journeyConstraint }: { journeyConstraint?: Jou
                     {guide.sourceLabel}<span className="hc-visually-hidden"> (opens in a new tab)</span>
                   </a>
                   {practicalGuide && <Link prefetch={false} href={practicalGuide} className="hc-text-link">Read the practical guide</Link>}
+                  {practicalGuide && match && <p className="hc-learn-match">
+                    <strong>Matching {match.kind}: </strong>
+                    <a href={practicalGuide + '#' + match.fragment} className="hc-text-link">{match.title}</a>
+                  </p>}
                   <div className="hc-learn-topic-actions">
                     <Link prefetch={false} href={journeyExplorerHref(topic.key, journeyConstraint)} className="hc-text-link">Explore in the Habit Explorer</Link>
                     <Link prefetch={false} href={journeyPlannerHref(topic.key, journeyConstraint)} className="hc-text-link">Make a next step</Link>
