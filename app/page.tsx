@@ -32,6 +32,7 @@ export default function HealthcrestHomePage() {
           <a href="#purpose">Our purpose</a>
           <a href="#pillars">Four pillars</a>
           <a href="#how-it-works">How it works</a>
+          <Link href="/learn" prefetch={false}>Learn</Link>
         </nav>
         <Link prefetch={false} href="/engine" className="hc-header-cta">Explore engine <ArrowUpRight size={16} aria-hidden="true" /></Link>
       </header>

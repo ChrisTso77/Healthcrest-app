@@ -45,6 +45,10 @@ export function HealthEngineGuide({ state, presets, onClose }: HealthEngineGuide
             The scenes are illustrations, not measurements of your body.
           </p>
 
+          <Link href="/learn" prefetch={false} className="inline-block rounded-lg border border-emerald-500/40 px-3 py-2 font-medium text-emerald-300 hover:bg-emerald-500/10">
+            Browse health topics and terms
+          </Link>
+
           <section aria-label="Current pillar" className="space-y-3 rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4">
             <h3 className="font-semibold text-emerald-300">{state.activePillar}: {pillar.heading}</h3>
             <p>{pillar.goal}</p>
