@@ -17,7 +17,7 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
     "topicLabel": "Movement",
     "title": "Movement and strength: a manageable starting point",
     "description": "Understand weekly activity guidance, moderate and vigorous intensity, strengthening activity and how to choose a manageable first step.",
-    "audience": "The weekly activity figures apply to ages 19–64. See the separate NHS reference for adults aged 65 and over.",
+    "audience": "General adult education. The weekly figures in the first section apply to ages 19–64; a separate section explains guidance for ages 65 and over. Choose activities and support that fit your circumstances.",
     "summary": "Learn how aerobic activity and strengthening activity fit together, then choose a manageable starting point for your circumstances.",
     "takeaways": [
       "Intensity and strength both matter.",
@@ -72,12 +72,26 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
           "older"
         ],
         "paragraphs": [
-          "NHS guidance for older adults also includes balance and flexibility. Follow the age-appropriate reference and ask for individual advice where needed."
+          "NHS guidance for adults aged 65 and over includes activity every day, even light movement, and strength, balance and flexibility activities on at least two days a week.",
+          "It describes at least 150 minutes of moderate activity weekly, or 75 minutes of vigorous activity if you are already active, or a combination. Adapt activity and intensity to your fitness. Break up long periods of sitting.",
+          "If you have been inactive, have medical conditions or have concerns, speak to a GP before starting. If falls or balance worry you, ask for help choosing suitable activity."
+        ]
+      },
+      {
+        "id": "adapt-movement",
+        "title": "Explore seated movement and suitable support",
+        "sourceIds": [
+          "sitting"
+        ],
+        "paragraphs": [
+          "The NHS sitting-exercise page offers gentle seated demonstrations and advises building up gradually. Read the full instructions before trying an activity; check with a GP or a professional involved in your care if you are unsure whether it is suitable.",
+          "These demonstrations assume a solid chair without wheels, feet flat on the floor and knees at right angles. Ask for help choosing a suitable setup if those assumptions do not fit your seating or movement needs.",
+          "Your next step can be finding an appropriate activity or arranging support. Choose a manageable action without copying a routine that does not suit your circumstances."
         ]
       }
     ],
     "ideas": [
-      "Choose a short walk, or another suitable activity you enjoy, at a moment that fits your day.",
+      "Choose a suitable activity you enjoy, or ask for help finding one that fits your ability, seating and available space.",
       "Read one NHS strength demonstration and decide what support or adaptation you need before trying it."
     ],
     "ideaSourceIds": [
@@ -104,8 +118,15 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
         "id": "older",
         "title": "NHS: physical activity for older adults",
         "url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-older-adults/",
-        "supports": "Separate activity guidance for adults aged 65 and over.",
+        "supports": "Daily activity, strength, balance, flexibility and age-appropriate weekly guidance for adults aged 65 and over.",
         "scope": "Linked for the appropriate age group; this guide does not assess balance or falls risk."
+      },
+      {
+        "id": "sitting",
+        "title": "NHS: sitting exercises",
+        "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",
+        "supports": "Seated demonstrations, gradual progression, chair setup and checking suitability with a care professional.",
+        "scope": "These exercises assume a specified chair setup; they are not a universal routine for every disability or seating need."
       }
     ]
   },

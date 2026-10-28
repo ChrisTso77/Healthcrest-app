@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { MovementOptions } from '@/components/MovementOptions';
+import { learningGuideHref } from '@/lib/education/learningGuides';
 import { pageMetadata } from '@/lib/siteMetadata';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 import { JOURNEY_TOPICS, JOURNEY_CONSTRAINTS, parseJourneyTopic, parseJourneyConstraint, journeyAction, journeyPlannerHref, journeyLearnHref, journeyExplorerHref } from '@/lib/education/startJourney';
@@ -66,6 +68,7 @@ export default async function StartPage({ searchParams }: {
             <p>{context.note}</p>
             <p><strong>One idea to adapt:</strong> {journeyAction(topic.key, constraint)}</p>
             <p className="hc-journey-small">This starting idea is selected by topic and practical preference, not calculated from your body or the Explorer’s settings.</p>
+            {topic.key === 'Fitness' && constraint === 'access' && <MovementOptions guideHref={learningGuideHref('Fitness', constraint)!} />}
             <ol className="hc-journey-steps">
               <li>
                 <span>01 · Understand</span><h3>Read the guidance</h3>

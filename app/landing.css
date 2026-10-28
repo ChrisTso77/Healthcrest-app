@@ -216,3 +216,12 @@
 .hc-privacy-secondary { background: transparent; color: #183b2d; }
 .hc-privacy-choices [role="status"] { margin-top: 18px; font-size: 14px; }
 @media (max-width: 600px) { .hc-privacy-choices { padding: 20px 16px; } }
+
+.hc-movement-options { margin-top: 28px; padding: 24px; border: 1px solid #a4b893; border-radius: 14px; background: #eaf0de; }
+.hc-movement-options h2 { font-size: 26px; line-height: 1.25; margin-bottom: 14px; overflow-wrap: anywhere; }
+.hc-movement-options p { font-size: 15px; line-height: 1.75; }
+.hc-movement-options ul { list-style: disc; padding-left: 22px; margin: 16px 0; }
+.hc-movement-options li + li { margin-top: 12px; }
+.hc-movement-options a { display: inline-block; padding: 4px 0; line-height: 1.6; text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.hc-movement-options a:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
+@media (max-width: 400px) { .hc-movement-options { padding: 20px 16px; } }

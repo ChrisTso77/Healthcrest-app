@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { MovementOptions } from '@/components/MovementOptions';
 import { notFound } from 'next/navigation';
 import { SiteHeader, SiteFooter } from '@/components/SiteChrome';
 import { UrgentSupport } from '@/components/UrgentSupport';
@@ -61,6 +62,7 @@ export default async function LearningGuidePage({ params, searchParams }: Props)
             <h2 id="guide-takeaways">At a glance</h2>
             <ul>{guide.takeaways.map(text => <li key={text}>{text}</li>)}</ul>
           </section>
+          {guide.pillar === 'Fitness' && <MovementOptions />}
           {guide.pillar === 'Stress' && <div id="urgent-support" tabIndex={-1} className="hc-guide-urgent"><UrgentSupport headingLevel={2} /></div>}
           <nav aria-label="In this guide" className="hc-guide-contents">
             <p>In this guide</p>
