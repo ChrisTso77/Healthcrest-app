@@ -2,6 +2,8 @@
 
 import { useId, useState } from 'react';
 import Link from 'next/link';
+import { HabitWeekPlan } from '@/components/HabitWeekPlan';
+import { weekDownloadLines } from '@/lib/education/habitWeek';
 import { UrgentSupport } from '@/components/UrgentSupport';
 import { Download, ArrowUpRight } from 'lucide-react';
 import { HABIT_DRAFT_KEY, parseSavedHabitDraft, type HabitPillar, type HabitDraft as Draft } from '@/lib/education/habitDraft';
@@ -17,10 +19,10 @@ const options = [
 
 function initialDrafts(): Record<HabitPillar, Draft> {
   return {
-    Fitness: { action: options[0].starter, cue: '', support: '', reflection: '' },
-    Nutrition: { action: options[1].starter, cue: '', support: '', reflection: '' },
-    Sleep: { action: options[2].starter, cue: '', support: '', reflection: '' },
-    Stress: { action: options[3].starter, cue: '', support: '', reflection: '' },
+    Fitness: { action: options[0].starter, cue: '', support: '', reflection: '', week: null },
+    Nutrition: { action: options[1].starter, cue: '', support: '', reflection: '', week: null },
+    Sleep: { action: options[2].starter, cue: '', support: '', reflection: '', week: null },
+    Stress: { action: options[3].starter, cue: '', support: '', reflection: '', week: null },
   };
 }
 
@@ -37,14 +39,14 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
   const guide = PILLAR_GUIDES[selected];
   const draft = drafts[selected];
 
-  function update(field: keyof Draft, value: string) {
+  function update<K extends keyof Draft>(field: K, value: Draft[K]) {
     setDrafts(current => ({ ...current, [selected]: { ...current[selected], [field]: value } }));
     setStatus('');
   }
 
   function saveDraft() {
     try {
-      const raw = JSON.stringify({ version: 2, selected, drafts });
+      const raw = JSON.stringify({ version: 3, selected, drafts });
       if (!parseSavedHabitDraft(raw)) throw new Error('Invalid draft');
       window.localStorage.setItem(HABIT_DRAFT_KEY, raw);
       setStatus('Saved draft on this device. Save again after making changes.');
@@ -78,14 +80,14 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
   }
 
   function download() {
-    if (!draft.action.trim()) return;
+    if (!draft.action.trim() && !draft.week) return;
     const text = [
       'HEALTHCREST — MY NEXT STEP',
       '',
       'Pillar: ' + option.label,
       'Why it matters: ' + guide.goal,
       '',
-      'My manageable action: ' + draft.action.trim(),
+      'My manageable action: ' + (draft.action.trim() || 'Choose a new action when ready.'),
       'When I will try it: ' + (draft.cue.trim() || 'Choose a moment that fits my routine.'),
       'What could help: ' + (draft.support.trim() || 'Keep the action small and adapt it to my circumstances.'),
       '',
@@ -93,6 +95,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
       'An interrupted routine is a reason to adapt, not a failed health score.',
       '',
       ...(draft.reflection.trim() ? ['My reflection: ' + draft.reflection.trim(), ''] : []),
+      ...(draft.week ? weekDownloadLines(draft.week) : []),
       'General guidance: ' + guide.guidance,
       guide.sourceLabel,
       guide.sourceUrl,
@@ -113,7 +116,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
 
   return (
     <div className="hc-plan">
-      <noscript><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. You can still read the starter idea and guidance below.</p></noscript>
+      <noscript><style>{'.hc-week-start { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
       <div role="group" aria-label="Choose a habit pillar" className="hc-plan-choices">
         {options.map(item => (
           <button key={item.key} type="button" aria-pressed={selected === item.key}
@@ -147,18 +150,21 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
               aria-describedby={id + '-support-help'} onChange={event => update('support', event.target.value)} />
           </div>
           <div className="hc-plan-review">
-            <h3>Try it, then reflect</h3>
+            <h3>Extra reflection notes</h3>
             <p>How did it fit your routine? What made it easier or harder? What would you adjust? An interrupted routine is a reason to adapt, not a failed health score.</p>
           </div>
           <div className="hc-plan-field">
             <label htmlFor={id + '-reflection'}>What did I learn? <span>(optional)</span></label>
-            <p id={id + '-reflection-help'}>After trying the habit, note what helped, what got in the way and one adjustment you might try.</p>
+            <p id={id + '-reflection-help'}>Keep a general note here, or use the daily check-ins and weekly review below.</p>
             <textarea id={id + '-reflection'} rows={4} maxLength={500} value={draft.reflection}
               aria-describedby={id + '-reflection-help'} onChange={event => update('reflection', event.target.value)} />
           </div>
+          <HabitWeekPlan key={selected} week={draft.week} draft={draft}
+            onChange={week => update('week', week)}
+            onUseNextAction={action => { update('action', action); document.getElementById(id + '-action')?.focus(); }} />
           <section id="saved-draft-controls" tabIndex={-1} aria-label="Keep your draft" className="hc-plan-keep">
             <h3>Keep your draft</h3>
-            <p className="hc-plan-storage">Choose Save on this device to keep all four pillar drafts and their reflection notes in this browser. They do not sync to other devices. Saving is manual: save again after editing.</p>
+            <p className="hc-plan-storage">Choose Save on this device to keep all four pillar drafts, reflection notes and seven-day check-ins in this browser. They do not sync to other devices. Saving is manual: save again after editing.</p>
             <p className="hc-plan-storage">Restore replaces the drafts currently on this page. Remove clears only the saved copy and keeps your current edits.</p>
             <div className="hc-plan-save-actions">
               <button type="button" onClick={saveDraft}>Save on this device</button>
@@ -167,7 +173,7 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
             </div>
             <p className="hc-plan-storage">Without saving, drafts are discarded when you leave or reload. You can also download a plan to keep a separate copy.</p>
           </section>
-          <button type="button" className="hc-button hc-button-primary" onClick={download} disabled={!draft.action.trim()}>
+          <button type="button" className="hc-button hc-button-primary" onClick={download} disabled={!draft.action.trim() && !draft.week}>
             Download my next step <Download size={18} aria-hidden="true" />
           </button>
           <p role="status" className="hc-plan-status">{status}</p>

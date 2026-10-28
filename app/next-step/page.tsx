@@ -7,7 +7,7 @@ import './next-step.css';
 
 export const metadata = pageMetadata(
   "My next step | Healthcrest",
-  "Turn an educational insight into one manageable everyday habit. Adapt a starter idea and download your next-step plan.",
+  "Turn an educational insight into one manageable everyday habit. Adapt a starter idea, try a seven-day plan and reflect on what helps.",
   '/next-step',
 );
 
@@ -29,7 +29,7 @@ export default async function NextStepPage({ searchParams }: {
       <main id="main-content" tabIndex={-1} className="hc-section hc-plan-main">
         <span className="hc-eyebrow">Health through everyday habits</span>
         <h1>One habit.<br /><em>Your next step.</em></h1>
-        <p className="hc-plan-intro">Choose a pillar, adapt a starter idea and give it a place in your routine. Start with something manageable; you can adjust it as you learn.</p>
+        <p className="hc-plan-intro">Choose a pillar, adapt a starter idea and give it a place in your routine. Try a seven-day plan with optional daily check-ins and a weekly review. Start with something manageable; you can adjust it as you learn.</p>
         <HabitPlanner initialPillar={initialPillar} initialAction={constraint ? journeyAction(initialPillar, constraint) : undefined} />
       </main>
       <SiteFooter />
