@@ -232,7 +232,7 @@ test('earlier saved plans restore with empty reflection notes and upgrade only o
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('healthcrest.habit-draft.v1')!).version)).toBe(1);
   await page.getByLabel('What did I learn?', { exact: false }).fill('A useful first attempt.');
   await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('healthcrest.habit-draft.v1')!).version)).toBe(2);
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('healthcrest.habit-draft.v1')!).version)).toBe(3);
   await page.reload();
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
   await expect(page.getByLabel('What did I learn?', { exact: false })).toHaveValue('A useful first attempt.');

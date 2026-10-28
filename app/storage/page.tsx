@@ -19,7 +19,8 @@ export default function Page() {
         <h1>Browser storage</h1>
         <section aria-labelledby="draft-storage-title">
           <h2 id="draft-storage-title">Your habit drafts</h2>
-          <p>The next-step planner keeps your edits in the current page. Choosing <strong>Save on this device</strong> stores all four pillar drafts and reflection notes in this browser using local storage. The planner does not send those drafts to Healthcrest or sync them between devices.</p>
+          <p>The next-step planner keeps your edits in the current page. Choosing <strong>Save on this device</strong> stores all four pillar drafts, reflection notes and current seven-day plans, including their dates, daily check-ins and weekly reviews in this browser using local storage. The planner does not send those drafts to Healthcrest or sync them between devices.</p>
+          <p>Each pillar keeps one current week. Clearing a week changes the current page; saving again replaces its saved copy. Download a week first if you want a separate record.</p>
           <p>Saving and restoring are manual. A saved copy remains until you remove it or clear the browser’s site data. Other people using this browser profile may be able to restore it. A shared or public device may not be a suitable place to save personal notes.</p>
           <p>Choose <strong>Remove saved draft</strong> to delete the planner’s saved copy while keeping your current page edits. This does not delete a downloaded text file; you manage downloaded files separately.</p>
           <p><Link href="/next-step#saved-draft-controls" prefetch={false} className="hc-text-link">Open the save, restore and remove controls</Link>.</p>

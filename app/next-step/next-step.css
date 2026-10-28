@@ -42,3 +42,33 @@
 .hc-plan-save-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .hc-plan-save-actions button { min-height: 44px; padding: 10px 14px; border: 1px solid #8b9d7d; border-radius: 10px; background: #f8f7f0; color: var(--hc-ink); font: inherit; font-size: 13px; cursor: pointer; }
 .hc-plan-save-actions button:hover { background: #eaf0de; }
+
+/* One current week per pillar, with native disclosure controls for daily notes. */
+.hc-week { margin-top: 28px; padding-top: 26px; border-top: 1px solid #d4dcc7; }
+.hc-week .hc-eyebrow { margin-bottom: 12px; }
+.hc-week h3 { font-family: Georgia, 'Times New Roman', serif; font-size: 26px; line-height: 1.2; }
+.hc-week > p, .hc-week-action p + p { margin-top: 14px; }
+.hc-week > p, .hc-week-start p, .hc-week-action p, .hc-week-review p, .hc-week-confirm p { font-size: 14px; line-height: 1.65; overflow-wrap: anywhere; }
+.hc-week-start, .hc-week-action, .hc-week-review { margin-top: 20px; }
+.hc-week label { display: block; margin-top: 18px; font-size: 14px; font-weight: 600; }
+.hc-week label span { font-weight: 400; }
+.hc-week input, .hc-week select, .hc-week textarea { display: block; width: 100%; min-width: 0; min-height: 44px; padding: 10px; margin-top: 8px; border: 1px solid #8b9d7d; border-radius: 8px; background: white; color: var(--hc-ink); font: inherit; font-size: 16px; line-height: 1.5; }
+.hc-week input[type="date"] { max-width: 100%; min-width: 0; }
+.hc-week textarea { resize: vertical; }
+.hc-week button { min-height: 44px; max-width: 100%; margin-top: 16px; padding: 10px 14px; border: 1px solid #8b9d7d; border-radius: 10px; background: #f0f4e8; color: #183b2d; font: inherit; font-size: 14px; cursor: pointer; }
+.hc-week button:disabled { opacity: .55; cursor: not-allowed; }
+.hc-week input:focus-visible, .hc-week select:focus-visible, .hc-week textarea:focus-visible, .hc-week button:focus-visible, .hc-week summary:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
+.hc-week-action { padding: 18px; background: #eaf0de; border-radius: 12px; }
+.hc-week-chosen { font-weight: 600; }
+.hc-week-days { list-style: none; padding: 0; margin-top: 18px; display: grid; gap: 10px; }
+.hc-week-days li { min-width: 0; }
+.hc-week-days details { border: 1px solid #c5d1b7; border-radius: 10px; background: #fbfcf5; }
+.hc-week-days summary { padding: 14px; cursor: pointer; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+.hc-week-days summary span:last-child { display: block; margin-left: 16px; font-size: 13px; color: var(--hc-muted); }
+.hc-week-day-fields { padding: 0 14px 18px; }
+.hc-week-day-fields p { margin-top: 6px; font-size: 13px; }
+.hc-week-review { border-top: 1px solid #d4dcc7; padding-top: 20px; }
+.hc-week-review h4 { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+.hc-week-confirm { padding: 16px; background: #f2f1e5; border: 1px solid #a7b594; border-radius: 10px; margin-top: 16px; }
+.hc-week-confirm button + button { margin-left: 8px; }
+@media (max-width: 400px) { .hc-week-action { padding: 14px; } .hc-week-confirm button { width: 100%; } .hc-week-confirm button + button { margin-left: 0; } }

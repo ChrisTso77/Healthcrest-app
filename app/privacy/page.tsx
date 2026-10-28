@@ -27,7 +27,7 @@ export default function PrivacyPage() {
           <h2 id="optional-measurement">What optional measurement does</h2>
           <p>If you agree and the feature is active, Vercel Web Analytics helps us understand visits to public pages. Vercel Speed Insights helps us understand page speed on real devices. We use your permission for these optional features; declining leaves all Healthcrest tools available.</p>
           <p>Vercel can receive a public page address, event time, referrer and technical information such as device, browser and approximate location. Performance measurement also includes browser timing data. Our integration removes query strings and fragments from measurement URLs, excludes the planner and privacy settings, rejects custom analytics events, and avoids sending from pages with potentially sensitive referrers.</p>
-          <p>The integrations do not read your habit drafts or reflection notes. Choosing a pillar or a practical preference is not sent as a custom event. The graphs are educational illustrations, not a health assessment or an automated clinical decision.</p>
+          <p>The integrations do not read your habit drafts, daily check-ins or review notes. Choosing a pillar or a practical preference is not sent as a custom event. The graphs are educational illustrations, not a health assessment or an automated clinical decision.</p>
           <p>Vercel describes its analytics as cookie-free. Our measurement preference is stored separately in this browser using local storage; this record contains only the two choices, their version and the time you saved them.</p>
           <p><a href="https://vercel.com/docs/analytics/privacy-policy" className="hc-text-link">Vercel Web Analytics data details</a> and <a href="https://vercel.com/docs/speed-insights/privacy-policy" className="hc-text-link">Vercel Speed Insights data details</a>.</p>
         </section>
@@ -40,7 +40,7 @@ export default function PrivacyPage() {
         </section>
         <section aria-labelledby="privacy-storage">
           <h2 id="privacy-storage">Your habit drafts stay separate</h2>
-          <p>The planner keeps edits in the current page. Only choosing Save on this device stores drafts and reflection notes in this browser. Restore and Remove are manual. A downloaded text file is a separate copy you manage.</p>
+          <p>The planner keeps edits in the current page. Only choosing Save on this device stores drafts, reflection notes and current seven-day plans, including dates, check-ins and weekly reviews, in this browser. Restore and Remove are manual. A downloaded text file is a separate copy you manage.</p>
           <p><Link href="/storage" prefetch={false} className="hc-text-link">Read the browser-storage explanation</Link>. Changing measurement choices does not remove a saved habit plan.</p>
         </section>
         <section aria-labelledby="privacy-services">

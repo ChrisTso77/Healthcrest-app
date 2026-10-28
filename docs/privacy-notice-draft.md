@@ -10,7 +10,7 @@ Updated 28 October 2026. This administrative draft is not the public notice. The
 - Website hosting/deployment: Vercel; content management: Sanity.
 - Vercel plan: Hobby, confirmed by the owner. The owner previously saw Enable buttons; the current dashboard enablement state has not been independently verified.
 - No account, newsletter signup, payment flow or user-health-data upload endpoint is implemented.
-- The planner keeps current edits in page memory. Only an explicit Save writes the four drafts and reflection notes to localStorage. Restore and Remove are explicit; download creates a separate user-managed text file.
+- The planner keeps current edits in page memory. Only an explicit Save writes the four drafts, reflection notes and their current seven-day plans (dates, chosen action, daily check-ins and weekly review) to localStorage. Restore and Remove are explicit; download creates a separate user-managed text file.
 - Start here puts topic/preference choices in the URL. They can appear in browser history and hosting request logs. It asks for no symptoms or diagnoses and does not upload a habit draft.
 - Both optional Vercel SDKs are now installed behind an operator switch, production-environment check and independent visitor permissions. With the switch unset, no optional SDK component mounts. Previews stay off even with the switch set and saved permission.
 - Only the choice version, two booleans and saved timestamp are stored under healthcrest.measurement-choice.v1. Permission expires after 180 days; the old record may remain until changed or cleared.
