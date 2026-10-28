@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { GuidePrintControl } from '@/components/GuidePrintControl';
+import { SITE_URL } from '@/lib/siteMetadata';
 import { MovementOptions } from '@/components/MovementOptions';
 import { notFound } from 'next/navigation';
 import { SiteHeader, SiteFooter } from '@/components/SiteChrome';
@@ -41,7 +43,7 @@ export default async function LearningGuidePage({ params, searchParams }: Props)
   const explorer = journeyExplorerHref(guide.pillar, constraint) + (constraint ? '' : '&view=2d');
   const schema = learningGuideSchema(guide);
   return (
-    <div className="hc-landing">
+    <div className="hc-landing hc-guide-page">
       <a className="hc-skip-link" href="#main-content">Skip to content</a>
       <SiteHeader />
       <main id="main-content" tabIndex={-1} className="hc-section hc-guide-main">
@@ -57,6 +59,9 @@ export default async function LearningGuidePage({ params, searchParams }: Props)
             <p className="hc-guide-summary">{guide.summary}</p>
             <p className="hc-guide-byline">Published by Healthcrest · Sources checked <time dateTime={GUIDE_SOURCE_CHECKED_ON}>{new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(GUIDE_SOURCE_CHECKED_ON + 'T00:00:00.000Z'))}</time>. <Link href="/about" prefetch={false}>About the creator and our approach</Link>.</p>
             <p className="hc-guide-audience">{guide.audience}</p>
+            <p className="hc-guide-print-only">Online guide and updates: <a href={SITE_URL + '/learn/' + guide.slug}>{SITE_URL + '/learn/' + guide.slug}</a></p>
+            <p className="hc-guide-print-only">General educational information for adults. Adapt ideas to your health, ability and circumstances alongside appropriate clinical care.</p>
+            <GuidePrintControl />
           </header>
           <section aria-labelledby="guide-takeaways" className="hc-guide-takeaways">
             <h2 id="guide-takeaways">At a glance</h2>
@@ -114,6 +119,7 @@ export default async function LearningGuidePage({ params, searchParams }: Props)
                   <p><strong>Source context:</strong> {source.publisher} · {source.kind}</p>
                   <p><strong>Supports:</strong> {source.supports}</p>
                   <p><strong>Scope:</strong> {source.scope}</p>
+                  <p className="hc-guide-print-only hc-guide-print-source-url">{source.url}</p>
                 </li>
               ))}
             </ol>

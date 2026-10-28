@@ -47,3 +47,45 @@
 .hc-guide-related a { font-size: 15px; line-height: 1.6; }
 @media (max-width: 900px) { .hc-guide-grid { grid-template-columns: 1fr; gap: 30px; } .hc-guide-tools { max-width: 760px; } }
 @media (max-width: 700px) { .hc-guide-main { padding-top: 28px; } .hc-guide-practice, .hc-guide-takeaways { padding: 22px 18px; } .hc-guide-related ul { grid-template-columns: 1fr; } .hc-guide-summary { font-size: 18px; } }
+
+.hc-guide-print-only { display: none; }
+.hc-guide-print-controls { margin-top: 24px; max-width: 780px; }
+.hc-guide-print-controls button { min-height: 44px; padding: 10px 16px; border: 1px solid #7c906b; border-radius: 10px; background: #eaf0de; color: var(--hc-ink); font: inherit; font-size: 14px; cursor: pointer; }
+.hc-guide-print-controls button:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
+.hc-guide-print-controls p { margin-top: 10px; color: var(--hc-muted); font-size: 13px; line-height: 1.7; }
+
+@media print {
+  @page { margin: 16mm; }
+  .hc-guide-page, .hc-guide-page .hc-guide, .hc-guide-page .hc-guide * { background: transparent !important; color: #000 !important; box-shadow: none !important; text-shadow: none !important; }
+  .hc-guide-page { background: #fff !important; min-height: 0; }
+  .hc-guide-page > :not(main),
+  .hc-guide-page .hc-guide-breadcrumb,
+  .hc-guide-page .hc-guide-contents,
+  .hc-guide-page .hc-guide-tools,
+  .hc-guide-page .hc-guide-related,
+  .hc-guide-page .hc-guide-print-controls,
+  .hc-guide-page .hc-guide-practice .hc-button,
+  .hc-guide-page .hc-movement-options,
+  .hc-guide-page .hc-visually-hidden { display: none !important; }
+  .hc-guide-page .hc-guide-main { padding: 0; margin: 0; max-width: none; }
+  .hc-guide-page .hc-guide { font: 11pt/1.5 Arial, Helvetica, sans-serif; overflow-wrap: anywhere; }
+  .hc-guide-page .hc-guide h1 { font: bold 22pt/1.2 Arial, Helvetica, sans-serif; letter-spacing: 0; margin-bottom: 10pt; }
+  .hc-guide-page .hc-guide h2 { font: bold 15pt/1.3 Arial, Helvetica, sans-serif; margin: 14pt 0 8pt; }
+  .hc-guide-page .hc-guide h3 { font: bold 12pt/1.3 Arial, Helvetica, sans-serif; margin: 12pt 0 6pt; }
+  .hc-guide-page .hc-guide p, .hc-guide-page .hc-guide li { font-size: 11pt; line-height: 1.5; }
+  .hc-guide-page .hc-guide p + p { margin-top: 6pt; }
+  .hc-guide-page .hc-guide-header, .hc-guide-page .hc-guide-body, .hc-guide-page .hc-guide-sources { max-width: none; }
+  .hc-guide-page .hc-guide-grid { display: block; margin-top: 18pt; }
+  .hc-guide-page .hc-guide-body > section + section { margin-top: 18pt; }
+  .hc-guide-page .hc-guide-takeaways, .hc-guide-page .hc-guide-practice { padding: 0; border: 0; margin-top: 16pt; }
+  .hc-guide-page .hc-guide-urgent { max-width: none; }
+  .hc-guide-page .hc-urgent-support { padding: 10pt; border: 1px solid #777; border-radius: 0; }
+  .hc-guide-page .hc-guide h1, .hc-guide-page .hc-guide h2, .hc-guide-page .hc-guide h3 { break-after: avoid; page-break-after: avoid; }
+  .hc-guide-page .hc-guide p, .hc-guide-page .hc-guide li { orphans: 3; widows: 3; }
+  .hc-guide-page .hc-guide-sources { margin-top: 20pt; padding-top: 12pt; border-top: 1px solid #777; }
+  .hc-guide-page .hc-guide-sources li { break-inside: avoid; page-break-inside: avoid; }
+  .hc-guide-page .hc-guide-citations, .hc-guide-page .hc-guide-byline, .hc-guide-page .hc-guide-print-source-url { font-size: 10pt; }
+  .hc-guide-page .hc-guide .hc-guide-print-only { display: block; margin-top: 8pt; font-size: 10pt; line-height: 1.5; }
+  .hc-guide-page .hc-guide-print-source-url { overflow-wrap: anywhere; }
+  .hc-guide-page .hc-guide a { color: #000; text-decoration: underline; }
+}
