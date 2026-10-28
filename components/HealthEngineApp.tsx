@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { SettingComparison } from '@/components/SettingComparison';
+import { captureComparisonStart } from '@/lib/education/settingComparison';
 import { useState, useEffect, useReducer, type CSSProperties } from 'react';
 import {
   ShieldAlert,
@@ -48,6 +50,9 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
       return mode ? { ...initial, renderMode: mode } : initial;
     }
   );
+
+  const [comparisonStart, setComparisonStart] = useState(() => captureComparisonStart(initialPillarsState.parameters, 'Settings when you opened the Explorer'));
+  const [isComparisonOpen, setIsComparisonOpen] = useState(false);
 
   const [cameraState, setCameraState] = useState<CameraState>({
     orbitAzimuth: 45,
@@ -127,6 +132,8 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
       {/* ------------------------------------------------------------------ */}
       <HealthEngineViewport
         state={state}
+        startingPoint={comparisonStart}
+        onCompare={() => setIsComparisonOpen(true)}
         cameraState={cameraState}
         motionPaused={motionPaused}
         onToggleMotion={() => setMotionPaused(paused => !paused)}
@@ -140,6 +147,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
       <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
         <HealthEngineHUD
         onGuideOpen={() => setIsGuideOpen(true)}
+        onCompareOpen={() => setIsComparisonOpen(true)}
         journeyConstraint={journeyConstraint}
         isDockOpen={isDockOpen}
         onDockToggle={() => setIsDockOpen((open) => !open)}
@@ -196,10 +204,10 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
           }
         }}
         onPresetLoad={(preset) => {
-          dispatch({
-            type: "APPLY_CANONICAL_PRESET",
-            payload: preset,
-          });
+          const action = { type: 'APPLY_CANONICAL_PRESET' as const, payload: preset };
+          const loaded = pillarsReducer(state, action);
+          setComparisonStart(captureComparisonStart(loaded.parameters, preset.title));
+          dispatch(action);
         }}
       />
       </div>
@@ -250,6 +258,11 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
 
       {/* ------------------------------------------------------------------ */}
       {/* 4. HOME PAGE & GLOBAL NARRATIVE DRAWER / MODAL */}
+      {isComparisonOpen && (
+        <SettingComparison state={state} start={comparisonStart} journeyConstraint={journeyConstraint}
+          onUseCurrent={() => setComparisonStart(captureComparisonStart(state.parameters, 'Your selected settings'))}
+          onClose={() => setIsComparisonOpen(false)} />
+      )}
       {isGuideOpen && (
         <HealthEngineGuide
           state={state}

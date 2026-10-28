@@ -33,11 +33,13 @@ import {
   ChevronDown,
   Zap,
   RotateCcw,
-  Camera
+  Camera,
+  ArrowLeftRight
 } from 'lucide-react';
 
 interface HealthEngineHUDProps {
   onGuideOpen: () => void;
+  onCompareOpen: () => void;
   journeyConstraint?: JourneyConstraint;
   isDockOpen: boolean;
   onDockToggle: () => void;
@@ -56,6 +58,7 @@ interface HealthEngineHUDProps {
 
 export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
   onGuideOpen,
+  onCompareOpen,
   journeyConstraint,
   isDockOpen,
   onDockToggle,
@@ -194,7 +197,8 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         </nav>
 
         {/* Guide & Rendering Switcher */}
-        <div className="flex w-full items-center justify-between gap-3 xl:w-auto">
+        <div className="flex w-full items-center justify-between gap-1 xl:w-auto xl:gap-3">
+          <div className="flex shrink-0 items-center gap-1">
           <button
             type="button"
             aria-label="Guide: understand this view"
@@ -205,6 +209,13 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             <span>Guide</span>
           </button>
 
+          <button type="button" aria-label="Compare starting and current settings" title="Compare starting and current settings"
+            onClick={onCompareOpen}
+            className="inline-flex min-h-9 min-w-8 items-center justify-center gap-1 rounded-lg border border-cyan-500/40 bg-cyan-500/10 px-1.5 text-[10px] text-cyan-200 hover:bg-cyan-500/20 focus-visible:outline-2 focus-visible:outline-cyan-300">
+            <ArrowLeftRight aria-hidden="true" className="size-3.5" /><span className="hidden xl:inline">Compare</span>
+          </button>
+          </div>
+
           <div role="group" aria-label="Render mode" className="flex items-center bg-slate-950/80 p-1 rounded-lg border border-slate-800 text-xs">
             {(['high-3d', 'lite-3d', '2d-canvas'] as RenderMode[]).map((mode) => (
               <button
@@ -213,7 +224,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                 onClick={() => {
                   onRenderModeChange?.(mode);
                 }}
-                className={`min-h-9 px-2.5 py-1 rounded-md text-[11px] font-mono capitalize transition-all xl:min-h-0 ${
+                className={`min-h-9 px-1.5 py-1 rounded-md xl:px-2.5 text-[11px] font-mono capitalize transition-all xl:min-h-0 ${
                   renderMode === mode
                     ? 'bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/30'
                     : 'text-slate-400 hover:text-slate-200'
