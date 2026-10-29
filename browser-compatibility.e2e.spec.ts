@@ -218,10 +218,14 @@ test('labelled 2D settings and guide keyboard focus work without WebGL', async (
   const compare = page.getByRole('button', { name: 'Compare starting and current settings', exact: true });
   await compare.click();
   const comparison = page.getByRole('dialog', { name: 'Starting and current settings', exact: true });
+  const summarySleep = comparison.getByRole('table', { name: 'Settings at a glance', exact: true }).getByRole('row').filter({ hasText: 'Sleep duration' });
+  await expect(summarySleep.getByRole('cell').first()).toHaveText('8');
+  await expect(summarySleep.getByRole('cell').nth(1)).toHaveText(/^4\.5\s*Changed$/);
   const restore = comparison.getByRole('button', { name: 'Restore starting settings', exact: true });
   await restore.focus();
   await page.keyboard.press('Enter');
   await expect(comparison.getByRole('status')).toContainText('No settings have changed');
+  await expect(summarySleep.getByRole('cell').nth(1)).toHaveText(/^8\s*Unchanged$/);
   await expect(restore).toBeDisabled();
   await expect(restore).toBeFocused();
   await page.keyboard.press('Escape');

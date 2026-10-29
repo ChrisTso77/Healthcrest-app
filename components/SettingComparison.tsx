@@ -46,13 +46,36 @@ export function SettingComparison({ state, start, journeyConstraint, onUseCurren
           </div>
           <button type="button" aria-label="Close settings comparison" onClick={onClose} className="min-h-10 min-w-10 shrink-0 rounded-lg p-2 text-slate-200 hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-cyan-300"><X aria-hidden="true" className="size-5" /></button>
         </div>
-        <div role="region" aria-label="Settings comparison content" tabIndex={0} className="min-h-0 select-text space-y-5 overflow-y-auto overscroll-contain p-4 text-sm leading-relaxed text-slate-300 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-cyan-300 sm:p-6">
-          <div className="space-y-2">
+        <div role="region" aria-label="Settings comparison content" tabIndex={0} className="min-h-0 select-text space-y-4 overflow-y-auto overscroll-contain p-4 text-sm leading-relaxed text-slate-300 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-cyan-300 sm:space-y-5 sm:p-6">
+          <div className="space-y-1 text-xs leading-snug">
             <p><strong className="text-slate-100">Starting point: </strong>{start.label}</p>
-            <p role="status">{count === 0 ? 'No settings have changed from this starting point.' : count + (count === 1 ? ' setting differs' : ' settings differ') + ' from this starting point.'} Directions describe numerical changes, not an improvement in health.</p>
-            <p>Moving a slider changes an educational example. Use the habit guidance to choose an action that fits your circumstances.</p>
-            <ComparisonLegend />
+            <p role="status">{count === 0 ? 'No settings have changed from this starting point.' : count + (count === 1 ? ' setting differs' : ' settings differ') + ' from this starting point.'}</p>
+            <p>Changes in settings do not measure changes in health.</p>
           </div>
+          <table className="w-full table-fixed border-collapse text-left text-xs leading-4">
+            <caption className="pb-2 text-left text-sm font-semibold leading-5 text-slate-100">Settings at a glance</caption>
+            <colgroup><col className="w-[44%]" /><col className="w-[28%]" /><col className="w-[28%]" /></colgroup>
+            <thead className="border-b border-slate-600 text-slate-200">
+              <tr><th scope="col" className="px-2 py-2">Input</th><th scope="col" className="px-2 py-2">Starting</th><th scope="col" className="px-2 py-2">Current</th></tr>
+            </thead>
+            <tbody>
+              {rows.map(row => (
+                <tr key={row.key} className="border-b border-slate-700 align-top">
+                  <th scope="row" className="break-words px-2 py-1.5 font-medium text-slate-100">{row.label}<span className="mt-0.5 block text-[11px] font-normal text-slate-300">{row.unit}</span></th>
+                  <td className="break-words px-2 py-1.5 font-mono text-sm text-slate-200">{formatSettingNumber(row.start)}</td>
+                  <td className="break-words px-2 py-1.5"><span className="font-mono text-sm text-cyan-200">{formatSettingNumber(row.current)}</span><span className="mt-0.5 block text-[11px] leading-4 text-slate-300">{row.changed ? 'Changed' : 'Unchanged'}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <details className="rounded-xl border border-slate-700 p-3">
+            <summary className="cursor-pointer rounded text-sm font-medium text-cyan-200 focus-visible:outline-2 focus-visible:outline-cyan-300">How to read this comparison</summary>
+            <div className="mt-3 space-y-3">
+              <p>Moving a slider changes an educational example. Use the habit guidance to choose an action that fits your circumstances.</p>
+              <ComparisonLegend />
+              <p className="text-xs">The summary uses the same units for starting and current values. The detailed cards below show exact numerical changes, visual markers and source-linked guidance. The summary covers the four main controls; any other changed example inputs are listed separately below.</p>
+            </div>
+          </details>
           <div className="grid gap-4 sm:grid-cols-2">
             {rows.map(row => {
               const guide = PILLAR_GUIDES[row.pillar];
