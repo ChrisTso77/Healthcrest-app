@@ -186,7 +186,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
               onClick={() => {
                 onPillarChange?.(pillar);
               }}
-              className={`flex min-h-9 min-w-0 items-center justify-center gap-1 px-0.5 py-1.5 rounded-lg text-[10px] font-medium transition-all duration-150 xl:min-h-0 xl:gap-2 xl:px-3 xl:text-xs ${
+              className={`flex min-h-9 min-w-0 items-center justify-center gap-1 px-0.5 py-0.5 rounded-lg text-[10px] font-medium transition-all duration-150 xl:min-h-0 xl:gap-2 xl:px-3 xl:py-1.5 xl:text-xs ${
                 activePillar === pillar
                   ? 'bg-slate-800 text-slate-100 shadow-sm border border-slate-700/50'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'
