@@ -8,6 +8,14 @@ import { checkHabitSelection } from './e2e/habit-selection';
 import { checkScenarioSelection } from './e2e/scenario-selection';
 import { checkExplorerInformation } from './e2e/explorer-information';
 import { checkSavedPlanRemoval } from './e2e/saved-plan-removal';
+import { checkSavedPlanRestore } from './e2e/saved-plan-restore';
+
+for (const unavailable of [false, 'invalid', 'blocked'] as const) {
+  test('both restore controls protect edits with saved data: ' + unavailable, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    await checkSavedPlanRestore(page, testInfo, unavailable);
+  });
+}
 
 for (const blocked of [false, true]) {
   test('saved-plan removal preserves edits and handles blocked storage: ' + blocked, async ({ page }, testInfo) => {

@@ -45,3 +45,7 @@ The ordinary footer reserve is 5.5rem (previously 5rem) to accommodate larger co
 ## Saved-copy removal state
 
 The planner's inline removal confirmation uses the existing muted surface, ink, border, focus and 44px button styles. Its heading describes removal of the saved browser copy; body text covers all four habits, notes/check-ins and the separate current-page/downloaded/printed copies. Keep saved plan receives focus first; Remove saved copy is a distinct final action. Failure text remains beside the actions, with the existing status announcement. Cancellation/success restore focus to Remove saved plan. No auto-read/save/restore is introduced; explicit save/restore/import and context changes invalidate a pending removal.
+
+## Restore confirmation and feedback
+
+Both restore controls use the same origin-aware inline confirmation when page drafts are unsaved. Keep my edits receives focus; Replace edits and restore describes the complete replacement scope. Error text stays beside the initiating control and is its accessible description; the existing live status announces the result. Successful top restoration still opens its week/action; lower restoration keeps opener focus. Existing public surfaces, borders, focus tokens and 44px controls are reused. No automatic saved-plan read or rewrite is introduced, and clean pages retain the explicit one-step flow.

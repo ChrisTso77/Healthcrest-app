@@ -4,6 +4,20 @@ import { checkHabitSelection } from './e2e/habit-selection';
 import { checkScenarioSelection } from './e2e/scenario-selection';
 import { checkExplorerInformation } from './e2e/explorer-information';
 import { checkSavedPlanRemoval } from './e2e/saved-plan-removal';
+import { checkSavedPlanRestore } from './e2e/saved-plan-restore';
+
+for (const width of [320, 1350]) {
+  test('both restore controls protect unsaved drafts and notes at ' + width + 'px', async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: width === 320 ? 568 : 940 });
+    await checkSavedPlanRestore(page, testInfo, false, true);
+  });
+}
+for (const unavailable of ['invalid', 'blocked'] as const) {
+  test('both restore controls preserve edits with ' + unavailable + ' saved data', async ({ page }, testInfo) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    await checkSavedPlanRestore(page, testInfo, unavailable, true);
+  });
+}
 
 for (const width of [320, 1350]) {
   test('saved-plan removal requires confirmation and preserves page edits at ' + width + 'px', async ({ page }, testInfo) => {
