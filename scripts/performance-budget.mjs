@@ -20,7 +20,7 @@ export function assessMobileReport(report) {
     ['lcpMs', 'largest-contentful-paint'], ['cls', 'cumulative-layout-shift'], ['totalBlockingMs', 'total-blocking-time'],
   ]) {
     const value = report?.audits?.[audit]?.numericValue;
-    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || (name === 'lcpMs' && value === 0)) {
       failures.push('Missing or invalid metric: ' + audit);
     } else {
       metrics[name] = value;

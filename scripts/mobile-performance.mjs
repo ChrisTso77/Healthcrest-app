@@ -42,8 +42,8 @@ try {
     const report = JSON.parse(await readFile(output + '/' + name + '.report.json', 'utf8'));
     const assessment = assessMobileReport(report);
     const summary = {
-      page: name, lighthouseVersion: report.lighthouseVersion,
-      formFactor: report.configSettings?.formFactor,
+      page: name, lighthouseVersion: report?.lighthouseVersion,
+      formFactor: report?.configSettings?.formFactor,
       scores: Object.fromEntries(Object.entries(assessment.metrics.scores).map(([key, value]) => [key, value * 100])),
       lcpMs: assessment.metrics.lcpMs, cls: assessment.metrics.cls,
       totalBlockingMs: assessment.metrics.totalBlockingMs,

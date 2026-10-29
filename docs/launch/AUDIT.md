@@ -152,7 +152,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: The development lint tool no longer receives upstream maintenance; blind major upgrades could also change lint behavior.
 - Remediation: Prepare an independent dev-tool PR after checking all peer constraints and the v10 migration guide; use a real lockfile update without force/legacy-peer-deps or disabling rules.
 - Complexity / dependencies: Low–Medium; compatible Next/TypeScript/React lint plugins and Node (v10 requires ^20.19 / ^22.13 / >=24; CI selects current Node 22).
-- Acceptance / status: Clean install without peer overrides, intended lint coverage/rules preserved, lint/type/unit/build/hosted checks pass. **Investigating independently; current foundation PR does not change dependencies.**
+- Acceptance / status: Clean install without peer overrides, intended lint coverage/rules preserved, lint/type/unit/build/hosted checks pass. **Blocked on current plugin peer compatibility.** A separate isolated installation of eslint 10.13.0 completed with peer override warnings, but `npm ls eslint --all` exited ELSPROBLEMS: current eslint-plugin-react 7.37.5, eslint-plugin-jsx-a11y 6.10.2 and eslint-plugin-import 2.32.0 exclude v10. Registry checks confirmed these are their latest releases. No forced/legacy-peer install, rule removal or lockfile change is proposed in the foundation PR. Reassess compatible upstream releases or a separately reviewed configuration alternative.
 
 ## Sources read for this audit
 

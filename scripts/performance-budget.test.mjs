@@ -43,6 +43,13 @@ test('rejects a category score above the valid range', () => {
   const report = fixture(); report.categories.performance.score = 90;
   assert.equal(assessMobileReport(report).passed, false);
 });
+test('rejects a zero LCP while preserving valid zero CLS and blocking time', () => {
+  const report = fixture(); report.audits['cumulative-layout-shift'].numericValue = 0;
+  report.audits['total-blocking-time'].numericValue = 0;
+  assert.equal(assessMobileReport(report).passed, true);
+  report.audits['largest-contentful-paint'].numericValue = 0;
+  assert.equal(assessMobileReport(report).passed, false);
+});
 test('rejects absent, runtime-failed, desktop and incomplete reports', () => {
   assert.equal(assessMobileReport(undefined).passed, false);
   const failed = fixture(); failed.runtimeError = { code: 'NO_FCP' };
