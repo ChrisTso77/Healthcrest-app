@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { setTimeout as delay } from 'node:timers/promises';
 import { chromium } from '@playwright/test';
+import { assertStructuredData } from './structured-data-contract.mjs';
 
 const canonicalOrigin = 'https://www.healthcrest.uk';
 const suppliedOrigin = process.env.HEALTHCREST_RELEASE_ORIGIN;
@@ -24,6 +25,44 @@ const internalPaths = new Set();
 const pageIds = new Map();
 const internalFragments = new Map();
 const pageMetadata = [];
+const structuredPages = [];
+
+async function checkPageStructuredData(page, path) {
+  const snapshot = await page.evaluate(isGuide => {
+    const content = selector => document.querySelector(selector)?.getAttribute('content') ?? null;
+    const cleanText = element => {
+      if (!element) return null;
+      const copy = element.cloneNode(true);
+      copy.querySelectorAll('.hc-visually-hidden, [aria-hidden="true"]').forEach(node => node.remove());
+      return copy.textContent.trim();
+    };
+    return {
+      scripts: Array.from(document.querySelectorAll('script[type="application/ld+json"]'), node => node.textContent),
+      siteName: content('meta[property="og:site_name"]'),
+      canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+      description: content('meta[name="description"]'), openGraphType: content('meta[property="og:type"]'),
+      modifiedTime: content('meta[property="article:modified_time"]'),
+      authors: Array.from(document.querySelectorAll('meta[name="author"]'), node => node.getAttribute('content')),
+      guide: isGuide ? {
+        headline: cleanText(document.querySelector('#guide-title')),
+        author: cleanText(document.querySelector('.hc-guide-publisher')),
+        checkedOn: document.querySelector('.hc-guide-byline time')?.getAttribute('datetime'),
+        sources: Array.from(document.querySelectorAll('#guide-sources ol > li'), node => {
+          const link = node.querySelector('a');
+          return { name: cleanText(link), url: link?.getAttribute('href') };
+        }),
+        breadcrumbs: Array.from(document.querySelectorAll('nav[aria-label="Breadcrumb"] a, nav[aria-label="Breadcrumb"] [aria-current="page"]'), node => ({
+          name: cleanText(node), href: node.getAttribute('href'),
+        })),
+      } : null,
+    };
+  }, path.startsWith('/learn/'));
+  ensure(snapshot.canonical && new URL(snapshot.canonical).href === new URL(path, canonicalOrigin).href, 'Structured-data check found an unexpected canonical page: ' + path);
+  if (snapshot.guide) snapshot.guide.breadcrumbs = snapshot.guide.breadcrumbs.map(item => ({
+    name: item.name, url: item.href ? new URL(item.href, canonicalOrigin).href : snapshot.canonical,
+  }));
+  return assertStructuredData(snapshot, canonicalOrigin);
+}
 
 function ensure(condition, message) {
   if (!condition) throw new Error(message);
@@ -112,6 +151,7 @@ try {
       ensure(/^en(?:-|$)/.test(await page.locator('html').getAttribute('lang') || ''), 'Missing English document language: ' + path);
       const sharingUrl = await page.locator('meta[property="og:url"]').getAttribute('content');
       ensure(sharingUrl && new URL(sharingUrl).href === new URL(path, canonicalOrigin).href, 'Incorrect sharing URL: ' + path);
+      structuredPages.push(await checkPageStructuredData(page, path));
       const hrefs = await page.locator('a[href]').evaluateAll(nodes => nodes.map(node => node.getAttribute('href')));
       pageIds.set(path, new Set(await page.locator('[id]').evaluateAll(nodes => nodes.map(node => node.id))));
       for (const href of hrefs) {
@@ -130,6 +170,23 @@ try {
       return { path, status: response.status() };
     });
   }
+
+  await check('structured data and visible guide references', async () => ({
+    pages: structuredPages.length,
+    guides: structuredPages.reduce((count, value) => count + value.guides, 0),
+    citations: structuredPages.reduce((count, value) => count + value.citations, 0),
+  }));
+  await check('guide discovery metadata with public preferences', async () => {
+    const guides = paths.filter(path => path.startsWith('/learn/'));
+    for (const path of guides) {
+      const response = await page.goto(origin + path + '?idea=routine&unused=seo-check', { waitUntil: 'domcontentloaded' });
+      ensure(response?.status() === 200, 'Guide preference variant did not return HTTP 200.');
+      await checkPageStructuredData(page, path);
+      const sharing = await page.locator('meta[property="og:url"]').getAttribute('content');
+      ensure(sharing && new URL(sharing).href === new URL(path, canonicalOrigin).href, 'Guide sharing URL retained public preferences.');
+    }
+    return { guides: guides.length };
+  });
 
   await check('unique public metadata', async () => {
     ensure(new Set(pageMetadata.map(item => item.title)).size === pageMetadata.length, 'Public pages share a title.');

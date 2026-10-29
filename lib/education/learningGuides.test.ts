@@ -61,7 +61,7 @@ describe('source and discovery contracts', () => {
       expect(sitemap().filter(entry => entry.url === url)).toHaveLength(1);
       const breadcrumbs = learningGuideSchema(guide)['@graph'][1];
       expect(breadcrumbs).toMatchObject({ itemListElement: [
-        { position: 1, item: SITE_URL + '/' }, { position: 2, item: SITE_URL + '/learn' }, { position: 3, item: url },
+        { position: 1, name: 'Home', item: SITE_URL + '/' }, { position: 2, name: 'Learn', item: SITE_URL + '/learn' }, { position: 3, name: guide.topicLabel, item: url },
       ] });
     });
   }

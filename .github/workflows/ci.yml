@@ -38,6 +38,9 @@ jobs:
       - name: Verify performance-budget failure boundaries
         run: npm run test:performance-budget
 
+      - name: Verify structured-data consistency boundaries
+        run: npm run test:seo
+
   validate-cms-seed:
     name: Validate CMS Seed JSON
     runs-on: ubuntu-latest
