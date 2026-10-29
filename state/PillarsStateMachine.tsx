@@ -7,6 +7,7 @@ import { createPillarsState } from '@/lib/state/createPillarsState';
 import { applyCanonicalPresetToState } from '@/lib/state/applyCanonicalPresetToState';
 import { setSceneState } from '@/lib/state/setSceneState';
 import { updateManualParameterState } from '@/lib/state/updateManualParameterState';
+import { createManualOverlay } from '@/lib/state/createManualOverlay';
 
 // ============================================================================
 // 1. PRESET MAPPINGS & CLINICAL STATE MACHINE REDUCER
@@ -28,6 +29,14 @@ function stateMachineReducer(state: State, action: PillarsAction): State {
 
     case 'SET_RENDER_MODE':
       return { ...state, renderMode: action.payload };
+
+    case 'RESTORE_PARAMETERS':
+      return {
+        ...state,
+        parameters: { ...action.payload },
+        activePreset: null,
+        overlay: createManualOverlay(),
+      };
 
     case 'UPDATE_PARAM':
       return updateManualParameterState(

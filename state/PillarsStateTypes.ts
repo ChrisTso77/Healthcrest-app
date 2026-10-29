@@ -46,6 +46,7 @@ export interface State {
 export type PillarsAction =
   | { type: 'SET_SCENE'; payload: SceneId }
   | { type: 'APPLY_CANONICAL_PRESET'; payload: CanonicalScenarioPreset }
+  | { type: 'RESTORE_PARAMETERS'; payload: Readonly<PillarParameters> }
   | {
       type: 'UPDATE_PARAM';
       payload: {

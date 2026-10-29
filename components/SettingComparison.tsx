@@ -27,9 +27,9 @@ export function ComparisonLegend() {
   return <p className="text-xs leading-relaxed text-slate-300"><span aria-hidden="true">○</span> Starting settings · <span aria-hidden="true">◆</span> Current settings. Markers and numbers show inputs. Scale ends are control limits; a higher value is not automatically better.</p>;
 }
 
-export function SettingComparison({ state, start, journeyConstraint, onUseCurrent, onClose }: {
+export function SettingComparison({ state, start, journeyConstraint, onUseCurrent, onRestoreStart, onClose }: {
   state: State; start: ComparisonStart; journeyConstraint?: JourneyConstraint;
-  onUseCurrent: () => void; onClose: () => void;
+  onUseCurrent: () => void; onRestoreStart: () => void; onClose: () => void;
 }) {
   const id = useId();
   const rows = compareSettings(start, state.parameters);
@@ -107,12 +107,18 @@ export function SettingComparison({ state, start, journeyConstraint, onUseCurren
           )}
           <section aria-label="Choose a starting point" className="space-y-3 border-t border-slate-700 pt-4">
             <h3 className="font-semibold text-slate-100">Choose your starting point</h3>
-            <p>Opening the Explorer starts a comparison. Choosing an example starts a fresh comparison with that example’s settings. Changing a pillar, view or camera keeps the same starting values.</p>
+            <p>Opening the Explorer starts a comparison. Choosing an example starts a fresh comparison with that example’s settings. Changing a topic, view or camera keeps the same starting values.</p>
+            <p id={id + '-restore-help'}>Restore starting settings puts those values back into the controls as a manual scenario. Your topic, view and camera stay as selected. To keep your current values as the reference instead, use the button below.</p>
             <button type="button" onClick={onUseCurrent} className="min-h-10 rounded-lg border border-cyan-500/50 px-3 py-2 font-medium text-cyan-200 focus-visible:outline-2 focus-visible:outline-cyan-300">Use current settings as starting point</button>
             <p className="text-xs text-slate-400">This comparison lasts while this Explorer is open. Reloading starts again. NHS sources support the general guidance, not the example values or visual rules.</p>
           </section>
         </div>
-        <div className="flex shrink-0 justify-end border-t border-slate-700 bg-slate-950/60 p-4">
+        <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-slate-700 bg-slate-950/60 p-4">
+          <button type="button" aria-disabled={count === 0} aria-describedby={id + '-restore-help'}
+            onClick={() => { if (count > 0) onRestoreStart(); }}
+            className="min-h-10 rounded-xl border border-cyan-500/50 px-4 py-2 text-sm font-semibold text-cyan-200 focus-visible:outline-2 focus-visible:outline-cyan-300 aria-disabled:border-slate-700 aria-disabled:text-slate-400">
+            Restore starting settings
+          </button>
           <button type="button" onClick={onClose} className="min-h-10 rounded-xl bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 focus-visible:outline-2 focus-visible:outline-emerald-200">Close and keep exploring</button>
         </div>
       </div>
