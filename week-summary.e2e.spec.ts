@@ -96,6 +96,7 @@ test('summary stays current across pillar changes, week replacement, restore and
   await page.getByRole('button', { name: 'Replace with this new week', exact: true }).click();
   expect(await facts(page)).toEqual({ 'Days with a choice': 0, 'Days with notes only': 0, 'Blank days': 7 });
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   expect(await facts(page)).toEqual({ 'Days with a choice': 1, 'Days with notes only': 1, 'Blank days': 5 });
 
   const data = JSON.parse(saved!);

@@ -127,6 +127,8 @@ test('overview refreshes after import, another week, clearing and restore withou
   await expect(card(page, 'Food').locator('time')).toHaveCount(0);
   await expect(card(page, 'Sleep')).toContainText('Days with a check-in: 2 of 7');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await expect(card(page, 'Food')).toContainText('Imported food idea.');
+  await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(card(page, 'Food')).toContainText('Saved Nutrition action.');
   await expect(card(page, 'Food')).toContainText('Days with a check-in: 0 of 7');
   await expect(card(page, 'Sleep').getByRole('button')).toHaveAttribute('aria-pressed', 'true');

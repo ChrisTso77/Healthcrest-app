@@ -41,6 +41,7 @@ test('comparison follows page edits and restore while a candidate stays open wit
   await expect(card(page, 'Sleep')).toContainText('Extra reflection notes');
   await expect(comparison(page)).not.toContainText('PRIVATE-UNSAVED-REFLECTION');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.locator('.hc-backup-change-count')).toHaveText('0 of 4 pillar drafts differ from this page.');
   await expect(card(page, 'Sleep')).toContainText('Matches the current page draft and week.');
   await page.getByLabel('One manageable action', { exact: true }).fill('Keep this page edit.');

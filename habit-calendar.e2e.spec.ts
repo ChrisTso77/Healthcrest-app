@@ -77,6 +77,8 @@ test('time and feedback reset across pillars, restore, import, date replacement 
   await expect(calendar(page).getByLabel('Check-in time', { exact: true })).toHaveValue('');
   await calendar(page).getByLabel('Check-in time', { exact: true }).fill('20:00');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await expect(calendar(page).getByLabel('Check-in time', { exact: true })).toHaveValue('20:00');
+  await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(calendar(page).getByLabel('Check-in time', { exact: true })).toHaveValue('');
   const incoming = JSON.parse(saved!);
   incoming.selected = 'Nutrition';

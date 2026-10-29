@@ -119,6 +119,7 @@ test('device saving restores all pillar drafts and the saved selection after rel
   await expect(page.getByRole('group', { name: 'Choose a habit pillar' }).getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await action.fill('An unsaved change.');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(action).toHaveValue('Read quietly before bed.');
   await page.getByRole('group', { name: 'Choose a habit pillar' }).getByRole('button', { name: 'Food', exact: true }).click();
   await expect(action).toHaveValue('Add beans to lunch.');
@@ -145,6 +146,7 @@ test('removing saved drafts keeps current edits and unrelated browser storage', 
   await expect(action).toHaveValue('My current habit.');
   expect(await page.evaluate(() => localStorage.getItem('unrelated-preference'))).toBe('keep');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('No compatible saved draft was found.');
   await expect(action).toHaveValue('My current habit.');
 });
@@ -156,6 +158,7 @@ test('damaged saved data never replaces current edits', async ({ page }) => {
   for (const raw of ['{broken', JSON.stringify({ version: 999, selected: 'Sleep', drafts: {} })]) {
     await page.evaluate(value => localStorage.setItem('healthcrest.habit-draft.v1', value), raw);
     await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+    await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
     await expect(page.getByRole('status')).toContainText('No compatible saved draft was found.');
     await expect(action).toHaveValue('Keep this current draft.');
   }
@@ -176,6 +179,7 @@ test('blocked browser storage leaves editing and download available', async ({ p
   await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('Saving is unavailable');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('Saved drafts are unavailable');
   await page.getByRole('button', { name: 'Remove saved plan', exact: true }).click();
   await page.getByRole('button', { name: 'Remove saved copy', exact: true }).click();
