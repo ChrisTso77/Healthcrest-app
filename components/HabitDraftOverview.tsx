@@ -1,5 +1,7 @@
 'use client';
 
+import { HabitSelectionMark } from '@/components/HabitSelectionMark';
+
 import { useId, useState } from 'react';
 import type { HabitDrafts, HabitPillar } from '@/lib/education/habitDraft';
 import { formatDay, summarizeHabitWeek, weekDayDate } from '@/lib/education/habitWeek';
@@ -39,6 +41,7 @@ export function HabitDraftOverview({ drafts, pillars, selected, onOpen }: {
                   </> : <p>No dated week on this page.</p>}
                   <button type="button" aria-pressed={selected === pillar.key} onClick={() => onOpen(pillar.key)}>
                     Open {pillar.label.toLowerCase()} draft
+                    <HabitSelectionMark selected={selected === pillar.key} />
                   </button>
                 </article>
               );

@@ -1,5 +1,7 @@
 'use client';
 
+import { HabitSelectionMark } from '@/components/HabitSelectionMark';
+
 import { useId, useState } from 'react';
 import Link from 'next/link';
 import { HabitDraftOverview } from '@/components/HabitDraftOverview';
@@ -203,6 +205,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
           <button key={item.key} type="button" aria-pressed={selected === item.key}
             onClick={() => { setSelected(item.key); setStatus(''); }}>
             {item.label}
+            <HabitSelectionMark selected={selected === item.key} />
           </button>
         ))}
       </div>

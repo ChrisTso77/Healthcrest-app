@@ -8,6 +8,8 @@
 .hc-landing h1, .hc-landing h2, .hc-landing h3, .hc-landing p, .hc-landing figure, .hc-landing ol, .hc-landing ul { margin: 0; }
 .hc-landing a { color: inherit; text-decoration: none; }
 .hc-landing button, .hc-landing a { -webkit-tap-highlight-color: transparent; }
+.hc-selection-mark { display: inline-block; width: 16px; height: 16px; flex: none; vertical-align: middle; visibility: hidden; }
+.hc-selection-mark[data-selected="true"] { visibility: visible; }
 .hc-landing a:focus-visible, .hc-landing button:focus-visible, #main-content:focus-visible { outline: var(--hc-focus-width) solid var(--hc-focus-ring); outline-offset: var(--hc-focus-offset-wide); }
 .hc-landing h1, .hc-landing h2 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; letter-spacing: -.045em; line-height: 1.06; }
 .hc-landing h1 { font-size: clamp(3.6rem, 6.6vw, 6.6rem); }

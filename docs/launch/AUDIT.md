@@ -104,7 +104,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: Incremental upgrades risk inconsistent states, contrast or spacing across calm/light and dark interactive routes.
 - Remediation: Inventory approved tokens and components, compare current screenshots, then migrate one representative control/page at a time. Preserve hummingbird assets and existing layout behavior.
 - Complexity / dependencies: Medium; baseline visual matrix, contrast verification and D05 for material brand changes.
-- Acceptance / status: Documented semantic tokens and before/after review at mobile/tablet/desktop with no lost focus/reflow. **First scoped palette/focus migration active (L22); see DESIGN-TOKENS.md.** Status, spacing, typography and Explorer migration remain queued; no wholesale rewrite.
+- Acceptance / status: Documented semantic tokens and before/after review at mobile/tablet/desktop with no lost focus/reflow. **First scoped palette/focus migration merged #117 (L22); see DESIGN-TOKENS.md.** Status, spacing, typography and Explorer migration remain queued; no wholesale rewrite.
 
 ### L09 — Operational recovery/monitoring not demonstrated
 - Category / severity / kind: Operations; **Medium**; unverified risk and Gate D blocker.
@@ -216,7 +216,15 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: Separate literals make future state changes harder to maintain; a brighter existing colour makes keyboard focus easier to distinguish on dark sections.
 - Remediation: Centralise the existing semantic public palette/focus dimensions, preserve page appearance, and inherit #c3d99f focus on the preview/guidance dark surfaces. Document the partial migration and keep the Explorer independent.
 - Complexity / dependencies: Low–Medium; scoped CSS and existing hosted browser/artifact tooling. No dependency, provider, clinical or storage change.
-- Acceptance / status: Rendered keyboard focus/activation across home/Learn/guide/planner/Start, outline width/offset at least 3px and contrast at least 3:1 on light/7:1 on dark. Inspect phone/desktop focus screenshots, all five jobs and eight profiles. **Implemented on the public-focus branch; exact-head verification required.** This does not complete manual AT/device/forced-colour review.
+- Acceptance / status: Rendered keyboard focus/activation across home/Learn/guide/planner/Start, outline width/offset at least 3px and contrast at least 3:1 on light/7:1 on dark. Inspect phone/desktop focus screenshots, all five jobs and eight profiles. **Merged #117: all five jobs, 296 Chromium/18 compatibility cases and eight inspected profiles passed; six 390/1350px focus screenshots were reviewed.** This does not complete manual AT/device/forced-colour review.
+
+### L23 — Selected public habits rely on palette changes
+- Category / severity / kind: Accessibility/selection clarity; **Medium**; verified style defect with limited runtime reproduction.
+- Evidence: Main da60a96 uses only background/border/text colours to distinguish aria-pressed buttons in LandingEnginePreview, HabitPlanner and HabitDraftOverview. An isolated local Chromium render of actual public CSS under forced-colours emulation shows selected and unselected preview/planner controls with the same black border/text on white; no visual marker remains. Full hosted-page and actual OS/AT evidence is separate.
+- Impact: Visitors using a substituted palette can lose the visual indication of the active habit or open draft even though aria-pressed remains available to assistive technology.
+- Remediation: Add one shared, aria-hidden checkmark to selected buttons in all three groups. Reserve its space, preserve accessible names/pressed semantics and align text/marker within existing responsive controls. Do not override the visitor's system palette.
+- Complexity / dependencies: Low–Medium; existing lucide icon, scoped CSS and browser/artifact tooling. No dependency, storage, collection, clinical or provider change.
+- Acceptance / status: All four choices in each group update exactly one visible marker and unchanged accessible names. Normal narrow and emulated forced light/dark phone/desktop layouts retain usable controls; keyboard/focus, edit preservation and no-save boundaries pass. Inspect screenshots, all five jobs and eight profiles. **Implemented on the visible-selection branch; exact-head verification required.** Actual forced-colour OS themes, screen readers and real-device checks remain pending.
 
 ## Sources read for this audit
 

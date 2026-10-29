@@ -1,6 +1,7 @@
 'use client';
 
 import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
+import { HabitSelectionMark } from '@/components/HabitSelectionMark';
 
 import { useId, useState } from 'react';
 import Link from 'next/link';
@@ -31,6 +32,7 @@ export function LandingEnginePreview() {
             <button key={pillar.key} type="button" aria-pressed={selected.key === pillar.key} onClick={() => setSelected(pillar)}>
               <pillar.icon size={17} aria-hidden="true" />
               {pillar.label}
+              <HabitSelectionMark selected={selected.key === pillar.key} />
             </button>
           ))}
         </div>
