@@ -4,6 +4,8 @@
 
 Use [OWNER-LAUNCH-ACTIONS.md](OWNER-LAUNCH-ACTIONS.md) for one consolidated handoff. Record evidence once and link it to the decisions actually resolved. Security assessment and technical checks remain engineering tasks, not questions for the owner to certify.
 
+Owner update during this batch: D02 professional registered-office arrangement is not yet in place; no private address was requested or recorded. D09 available actual platforms are iPhone/Safari, Android/Chrome, Windows and Mac. Device/AT results and screen-reader access remain pending.
+
 | ID | Decision / verified context | Required evidence or approval | State / blocked work |
 | --- | --- | --- | --- |
 | D01 | Hosting eligibility. Owner wants hobby-first/non-commercial start; last confirmed plan was Hobby. Actual use, not project label/revenue alone, determines provider eligibility. | Confirm current plan/intended launch use; retain eligibility evidence/provider clarification or explicitly approve a suitable plan and cost if needed. | Pending; eligible hosting for intended launch not established. No plan change/purchase authorised. |

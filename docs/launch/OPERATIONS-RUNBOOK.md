@@ -6,7 +6,7 @@ Prepared 29 October 2026. This is an operator worksheet, not evidence of an exer
 
 Create one record for the combined release. Keep accepted reports in an existing operator-controlled location: current GitHub artifacts expire after 14 days. Never put secrets, private query strings, contact messages, planner notes or backup contents in public records.
 
-Stop if the reviewed head/base changes, a required check fails, deployed identity differs from the approved source, canonical smoke fails, a required owner decision is unresolved, or no authorised operator can recover production. An unavailable check stays pending; a green preview/build does not resolve these conditions.
+Pause the affected release/deployment if the reviewed head/base changes, a required check fails, deployed identity differs from the approved source, canonical smoke fails, or no authorised operator can recover production. Unresolved owner decisions block launch acceptance and any change that depends on them; they do not prohibit a separately approved safe preparation release. An unavailable check stays pending; a green preview/build does not complete launch acceptance.
 
 | Record field | Required evidence |
 | --- | --- |
@@ -42,7 +42,7 @@ Latest reference: PR #122 merged with owner approval as `4309697dbdc0ffb4eeacc21
 2. Classify delivery, CMS outage, functional regression, content/safety, security/privacy or optional measurement. Inspect existing logs/reports. Suspected security incidents need appropriate operator escalation and supported assessment; this runbook authorises no live penetration/load testing.
 3. Pause release/wider promotion for failed canonical identity/checks, broken core journeys, suspected unexpected planner transmission or potentially harmful content. Chris handles content corrections under [EDITORIAL-REVIEW.md](EDITORIAL-REVIEW.md); urgent concerns must not wait for the weekly review.
 4. Propose a specific corrective PR or known-good deployment, including settings/data differences. Obtain explicit approval for production rollback/promotion; record operator, target, time and actual result. A source revert is a separately reviewed PR.
-5. After an approved rollback, verify recovered deployment/source, rerun canonical smoke against that revision and retest the affected synthetic journey. If recovery fails, stop repeated changes and escalate to the named operator. Contacting visitors/providers is not authorised by this worksheet.
+5. After an approved rollback, verify recovered deployment/source and retest the affected synthetic journey. A recovery point that predates the release marker (including #122) cannot pass the new identity-bound smoke. Record that limitation and provider/source/manual verification separately; never invent a passing identity report or disable the assertion. For a marker-bearing recovery point that differs from current main, the main-only workflow deliberately rejects the old expected SHA: use the documented read-only shell check with that target SHA and record the separate harness revision. If recovery fails, stop repeated changes and escalate to the named operator. Contacting visitors/providers is not authorised by this worksheet.
 6. Record duration, established cause, residual differences/risks, verification links and follow-up. Older open browser tabs may still run older code. Removing a telemetry flag requires redeployment; it does not retroactively remove loaded scripts/reports. Follow the documented measurement stop procedure.
 
 ## CMS recovery — provider evidence pending

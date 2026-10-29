@@ -2,6 +2,8 @@
 
 Prepared 29 October 2026 for one consolidated launch-readiness handoff. This worksheet collects remaining owner/operator facts; it requests no credentials and certifies no legal, clinical, security or accessibility compliance. Existing answers are retained below. Engineering continues independently while these items are resolved.
 
+Owner update during batch review: a professional registered-office arrangement is **not yet in place**. Actual-device access is confirmed for **iPhone/Safari, Android/Chrome, Windows and Mac**. These are available test platforms, not completed tests. Screen-reader access remains unconfirmed; do not mark the manual matrix complete.
+
 ## Five grouped actions
 
 | Action | Already known | Minimum outcome needed | Decisions |

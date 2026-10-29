@@ -28,6 +28,7 @@ The roadmap now uses coherent batches, independent file ownership, combined diff
 
 - Local 302 unit, 35 performance-budget, 35 structured-data/SEO and 29 new release-identity checks passed; combined lint/types passed. Independent release correctness review found no blockers. Final hosted build/all five jobs and artifact review remain required.
 - Independently review build-time header capture, runtime immutability, full SHA validation, GitHub PR synthetic-merge vs Vercel main identity, workflow input handling and reports on failure. Keep all existing five hosted jobs and final-head builds.
+- Initial batch run 40957509907 passed lint/types/302 unit/35 performance/35 SEO/29 identity boundaries and its 24-check build report proved compiled/observed/expected identity remained equal despite changed runtime variables. Integration review then clarified approved preparation releases versus launch acceptance and recovery to legacy markerless deployments; recorded the owner's pending office arrangement and available real devices. These documentation corrections require a new final-head run; initial results are not final-head completion.
 - Review the final combined head's hosted 24-check release report, 315 Chromium/34 compatibility cases, preview-off results, eight raw lab reports and Vercel preview. Do not substitute #122 artifacts for this batch.
 - Check documentation links and distinguish completed baseline evidence, prepared work and actual owner/device/live evidence. Only then mark the PR ready; leave it unmerged pending approval.
 
@@ -38,6 +39,7 @@ The roadmap now uses coherent batches, independent file ownership, combined diff
 - Standard security skill is readable, but referenced scan-prologue and preflight/start/scan tools are unavailable. No preflight-ready source assessment or security report exists. Dependency audit success is not application-security assurance.
 - No authenticated workflow-dispatch connector is exposed. The owner must run the canonical production smoke workflow after an approved merged SHA is deployed and retain its report.
 - Hosting eligibility, company/office disclosure arrangements, actual provider/retention/rights facts, content sign-offs/credentials and recovery ownership remain open (D01–D04/D07/D09). Use OWNER-LAUNCH-ACTIONS.md to resolve them together. Do not request or record the private home address in public GitHub.
+- Owner confirmed no professional office arrangement yet and access to iPhone/Safari, Android/Chrome, Windows and Mac. Actual checks and screen-reader access remain pending. Legacy markerless recovery points cannot pass the new identity smoke; retain the limitation and separate provider/source/manual verification rather than weakening the check.
 - External SEO accounts/submissions/campaigns require D06; there is no automatic marketing or launch after this batch.
 
 ## Next actions
