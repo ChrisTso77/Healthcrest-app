@@ -88,7 +88,20 @@ test('weekly notes survive only explicit saving and restoring on a narrow layout
   await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
   const raw = await page.evaluate(key => localStorage.getItem(key), KEY);
   expect(JSON.parse(raw!).drafts.Sleep.week.days[0].note).toBe('A shorter version — ゆっくり');
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  const layout = await page.evaluate(() => ({
+    viewport: innerWidth,
+    documentWidth: document.documentElement.scrollWidth,
+    overflowing: [...document.querySelectorAll('body *')].filter((node): node is HTMLElement => node instanceof HTMLElement)
+      .filter(node => { const box = node.getBoundingClientRect(); return box.width > 0 && box.right > innerWidth + 1; })
+      .slice(0, 25).map(node => {
+        const box = node.getBoundingClientRect();
+        const style = getComputedStyle(node);
+        return { tag: node.tagName, type: node.getAttribute('type'), className: node.className,
+          width: box.width, right: box.right, scrollWidth: node.scrollWidth, clientWidth: node.clientWidth,
+          minWidth: style.minWidth, maxWidth: style.maxWidth, cssWidth: style.width };
+      }),
+  }));
+  expect(layout.documentWidth, JSON.stringify(layout)).toBeLessThanOrEqual(layout.viewport);
 });
 test('backup review, import and blob download preserve the manual save boundary', async ({ page }) => {
   await page.goto('/next-step');
