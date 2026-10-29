@@ -77,6 +77,8 @@ for (const width of [320, 768, 1350]) {
     await expect(comparison.getByRole('status')).toContainText('No settings have changed');
     await expect(summarySleep.getByRole('cell').first()).toHaveText('8');
     await expect(summarySleep.getByRole('cell').nth(1)).toHaveText(/^8\s*Unchanged$/);
+    const unchangedLabel = summarySleep.getByText('Unchanged', { exact: true });
+    expect(await unchangedLabel.evaluate(node => node.getBoundingClientRect().height <= 17 && node.scrollWidth <= node.clientWidth)).toBe(true);
     await expect(restore).toBeDisabled();
     await expect(restore).toBeFocused();
     await page.keyboard.press('Enter');
