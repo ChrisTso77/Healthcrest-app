@@ -1,11 +1,12 @@
 # Controlled-launch checklist
 
-Unchecked means pending, including checks unavailable in the current environment. This register is not a statement of legal, clinical, security or WCAG compliance. Record evidence/approver/date, not just a tick. Baseline evidence is in AUDIT.md; implementation results go in PROGRESS.md.
+Unchecked means pending, including checks unavailable in the current environment. This register is not a statement of legal, clinical, security or WCAG compliance. Record evidence/approver/date, not just a tick. Baseline evidence is in AUDIT.md and [RELEASE-EVIDENCE.md](RELEASE-EVIDENCE.md); implementation results go in PROGRESS.md. The owner has approved parallel launch-readiness work and combined release review. Optional visual refinements do not take priority over these gates.
 
 ## Gate A — Functional foundation
 - [x] Immutable source inventory and exact-main CI baseline recorded (34ca713b; run 40840624311).
 - [x] Existing automation covers homepage/navigation, practical learning journeys, Explorer scenarios/2D fallback/keyboard settings, planner save/restore/backup/calendar/failure and no-JavaScript/404 recovery.
 - [x] Legacy draft parsing, explicit save/import boundaries and storage-blocked cases remain covered.
+- [x] Latest approved baseline #122 has five passing jobs, 315 Chromium/34 compatibility cases, 23 build smoke checks, eight inspected lab profiles and a successful matching-tree production deployment; see RELEASE-EVIDENCE.md. This is historical release evidence, not acceptance of the next batch.
 - [ ] Current launch PR exact head passes all five CI jobs and Vercel preview; reports reviewed, not just presence of checks.
 - [ ] Representative real-device/touch/back-forward/error journeys recorded; confirm no critical functional defects across the agreed support matrix.
 - [ ] Final Gate A reviewer/date/evidence recorded.
@@ -17,6 +18,7 @@ Unchecked means pending, including checks unavailable in the current environment
 - [ ] Provider dashboards, scope, environment separation and optional measurement payload/withdrawal checks reviewed per ../measurement-rollout.md. Default-off behavior retained; do not enable by assumption.
 - [ ] Company disclosures, current credentials and privacy/provider/retention/rights process verified and public changes approved (D02–D04).
 - [ ] Four guides and scenarios receive accountable human editorial sign-off; source-check dates are not clinical-review dates.
+- [ ] Complete the per-content records in [CONTENT-APPROVAL-PACKET.md](CONTENT-APPROVAL-PACKET.md); keep pending decisions blank and bind actual approvals to the reviewed source.
 - [ ] Manual accessibility matrix below completed and blocking defects fixed/retested.
 - [ ] Final Gate B reviewer/date/evidence recorded.
 
@@ -52,6 +54,7 @@ For each row record date, commit, browser/OS/device or AT/version, task, result,
 - [ ] Explicit owner approval identifies the release commit/PR and production deployment. No automatic protected-branch merge.
 - [ ] All five CI jobs and preview pass at that exact head; merge result and deployed SHA checked.
 - [ ] Run manual Production release smoke check on intended main; verify https://www.healthcrest.uk and retain the commit-bound live report. CI localhost checks do not satisfy this item.
+- [ ] Require the build-bound release marker to match the approved merged commit on canonical live responses. Retain expected/observed identity, checked-out harness revision and run provenance; a missing/mismatched marker is a failed release check.
 - [ ] External legal/provider/credential/accessibility/security checks complete or explicit owner risk decision recorded; unresolved required gates are never silently waived.
 - [ ] Final launch approver/date/evidence and post-launch observation/rollback trigger recorded.
 

@@ -1,21 +1,18 @@
 import { spawn } from 'node:child_process';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { setTimeout as delay } from 'node:timers/promises';
 import { chromium } from '@playwright/test';
 import { assertStructuredData } from './structured-data-contract.mjs';
+import { CANONICAL_ORIGIN, RELEASE_HEADER, assertReleaseCommit, releaseProvenance, releaseTarget } from './release-identity.mjs';
 
-const canonicalOrigin = 'https://www.healthcrest.uk';
-const suppliedOrigin = process.env.HEALTHCREST_RELEASE_ORIGIN;
-const probe = new URL(suppliedOrigin || 'http://127.0.0.1:3002');
-if (probe.username || probe.password || probe.search || probe.hash || probe.pathname !== '/' ||
-    (probe.protocol !== 'https:' && !(probe.protocol === 'http:' && ['127.0.0.1', 'localhost'].includes(probe.hostname)))) {
-  throw new Error('Release origin must be an HTTPS origin, or HTTP localhost, without credentials, a path, query or fragment.');
-}
-const origin = probe.origin;
+const canonicalOrigin = CANONICAL_ORIGIN;
+let origin = null;
+let expectedCommit = null;
 const output = 'artifacts/release-readiness';
 const requiredPaths = ['/', '/start', '/learn', '/engine', '/next-step', '/about', '/contact', '/storage', '/privacy',
   '/learn/movement-and-strength', '/learn/balanced-meals', '/learn/sleep-routines', '/learn/stress-and-support'];
-const report = { origin, canonicalOrigin, passed: false, checks: [] };
+const report = { origin, canonicalOrigin, passed: false, checks: [], provenance: releaseProvenance(process.env),
+  release: { mode: 'unresolved', expectedCommit: null, observedCommit: null, identityVerified: false, compiledCommit: null, runtimeIdentityProbe: false } };
 let server;
 let serverExited = false;
 let browser;
@@ -82,8 +79,20 @@ async function check(name, run) {
 
 await mkdir(output, { recursive: true });
 try {
-  if (!suppliedOrigin) {
-    server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '--hostname', '127.0.0.1', '--port', '3002'], { stdio: 'inherit', env: process.env });
+  const target = releaseTarget(process.env);
+  origin = target.origin;
+  expectedCommit = target.expectedCommit;
+  report.origin = origin;
+  report.release.mode = target.mode;
+  report.release.expectedCommit = expectedCommit;
+  if (!target.suppliedOrigin) {
+    // Deliberately use a different runtime value in commit-bound local CI. The
+    // response must retain the build manifest's commit, proving a runtime env
+    // change cannot relabel the tested build. No deployed settings are changed.
+    const runtimeCommit = expectedCommit === '0'.repeat(40) ? '1'.repeat(40) : '0'.repeat(40);
+    const serverEnvironment = expectedCommit ? { ...process.env, HEALTHCREST_BUILD_COMMIT: runtimeCommit, VERCEL_GIT_COMMIT_SHA: runtimeCommit } : process.env;
+    report.release.runtimeIdentityProbe = Boolean(expectedCommit);
+    server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '--hostname', '127.0.0.1', '--port', '3002'], { stdio: 'inherit', env: serverEnvironment });
     server.on('error', () => { serverExited = true; });
     server.on('exit', () => { serverExited = true; });
     let ready = false;
@@ -112,6 +121,23 @@ try {
     const url = new URL(response.url());
     if (url.origin === origin && url.pathname.startsWith('/_next/static/') && response.status() >= 400) failedAssets.push(url.pathname);
   });
+  if (expectedCommit) await check('build-bound release identity', async () => {
+    if (!target.suppliedOrigin) {
+      const manifest = JSON.parse(await readFile('.next/routes-manifest.json', 'utf8'));
+      const markers = manifest.headers.flatMap(rule => rule.headers).filter(header => header.key.toLowerCase() === RELEASE_HEADER.toLowerCase());
+      ensure(markers.length === 1, 'Expected one compiled release identity header.');
+      report.release.compiledCommit = assertReleaseCommit(markers[0].value, expectedCommit);
+    }
+    const response = await context.request.get(origin + '/', { maxRedirects: 0 });
+    ensure(response.status() === 200, 'Release identity request did not return HTTP 200 without redirects.');
+    const observed = response.headers()[RELEASE_HEADER.toLowerCase()];
+    // Retain only a well-formed public SHA, never arbitrary server header text.
+    report.release.observedCommit = /^[a-f0-9]{40}$/.test(observed || '') ? observed : null;
+    assertReleaseCommit(observed, expectedCommit);
+    report.release.identityVerified = true;
+    return { expectedCommit, observedCommit: report.release.observedCommit, mode: target.mode,
+      compiledCommit: report.release.compiledCommit, runtimeIdentityProbe: report.release.runtimeIdentityProbe };
+  });
   const paths = [];
   await check('canonical sitemap and robots', async () => {
     const sitemap = await context.request.get(origin + '/sitemap.xml', { maxRedirects: 0 });
@@ -137,6 +163,7 @@ try {
       if (path === '/engine') target.searchParams.set('view', '2d');
       const response = await page.goto(target.href, { waitUntil: 'domcontentloaded' });
       ensure(response?.status() === 200, 'Public page did not return HTTP 200: ' + path);
+      if (expectedCommit) assertReleaseCommit(response.headers()[RELEASE_HEADER.toLowerCase()], expectedCommit);
       const final = new URL(page.url());
       ensure(final.origin === origin && final.pathname === path, 'Public page redirected away from its expected deployment path: ' + path);
       ensure(response.headers()['referrer-policy'] === 'no-referrer', 'Missing no-referrer header: ' + path);
@@ -269,11 +296,17 @@ try {
     return { failedAssets: failedAssets.length, telemetryRequests: telemetryRequests.length };
   });
   report.passed = true;
+} catch (error) {
+  report.error = error.message;
+  throw error;
 } finally {
-  await writeFile(output + '/summary.json', JSON.stringify({
-    ...report,
-    scope: 'Read-only smoke checks of a fresh browser against the built application or explicitly supplied origin. Fragment targets use default public page DOMs; query-dependent states and external sources need separate tests. No claim about provider dashboards, legal review or every clinical statement.',
-  }, null, 2));
-  await browser?.close();
-  server?.kill('SIGTERM');
+  try {
+    await writeFile(output + '/summary.json', JSON.stringify({
+      ...report,
+      scope: 'Read-only smoke checks of a fresh browser against the built application or explicitly supplied origin. Expected/observed commit headers identify the claimed build; they do not independently attest provider settings or source integrity. A GitHub PR source checkout can be a synthetic merge commit. Fragment targets use default public page DOMs; query-dependent states and external sources need separate tests. No claim about provider dashboards, legal review or every clinical statement.',
+    }, null, 2));
+  } finally {
+    try { await browser?.close(); }
+    finally { server?.kill('SIGTERM'); }
+  }
 }

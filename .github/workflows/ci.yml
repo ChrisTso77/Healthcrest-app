@@ -41,6 +41,9 @@ jobs:
       - name: Verify structured-data consistency boundaries
         run: npm run test:seo
 
+      - name: Verify release identity boundaries
+        run: node scripts/release-identity.test.mjs
+
   validate-cms-seed:
     name: Validate CMS Seed JSON
     runs-on: ubuntu-latest
@@ -70,6 +73,8 @@ jobs:
     env:
       HEALTHCREST_TELEMETRY_ENABLED: 'true'
       VERCEL_ENV: production
+      HEALTHCREST_BUILD_COMMIT: ${{ github.sha }}
+      HEALTHCREST_EXPECTED_COMMIT: ${{ github.sha }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
