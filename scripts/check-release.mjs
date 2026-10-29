@@ -107,7 +107,8 @@ try {
       const description = await page.locator('meta[name="description"]').getAttribute('content');
       ensure(description?.trim(), 'Missing description: ' + path);
       pageMetadata.push({ path, title, description });
-      ensure(await page.locator('h1').count() === 1, 'Expected one primary heading: ' + path);
+      // The planner also has a print-only h1; assess headings exposed in this screen view.
+      ensure(await page.getByRole('heading', { level: 1 }).count() === 1, 'Expected one exposed primary heading: ' + path);
       ensure(/^en(?:-|$)/.test(await page.locator('html').getAttribute('lang') || ''), 'Missing English document language: ' + path);
       const sharingUrl = await page.locator('meta[property="og:url"]').getAttribute('content');
       ensure(sharingUrl && new URL(sharingUrl).href === new URL(path, canonicalOrigin).href, 'Incorrect sharing URL: ' + path);

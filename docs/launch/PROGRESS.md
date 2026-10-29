@@ -10,21 +10,22 @@ Updated 29 October 2026. Read ROADMAP.md and this file before starting another c
 ## Completed this cycle
 - Read the master directive; audited current source inventory, recent/open PR state, architecture, routes, content/assets, storage/privacy behavior and existing verification/operations documents.
 - Created AUDIT.md with ranked evidence/limits, ROADMAP.md with engineering/editorial/commercial tasks, LAUNCH-CHECKLIST.md and DECISION-REGISTER.md. Full security/manual/operational checks remain pending, not passed.
-- Local baseline: type checks, lint and 300 unit tests passed using reused dependencies. Local browser binaries are missing. Build outcome and hosted implementation evidence will be appended below.
+- Local baseline: type checks, lint and 300 unit tests passed initially using reused dependencies; a subsequent clean npm ci succeeded. Local browser binaries are missing. Build outcome and hosted implementation evidence will be appended below.
 - Implemented L05: raw-value mobile budgets, explicit failure on low/invalid/runtime-failed reports or unpermitted measurement; preserves output before failure. Added 20 Node boundary/error cases and CI invocation. No dependency/service or app runtime change.
 - Implemented L07's first slice: unique public titles/descriptions, single primary heading/language and default-public-page fragment destinations in the existing read-only release check. Query-dependent states still need separate tests; no external source uptime or schema eligibility claim.
 - Owner supplied company number 15318363, registration in England, a hobby-first intention, and Chris Tsoto approval with at least weekly content review/correction. These are recorded as supplied facts; no company lookup exposing an address or public legal change was made. Registered-office privacy/eligibility and actual content sign-off remain open. See D01/D02/D04.
 
 ## Active task
-Verify and review the launch foundation PR at its immutable head. Then choose the highest-priority unblocked roadmap task. Keep reports and state bound to the actual checked commit, not this document's later administrative edits. All five CI jobs, including compatibility and preview-off, are required; do not infer Actions success from the Vercel status alone.
+Verify and review the launch foundation PR at its immutable head. Also investigate L14 in a separate dev-tool branch; do not force peer versions or weaken lint rules. Then choose the highest-priority unblocked roadmap task. Keep reports and state bound to the actual checked commit, not this document's later administrative edits. All five CI jobs, including compatibility and preview-off, are required; do not infer Actions success from the Vercel status alone.
 
 ## Failed/unavailable checks and dependencies
 - Local git network: proxy:8080 connection failed. Do not bypass the policy or expose credentials; use the GitHub connector and hosted CI.
-- `npm ci --offline`: ENOTCACHED for zustand. Key reused installed versions matched lockfile; this is not a fresh install.
+- Initial `npm ci --offline`: ENOTCACHED for zustand. A later npm ci with supported network permission succeeded; no proxy/TLS bypass. The install exposed an unsupported ESLint 9 warning (L14), now investigated separately.
 - Initial local build with symlinked node_modules: Turbopack could not resolve a package outside its filesystem root. Retry with dependency files inside snapshot failed at Turbopack/PostCSS child-process port binding: Operation not permitted (os error 1). This is an execution-sandbox limitation; hosted build verification is required. Do not change production config to accommodate the workspace.
 - No local Chromium/Firefox/WebKit executables; browser CDN is outside allowed destinations. Browser/release/Lighthouse checks require hosted CI here.
 - Formal security workflow blocked: codex-security:security-scan/SKILL.md was readable; required scan-prologue resource failed to load and no capability/preflight/scan tool was exposed. Skill requires preflight ready before source-audit workflow. No completed security scan/report or blanket security conclusion exists.
 - Live canonical homepage fetch was inaccessible from the web tool; production deployment success is not a live smoke pass.
+- First foundation CI attempt (run 40843896951) stopped on a new heading assertion that counted the planner’s hidden print-only h1. Corrected the check to use exposed accessibility headings, preserving the print heading and app behavior. Subsequent hosted verification is required.
 - Owner/provider/AT/device decisions in D01–D09 remain open. No company/credential/retention/commercial eligibility facts were invented.
 
 ## Next safe actions

@@ -6,8 +6,8 @@ Recorded 29 October 2026. Baseline: `34ca713b922ee53b2f0dad1c5447d406e9a1216d` (
 
 - GitHub main was at the baseline above; no open PRs at audit start. The original local `/workspace/Healthcrest-app` checkout was clean at `81758f7` on branch `work`; it was preserved.
 - The GitHub connector supplied the immutable tree and changed files. An isolated source snapshot was reconstructed at `/workspace/healthcrest-launch-34ca713`; all 203 tracked files matched their Git blob hashes. No AGENTS.md or SECURITY.md was present in the repository inventory.
-- Local git fetch failed: `Failed to connect to proxy port 8080`. `npm ci --offline` failed with ENOTCACHED for zustand; fresh installation cannot be claimed. Existing dependencies were reused, with the key installed package versions checked against the unchanged lockfile. Local Node is 24.19.0; CI uses Node 22.
-- Local `npx --no-install tsc --noEmit`, `npm run lint` and `npm run test:unit` passed (300 tests, 30 files). A symlinked dependency build failed Turbopack root resolution; dependencies were then made available inside the snapshot. The subsequent build with in-root dependency files failed when Turbopack/PostCSS attempted a child-process port bind denied by the execution sandbox (Operation not permitted). Hosted CI remains the build evidence; no application config was changed to bypass this.
+- Local git fetch failed: `Failed to connect to proxy port 8080`. `npm ci --offline` failed with ENOTCACHED for zustand; the initial install was unavailable under the default sandbox. A later `npm ci` with the supported network permission completed successfully (468 packages); no proxy or TLS settings were bypassed. Existing dependencies were reused, with the key installed package versions checked against the unchanged lockfile. Local Node is 24.19.0; CI uses Node 22.
+- Initial local `npx --no-install tsc --noEmit`, `npm run lint` and `npm run test:unit` passed (300 tests, 30 files). A symlinked dependency build failed Turbopack root resolution; dependencies were then made available inside the snapshot. The subsequent build with in-root dependency files failed when Turbopack/PostCSS attempted a child-process port bind denied by the execution sandbox (Operation not permitted). Hosted CI remains the build evidence; no application config was changed to bypass this.
 - Chromium, Firefox and WebKit executables are absent locally. Local browser/release/Lighthouse checks are unavailable; browser downloads require destinations outside the current allowed host policy. No network-policy bypass was attempted.
 - Exact-main hosted [run 40840624311](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40840624311) passed all five jobs: CMS seed validation; lint/type checks/300 unit tests and production dependency audit; production build/18 release checks/283 Chromium tests/mobile audit; preview measurement-off; 14 compatibility checks (seven Firefox, seven WebKit). Dependency audit reported zero vulnerabilities; that is not an application-security assessment.
 - Vercel reported a successful [production deployment](https://vercel.com/tsotsoft/healthcrest-app/66LRHQHEcpqpXZxTbBkacmQUhaN9) for the baseline. This does not prove current DNS, all live journeys or provider settings. A read-only web fetch of the canonical homepage was inaccessible from this tool. The latest known manual live smoke predates this baseline; run the production workflow after an explicitly approved release.
@@ -25,7 +25,7 @@ Lighthouse 13.6.0, one navigation per route on a GitHub runner; default visitor 
 
 | Area | Current evidence and limits |
 | --- | --- |
-| Stack | package-lock.json resolves Next 16.4.3, React/React DOM 19.3.0, TypeScript 5.9.3, Tailwind 4.3.3, Sanity client 8.7.0, Three 0.186.1, Playwright 1.63.0 and Vitest 5.0.5. package.json, tsconfig.json, next.config.ts and .github/workflows/ci.yml define commands/builds. Dependency currency beyond the recorded audit is not established. |
+| Stack | package-lock.json resolves Next 16.4.3, React/React DOM 19.3.0, TypeScript 5.9.3, Tailwind 4.3.3, Sanity client 8.7.0, Three 0.186.1, Playwright 1.63.0 and Vitest 5.0.5. package.json, tsconfig.json, next.config.ts and .github/workflows/ci.yml define commands/builds. The later clean install warned that ESLint 9.39.5 is unsupported; see L14. Other dependency currency beyond the recorded audit is not established. |
 | Routes and server/client boundaries | App Router server pages cover /, /start, /learn, four /learn/[slug] guides, /engine, /next-step, /about, /contact, /storage and /privacy. Client islands include LearningLibrary, HabitPlanner, MeasurementProvider, the preview and animation. The engine is interactive client state; its WebGL wrapper is dynamically imported with SSR disabled. |
 | Brand and navigation | components/SiteChrome.tsx shares logo/header/footer. app/page.tsx provides the purpose, four pillars, interactive preview, sources, credibility and planner links. The approved raster logo uses next/image AVIF/WebP delivery, not a fabricated vector. app/landing.css supplies three scoped colour variables plus shared classes; engine and planner styles also contain literal values. |
 | Explorer | state/PillarsStateMachine.tsx and lib/state implement reducer transitions; reviewed preset text is separate from illustration values. components/HealthEngineViewport.tsx supplies a labelled 2D alternative/error boundary. app/WebGLCanvasWrapper.tsx uses demand frames when paused/reduced motion and capped DPR; normal animated mode still renders continuously. GPU/background-tab behavior needs profiling. |
@@ -92,7 +92,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 
 ### L07 — SEO/internal-link regression coverage gaps
 - Category / severity / kind: SEO/functionality; **Medium**; opportunity.
-- Evidence: scripts/check-release.mjs checked title/description presence and internal pathnames, but not unique page metadata, primary heading/language or fragment targets. Structured data exists; external eligibility/indexing checks remain separate.
+- Evidence: scripts/check-release.mjs checked title/description presence and internal pathnames, but not unique page metadata, exposed screen heading/language or fragment targets. Structured data exists; external eligibility/indexing checks remain separate.
 - Impact: A later broken source/skip/planner anchor or duplicated metadata could pass the smoke check.
 - Remediation: Add default-public-DOM fragment and metadata/heading checks; plan structured-data consistency review and approved Search Console verification/submission.
 - Complexity / dependencies: Low engineering; browser CI. External accounts require D06.
@@ -146,6 +146,14 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Complexity / dependencies: Medium; D04/D07 and scoped CMS access.
 - Acceptance / status: Recorded author→review→preview→publish→correct/archive journey with failure/recovery evidence, without publishing new advice automatically. **Pending.**
 
+### L14 — ESLint release line unsupported
+- Category / severity / kind: Development tooling; **Medium**; verified maintenance issue, not a claimed exploitable vulnerability.
+- Evidence: Clean npm ci warned that ESLint 9.39.5 is no longer supported; package-lock.json resolves that version. Official eslint.org/version-support/ read 29 October lists v9 EOL since 6 August 2026 and v10 current. npm registry reports stable 10.13.0; installed eslint-config-next 16.4.3 declares eslint >=9.0.0. Plugin compatibility still needs testing.
+- Impact: The development lint tool no longer receives upstream maintenance; blind major upgrades could also change lint behavior.
+- Remediation: Prepare an independent dev-tool PR after checking all peer constraints and the v10 migration guide; use a real lockfile update without force/legacy-peer-deps or disabling rules.
+- Complexity / dependencies: Low–Medium; compatible Next/TypeScript/React lint plugins and Node (v10 requires ^20.19 / ^22.13 / >=24; CI selects current Node 22).
+- Acceptance / status: Clean install without peer overrides, intended lint coverage/rules preserved, lint/type/unit/build/hosted checks pass. **Investigating independently; current foundation PR does not change dependencies.**
+
 ## Sources read for this audit
 
 Read 29 October 2026; these do not certify Healthcrest:
@@ -153,6 +161,7 @@ Read 29 October 2026; these do not certify Healthcrest:
 - https://www.gov.uk/running-a-limited-company/signs-stationery-and-promotional-material and https://www.gov.uk/limited-company-formation/company-address — company website disclosures and suitable registered-office alternatives. No private address was retrieved or published.
 - https://developers.google.com/search/docs/essentials — people-first content, crawlable links and technical eligibility; no ranking guarantee.
 - https://web.dev/articles/vitals — LCP/INP/CLS field targets and p75 segmentation.
+- https://eslint.org/version-support/ and https://eslint.org/docs/latest/use/migrate-to-10.0.0 — development-tool support and migration requirements.
 - https://developer.chrome.com/docs/lighthouse/performance/performance-scoring — lab scores/variability, distinct from field evidence.
 
 The official-source review does not independently verify professional registration, company identity, medical claims or legal compliance. No public legal/clinical statements, provider configuration or production resources were changed by the audit.
