@@ -88,39 +88,28 @@ test('weekly notes survive only explicit saving and restoring on a narrow layout
   await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
   const raw = await page.evaluate(key => localStorage.getItem(key), KEY);
   expect(JSON.parse(raw!).drafts.Sleep.week.days[0].note).toBe('A shorter version — ゆっくり');
-  const layout = await page.evaluate(async () => {
-    const measure = () => {
-      const describe = (node: HTMLElement) => {
-        const box = node.getBoundingClientRect();
-        const style = getComputedStyle(node);
-        return { tag: node.tagName, type: node.getAttribute('type'), className: node.className,
-          width: box.width, left: box.left, right: box.right, scrollWidth: node.scrollWidth, clientWidth: node.clientWidth,
-          minWidth: style.minWidth, maxWidth: style.maxWidth, cssWidth: style.width, position: style.position };
-      };
-      const nodes = [...document.querySelectorAll('body *')].filter((node): node is HTMLElement => node instanceof HTMLElement);
-      return {
-        viewport: innerWidth, scrollX, documentWidth: document.documentElement.scrollWidth,
-        root: describe(document.documentElement), body: describe(document.body),
-        visual: visualViewport ? { width: visualViewport.width, offsetLeft: visualViewport.offsetLeft, scale: visualViewport.scale } : null,
-        overflowing: nodes.filter(node => { const box = node.getBoundingClientRect(); return box.width > 0 && box.right + scrollX > innerWidth + 1; }).slice(-25).map(describe),
-        controls: nodes.filter(node => node.matches('input, select, textarea')).map(describe),
-      };
-    };
-    const initial = measure();
-    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
-    await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
-    const afterBlur = measure();
+  const layout = await page.evaluate(() => {
+    const initial = { viewport: innerWidth, documentWidth: document.documentElement.scrollWidth };
     const probes: Record<string, number> = {};
-    for (const selector of ['input[type="time"]', 'input[type="file"]', 'select', 'textarea', '.hc-week-calendar', '.hc-plan-print', 'form']) {
-      const nodes = [...document.querySelectorAll<HTMLElement>(selector)];
-      const previous = nodes.map(node => node.getAttribute('style'));
-      nodes.forEach(node => node.style.setProperty('display', 'none', 'important'));
-      probes[selector] = document.documentElement.scrollWidth;
-      nodes.forEach((node, index) => { const value = previous[index]; if (value === null) node.removeAttribute('style'); else node.setAttribute('style', value); });
+    if (initial.documentWidth > initial.viewport) {
+      const selects = [...document.querySelectorAll<HTMLSelectElement>('.hc-week select')];
+      const previous = selects.map(node => node.getAttribute('style'));
+      for (const declaration of ['max-width:100%', 'overflow:hidden', 'text-overflow:ellipsis', 'appearance:none', 'contain:inline-size']) {
+        selects.forEach(node => node.setAttribute('style', declaration));
+        probes[declaration] = document.documentElement.scrollWidth;
+        selects.forEach((node, index) => { const value = previous[index]; if (value === null) node.removeAttribute('style'); else node.setAttribute('style', value); });
+      }
     }
-    return { initial, afterBlur, probes };
+    return { ...initial, probes };
   });
-  expect(layout.initial.documentWidth, JSON.stringify(layout)).toBeLessThanOrEqual(layout.initial.viewport);
+  expect(layout.documentWidth, JSON.stringify(layout)).toBeLessThanOrEqual(layout.viewport);
+  const summary = page.getByRole('region', { name: 'Your week at a glance', exact: true });
+  await summary.getByLabel('Day to open', { exact: true }).selectOption('6');
+  await summary.getByRole('button', { name: 'Open selected day', exact: true }).click();
+  await expect(page.getByLabel('Day 7: what happened?', { exact: true })).toBeFocused();
+  await page.getByLabel('Day 7: what happened?', { exact: true }).selectOption('rest');
+  await expect(page.getByLabel('Day 7: what happened?', { exact: true })).toHaveValue('rest');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 test('backup review, import and blob download preserve the manual save boundary', async ({ page }) => {
   await page.goto('/next-step');
