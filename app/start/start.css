@@ -6,7 +6,7 @@
 .hc-journey-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
 .hc-journey-options label { display: flex; align-items: start; gap: 12px; min-width: 0; padding: 18px; border: 1px solid #a4b893; border-radius: 12px; cursor: pointer; }
 .hc-journey-options label:has(input:checked) { background: #e5edda; border-color: #486c33; }
-.hc-journey-options label:focus-within { outline: 3px solid #648c44; outline-offset: 3px; }
+.hc-journey-options label:focus-within { outline: var(--hc-focus-width) solid var(--hc-focus-ring); outline-offset: var(--hc-focus-offset); }
 .hc-journey-options input { margin-top: 5px; flex: none; width: 18px; height: 18px; accent-color: #365a28; }
 .hc-journey-options strong, .hc-journey-options strong + span { display: block; }
 .hc-journey-options strong + span { font-size: 14px; margin-top: 6px; }

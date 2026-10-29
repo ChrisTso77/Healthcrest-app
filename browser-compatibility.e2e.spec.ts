@@ -3,6 +3,12 @@ import { FALLBACK_PRESETS } from './lib/presets/fallback';
 import { LEARNING_GUIDES } from './lib/education/learningGuides';
 import { createHabitWeek } from './lib/education/habitWeek';
 import type { SavedHabitDraft } from './lib/education/habitDraft';
+import { checkPublicFocus } from './e2e/focus-appearance';
+
+test('public keyboard focus works on light and dark surfaces', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await checkPublicFocus(page, testInfo);
+});
 
 test('the browser-tab icon and conventional fallback decode locally', async ({ page, request }, testInfo) => {
   await page.goto('/learn');
