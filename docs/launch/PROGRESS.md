@@ -10,7 +10,9 @@ Read ROADMAP.md, RELEASE-EVIDENCE.md and LAUNCH-CHECKLIST.md together. Preserve 
 - PR [#123](https://github.com/ChrisTso77/Healthcrest-app/pull/123) delivered launch preparation and build-bound release identity. Its canonical smoke failed the favicon MIME assertion; #124 fixed the confirmed header mismatch and preserved every release assertion and both workflows.
 - [PR CI 40964311761](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40964311761) passed all five jobs. [Canonical live run 40967684877](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40967684877) passed all 24 checks with expected/observed commit equal to merged main. Detailed evidence and the retained failed #123 run are in RELEASE-EVIDENCE.md.
 - Direct production inspection confirmed HTTP 200, `image/png` and complete 2,787-byte 64×64 favicon bytes. This closes L29's deployed-identity evidence gap for this release, not recovery rehearsal or launch acceptance.
-- Current branch `docs/verified-production-release` reconciles the resumption/operations/gate records with those actual outcomes. It changes documentation only and needs its own review/merge approval. Prior approval stops at #124.
+- The `docs/verified-production-release` branch reconciled the resumption/operations/gate records with those actual outcomes in documentation only.
+- That reconciliation merged with explicit owner approval in #125 as `534325ea71f901a4a90b677691a087a48e56b270`; reviewed/merged trees matched. All five PR jobs passed in run 40968534850, and canonical live run [40969499299](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40969499299) passed all 24 checks with matching identity. The #124 ledger above remains evidence for that specific release.
+- Current development branch `harden/response-content-types` adds the observed missing `nosniff` response header and checks declared MIME types on loaded scripts/styles alongside the existing release assertions. This is scoped header hardening; L01's supported assessment and a broader resource-specific CSP review remain pending. #125 merge approval does not apply to this new change.
 
 ## Security/tooling reassessment
 

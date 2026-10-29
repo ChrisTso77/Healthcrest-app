@@ -18,6 +18,8 @@ let serverExited = false;
 let browser;
 const telemetryRequests = [];
 const failedAssets = [];
+const invalidAssetTypes = new Set();
+const checkedAssetTypes = new Set();
 const internalPaths = new Set();
 const pageIds = new Map();
 const internalFragments = new Map();
@@ -120,6 +122,13 @@ try {
   page.on('response', response => {
     const url = new URL(response.url());
     if (url.origin === origin && url.pathname.startsWith('/_next/static/') && response.status() >= 400) failedAssets.push(url.pathname);
+    if (url.origin !== origin || !url.pathname.startsWith('/_next/static/')) return;
+    const expectedTypes = url.pathname.endsWith('.css') ? ['text/css']
+      : /\.m?js$/.test(url.pathname) ? ['text/javascript', 'application/javascript'] : null;
+    if (!expectedTypes) return;
+    const type = response.headers()['content-type']?.split(';')[0].trim().toLowerCase();
+    checkedAssetTypes.add(url.pathname);
+    if (!expectedTypes.includes(type) || response.headers()['x-content-type-options'] !== 'nosniff') invalidAssetTypes.add(url.pathname);
   });
   if (expectedCommit) await check('build-bound release identity', async () => {
     if (!target.suppliedOrigin) {
@@ -167,6 +176,7 @@ try {
       const final = new URL(page.url());
       ensure(final.origin === origin && final.pathname === path, 'Public page redirected away from its expected deployment path: ' + path);
       ensure(response.headers()['referrer-policy'] === 'no-referrer', 'Missing no-referrer header: ' + path);
+      ensure(response.headers()['x-content-type-options'] === 'nosniff', 'Missing nosniff header: ' + path);
       const title = await page.title();
       ensure(title.includes('Healthcrest'), 'Missing Healthcrest title: ' + path);
       const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
@@ -258,6 +268,7 @@ try {
   await check('browser-tab icon metadata and fallback', async () => {
     const assertIcon = async response => {
       const bytes = await response.body();
+      ensure(response.headers()['x-content-type-options'] === 'nosniff', 'Missing nosniff header on browser-tab icon.');
       ensure(response.status() === 200 && response.headers()['content-type']?.startsWith('image/png'),
         'Browser-tab icon did not return a PNG: ' + new URL(response.url()).pathname +
         ' (HTTP ' + response.status() + ', Content-Type ' + (response.headers()['content-type'] || 'missing') + ', ' + bytes.length + ' bytes).');
@@ -286,6 +297,7 @@ try {
     for (const path of ['/healthcrest-release-check-missing', '/learn/healthcrest-release-check-missing']) {
       const response = await page.goto(origin + path, { waitUntil: 'domcontentloaded' });
       ensure(response?.status() === 404, 'Missing page did not return HTTP 404: ' + path);
+      ensure(response.headers()['x-content-type-options'] === 'nosniff', 'Missing nosniff header on recovery page: ' + path);
       ensure(await page.getByRole('heading', { level: 1 }).textContent() === 'Page not found', 'Missing branded recovery page.');
       const directives = await page.locator('meta[name="robots"]').evaluateAll(nodes => nodes.map(node => node.getAttribute('content')).join(','));
       ensure(directives.includes('noindex'), 'Missing page is not marked noindex.');
@@ -294,8 +306,10 @@ try {
   });
   await check('fresh-visitor assets and measurement', async () => {
     ensure(failedAssets.length === 0, 'Static application assets failed to load.');
+    ensure(checkedAssetTypes.size > 0, 'No static script or stylesheet responses were checked.');
+    ensure(invalidAssetTypes.size === 0, 'Static scripts or styles have an unexpected MIME type or missing nosniff header: ' + [...invalidAssetTypes].join(', '));
     ensure(telemetryRequests.length === 0, 'Optional measurement loaded for a fresh visitor.');
-    return { failedAssets: failedAssets.length, telemetryRequests: telemetryRequests.length };
+    return { failedAssets: failedAssets.length, telemetryRequests: telemetryRequests.length, typedAssets: checkedAssetTypes.size, invalidAssetTypes: invalidAssetTypes.size };
   });
   report.passed = true;
 } catch (error) {
