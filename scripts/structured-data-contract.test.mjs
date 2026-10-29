@@ -37,6 +37,10 @@ test('accepts a public non-guide with only the shared website identity', () => {
   const data = fixture();
   assert.deepEqual(assertStructuredData({ ...data.snapshot, canonical: origin + '/about', guide: null, scripts: [JSON.stringify(data.website)] }, origin), { pages: 1, guides: 0, citations: 0 });
 });
+test('normalises the equivalent root canonical with no trailing slash', () => {
+  const data = fixture();
+  assert.equal(assertStructuredData({ ...data.snapshot, canonical: origin, guide: null, scripts: [JSON.stringify(data.website)] }, origin).pages, 1);
+});
 test('accepts equivalent top-level JSON-LD document arrays', () => {
   const data = fixture(), value = snapshot(data);
   value.scripts = [JSON.stringify([data.website, { '@context': 'https://schema.org', '@graph': [data.article, data.trail] }])];

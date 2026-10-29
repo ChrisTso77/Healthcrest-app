@@ -17,7 +17,7 @@ New publication dates, clinical-review fields or top-level schema types require 
 
 The check covers all 13 sitemap pages and all four guides, then revisits the guides with a public practical preference and an ignored parameter. Canonical, sharing and structured page identity must remain query-free. These synthetic parameters contain no visitor notes, and the check neither saves a plan nor grants measurement permission. Existing noindex/404, source/fragment, privacy and performance checks remain required.
 
-Run npm run test:seo for 34 deterministic parser/mismatch cases, including malformed/missing markup, wrong identity/byline/date, source omissions/inventions, wrong trail positions/destinations, query contamination and unrecorded review/publication claims. Existing guide catalogue unit tests also check shared trail labels. The five hosted CI jobs remain; the existing lint/unit job runs the new cases and the release job exercises rendered pages. No dependencies or lockfile change.
+Run npm run test:seo for 35 deterministic parser/mismatch cases, including malformed/missing markup, wrong identity/byline/date, source omissions/inventions, wrong trail positions/destinations, query contamination and unrecorded review/publication claims. Existing guide catalogue unit tests also check shared trail labels. The five hosted CI jobs remain; the existing lint/unit job runs the new cases and the release job exercises rendered pages. No dependencies or lockfile change.
 
 ## Scope and launch decisions
 

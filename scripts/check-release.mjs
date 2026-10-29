@@ -57,7 +57,7 @@ async function checkPageStructuredData(page, path) {
       } : null,
     };
   }, path.startsWith('/learn/'));
-  ensure(snapshot.canonical === new URL(path, canonicalOrigin).href, 'Structured-data check found an unexpected canonical page: ' + path);
+  ensure(snapshot.canonical && new URL(snapshot.canonical).href === new URL(path, canonicalOrigin).href, 'Structured-data check found an unexpected canonical page: ' + path);
   if (snapshot.guide) snapshot.guide.breadcrumbs = snapshot.guide.breadcrumbs.map(item => ({
     name: item.name, url: item.href ? new URL(item.href, canonicalOrigin).href : snapshot.canonical,
   }));
@@ -182,7 +182,8 @@ try {
       const response = await page.goto(origin + path + '?idea=routine&unused=seo-check', { waitUntil: 'domcontentloaded' });
       ensure(response?.status() === 200, 'Guide preference variant did not return HTTP 200.');
       await checkPageStructuredData(page, path);
-      ensure(await page.locator('meta[property="og:url"]').getAttribute('content') === new URL(path, canonicalOrigin).href, 'Guide sharing URL retained public preferences.');
+      const sharing = await page.locator('meta[property="og:url"]').getAttribute('content');
+      ensure(sharing && new URL(sharing).href === new URL(path, canonicalOrigin).href, 'Guide sharing URL retained public preferences.');
     }
     return { guides: guides.length };
   });

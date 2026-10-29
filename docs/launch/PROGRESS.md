@@ -22,7 +22,7 @@ Guide breadcrumbs and responsible organisation now share definitions between HTM
 
 The read-only release check parses current curated schemas and compares WebSite/Article/BreadcrumbList, canonical identity, headline/description, displayed byline/date, all displayed sources and breadcrumb names/positions/destinations. It revisits four guides with fixed public preferences and an ignored parameter; canonical/sharing/schema identity must remain query-free. It never saves a plan, grants measurement permission or evaluates structured scripts. See STRUCTURED-DATA.md.
 
-Local evidence: 300 unit and 34 Node parser/mismatch cases passed, plus type, lint and syntax checks. Existing 32 performance cases/eight profiles and browser/privacy checks remain required in hosted CI. Expected release coverage expands from 20 to 22 checks; actual counts/results must be read from the final-head report.
+Local evidence: 300 unit and 35 Node parser/mismatch cases passed, plus type, lint and syntax checks. The first hosted attempt (run 40860942048 at e792084723c2717ba2d9547f9facc9db5eb16217) stopped at an overly strict raw root-canonical comparison; the collector now normalises URL identity like the pre-existing release check, with a root-URL regression case. Corrected-head verification is required. Existing 32 performance cases/eight profiles and browser/privacy checks remain required in hosted CI. Expected release coverage expands from 20 to 22 checks; actual counts/results must be read from the final-head report.
 
 ## Dependencies and unavailable evidence
 - Local Turbopack/PostCSS build was denied a child-process port bind by the execution sandbox, including with supported network permission. Do not alter app configuration to bypass this; use hosted build evidence.
