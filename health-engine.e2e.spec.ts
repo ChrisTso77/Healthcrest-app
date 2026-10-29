@@ -393,11 +393,11 @@ test.describe('Healthcrest production regression', () => {
   for (const viewport of [{ width: 1280, height: 720 }, { width: 320, height: 568 }]) {
     for (const scenario of [
       {
-        trigger: 'Home & Global Narrative',
-        title: 'HEALTH THROUGH EVERYDAY HABITS',
-        close: 'Close global narrative',
-        content: 'Global narrative content',
-        done: 'Close & Return to the Habit Explorer',
+        trigger: 'About this Explorer',
+        title: 'About this Explorer',
+        close: 'Close about this Explorer',
+        content: 'About this Explorer content',
+        done: 'Close and keep exploring',
       },
       {
         trigger: 'Guide: understand this view',
@@ -407,11 +407,11 @@ test.describe('Healthcrest production regression', () => {
         done: 'Close & explore',
       },
       {
-        trigger: 'Clinical & Legal Disclaimer',
-        title: 'CLINICAL & MEDICO-LEGAL DISCLAIMER',
-        close: 'Close clinical disclaimer',
-        content: 'Clinical disclaimer content',
-        done: 'I Understand & Acknowledge',
+        trigger: 'Important information',
+        title: 'Important information',
+        close: 'Close important information',
+        content: 'Important information content',
+        done: 'Close and keep exploring',
       },
     ]) {
       test(`${scenario.trigger} manages modal focus and dismissal at ${viewport.width}px`, async ({ page }) => {
@@ -513,8 +513,8 @@ test.describe('Healthcrest production regression', () => {
         expect(box!.x).toBeGreaterThanOrEqual(0);
         expect(box!.x + box!.width).toBeLessThanOrEqual(viewport.width);
       }
-      await page.getByRole('button', { name: /Clinical & Legal Disclaimer/i }).click();
-      await expect(page.getByRole('dialog', { name: /CLINICAL & MEDICO-LEGAL DISCLAIMER/i })).toBeVisible();
+      await page.getByRole('button', { name: /Important information/i }).click();
+      await expect(page.getByRole('dialog', { name: /Important information/i })).toBeVisible();
     });
   }
 

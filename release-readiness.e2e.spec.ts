@@ -2,6 +2,15 @@ import { test, expect } from '@playwright/test';
 import { checkPublicFocus } from './e2e/focus-appearance';
 import { checkHabitSelection } from './e2e/habit-selection';
 import { checkScenarioSelection } from './e2e/scenario-selection';
+import { checkExplorerInformation } from './e2e/explorer-information';
+
+for (const width of [320, 1350]) {
+  test('plain Explorer information controls preserve the current session at ' + width + 'px', async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: width === 320 ? 568 : 940 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await checkExplorerInformation(page, testInfo, width === 320 ? '2d' : '3d', true);
+  });
+}
 
 for (const width of [320, 1350]) {
   for (const colorScheme of ['light', 'dark'] as const) {

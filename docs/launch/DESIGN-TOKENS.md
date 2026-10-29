@@ -35,3 +35,9 @@ The marker follows activePreset identity. Editing an input or restoring a refere
 ## Forced-colour decorative effects
 
 HUD header/summary/camera/dock surfaces and native modal backdrops now disable backdrop blur under forced-colors: active, using existing Tailwind variants. Normal modes retain the original effects and palette. Initial hosted screenshots and an isolated Chromium reproduction showed unchanged text disappearing after dialog close when either blur layer remained. Compiled-style checks cover actual visible surfaces and dialog pseudo-elements; retained post-close screenshots must be inspected because DOM visibility alone did not detect the missing paint. This adds no system-colour override and establishes no real-device or OS-theme certification.
+
+## Explorer information controls
+
+About this Explorer and Important information open in-place dialogs; the separate Healthcrest home link navigates home. Information openers use 12px text, explicit dialog hints and at least 44px targets. Header and final close actions also use 44px targets; flexible headers wrap beside a fixed close target. Both final actions say Close and keep exploring and record no acknowledgement. Substantive content/source blocks remain unchanged; this is no legal or clinical re-review.
+
+The ordinary footer reserve is 5.5rem (previously 5rem) to accommodate larger controls without dock overlap. Existing recovery reserve/scrolling is retained. Existing keyboard/modal/recovery/forced-colour coverage remains required alongside compact 2D/desktop 3D screenshots and session/storage checks.

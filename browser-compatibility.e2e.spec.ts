@@ -6,6 +6,12 @@ import type { SavedHabitDraft } from './lib/education/habitDraft';
 import { checkPublicFocus } from './e2e/focus-appearance';
 import { checkHabitSelection } from './e2e/habit-selection';
 import { checkScenarioSelection } from './e2e/scenario-selection';
+import { checkExplorerInformation } from './e2e/explorer-information';
+
+test('plain information dialogs preserve compact Explorer settings', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 320, height: 568 });
+  await checkExplorerInformation(page, testInfo);
+});
 
 test('example scenario markers clear for manual edits and restored values', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 320, height: 568 });

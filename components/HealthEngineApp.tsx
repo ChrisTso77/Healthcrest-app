@@ -123,7 +123,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
   return (
     <main
       style={{
-        '--engine-footer-space': apiError ? '8rem' : '5rem',
+        '--engine-footer-space': apiError ? '8rem' : '5.5rem',
         '--engine-dock-space': isDockOpen ? 'min(16rem,35dvh)' : '2.5rem',
         '--engine-desktop-dock-space': isDockOpen ? '16rem' : '2.5rem',
       } as CSSProperties}
@@ -241,19 +241,21 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
         {/* Global Narrative Trigger */}
         <button
           onClick={() => setIsNarrativeOpen(true)}
-          className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-emerald-500/20 border border-emerald-500/40 hover:border-emerald-400 text-emerald-300 hover:text-emerald-200 transition-all shadow-lg pointer-events-auto"
+          aria-haspopup="dialog"
+          className="flex min-h-11 min-w-0 items-center justify-center gap-1.5 px-3 py-1 text-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 rounded-lg bg-emerald-500/20 border border-emerald-500/40 hover:border-emerald-400 text-emerald-300 hover:text-emerald-200 transition-all shadow-lg pointer-events-auto"
         >
-          <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Home & Global Narrative</span>
+          <BookOpen aria-hidden="true" className="w-3.5 h-3.5 shrink-0 text-emerald-400" />
+          <span>About this Explorer</span>
         </button>
 
         {/* Disclaimer Trigger */}
         <button
           onClick={() => setIsDisclaimerOpen(true)}
-          className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-emerald-400 transition-all shadow-lg pointer-events-auto"
+          aria-haspopup="dialog"
+          className="flex min-h-11 min-w-0 items-center justify-center gap-1.5 px-3 py-1 text-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 rounded-lg bg-slate-900/80 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-emerald-400 transition-all shadow-lg pointer-events-auto"
         >
-          <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
-          <span>Clinical & Legal Disclaimer</span>
+          <ShieldAlert aria-hidden="true" className="w-3.5 h-3.5 shrink-0 text-amber-400" />
+          <span>Important information</span>
         </button>
         <Link href="/privacy" prefetch={false} className="pointer-events-auto col-span-2 justify-self-end rounded px-2 py-1 text-slate-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-emerald-300">Privacy choices</Link>
       </footer>
@@ -283,30 +285,30 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
             
             {/* Modal Header */}
             <div className="shrink-0 p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/60">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400">
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="shrink-0 p-2 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400">
                   <Sparkles className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h2 id="global-narrative-title" className="text-base font-semibold tracking-wide text-slate-100">
-                    HEALTH THROUGH EVERYDAY HABITS
+                    About this Explorer
                   </h2>
                   <p className="text-[11px] font-mono text-slate-400">
-                    Global Narrative & Clinical Reference Framework
+                    Everyday habits and illustration limits
                   </p>
                 </div>
               </div>
               <button
-                aria-label="Close global narrative"
+                aria-label="Close about this Explorer"
                 onClick={() => setIsNarrativeOpen(false)}
-                className="p-1.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
+                className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Modal Scrollable Body */}
-            <div role="region" aria-label="Global narrative content" tabIndex={0} className="min-h-0 p-6 space-y-6 overflow-y-auto text-xs text-slate-300 leading-relaxed font-sans focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400">
+            <div role="region" aria-label="About this Explorer content" tabIndex={0} className="min-h-0 p-6 space-y-6 overflow-y-auto text-xs text-slate-300 leading-relaxed font-sans focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400">
               
               {/* Bottom Line Highlight Box */}
               <div className="p-4 bg-gradient-to-r from-emerald-500/10 via-slate-900 to-cyan-500/10 border border-emerald-500/30 rounded-2xl space-y-1.5">
@@ -401,9 +403,9 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
             <div className="shrink-0 p-4 border-t border-slate-800 bg-slate-950/60 flex justify-end">
               <button
                 onClick={() => setIsNarrativeOpen(false)}
-                className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-colors shadow-lg shadow-emerald-500/20"
+                className="min-h-11 px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-colors shadow-lg shadow-emerald-500/20"
               >
-                Close & Return to the Habit Explorer
+                Close and keep exploring
               </button>
             </div>
 
@@ -420,23 +422,23 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
             
             {/* Modal Header */}
             <div className="shrink-0 p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
-              <div className="flex items-center space-x-2.5">
-                <ShieldAlert className="w-5 h-5 text-amber-400" />
+              <div className="flex min-w-0 items-center gap-2.5">
+                <ShieldAlert aria-hidden="true" className="w-5 h-5 shrink-0 text-amber-400" />
                 <h2 id="clinical-disclaimer-title" className="text-sm font-semibold tracking-wide text-slate-100">
-                  CLINICAL & MEDICO-LEGAL DISCLAIMER
+                  Important information
                 </h2>
               </div>
               <button
-                aria-label="Close clinical disclaimer"
+                aria-label="Close important information"
                 onClick={() => setIsDisclaimerOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
+                className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Modal Content Body */}
-            <div role="region" aria-label="Clinical disclaimer content" tabIndex={0} className="min-h-0 p-6 space-y-4 overflow-y-auto text-xs text-slate-300 leading-relaxed font-sans focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400">
+            <div role="region" aria-label="Important information content" tabIndex={0} className="min-h-0 p-6 space-y-4 overflow-y-auto text-xs text-slate-300 leading-relaxed font-sans focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400">
               
               <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start space-x-3 text-amber-200">
                 <Info className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
@@ -487,9 +489,9 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
             <div className="shrink-0 p-4 border-t border-slate-800 bg-slate-950/50 flex justify-end">
               <button
                 onClick={() => setIsDisclaimerOpen(false)}
-                className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-colors shadow-lg shadow-emerald-500/20"
+                className="min-h-11 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-colors shadow-lg shadow-emerald-500/20"
               >
-                I Understand & Acknowledge
+                Close and keep exploring
               </button>
             </div>
 
