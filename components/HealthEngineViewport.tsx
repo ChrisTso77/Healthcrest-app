@@ -92,7 +92,7 @@ function FallbackViewport({ state, startingPoint, onCompare }: Pick<HealthEngine
       role="region"
       aria-label="2D health overview"
       tabIndex={0}
-      className="absolute inset-x-3 top-44 bottom-[calc(var(--engine-footer-space,4rem)_+_var(--engine-dock-space,16rem)_+_0.75rem)] z-0 overflow-y-auto transition-[bottom] duration-300 overscroll-contain rounded-2xl bg-slate-950 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400 xl:top-20 xl:left-[22rem] xl:right-[17rem] xl:bottom-[calc(var(--engine-footer-space,4rem)_+_var(--engine-desktop-dock-space,16rem)_+_0.75rem)]"
+      className="absolute inset-x-3 top-44 bottom-[calc(var(--engine-footer-space,4rem)_+_var(--engine-dock-space,16rem)_+_0.75rem)] z-0 overflow-y-auto transition-[bottom] duration-300 overscroll-contain rounded-2xl bg-slate-950 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-emerald-400 xl:top-20 xl:left-[22rem] xl:right-6 xl:bottom-[calc(var(--engine-footer-space,4rem)_+_var(--engine-desktop-dock-space,16rem)_+_0.75rem)]"
     >
       <HealthEngine2DFallback
         startingPoint={startingPoint}

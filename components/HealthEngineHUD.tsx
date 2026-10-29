@@ -79,6 +79,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
   // Navigation & Control States
   const controlsId = useId();
   const [mobilePanel, setMobilePanel] = useState<'clinical' | 'camera' | null>(null);
+  const is3D = renderMode !== '2d-canvas';
 
   const availablePresets =
     resolveAvailablePresets(presets);
@@ -163,7 +164,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
           >
             <ShieldCheck className="size-4" />
           </button>
-          <button
+          {is3D && <button
             type="button"
             aria-label="Camera controls"
             aria-expanded={mobilePanel === 'camera'}
@@ -172,7 +173,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             className="flex size-9 items-center justify-center rounded-lg border border-slate-700 text-cyan-300"
           >
             <Camera className="size-4" />
-          </button>
+          </button>}
         </div>
 
         {/* Pillar Selector Tabs */}
@@ -222,6 +223,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                 key={mode}
                 aria-pressed={renderMode === mode}
                 onClick={() => {
+                  setMobilePanel(null);
                   onRenderModeChange?.(mode);
                 }}
                 className={`min-h-9 px-1.5 py-1 rounded-md xl:px-2.5 text-[11px] font-mono capitalize transition-all xl:min-h-0 ${
@@ -314,9 +316,9 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       </div>
 
       {/* ------------------------------------------------------------------ */}
-      {/* 3. STORYBOARD CAMERA DIRECTOR & TOUCH SHOTS (RIGHT FLOATING PANEL) */}
+      {/* 3. CAMERA VIEWING ANGLES (3D ONLY) */}
       {/* ------------------------------------------------------------------ */}
-      <div
+      {is3D && <div
         id={`${controlsId}-camera-panel`}
         role="region"
         aria-label="Camera controls"
@@ -326,6 +328,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
           <Camera className="w-3.5 h-3.5 text-cyan-400" />
           <h2 className="text-xs font-mono tracking-wider uppercase text-slate-300">CAMERA VIEWS</h2>
         </div>
+        <p className="mb-3 text-xs leading-relaxed text-slate-300">Change the 3D angle and zoom. Your habit settings stay the same.</p>
 
         <div className="space-y-1.5">
           {CAMERA_SHOTS.map((shot) => (
@@ -340,10 +343,10 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
               }`}
             >
               <div className="flex items-center justify-between w-full">
-                <span className="font-semibold text-[11px]">{shot.name}</span>
+                <span className="font-semibold text-xs">{shot.name}</span>
                 {camera.activeShotId === shot.id && <Zap className="w-3 h-3 text-cyan-400 flex-shrink-0" />}
               </div>
-              <span className="text-[9px] text-slate-300 mt-0.5 leading-tight">{shot.desc}</span>
+              <span className="text-[11px] text-slate-300 mt-0.5 leading-relaxed">{shot.desc}</span>
             </button>
           ))}
         </div>
@@ -353,9 +356,9 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
           className="w-full mt-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-mono flex items-center justify-center space-x-1 border border-slate-700/50"
         >
           <RotateCcw className="w-3 h-3" />
-          <span>RESET CAMERA VIEWPORT</span>
+          <span>Reset to wide view</span>
         </button>
-      </div>
+      </div>}
 
       {/* ------------------------------------------------------------------ */}
       {/* 4. RETRACTABLE CONTROL DOCK & SLIDERS (BOTTOM DRAWER) */}

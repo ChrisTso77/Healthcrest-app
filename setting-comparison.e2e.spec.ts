@@ -35,7 +35,7 @@ test('the starting point survives scene, mode and camera changes until explicitl
   await page.getByRole('slider', { name: 'Sleep Duration', exact: true }).fill('5');
   await page.getByRole('navigation', { name: 'Health pillars', exact: true }).getByRole('button', { name: 'Nutrition', exact: true }).click();
   await page.getByRole('button', { name: /lite 3d/i }).click();
-  await page.getByRole('button', { name: /Shot 1: Equilibrium Orbit/i }).click();
+  await page.getByRole('button', { name: /^Wide view/i }).click();
   await trigger(page).click();
   const row = dialog(page).getByRole('region', { name: 'Sleep duration comparison', exact: true });
   await expect(row).toContainText('-3 hours/night');
