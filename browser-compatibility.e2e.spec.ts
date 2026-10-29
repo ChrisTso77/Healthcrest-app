@@ -88,20 +88,7 @@ test('weekly notes survive only explicit saving and restoring on a narrow layout
   await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
   const raw = await page.evaluate(key => localStorage.getItem(key), KEY);
   expect(JSON.parse(raw!).drafts.Sleep.week.days[0].note).toBe('A shorter version — ゆっくり');
-  const layout = await page.evaluate(() => {
-    const initial = { viewport: innerWidth, documentWidth: document.documentElement.scrollWidth };
-    const probes: Record<string, number> = {};
-    if (initial.documentWidth > initial.viewport) {
-      const selects = [...document.querySelectorAll<HTMLSelectElement>('.hc-week select')];
-      const previous = selects.map(node => node.getAttribute('style'));
-      for (const declaration of ['max-width:100%', 'overflow:hidden', 'text-overflow:ellipsis', 'appearance:none', 'contain:inline-size']) {
-        selects.forEach(node => node.setAttribute('style', declaration));
-        probes[declaration] = document.documentElement.scrollWidth;
-        selects.forEach((node, index) => { const value = previous[index]; if (value === null) node.removeAttribute('style'); else node.setAttribute('style', value); });
-      }
-    }
-    return { ...initial, probes };
-  });
+  const layout = await page.evaluate(() => ({ viewport: innerWidth, documentWidth: document.documentElement.scrollWidth }));
   expect(layout.documentWidth, JSON.stringify(layout)).toBeLessThanOrEqual(layout.viewport);
   const summary = page.getByRole('region', { name: 'Your week at a glance', exact: true });
   await summary.getByLabel('Day to open', { exact: true }).selectOption('6');
