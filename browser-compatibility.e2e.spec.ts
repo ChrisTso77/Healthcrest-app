@@ -88,20 +88,39 @@ test('weekly notes survive only explicit saving and restoring on a narrow layout
   await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
   const raw = await page.evaluate(key => localStorage.getItem(key), KEY);
   expect(JSON.parse(raw!).drafts.Sleep.week.days[0].note).toBe('A shorter version — ゆっくり');
-  const layout = await page.evaluate(() => ({
-    viewport: innerWidth,
-    documentWidth: document.documentElement.scrollWidth,
-    overflowing: [...document.querySelectorAll('body *')].filter((node): node is HTMLElement => node instanceof HTMLElement)
-      .filter(node => { const box = node.getBoundingClientRect(); return box.width > 0 && box.right > innerWidth + 1; })
-      .slice(0, 25).map(node => {
+  const layout = await page.evaluate(async () => {
+    const measure = () => {
+      const describe = (node: HTMLElement) => {
         const box = node.getBoundingClientRect();
         const style = getComputedStyle(node);
         return { tag: node.tagName, type: node.getAttribute('type'), className: node.className,
-          width: box.width, right: box.right, scrollWidth: node.scrollWidth, clientWidth: node.clientWidth,
-          minWidth: style.minWidth, maxWidth: style.maxWidth, cssWidth: style.width };
-      }),
-  }));
-  expect(layout.documentWidth, JSON.stringify(layout)).toBeLessThanOrEqual(layout.viewport);
+          width: box.width, left: box.left, right: box.right, scrollWidth: node.scrollWidth, clientWidth: node.clientWidth,
+          minWidth: style.minWidth, maxWidth: style.maxWidth, cssWidth: style.width, position: style.position };
+      };
+      const nodes = [...document.querySelectorAll('body *')].filter((node): node is HTMLElement => node instanceof HTMLElement);
+      return {
+        viewport: innerWidth, scrollX, documentWidth: document.documentElement.scrollWidth,
+        root: describe(document.documentElement), body: describe(document.body),
+        visual: visualViewport ? { width: visualViewport.width, offsetLeft: visualViewport.offsetLeft, scale: visualViewport.scale } : null,
+        overflowing: nodes.filter(node => { const box = node.getBoundingClientRect(); return box.width > 0 && box.right + scrollX > innerWidth + 1; }).slice(-25).map(describe),
+        controls: nodes.filter(node => node.matches('input, select, textarea')).map(describe),
+      };
+    };
+    const initial = measure();
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+    await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    const afterBlur = measure();
+    const probes: Record<string, number> = {};
+    for (const selector of ['input[type="time"]', 'input[type="file"]', 'select', 'textarea', '.hc-week-calendar', '.hc-plan-print', 'form']) {
+      const nodes = [...document.querySelectorAll<HTMLElement>(selector)];
+      const previous = nodes.map(node => node.getAttribute('style'));
+      nodes.forEach(node => node.style.setProperty('display', 'none', 'important'));
+      probes[selector] = document.documentElement.scrollWidth;
+      nodes.forEach((node, index) => { const value = previous[index]; if (value === null) node.removeAttribute('style'); else node.setAttribute('style', value); });
+    }
+    return { initial, afterBlur, probes };
+  });
+  expect(layout.initial.documentWidth, JSON.stringify(layout)).toBeLessThanOrEqual(layout.initial.viewport);
 });
 test('backup review, import and blob download preserve the manual save boundary', async ({ page }) => {
   await page.goto('/next-step');
