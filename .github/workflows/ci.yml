@@ -158,3 +158,41 @@ jobs:
           name: measurement-off-report
           path: playwright-report/
           retention-days: 14
+
+  browser-compatibility:
+    name: Firefox and WebKit compatibility
+    needs: [lint-and-typecheck, validate-cms-seed]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      HEALTHCREST_TELEMETRY_ENABLED: 'true'
+      VERCEL_ENV: production
+      CI: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Firefox and WebKit
+        run: npx playwright install --with-deps firefox webkit
+      - name: Build production profile
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+      - name: Check core flows in Firefox and WebKit
+        run: npm run test:compatibility
+      - name: Upload compatibility report
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: browser-compatibility-report
+          path: playwright-compatibility-report/
+          retention-days: 14
