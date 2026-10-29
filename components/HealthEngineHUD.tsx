@@ -1,5 +1,6 @@
 import type { JourneyConstraint } from '@/lib/education/startJourney';
 import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
+import { HabitSelectionMark } from '@/components/HabitSelectionMark';
 import { useId, useState, type FC, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ScenarioEvidence } from '@/components/ScenarioEvidence';
@@ -141,7 +142,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       {/* ------------------------------------------------------------------ */}
       {/* 1. TOP HEADER NAVIGATION BAR */}
       {/* ------------------------------------------------------------------ */}
-      <header className="absolute top-0 inset-x-0 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-3 py-2 flex flex-wrap items-center justify-between gap-2 z-50 xl:z-30 xl:h-16 xl:flex-nowrap xl:gap-0 xl:px-6 xl:py-0">
+      <header className="absolute top-0 inset-x-0 bg-slate-900/80 backdrop-blur-md forced-colors:backdrop-blur-none border-b border-slate-800/80 px-3 py-2 flex flex-wrap items-center justify-between gap-2 z-50 xl:z-30 xl:h-16 xl:flex-nowrap xl:gap-0 xl:px-6 xl:py-0">
         
         {/* Brand Logo & Platform Title */}
         <Link href="/" aria-label="Healthcrest home" className="pointer-events-auto flex min-w-0 items-center space-x-3 rounded-lg focus-visible:outline-2 focus-visible:outline-emerald-400">
@@ -248,7 +249,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         role="region"
         aria-label="Scenario summary"
         tabIndex={0}
-        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-800/90 rounded-2xl p-4 shadow-2xl z-40 ${mobilePanel === 'clinical' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-6 xl:right-auto xl:w-80 xl:max-h-[calc(100dvh_-_var(--engine-footer-space,4rem)_-_var(--engine-desktop-dock-space,16rem)_-_6rem)] xl:bg-slate-900/80 xl:z-20`}
+        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md forced-colors:backdrop-blur-none border border-slate-800/90 rounded-2xl p-4 shadow-2xl z-40 ${mobilePanel === 'clinical' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-6 xl:right-auto xl:w-80 xl:max-h-[calc(100dvh_-_var(--engine-footer-space,4rem)_-_var(--engine-desktop-dock-space,16rem)_-_6rem)] xl:bg-slate-900/80 xl:z-20`}
       >
         <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
           <div className="flex items-center space-x-2">
@@ -323,7 +324,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         id={`${controlsId}-camera-panel`}
         role="region"
         aria-label="Camera controls"
-        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-800/90 rounded-2xl p-3 shadow-2xl z-40 ${mobilePanel === 'camera' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-auto xl:right-6 xl:w-60 xl:max-h-[calc(100dvh_-_var(--engine-footer-space,4rem)_-_var(--engine-desktop-dock-space,16rem)_-_6rem)] xl:bg-slate-900/80 xl:z-20`}
+        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md forced-colors:backdrop-blur-none border border-slate-800/90 rounded-2xl p-3 shadow-2xl z-40 ${mobilePanel === 'camera' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-auto xl:right-6 xl:w-60 xl:max-h-[calc(100dvh_-_var(--engine-footer-space,4rem)_-_var(--engine-desktop-dock-space,16rem)_-_6rem)] xl:bg-slate-900/80 xl:z-20`}
       >
         <div className="flex items-center space-x-2 pb-2.5 border-b border-slate-800/80 mb-2">
           <Camera className="w-3.5 h-3.5 text-cyan-400" />
@@ -364,7 +365,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       {/* ------------------------------------------------------------------ */}
       {/* 4. RETRACTABLE CONTROL DOCK & SLIDERS (BOTTOM DRAWER) */}
       {/* ------------------------------------------------------------------ */}
-      <div className="absolute bottom-[var(--engine-footer-space,4rem)] inset-x-0 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800/90 transition-all duration-300 z-30 h-[var(--engine-dock-space)] xl:h-[var(--engine-desktop-dock-space)]">
+      <div className="absolute bottom-[var(--engine-footer-space,4rem)] inset-x-0 bg-slate-900/90 backdrop-blur-xl forced-colors:backdrop-blur-none border-t border-slate-800/90 transition-all duration-300 z-30 h-[var(--engine-dock-space)] xl:h-[var(--engine-desktop-dock-space)]">
         
         <button
           onClick={onDockToggle}
@@ -389,7 +390,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             {/* Left Col: Scenario Presets List */}
             <div className="xl:col-span-4 space-y-2 border-b pb-3 xl:pb-0 xl:border-b-0 xl:border-r border-slate-800/80 xl:pr-4">
               <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Try an example scenario</span>
-              <div className="space-y-3 max-h-40 overflow-y-auto pr-1">
+              <div role="group" aria-label="Example scenarios" className="space-y-3 max-h-40 overflow-y-auto pr-1">
                 {[
                   { label: 'Everyday examples', items: availablePresets.filter(p => p.education?.category === 'Everyday guidance' || p.education?.category === 'Illustrative comparison') },
                   { label: 'Research examples — not routine advice', items: availablePresets.filter(p => p.education?.category === 'Research example') },
@@ -401,7 +402,10 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                       <button key={preset.id} type="button" aria-pressed={activePreset?.id === preset.id}
                         onClick={() => loadPreset(preset)}
                         className={`w-full rounded-lg border p-2 text-left text-xs transition-all ${activePreset?.id === preset.id ? 'bg-slate-800 border-emerald-500/50 text-slate-100 shadow-md' : 'bg-slate-950/40 border-slate-800/80 text-slate-400 hover:bg-slate-800/40 hover:text-slate-200'}`}>
-                        <span className="block font-semibold">{preset.title}</span>
+                        <span className="flex items-start justify-between gap-2">
+                          <span className="min-w-0 break-words font-semibold">{preset.title}</span>
+                          <HabitSelectionMark selected={activePreset?.id === preset.id} />
+                        </span>
                         <span className="mt-1 block text-[10px] text-cyan-300">{preset.education?.category}</span>
                       </button>
                     ))}

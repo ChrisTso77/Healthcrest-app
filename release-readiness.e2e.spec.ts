@@ -1,6 +1,24 @@
 import { test, expect } from '@playwright/test';
 import { checkPublicFocus } from './e2e/focus-appearance';
 import { checkHabitSelection } from './e2e/habit-selection';
+import { checkScenarioSelection } from './e2e/scenario-selection';
+
+for (const width of [320, 1350]) {
+  for (const colorScheme of ['light', 'dark'] as const) {
+    test('scenario selection and manual attribution survive forced ' + colorScheme + ' colours at ' + width + 'px', async ({ page }, testInfo) => {
+      await page.setViewportSize({ width, height: width === 320 ? 568 : 940 });
+      await page.emulateMedia({ forcedColors: 'active', colorScheme, reducedMotion: 'reduce' });
+      expect(await page.evaluate(() => matchMedia('(forced-colors: active)').matches)).toBe(true);
+      await checkScenarioSelection(page, testInfo, '2d', true);
+    });
+  }
+}
+
+test('3D scenario markers preserve camera, canvas and manual attribution', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 1350, height: 940 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await checkScenarioSelection(page, testInfo, '3d', true);
+});
 
 for (const width of [320, 1350]) {
   for (const colorScheme of ['light', 'dark'] as const) {

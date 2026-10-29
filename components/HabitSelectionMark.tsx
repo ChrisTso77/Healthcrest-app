@@ -2,5 +2,5 @@ import { Check } from 'lucide-react';
 
 // aria-pressed already communicates selection to assistive technology.
 export function HabitSelectionMark({ selected }: { selected: boolean }) {
-  return <Check size={16} aria-hidden="true" className="hc-selection-mark" data-selected={selected} />;
+  return <Check size={16} aria-hidden="true" className={'hc-selection-mark inline-block size-4 flex-none align-middle ' + (selected ? 'visible' : 'invisible')} data-selected={selected} />;
 }
