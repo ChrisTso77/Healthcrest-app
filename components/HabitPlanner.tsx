@@ -2,7 +2,7 @@
 
 import { HabitSelectionMark } from '@/components/HabitSelectionMark';
 
-import { useId, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { HabitDraftOverview } from '@/components/HabitDraftOverview';
 import { HabitPlanEvidence } from '@/components/HabitPlanEvidence';
@@ -36,6 +36,7 @@ function initialDrafts(): Record<HabitPillar, Draft> {
 export function HabitPlanner({ initialPillar, initialAction, initialGuideSource }: {
   initialPillar: HabitPillar; initialAction?: string; initialGuideSource?: { title: string; href: string };
 }) {
+  const removeError = 'The saved plan could not be removed in this browser. Your current edits are unchanged.';
   const [selected, setSelected] = useState<HabitPillar>(initialPillar);
   const [drafts, setDrafts] = useState(() => {
     const initial = initialDrafts();
@@ -45,6 +46,9 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
   const [status, setStatus] = useState('');
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [confirmReturn, setConfirmReturn] = useState(false);
+  const [confirmRemove, setConfirmRemove] = useState(false);
+  const removeButton = useRef<HTMLButtonElement>(null);
+  const keepButton = useRef<HTMLButtonElement>(null);
   const [planRevision, setPlanRevision] = useState(0);
   const id = useId();
   const option = options.find(item => item.key === selected)!;
@@ -58,6 +62,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
   }
 
   function saveDraft() {
+    setConfirmRemove(false);
     try {
       const raw = JSON.stringify({ version: 3, selected, drafts });
       if (!parseSavedHabitDraft(raw)) throw new Error('Invalid draft');
@@ -70,6 +75,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
   }
 
   function restoreDraft(openWeek = false) {
+    setConfirmRemove(false);
     try {
       const saved = parseSavedHabitDraft(window.localStorage.getItem(HABIT_DRAFT_KEY));
       if (!saved) {
@@ -97,6 +103,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
   }
 
   function importBackup(saved: SavedHabitDraft) {
+    setConfirmRemove(false);
     setPlanRevision(current => current + 1);
     setDrafts(saved.drafts);
     setSelected(saved.selected);
@@ -122,6 +129,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
   }
 
   function startNextWeek(week: HabitWeek) {
+    setConfirmRemove(false);
     setDrafts(current => ({ ...current, [selected]: { ...current[selected], action: week.action, cue: week.cue, support: week.support, week } }));
     setUnsavedChanges(true);
     setConfirmReturn(false);
@@ -129,12 +137,15 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
   }
 
   function removeSavedDraft() {
+    if (!confirmRemove) return;
     try {
       window.localStorage.removeItem(HABIT_DRAFT_KEY);
       setUnsavedChanges(true);
-      setStatus('Saved draft removed from this browser. Your current edits are unchanged.');
+      setConfirmRemove(false);
+      setStatus('Saved plan removed from this browser. Your current edits are unchanged.');
+      requestAnimationFrame(() => removeButton.current?.focus());
     } catch {
-      setStatus('The saved draft could not be removed in this browser. Your current edits are unchanged.');
+      setStatus(removeError);
     }
   }
 
@@ -189,7 +200,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
         <h2 id={id + '-return-title'}>Return to your plan</h2>
         <p>Choose Restore my plan to read the saved copy on this device and open its selected week. Restoring replaces the drafts currently on this page. Plans stay in this browser and do not sync between devices.</p>
         <div className="hc-plan-return-actions">
-          {!confirmReturn ? <button type="button" onClick={() => { if (unsavedChanges) { setConfirmReturn(true); requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#return-to-plan [role="group"] button')?.focus()); } else restoreDraft(true); }}>Restore my plan</button> : (
+          {!confirmReturn ? <button type="button" onClick={() => { setConfirmRemove(false); if (unsavedChanges) { setConfirmReturn(true); requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#return-to-plan [role="group"] button')?.focus()); } else restoreDraft(true); }}>Restore my plan</button> : (
             <div role="group" aria-label="Restore confirmation">
               <p>Replace your current page edits with the saved plan? Save or download first if you want to keep these edits.</p>
               <button type="button" onClick={() => { setConfirmReturn(false); requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('#return-to-plan button')?.focus()); }}>Keep my edits</button>
@@ -203,7 +214,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
       <div role="group" aria-label="Choose a habit pillar" className="hc-plan-choices">
         {options.map(item => (
           <button key={item.key} type="button" aria-pressed={selected === item.key}
-            onClick={() => { setSelected(item.key); setStatus(''); }}>
+            onClick={() => { setSelected(item.key); setConfirmRemove(false); setStatus(''); }}>
             {item.label}
             <HabitSelectionMark selected={selected === item.key} />
           </button>
@@ -211,6 +222,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
       </div>
 
       <HabitDraftOverview drafts={drafts} pillars={options} selected={selected} onOpen={pillar => {
+        setConfirmRemove(false);
         setSelected(pillar);
         setStatus('');
         requestAnimationFrame(() => {
@@ -264,12 +276,33 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
           <section id="saved-draft-controls" tabIndex={-1} aria-label="Keep your draft" className="hc-plan-keep">
             <h3>Keep your draft</h3>
             <p className="hc-plan-storage">Choose Save on this device to keep all four pillar drafts, reflection notes and seven-day check-ins in this browser. They do not sync to other devices. Saving is manual: save again after editing.</p>
-            <p className="hc-plan-storage">Restore replaces the drafts currently on this page. Remove clears only the saved copy and keeps your current edits.</p>
+            <p className="hc-plan-storage">Restore replaces the drafts currently on this page. Removing a saved plan needs confirmation and clears only the saved copy, keeping your current page edits.</p>
             <div className="hc-plan-save-actions">
               <button type="button" onClick={saveDraft}>Save on this device</button>
               <button type="button" onClick={() => restoreDraft()}>Restore saved draft</button>
-              <button type="button" onClick={removeSavedDraft}>Remove saved draft</button>
+              <button type="button" ref={removeButton} aria-expanded={confirmRemove}
+                aria-controls={confirmRemove ? id + '-remove-confirmation' : undefined}
+                onClick={() => {
+                  setConfirmReturn(false);
+                  setConfirmRemove(true);
+                  setStatus('');
+                  requestAnimationFrame(() => keepButton.current?.focus());
+                }}>Remove saved plan</button>
             </div>
+            {confirmRemove && <div id={id + '-remove-confirmation'} role="group" aria-labelledby={id + '-remove-title'} className="hc-plan-removal">
+              <h4 id={id + '-remove-title'}>Remove the saved plan on this browser?</h4>
+              <p id={id + '-remove-scope'}>This removes the saved copy for all four habits, including saved notes and seven-day check-ins. The drafts currently on this page stay available.</p>
+              <p>Download a backup first if you want a separate copy. Downloaded files and printed copies are not removed.</p>
+              {status === removeError && <p className="hc-plan-removal-error">{removeError}</p>}
+              <div className="hc-plan-save-actions">
+                <button type="button" ref={keepButton} onClick={() => {
+                  setConfirmRemove(false);
+                  setStatus('Removal cancelled.');
+                  requestAnimationFrame(() => removeButton.current?.focus());
+                }}>Keep saved plan</button>
+                <button type="button" aria-describedby={id + '-remove-scope'} onClick={removeSavedDraft}>Remove saved copy</button>
+              </div>
+            </div>}
             <p className="hc-plan-storage">Without saving, drafts are discarded when you leave or reload. You can also download a plan to keep a separate copy.</p>
           </section>
           <HabitPlanBackup drafts={drafts} onDownload={downloadBackup} onImport={importBackup} onStatus={setStatus} />

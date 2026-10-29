@@ -23,7 +23,7 @@ export default function Page() {
           <p>Each pillar keeps one current week. Clearing a week changes the current page; saving again replaces its saved copy. Download a week first if you want a separate record.</p>
           <p>Prepare another week lets you edit a proposed action and date while the current week stays in place. Before confirming replacement, download a backup if you want to keep the old record. Only saving again updates the browser copy; the planner keeps one current week per pillar.</p>
           <p>Saving and restoring are manual. A saved copy remains until you remove it or clear the browser’s site data. Other people using this browser profile may be able to restore it. A shared or public device may not be a suitable place to save personal notes.</p>
-          <p>Choose <strong>Remove saved draft</strong> to delete the planner’s saved copy while keeping your current page edits. This does not delete downloaded files or printed copies; you manage those separately.</p>
+          <p>Choose <strong>Remove saved plan</strong>, then confirm with <strong>Remove saved copy</strong>, to delete the saved copy for all four habits while keeping your current page edits. Choose <strong>Keep saved plan</strong> to cancel. Downloaded files and printed copies are not deleted; you manage those separately.</p>
           <p><Link href="/next-step#saved-draft-controls" prefetch={false} className="hc-text-link">Open the save, restore and remove controls</Link>.</p>
         </section>
         <section aria-labelledby="calendar-storage-title">

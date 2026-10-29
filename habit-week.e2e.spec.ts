@@ -96,7 +96,8 @@ test('explicit saving restores check-ins and review across pillars and removes o
   await openDay(page, 1);
   await expect(page.getByLabel('Day 1: a note', { exact: false })).toHaveValue('Reading helped — ゆっくり');
   await expect(page.getByLabel('What did this week teach me?', { exact: false })).toHaveValue('A quieter room helped.');
-  await page.getByRole('button', { name: 'Remove saved draft', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove saved plan', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove saved copy', exact: true }).click();
   await expect(page.getByLabel('Day 1: a note', { exact: false })).toHaveValue('Reading helped — ゆっくり');
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
   expect(await page.evaluate(() => localStorage.getItem('unrelated-preference'))).toBe('keep');
