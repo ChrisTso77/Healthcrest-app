@@ -31,7 +31,9 @@ function initialDrafts(): Record<HabitPillar, Draft> {
   };
 }
 
-export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: HabitPillar; initialAction?: string }) {
+export function HabitPlanner({ initialPillar, initialAction, initialGuideSource }: {
+  initialPillar: HabitPillar; initialAction?: string; initialGuideSource?: { title: string; href: string };
+}) {
   const [selected, setSelected] = useState<HabitPillar>(initialPillar);
   const [drafts, setDrafts] = useState(() => {
     const initial = initialDrafts();
@@ -220,6 +222,9 @@ export function HabitPlanner({ initialPillar, initialAction }: { initialPillar: 
           <span className="hc-eyebrow">Make it your own</span>
           <h2 id={id + '-draft'}>My {option.label.toLowerCase()} next step</h2>
           <p id={id + '-scope'}>The starter is an idea to adapt, not a recommendation calculated from your Habit Explorer settings.</p>
+          {initialGuideSource && selected === initialPillar && draft.action === initialAction && planRevision === 0 && <p className="hc-plan-guide-origin">
+            Starting idea from <Link href={initialGuideSource.href} prefetch={false}>{initialGuideSource.title}</Link>. Edit the wording to fit your circumstances. Using this idea does not restore or save a plan.
+          </p>}
           <a href="#habit-plan-evidence" className="hc-plan-evidence-jump">Read the evidence for this habit</a>
           <div className="hc-plan-field">
             <label htmlFor={id + '-action'}>One manageable action</label>

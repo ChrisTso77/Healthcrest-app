@@ -26,6 +26,8 @@ for (const guide of LEARNING_GUIDES) {
     await expect(page.locator('.hc-guide-related')).toBeHidden();
     await expect(page.locator('.hc-guide-print-controls')).toBeHidden();
     await expect(page.locator('.hc-guide-practice .hc-button')).toBeHidden();
+    await expect(page.locator('.hc-guide-idea-action').first()).toBeHidden();
+    for (const idea of guide.ideas) await expect(page.locator('#idea-' + idea.id)).toContainText(idea.text);
     for (const section of guide.sections) {
       const block = page.locator('#' + section.id);
       await expect(block).toBeVisible();

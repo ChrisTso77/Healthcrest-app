@@ -204,3 +204,7 @@
 .hc-week-calendar p { margin-top: 12px; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
 .hc-week-calendar input[type="time"] { max-width: 100%; min-width: 0; }
 @media (max-width: 400px) { .hc-week-calendar { padding: 16px; } }
+
+.hc-plan-guide-origin { padding: 16px; border: 1px solid #b5c6a1; border-radius: 10px; background: #eaf0de; font-size: 14px; line-height: 1.75; overflow-wrap: anywhere; }
+.hc-plan-guide-origin a { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.hc-plan-guide-origin a:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }

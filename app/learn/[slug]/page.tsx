@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { guideStarterHref } from '@/lib/education/guideStarter';
 import { GuidePrintControl } from '@/components/GuidePrintControl';
 import { SITE_URL } from '@/lib/siteMetadata';
 import { MovementOptions } from '@/components/MovementOptions';
@@ -90,7 +91,11 @@ export default async function LearningGuidePage({ params, searchParams }: Props)
               <section id="try-this-week" tabIndex={-1} aria-labelledby="try-this-week-heading" className="hc-guide-practice">
                 <h2 id="try-this-week-heading">Choose a step for this week</h2>
                 <p>Here are ideas to adapt to your circumstances. Choose one, make it manageable and decide when to try it.</p>
-                <ul>{guide.ideas.map(idea => <li key={idea}>{idea}</li>)}</ul>
+                <ul>{guide.ideas.map(idea => <li key={idea.id} id={'idea-' + idea.id}>
+                  <span>{idea.text}</span>
+                  <a href={guideStarterHref(guide.pillar, idea.id, constraint)} className="hc-guide-idea-action"
+                    aria-label={'Use this idea in my plan: ' + idea.text}>Use this idea in my plan</a>
+                </li>)}</ul>
                 <SourceLinks guide={guide} ids={guide.ideaSourceIds} />
                 <h3>Notice what helps, then adjust</h3>
                 <p>{guide.reflection}</p>
