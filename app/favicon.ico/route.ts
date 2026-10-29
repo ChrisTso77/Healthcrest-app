@@ -1,7 +1,8 @@
-// Browsers also probe this conventional address independently of icon metadata.
-// Keep one generated PNG, reached through a same-origin relative redirect.
+import { createBrowserIcon } from '@/lib/branding/browserIcon';
+
+// The conventional address and metadata icon use the same PNG renderer.
 export const dynamic = 'force-static';
 
 export function GET() {
-  return new Response(null, { status: 308, headers: { Location: '/icon' } });
+  return createBrowserIcon();
 }

@@ -11,7 +11,7 @@ test('the browser-tab icon and conventional fallback decode locally', async ({ p
   const icon = new URL(href!, page.url());
   expect(icon.origin).toBe(new URL(page.url()).origin);
   expect(icon.pathname).toBe('/icon');
-  const response = await request.get('/favicon.ico');
+  const response = await request.get('/favicon.ico', { maxRedirects: 0 });
   expect(response.status()).toBe(200);
   expect(response.headers()['content-type']).toContain('image/png');
   const bytes = await response.body();

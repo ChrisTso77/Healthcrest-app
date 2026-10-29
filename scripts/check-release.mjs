@@ -241,15 +241,13 @@ try {
     for (const path of iconPaths) {
       await assertIcon(await context.request.get(origin + path, { maxRedirects: 0 }));
     }
-    const fallback = await context.request.get(origin + '/favicon.ico', { maxRedirects: 0 });
-    ensure(fallback.status() === 308 && fallback.headers().location === '/icon', 'Conventional favicon must redirect locally to the generated icon.');
-    await assertIcon(await context.request.get(origin + '/favicon.ico', { maxRedirects: 1 }));
+    await assertIcon(await context.request.get(origin + '/favicon.ico', { maxRedirects: 0 }));
     const decoded = await page.evaluate(async href => {
       const image = new Image(); image.src = href; await image.decode();
       return { width: image.naturalWidth, height: image.naturalHeight };
     }, origin + '/favicon.ico');
     ensure(decoded.width === 64 && decoded.height === 64, 'Browser could not decode the fallback icon.');
-    return { pages: paths.length, metadataIcons: iconPaths.size, fallbackRedirects: 1, maximumBytes: 16384 };
+    return { pages: paths.length, metadataIcons: iconPaths.size, fallbackRedirects: 0, maximumBytes: 16384 };
   });
   await check('missing page recovery and indexing', async () => {
     for (const path of ['/healthcrest-release-check-missing', '/learn/healthcrest-release-check-missing']) {
