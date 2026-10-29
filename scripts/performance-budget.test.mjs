@@ -15,6 +15,7 @@ function fixture() {
       'network-requests': { details: { items: [{ url: 'http://127.0.0.1:3001/_next/static/app.js' }] } },
       'color-contrast': { score: 1, scoreDisplayMode: 'binary' },
       'heading-order': { score: 1, scoreDisplayMode: 'binary' },
+      'errors-in-console': { score: 1, scoreDisplayMode: 'binary', details: { items: [] } },
     },
   };
 }
@@ -150,4 +151,27 @@ test('a legitimately inapplicable required audit is distinct from missing eviden
   assert.equal(assessMobileReport(report).passed, true);
   delete report.audits['heading-order'].scoreDisplayMode;
   assert.equal(assessMobileReport(report).passed, false);
+});
+
+test('a high best-practices score cannot mask a favicon network error', () => {
+  const report = fixture(); report.categories['best-practices'].score = 0.96;
+  report.audits['errors-in-console'] = { score: 0, details: { items: [{
+    source: 'network', description: 'Failed to load resource: 404',
+    sourceLocation: { url: 'http://127.0.0.1:3001/favicon.ico' },
+  }] } };
+  assert.deepEqual(assessMobileReport(report).failures, ['Required browser audit failed or is missing: errors-in-console']);
+});
+
+test('runtime console errors fail even when aggregate scores pass', () => {
+  const report = fixture(); report.audits['errors-in-console'].score = 0;
+  report.audits['errors-in-console'].details.items = [{ source: 'console.error', description: 'Unhandled exception' }];
+  assert.equal(assessMobileReport(report).passed, false);
+});
+
+test('missing, unscorable and contradictory browser evidence cannot pass', () => {
+  for (const audit of [undefined, { score: null, scoreDisplayMode: 'notApplicable' }, { score: 1 },
+    { score: 1, details: { items: [{ description: 'Error despite score' }] } }]) {
+    const report = fixture(); report.audits['errors-in-console'] = audit;
+    assert.equal(assessMobileReport(report).passed, false);
+  }
 });

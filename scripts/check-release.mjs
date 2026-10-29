@@ -26,6 +26,7 @@ const pageIds = new Map();
 const internalFragments = new Map();
 const pageMetadata = [];
 const structuredPages = [];
+const iconPaths = new Set();
 
 async function checkPageStructuredData(page, path) {
   const snapshot = await page.evaluate(isGuide => {
@@ -145,6 +146,13 @@ try {
       ensure(canonical && new URL(canonical).href === new URL(path, canonicalOrigin).href, 'Incorrect canonical: ' + path);
       const description = await page.locator('meta[name="description"]').getAttribute('content');
       ensure(description?.trim(), 'Missing description: ' + path);
+      const icons = await page.locator('link[rel="icon"]').evaluateAll(nodes => nodes.map(node => node.getAttribute('href')));
+      ensure(icons.length > 0, 'Missing browser-tab icon metadata: ' + path);
+      for (const href of icons) {
+        const icon = new URL(href, page.url());
+        ensure(icon.origin === origin && icon.pathname === '/icon', 'Unexpected browser-tab icon destination: ' + path);
+        iconPaths.add(icon.pathname + icon.search);
+      }
       pageMetadata.push({ path, title, description });
       // The planner also has a print-only h1; assess headings exposed in this screen view.
       ensure(await page.getByRole('heading', { level: 1 }).count() === 1, 'Expected one exposed primary heading: ' + path);
@@ -219,6 +227,29 @@ try {
     const filmBytes = await film.body();
     ensure([200, 206].includes(film.status()) && filmBytes.subarray(0, 4).equals(Buffer.from([26, 69, 223, 163])), 'Hummingbird film did not load as WebM.');
     return { assets: 3 };
+  });
+  await check('browser-tab icon metadata and fallback', async () => {
+    const assertIcon = async response => {
+      const bytes = await response.body();
+      ensure(response.status() === 200 && response.headers()['content-type']?.startsWith('image/png'), 'Browser-tab icon did not return a PNG.');
+      ensure(bytes.length >= 32 && bytes.length <= 16384 &&
+        bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) &&
+        bytes.subarray(-12).equals(Buffer.from([0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130])), 'Browser-tab icon is incomplete or exceeds 16 KiB.');
+      ensure(bytes.readUInt32BE(16) === 64 && bytes.readUInt32BE(20) === 64, 'Browser-tab icon dimensions changed.');
+    };
+    ensure(iconPaths.size > 0, 'No public icon metadata was checked.');
+    for (const path of iconPaths) {
+      await assertIcon(await context.request.get(origin + path, { maxRedirects: 0 }));
+    }
+    const fallback = await context.request.get(origin + '/favicon.ico', { maxRedirects: 0 });
+    ensure(fallback.status() === 308 && fallback.headers().location === '/icon', 'Conventional favicon must redirect locally to the generated icon.');
+    await assertIcon(await context.request.get(origin + '/favicon.ico', { maxRedirects: 1 }));
+    const decoded = await page.evaluate(async href => {
+      const image = new Image(); image.src = href; await image.decode();
+      return { width: image.naturalWidth, height: image.naturalHeight };
+    }, origin + '/favicon.ico');
+    ensure(decoded.width === 64 && decoded.height === 64, 'Browser could not decode the fallback icon.');
+    return { pages: paths.length, metadataIcons: iconPaths.size, fallbackRedirects: 1, maximumBytes: 16384 };
   });
   await check('missing page recovery and indexing', async () => {
     for (const path of ['/healthcrest-release-check-missing', '/learn/healthcrest-release-check-missing']) {

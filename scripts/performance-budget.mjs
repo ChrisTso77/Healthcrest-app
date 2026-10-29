@@ -2,6 +2,7 @@ export const PERFORMANCE_BUDGET = Object.freeze({ score: 0.9, lcpMs: 2500, cls: 
 // Retain the original entry points for existing local tooling.
 export const MOBILE_BUDGET = PERFORMANCE_BUDGET;
 export const REQUIRED_ACCESSIBILITY_AUDITS = Object.freeze(['color-contrast', 'heading-order']);
+export const REQUIRED_BROWSER_AUDITS = Object.freeze(['errors-in-console']);
 export function assessMobileReport(report) {
   return assessPerformanceReport(report);
 }
@@ -30,6 +31,13 @@ export function assessPerformanceReport(report, { formFactor = 'mobile', url } =
     const audit = report?.audits?.[id];
     if (!(audit?.score === 1 || (audit?.score === null && audit?.scoreDisplayMode === 'notApplicable'))) {
       failures.push('Required accessibility audit failed or is missing: ' + id);
+    }
+  }
+  for (const id of REQUIRED_BROWSER_AUDITS) {
+    // A high best-practices score must not mask a missing icon or runtime error.
+    const audit = report?.audits?.[id];
+    if (audit?.score !== 1 || !Array.isArray(audit?.details?.items) || audit.details.items.length !== 0) {
+      failures.push('Required browser audit failed or is missing: ' + id);
     }
   }
   for (const name of ['performance', 'accessibility', 'best-practices', 'seo']) {
