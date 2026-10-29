@@ -1,5 +1,6 @@
 import type { JourneyConstraint } from '@/lib/education/startJourney';
 import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
+import { HabitSelectionMark } from '@/components/HabitSelectionMark';
 import { useId, useState, type FC, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ScenarioEvidence } from '@/components/ScenarioEvidence';
@@ -389,7 +390,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
             {/* Left Col: Scenario Presets List */}
             <div className="xl:col-span-4 space-y-2 border-b pb-3 xl:pb-0 xl:border-b-0 xl:border-r border-slate-800/80 xl:pr-4">
               <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Try an example scenario</span>
-              <div className="space-y-3 max-h-40 overflow-y-auto pr-1">
+              <div role="group" aria-label="Example scenarios" className="space-y-3 max-h-40 overflow-y-auto pr-1">
                 {[
                   { label: 'Everyday examples', items: availablePresets.filter(p => p.education?.category === 'Everyday guidance' || p.education?.category === 'Illustrative comparison') },
                   { label: 'Research examples — not routine advice', items: availablePresets.filter(p => p.education?.category === 'Research example') },
@@ -401,7 +402,10 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
                       <button key={preset.id} type="button" aria-pressed={activePreset?.id === preset.id}
                         onClick={() => loadPreset(preset)}
                         className={`w-full rounded-lg border p-2 text-left text-xs transition-all ${activePreset?.id === preset.id ? 'bg-slate-800 border-emerald-500/50 text-slate-100 shadow-md' : 'bg-slate-950/40 border-slate-800/80 text-slate-400 hover:bg-slate-800/40 hover:text-slate-200'}`}>
-                        <span className="block font-semibold">{preset.title}</span>
+                        <span className="flex items-start justify-between gap-2">
+                          <span className="min-w-0 break-words font-semibold">{preset.title}</span>
+                          <HabitSelectionMark selected={activePreset?.id === preset.id} />
+                        </span>
                         <span className="mt-1 block text-[10px] text-cyan-300">{preset.education?.category}</span>
                       </button>
                     ))}

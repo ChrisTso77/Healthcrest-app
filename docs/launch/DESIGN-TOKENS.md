@@ -22,6 +22,12 @@ Browser checks measure computed outlines against their surrounding opaque surfac
 
 ## Selection state beyond colour
 
-`HabitSelectionMark` shares a 16px current-colour checkmark across public preview, planner selection and draft overview buttons. Only the selected mark is visible; unselected marks reserve the same space. The icon is aria-hidden because each existing button already exposes aria-pressed. It adds no visible wording or accessible-name suffix and does not override system colours. Original topic icons remain intact. Responsive controls may wrap earlier to accommodate the reserved marker; verify 320px and desktop layouts. The Explorer and native Start radios retain their existing state representations.
+`HabitSelectionMark` shares a 16px current-colour checkmark across public preview, planner selection and draft overview buttons. Only the selected mark is visible; unselected marks reserve the same space. The icon is aria-hidden because each existing button already exposes aria-pressed. It adds no visible wording or accessible-name suffix and does not override system colours. Original topic icons remain intact. Responsive controls may wrap earlier to accommodate the reserved marker; verify 320px and desktop layouts. The Explorer now reuses the marker for selected example scenarios; its existing palette, camera icon and topic/render state styles stay independent. Native Start radios retain their own state representation.
 
 Chromium covers normal narrow and emulated forced light/dark phone/desktop selection. Firefox/WebKit cover the same switching/edit/focus journey in normal colours. These are partial automated checks, not a substitute for actual high-contrast OS themes or manual accessibility review.
+
+## Explorer example markers
+
+The shared marker now carries its own Tailwind size, spacing and visible/invisible utilities rather than relying on landing.css. The retained hc-selection-mark class/data attribute identify it for browser inspection. This moves no palette values into the Explorer. Example card titles wrap beside the reserved marker; accessible names still contain the exact title/category because the SVG is aria-hidden. The Example scenarios group contains the existing category groups.
+
+The marker follows activePreset identity. Editing an input or restoring a reference keeps manual attribution even when the numbers match an example. Only explicit selection reapplies that example. Automated checks cover ordinary/research examples, forced light/dark compact/desktop 2D, normal 3D canvas/camera continuity and Firefox/WebKit compact 2D, while retaining public-marker regressions. Actual OS-theme and manual AT/device checks remain pending.
