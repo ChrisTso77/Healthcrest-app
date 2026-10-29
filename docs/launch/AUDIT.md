@@ -124,11 +124,11 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 
 ### L11 — Performance scope and field evidence limited
 - Category / severity / kind: Performance; **Medium**; unverified risk.
-- Evidence: Existing Lighthouse covers only / and /start on mobile. No current representative guide/planner/2D/3D desktop lab baseline, interaction trace or real-user p75 INP evidence is available.
+- Evidence at the audit baseline: Lighthouse covered only / and /start on mobile. #109 made those budgets enforceable. This cycle adds eight navigation profiles across five routes, including guide/planner/explicit 2D Explorer on mobile and desktop, with requested-route/emulation checks. Actual 3D/device, interaction and p75 field evidence remains unavailable.
 - Impact: Good front-door scores do not establish interactive-route performance or Core Web Vitals compliance.
 - Remediation: Expand representative lab coverage after budgets are established; profile 3D/background behavior on actual devices. Use approved privacy-preserving field sources only if available, without enabling measurement by assumption.
 - Complexity / dependencies: Medium; browser/device access, D03 for any measurement changes.
-- Acceptance / status: Mobile/desktop representative-route reports; separate field/LCP/INP/CLS evidence or honest pending status. **Queued.**
+- Acceptance / status: Inspect all eight exact-head mobile/desktop navigation reports and unchanged budgets; field/INP, actual-device, interaction and 3D/GPU checks remain distinct. **Navigation coverage implemented on the working branch; hosted results linked from its PR. Other L11 evidence remains pending.** See PERFORMANCE-PROFILES.md.
 
 ### L12 — Launch state was scattered across feature notes
 - Category / severity / kind: Delivery/governance; **Low**; opportunity.

@@ -106,10 +106,11 @@ jobs:
         env:
           CI: true
 
-      - name: Audit mobile front-door performance
+      - name: Audit representative mobile and desktop performance
         run: node scripts/mobile-performance.mjs
+        timeout-minutes: 5
 
-      - name: Upload mobile performance reports
+      - name: Upload mobile and desktop performance reports
         uses: actions/upload-artifact@v7
         if: always()
         with:
