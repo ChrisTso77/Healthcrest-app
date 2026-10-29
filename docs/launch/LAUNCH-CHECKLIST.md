@@ -6,7 +6,7 @@ Unchecked means pending, including checks unavailable in the current environment
 - [x] Immutable source inventory and exact-main CI baseline recorded (34ca713b; run 40840624311).
 - [x] Existing automation covers homepage/navigation, practical learning journeys, Explorer scenarios/2D fallback/keyboard settings, planner save/restore/backup/calendar/failure and no-JavaScript/404 recovery.
 - [x] Legacy draft parsing, explicit save/import boundaries and storage-blocked cases remain covered.
-- [x] Latest approved baseline #122 has five passing jobs, 315 Chromium/34 compatibility cases, 23 build smoke checks, eight inspected lab profiles and a successful matching-tree production deployment; see RELEASE-EVIDENCE.md. This is historical release evidence, not acceptance of the next batch.
+- [x] Latest approved release #124 has five passing PR jobs, matching reviewed/merged trees, successful production deployment and 24 passing commit-bound canonical live checks; see RELEASE-EVIDENCE.md. This is release evidence, not launch acceptance.
 - [ ] Current launch PR exact head passes all five CI jobs and Vercel preview; reports reviewed, not just presence of checks.
 - [ ] Representative real-device/touch/back-forward/error journeys recorded; confirm no critical functional defects across the agreed support matrix.
 - [ ] Final Gate A reviewer/date/evidence recorded.
@@ -51,10 +51,10 @@ For each row record date, commit, browser/OS/device or AT/version, task, result,
 - [ ] Current hosting plan and intended use confirmed eligible (D01); any paid changes separately approved.
 - [ ] DNS/HTTPS/canonical domain, production/preview settings and least-privilege access verified by operator without exposing values.
 - [ ] Incident owner, privacy-preserving logs/monitoring, CMS recovery, rollback access and recovery exercise recorded (D07).
-- [ ] Explicit owner approval identifies the release commit/PR and production deployment. No automatic protected-branch merge.
+- [x] Owner explicitly approved #124 merge/resulting deployment; merged SHA 603d8e04e7a4bb8fb0b8939a3b714be9046fa20f. This approval does not apply to future releases or launch acceptance.
 - [ ] All five CI jobs and preview pass at that exact head; merge result and deployed SHA checked.
-- [ ] Run manual Production release smoke check on intended main; verify https://www.healthcrest.uk and retain the commit-bound live report. CI localhost checks do not satisfy this item.
-- [ ] Require the build-bound release marker to match the approved merged commit on canonical live responses. Retain expected/observed identity, checked-out harness revision and run provenance; a missing/mismatched marker is a failed release check.
+- [x] #124 manual canonical production run [40967684877](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40967684877) on intended main passed all 24 checks. Artifacts expire after 14 days; durable private preservation remains an operator task.
+- [x] Canonical live expected/observed marker and workflow source match approved merged SHA 603d8e04e7a4bb8fb0b8939a3b714be9046fa20f in run 40967684877. Preserve mismatch/failure assertions for future releases.
 - [ ] External legal/provider/credential/accessibility/security checks complete or explicit owner risk decision recorded; unresolved required gates are never silently waived.
 - [ ] Final launch approver/date/evidence and post-launch observation/rollback trigger recorded.
 

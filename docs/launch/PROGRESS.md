@@ -4,51 +4,35 @@ Updated 29 October 2026. The owner authorised parallel launch-readiness work and
 
 Read ROADMAP.md, RELEASE-EVIDENCE.md and LAUNCH-CHECKLIST.md together. Preserve Healthcrest's educational mission, canonical https://www.healthcrest.uk, manual saved-plan handling, default-off independent measurement and approved assets. Do not publish unreviewed health advice, invented legal/provider claims, private office details or new data collection.
 
-## Verified baseline
+## Verified production release and current cycle
 
-- Main: 4309697dbdc0ffb4eeacc214102f051491c4bbf8. PR #122 merged with owner approval; reviewed head f10213e2ec39943398651f47dc7bf2a99d3674c3 and merged main share tree 1cca0d39b2841bab1f840aaf9b563e414105e7b7. Vercel production succeeded. Full evidence and limits: RELEASE-EVIDENCE.md.
-- Run 300 / 40952956329 passed all five jobs: builds, CMS, lint/types, production dependency audit, 302 unit tests, 35 performance-budget checks, 35 structured-data/SEO checks, 315 Chromium and 34 Firefox/WebKit cases, preview measurement-off and 23 release checks.
-- All eight lab profiles and eight restore confirmation/error screenshots were inspected. This is not a canonical live report, actual-device/AT evidence, field performance or a completed application-security assessment.
-- The original /workspace/Healthcrest-app checkout remains untouched. A fresh source snapshot at /workspace/healthcrest-launch-batch-4309697 was copied only after all 230 tracked blobs matched the immutable main tree. Dependencies are reused; the tooling probe has its own isolated workspace.
+- Main is `603d8e04e7a4bb8fb0b8939a3b714be9046fa20f` after owner-approved PR #124. Reviewed head `1f84a9598000823369789da09a8b12541bdf43f5` has the identical tree `2fc562ef34bbd4b9c1f965854ddf0aeffbaf8913`.
+- PR [#123](https://github.com/ChrisTso77/Healthcrest-app/pull/123) delivered launch preparation and build-bound release identity. Its canonical smoke failed the favicon MIME assertion; #124 fixed the confirmed header mismatch and preserved every release assertion and both workflows.
+- [PR CI 40964311761](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40964311761) passed all five jobs. [Canonical live run 40967684877](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40967684877) passed all 24 checks with expected/observed commit equal to merged main. Detailed evidence and the retained failed #123 run are in RELEASE-EVIDENCE.md.
+- Direct production inspection confirmed HTTP 200, `image/png` and complete 2,787-byte 64×64 favicon bytes. This closes L29's deployed-identity evidence gap for this release, not recovery rehearsal or launch acceptance.
+- Current branch `docs/verified-production-release` reconciles the resumption/operations/gate records with those actual outcomes. It changes documentation only and needs its own review/merge approval. Prior approval stops at #124.
 
-## Active cycle: parallel launch-readiness batch
+## Security/tooling reassessment
 
-Branch: codex/launch-readiness-batch. Find its [PR and final-head checks](https://github.com/ChrisTso77/Healthcrest-app/pulls?q=is%3Apr+head%3Acodex%2Flaunch-readiness-batch). This authoring checkpoint does not establish later hosted outcomes; the PR's immutable final head, run and artifacts govern review. Prior merge approvals stop at #122.
-
-Independent workstreams:
-
-1. **Release verification (L29):** bind canonical smoke to an expected full deployed commit, expose a validated build-bound response marker and retain harness/run/expected/observed provenance. Missing or wrong identity must fail instead of attributing checks to an unintended build. Preserve existing page/privacy/browser/performance checks and manual dispatch. Actual canonical execution requires the approved deployment.
-2. **Operations (L09/L13):** an ordered access/release/recovery rehearsal, stop conditions, evidence records and consolidated OWNER-LAUNCH-ACTIONS.md. Preparation is not an exercised rollback, CMS recovery or provider verification.
-3. **Editorial preparation (L04):** a concise CONTENT-APPROVAL-PACKET.md tied to immutable source, guides/scenarios/shared-copy scope and blank actual review decisions. Chris's promised weekly cadence is not completed content sign-off.
-4. **Security/tooling reassessment (L01/L14):** supported scan references/preflight remain unavailable, so scanning did not start. Latest lint plugins still exclude ESLint 10; strict non-mutating resolution fails ERESOLVE. Package manifest/lock/config remain unchanged. Record these gaps and stop speculative work rather than weakening checks.
-
-The roadmap now uses coherent batches, independent file ownership, combined diff review and one final integrated hosted suite. Further small visual refinements are deferred while launch blockers remain open. AUDIT.md records twenty-nine findings/opportunities/evidence gaps; L28 is verified merged and L29 is the active release-identity gap.
-
-## Verification to complete before review
-
-- Local 302 unit, 35 performance-budget, 35 structured-data/SEO and 29 new release-identity checks passed; combined lint/types passed. Independent release correctness review found no blockers. Final hosted build/all five jobs and artifact review remain required.
-- Independently review build-time header capture, runtime immutability, full SHA validation, GitHub PR synthetic-merge vs Vercel main identity, workflow input handling and reports on failure. Keep all existing five hosted jobs and final-head builds.
-- Initial batch run 40957509907 passed lint/types/302 unit/35 performance/35 SEO/29 identity boundaries and its 24-check build report proved compiled/observed/expected identity remained equal despite changed runtime variables. Integration review then clarified approved preparation releases versus launch acceptance and recovery to legacy markerless deployments; recorded the owner's pending office arrangement and available real devices. These documentation corrections require a new final-head run; initial results are not final-head completion.
-- Review the final combined head's hosted 24-check release report, 315 Chromium/34 compatibility cases, preview-off results, eight raw lab reports and Vercel preview. Do not substitute #122 artifacts for this batch.
-- Check documentation links and distinguish completed baseline evidence, prepared work and actual owner/device/live evidence. Only then mark the PR ready; leave it unmerged pending approval.
+The Standard security skill was re-read after #124. Its required `references/scan-prologue.md` resource still fails to read, and no security preflight/start/scan tools are exposed. The skill requires a ready preflight before source review or workers; no supported scan started, no report was generated and L01 remains blocked. No speculative lint dependency probe was repeated: L14 remains unchanged until a supported candidate exists.
 
 ## Dependencies and unavailable evidence
 
-- Local Turbopack/PostCSS builds previously failed a child-process port bind under the sandbox, including supported network permission. Do not alter application configuration to bypass this. Hosted builds are authoritative.
+- Earlier sandbox build failures are historical: #124 local production build and all 24 smoke checks passed with supported network permission and system Chromium. Hosted CI also passed; neither result establishes real-device/AT coverage.
 - Local Chromium can support isolated checks, but no actual iPhone/Safari, screen-reader/device access or full manual accessibility matrix has been established.
 - Standard security skill is readable, but referenced scan-prologue and preflight/start/scan tools are unavailable. No preflight-ready source assessment or security report exists. Dependency audit success is not application-security assurance.
-- No authenticated workflow-dispatch connector is exposed. The owner must run the canonical production smoke workflow after an approved merged SHA is deployed and retain its report.
+- Authenticated GitHub CLI dispatch is available and was used for successful canonical run 40967684877. Retain the report before the 14-day artifact expiry; no durable private archive is established here.
 - Hosting eligibility, company/office disclosure arrangements, actual provider/retention/rights facts, content sign-offs/credentials and recovery ownership remain open (D01–D04/D07/D09). Use OWNER-LAUNCH-ACTIONS.md to resolve them together. Do not request or record the private home address in public GitHub.
 - Owner confirmed no professional office arrangement yet and access to iPhone/Safari, Android/Chrome, Windows and Mac. Actual checks and screen-reader access remain pending. Legacy markerless recovery points cannot pass the new identity smoke; retain the limitation and separate provider/source/manual verification rather than weakening the check.
 - External SEO accounts/submissions/campaigns require D06; there is no automatic marketing or launch after this batch.
 
 ## Next actions
 
-1. Integrate the independent workstreams, review the complete diff and run the combined head through all required checks.
-2. Present one concrete PR with verified results and a concise owner-action list. Do not pause for separate approval of each independent minor change.
-3. After explicit merge/deployment approval, recheck head/base/jobs, merge with expected head SHA, verify reviewed/merged tree equality and production status, then obtain the operator's expected-commit-bound canonical smoke report.
-4. Close real owner/security/device/recovery requirements with recorded evidence. Revisit blocked lint compatibility only when a supported candidate exists. Do not resume optional polish as a substitute for launch acceptance.
+1. Review this evidence reconciliation; preserve the historical #122 baseline and failed #123 run without attributing their results to #124.
+2. Restore supported security preflight/resources for L01. Do not substitute dependency audit or an improvised report for the required assessment.
+3. Close actual owner/security/device/recovery requirements using OWNER-LAUNCH-ACTIONS.md. Canonical smoke is complete for #124; access, recovery exercise, provider facts and human content/device checks remain pending.
+4. Prepare a concrete change only when evidence supports it. Keep optional polish deferred. Future merge/deployment approval must identify that release; #124 approval does not carry forward.
 
 ## Gates
 
-A partial: strong automation, manual/device evidence pending. B blocked: supported security assessment, trust/provider/content sign-off and manual accessibility. C partial: useful journeys, source-linked content and representative lab/SEO evidence; editorial/device/external evidence remains. D blocked: earlier gates, eligibility/operations/canonical live smoke and explicit launch acceptance. Healthcrest is not declared launch-ready.
+A partial: strong automation, manual/device evidence pending. B blocked: supported security assessment, trust/provider/content sign-off and manual accessibility. C partial: useful journeys, source-linked content and representative lab/SEO evidence; editorial/device/external evidence remains. D blocked: earlier gates, eligibility, recovery/operator evidence and explicit launch acceptance; canonical live smoke passed for #124. Healthcrest is not declared launch-ready.
