@@ -140,7 +140,7 @@ export function HealthEngineGuide({ state, presets, onClose, motionPaused, onTog
           <section aria-labelledby="health-guide-controls" className="space-y-3 border-t border-slate-800 pt-4">
             <h3 id="health-guide-controls" className="font-semibold text-slate-100">Views, quality and a useful next step</h3>
             <p>
-              Camera views change the angle and zoom only. High 3D, Lite 3D and 2D show the same chosen settings;
+              Camera views are available in 3D and change the angle and zoom only. High 3D, Lite 3D and 2D show the same chosen settings;
               Lite reduces graphics detail and 2D provides a labelled diagram. Render quality is not a health level.
               The 2D preset badge and 3D colours can differ because they describe different things.
             </p>

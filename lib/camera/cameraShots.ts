@@ -12,7 +12,7 @@ export interface CameraShot {
 export const CAMERA_SHOTS: readonly CameraShot[] = [
   {
     id: 'shot-1-orbit',
-    name: 'Shot 1: Equilibrium Orbit',
+    name: 'Wide view',
     azimuth: 45,
     elevation: 20,
     zoom: 1.0,
@@ -20,7 +20,7 @@ export const CAMERA_SHOTS: readonly CameraShot[] = [
   },
   {
     id: 'shot-2-failure',
-    name: 'Shot 2: Single-Pillar Strain',
+    name: 'Angled view',
     azimuth: 135,
     elevation: 35,
     zoom: 1.4,
@@ -28,7 +28,7 @@ export const CAMERA_SHOTS: readonly CameraShot[] = [
   },
   {
     id: 'shot-3-macro',
-    name: 'Shot 3: Core Deformation',
+    name: 'Close-up view',
     azimuth: 0,
     elevation: 10,
     zoom: 2.2,
@@ -36,7 +36,7 @@ export const CAMERA_SHOTS: readonly CameraShot[] = [
   },
   {
     id: 'shot-4-resonance',
-    name: 'Shot 4: Systemic Resonance',
+    name: 'Raised view',
     azimuth: 220,
     elevation: 50,
     zoom: 0.8,

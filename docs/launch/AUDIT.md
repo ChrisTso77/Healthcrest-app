@@ -96,7 +96,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: A later broken source/skip/planner anchor or duplicated metadata could pass the smoke check.
 - Remediation: Add default-public-DOM fragment and metadata/heading checks; plan structured-data consistency review and approved Search Console verification/submission.
 - Complexity / dependencies: Low engineering; browser CI. External accounts require D06.
-- Acceptance / status: Production-build release report includes the new checks; query-specific states remain covered separately. **Checks implemented; hosted verification pending.**
+- Acceptance / status: Production-build release report includes the new checks; query-specific states remain covered separately. **Initial checks merged in #109; rendered structured-data coverage merged in #111.**
 
 ### L08 — Design system only partially shared
 - Category / severity / kind: Design/UX; **Medium**; opportunity.
@@ -160,7 +160,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: Low-vision visitors can struggle to read camera explanations, and heading navigation conveys an incomplete panel hierarchy.
 - Remediation: Lighten camera descriptions to slate-300; use actual h2 panel labels above existing h3 content. Preserve labels, layout and control behavior. Require those two audit rules independently of the aggregate score.
 - Complexity / dependencies: Low; one HUD component, existing Lighthouse reports and Firefox/WebKit checks. No new dependency or clinical/legal text.
-- Acceptance / status: Old desktop report is rejected for exactly the two required audits; all eight corrected-build reports pass them, and desktop headings/keyboard camera selection preserve habit settings in both compatibility engines. **Fix and regressions implemented; final-head hosted validation required.** Other manual accessibility/device evidence remains pending.
+- Acceptance / status: Old desktop report is rejected for exactly the two required audits; all eight corrected-build reports pass them, and desktop headings/keyboard camera selection preserve habit settings in both compatibility engines. **Merged in #110 with all five jobs and eight report artifacts verified.** Other manual accessibility/device evidence remains pending.
 
 ### L16 — Structured data lacks rendered-content consistency checks
 - Category / severity / kind: SEO/content integrity; **Low**; improvement opportunity.
@@ -168,7 +168,15 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: Future source/byline/navigation edits could drift from structured representations while release checks remain green.
 - Remediation: Share breadcrumb and responsible-organisation definitions; parse and compare the rendered WebSite/Article/BreadcrumbList, visible byline/date/sources/trail and public preference variants. Do not invent clinical-review/publication dates or treat software checks as human review.
 - Complexity / dependencies: Low–Medium; existing Node, Vitest and hosted browser/release tooling; no new service or dependency. External Search Console actions remain D06-gated.
-- Acceptance / status: 35 parser/mismatch cases, existing catalogue tests and rendered checks across 13 pages/four guide variants pass at an immutable head. **Implemented on the structured-data branch; hosted evidence linked from its PR.** External validation/indexing and actual editorial sign-offs remain pending.
+- Acceptance / status: 35 parser/mismatch cases, existing catalogue tests and rendered checks across 13 pages/four guide variants pass at an immutable head. **Merged in #111; run 40861689429 passed all five jobs, 35 Node contract cases and 22 release checks.** External validation/indexing and actual editorial sign-offs remain pending.
+
+### L17 — Camera controls imply effects in the 2D diagram
+- Category / severity / kind: UX/accessibility clarity; **Low**; verified usability defect.
+- Evidence: At main 53fed298bcdb8d6cc5aeb712b0535ae5fb23b030, HealthEngineHUD rendered camera controls for every mode; HealthEngineViewport's 2D fallback did not consume camera state and reserved a 17rem right inset on desktop. cameraShots.ts used medical metaphors for angle/zoom presets; descriptions were 9px. Existing compatibility tests clicked a camera button in 2D without verifying a visible camera result.
+- Impact: Visitors can mistake viewing angles for health outcomes or expect a 2D response that never occurs; the unused column narrows the diagram.
+- Remediation: Render camera controls only in 3D, describe angles plainly, enlarge labels/descriptions, explain angle/zoom scope and expand desktop 2D space. Close compact overlays when changing render mode; preserve camera IDs/mappings, habit settings, presets and comparison starting values.
+- Complexity / dependencies: Low; existing HUD/viewport, guide UI explanation, camera catalogue and hosted browser/report tooling. No dependencies, new health advice or collection.
+- Acceptance / status: Keyboard camera/reset and render-mode transitions preserve selection/values; compact camera controls reopen closed after a mode change; 2D has no camera controls/canvas and uses the freed desktop width. Chromium screenshots cover mobile/tablet/desktop; Firefox/WebKit retain 2D-only checks. **Implemented on the Explorer clarity branch; exact-head hosted results required.** This does not complete manual accessibility or device/3D performance review.
 
 ## Sources read for this audit
 

@@ -177,12 +177,14 @@ test('labelled 2D settings and guide keyboard focus work without WebGL', async (
   const summary = page.getByRole('region', { name: 'Scenario summary', exact: true });
   await expect(summary.getByRole('heading', { level: 2, name: 'SCENARIO SUMMARY', exact: true })).toBeVisible();
   await expect(summary.getByRole('heading', { level: 3, name: 'Support sleep and recovery', exact: true })).toBeVisible();
-  const camera = page.getByRole('region', { name: 'Camera controls', exact: true });
-  await expect(camera.getByRole('heading', { level: 2, name: 'CAMERA VIEWS', exact: true })).toBeVisible();
-  const secondView = camera.getByRole('button', { name: /Shot 2: Single-Pillar Strain/ });
-  await secondView.focus();
-  await page.keyboard.press('Enter');
-  await expect(secondView).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('region', { name: 'Camera controls', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Camera controls', exact: true })).toHaveCount(0);
+  const bounds = await overview.boundingBox();
+  expect(bounds).not.toBeNull();
+  expect(bounds!.x + bounds!.width).toBeCloseTo(1350 - 24, 0);
+  await overview.focus();
+  await expect(overview).toBeFocused();
+  await expect(page.locator('canvas')).toHaveCount(0);
   await expect(sleep).toHaveValue('4.5');
 });
 test('guide-to-plan navigation and missing-page recovery are server rendered without JavaScript', async ({ browser, baseURL }) => {

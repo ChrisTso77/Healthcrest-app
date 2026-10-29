@@ -294,7 +294,7 @@ test.describe('Healthcrest production regression', () => {
       await expectIdle();
 
       const beforeCamera = await drawCount();
-      await page.getByRole('button', { name: /Shot 3: Core Deformation/i }).click();
+      await page.getByRole('button', { name: /Close-up view/i }).click();
       await expect.poll(drawCount).toBeGreaterThan(beforeCamera);
       await expectIdle();
 
@@ -459,7 +459,7 @@ test.describe('Healthcrest production regression', () => {
     { width: 768, height: 1024 },
     { width: 1024, height: 768 },
   ]) {
-    test(`compact layout keeps engine controls usable at ${viewport.width}px`, async ({ page }) => {
+    test(`compact layout keeps engine controls usable at ${viewport.width}px`, async ({ page }, testInfo) => {
       await page.setViewportSize(viewport);
       await page.goto('/engine?compact-layout-test=1');
       const navigation = page.getByRole('navigation', { name: 'Health pillars' });
@@ -476,11 +476,23 @@ test.describe('Healthcrest production regression', () => {
       await expect(page.getByRole('region', { name: 'Scenario summary' })).toBeVisible();
       await cameraToggle.click();
       await expect(page.getByRole('region', { name: 'Scenario summary' })).toBeHidden();
-      await page.getByRole('button', { name: /Shot 3: Core Deformation/i }).click();
+      await page.getByRole('button', { name: /Close-up view/i }).click();
+      const diagramButton = page.getByRole('button', { name: /2d diagram/i });
+      await diagramButton.focus();
+      await page.keyboard.press('Enter');
+      await expect(diagramButton).toBeFocused();
+      await expect(cameraToggle).toHaveCount(0);
+      await expect(page.getByRole('region', { name: 'Camera controls' })).toHaveCount(0);
+      await page.getByRole('button', { name: /lite 3d/i }).click();
+      await expect(cameraToggle).toHaveAttribute('aria-expanded', 'false');
       await cameraToggle.click();
-      await expect(page.getByRole('region', { name: 'Camera controls' })).toBeHidden();
-
-      await page.getByRole('button', { name: /2d diagram/i }).click();
+      await expect(page.getByRole('button', { name: /Close-up view/i })).toHaveAttribute('aria-pressed', 'true');
+      await diagramButton.click();
+      await expect(page.getByRole('region', { name: '2D health overview' })).toBeVisible();
+      await expect(page.locator('canvas')).toHaveCount(0);
+      if (viewport.width === 390 || viewport.width === 768) {
+        await testInfo.attach(`2d-${viewport.width}px`, { body: await page.screenshot(), contentType: 'image/png' });
+      }
       const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
       await sleep.scrollIntoViewIfNeeded();
       await sleep.fill('7.5');
@@ -616,7 +628,7 @@ test.describe('Healthcrest production regression', () => {
     await expect(page.getByRole('button', { name: 'Systems', exact: true }))
       .toHaveAttribute('aria-pressed', 'false');
 
-    const macro = page.getByRole('button', { name: /Shot 3: Core Deformation/i });
+    const macro = page.getByRole('button', { name: /Close-up view/i });
     await macro.focus();
     await page.keyboard.press('Enter');
     await expect(macro).toHaveAttribute('aria-pressed', 'true');
@@ -884,7 +896,7 @@ test.describe('Healthcrest production regression', () => {
     const viewport = page.locator('[data-camera-shot]');
 
     const failureShot = page.getByRole('button', {
-      name: /Shot 2: Single-Pillar Strain/i,
+      name: /Angled view/i,
     });
 
     await failureShot.click();
@@ -900,7 +912,7 @@ test.describe('Healthcrest production regression', () => {
     }).click();
 
     const macroShot = page.getByRole('button', {
-      name: /Shot 3: Core Deformation/i,
+      name: /Close-up view/i,
     });
 
     await expect(macroShot).toHaveClass(/border-cyan-500\/40/);
@@ -910,30 +922,58 @@ test.describe('Healthcrest production regression', () => {
     );
   });
 
-  test('camera director shots and reset remain usable', async ({ page }) => {
+  test('camera viewing angles and reset remain usable', async ({ page }, testInfo) => {
     const shots = [
-      /Shot 1: Equilibrium Orbit/i,
-      /Shot 2: Single-Pillar Strain/i,
-      /Shot 3: Core Deformation/i,
-      /Shot 4: Systemic Resonance/i,
+      /^Wide view/i,
+      /Angled view/i,
+      /Close-up view/i,
+      /Raised view/i,
     ];
 
+    const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+    await sleep.fill('7.5');
     for (const shot of shots) {
-      await page.getByRole('button', { name: shot }).click();
+      const button = page.getByRole('button', { name: shot });
+      await button.focus();
+      await page.keyboard.press('Enter');
+      await expect(button).toHaveAttribute('aria-pressed', 'true');
       await expect(page.locator('canvas')).toBeVisible();
+      await expect(sleep).toHaveValue('7.5');
     }
 
+    const panel = page.getByRole('region', { name: 'Camera controls', exact: true });
+    await expect(panel.getByRole('heading', { level: 2, name: 'CAMERA VIEWS', exact: true })).toBeVisible();
+    await expect(panel).toContainText('Your habit settings stay the same.');
+    await testInfo.attach('3d-camera-controls', { body: await page.screenshot(), contentType: 'image/png' });
+
+    const diagram = page.getByRole('button', { name: /2d diagram/i });
+    await diagram.focus();
+    await page.keyboard.press('Space');
+    await expect(diagram).toBeFocused();
+    await expect(panel).toHaveCount(0);
+    const overview = page.getByRole('region', { name: '2D health overview', exact: true });
+    const bounds = await overview.boundingBox();
+    expect(bounds).not.toBeNull();
+    expect(bounds!.x + bounds!.width).toBeCloseTo(page.viewportSize()!.width - 24, 0);
+    await expect(sleep).toHaveValue('7.5');
+    await testInfo.attach('2d-desktop', { body: await page.screenshot(), contentType: 'image/png' });
+    await page.getByRole('button', { name: /lite 3d/i }).click();
+    await expect(page.getByRole('button', { name: /Raised view/i })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('[data-camera-shot]')).toHaveAttribute('data-camera-shot', 'shot-4-resonance');
+
     await page
-      .getByRole('button', { name: /reset camera viewport/i })
+      .getByRole('button', { name: /Reset to wide view/i })
       .click();
 
     await expect(page.locator('canvas')).toBeVisible();
+    await expect(page.getByRole('button', { name: /^Wide view/i })).toHaveAttribute('aria-pressed', 'true');
+    await expect(sleep).toHaveValue('7.5');
   });
 
   test('reapplies the active camera shot after manual orbit', async ({ page }) => {
     const viewport = page.locator('[data-camera-request-revision]');
     const shot = page.getByRole('button', {
-      name: /Shot 1: Equilibrium Orbit/i,
+      name: /^Wide view/i,
     });
 
     await expect(viewport).toHaveAttribute('data-camera-request-revision', '0');
@@ -1005,7 +1045,7 @@ test.describe('Healthcrest production regression', () => {
     ).toBeVisible();
 
     await expect(
-      page.getByRole('button', { name: /Shot 1: Equilibrium Orbit/i })
+      page.getByRole('button', { name: /^Wide view/i })
     ).toBeVisible();
 
     await expect(page.locator('canvas')).toBeVisible();
