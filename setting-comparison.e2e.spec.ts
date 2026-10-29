@@ -12,7 +12,10 @@ async function boot(page: Page, query = 'pillar=sleep&view=2d') {
 test('2D shows starting circles, current diamonds and exact changes without loading WebGL', async ({ page }) => {
   await boot(page);
   await page.getByRole('slider', { name: 'Sleep Duration', exact: true }).fill('7.5');
+  await page.getByRole('slider', { name: 'Perceived Stress Level', exact: true }).fill('4');
   const overview = page.getByRole('region', { name: '2D health overview', exact: true });
+  await expect(overview.getByRole('img', { name: 'Current parameter illustration', exact: true }))
+    .toHaveAccessibleDescription(/Perceived stress: 4 out of 10.*Starting values:.*perceived stress 2 out of 10/);
   await expect(overview).toContainText('Starting: 8 hours/night');
   await expect(overview).toContainText('Change: -0.5 hours/night');
   await expect(overview.locator('svg circle')).toHaveCount(4);
