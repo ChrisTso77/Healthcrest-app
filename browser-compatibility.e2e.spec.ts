@@ -173,6 +173,17 @@ test('labelled 2D settings and guide keyboard focus work without WebGL', async (
   await expect(dialog).toHaveCount(0);
   await expect(button).toBeFocused();
   await expect(sleep).toHaveValue('4.5');
+  await page.setViewportSize({ width: 1350, height: 940 });
+  const summary = page.getByRole('region', { name: 'Scenario summary', exact: true });
+  await expect(summary.getByRole('heading', { level: 2, name: 'SCENARIO SUMMARY', exact: true })).toBeVisible();
+  await expect(summary.getByRole('heading', { level: 3, name: 'Support sleep and recovery', exact: true })).toBeVisible();
+  const camera = page.getByRole('region', { name: 'Camera controls', exact: true });
+  await expect(camera.getByRole('heading', { level: 2, name: 'CAMERA VIEWS', exact: true })).toBeVisible();
+  const secondView = camera.getByRole('button', { name: /Shot 2: Single-Pillar Strain/ });
+  await secondView.focus();
+  await page.keyboard.press('Enter');
+  await expect(secondView).toHaveAttribute('aria-pressed', 'true');
+  await expect(sleep).toHaveValue('4.5');
 });
 test('guide-to-plan navigation and missing-page recovery are server rendered without JavaScript', async ({ browser, baseURL }) => {
   const context = await browser.newContext({ baseURL, javaScriptEnabled: false, viewport: { width: 390, height: 844 } });

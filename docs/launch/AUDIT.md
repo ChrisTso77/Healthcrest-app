@@ -124,11 +124,11 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 
 ### L11 — Performance scope and field evidence limited
 - Category / severity / kind: Performance; **Medium**; unverified risk.
-- Evidence: Existing Lighthouse covers only / and /start on mobile. No current representative guide/planner/2D/3D desktop lab baseline, interaction trace or real-user p75 INP evidence is available.
+- Evidence at the audit baseline: Lighthouse covered only / and /start on mobile. #109 made those budgets enforceable. This cycle adds eight navigation profiles across five routes, including guide/planner/explicit 2D Explorer on mobile and desktop, with requested-route/emulation checks. Actual 3D/device, interaction and p75 field evidence remains unavailable.
 - Impact: Good front-door scores do not establish interactive-route performance or Core Web Vitals compliance.
 - Remediation: Expand representative lab coverage after budgets are established; profile 3D/background behavior on actual devices. Use approved privacy-preserving field sources only if available, without enabling measurement by assumption.
 - Complexity / dependencies: Medium; browser/device access, D03 for any measurement changes.
-- Acceptance / status: Mobile/desktop representative-route reports; separate field/LCP/INP/CLS evidence or honest pending status. **Queued.**
+- Acceptance / status: Inspect all eight exact-head mobile/desktop navigation reports and unchanged budgets; field/INP, actual-device, interaction and 3D/GPU checks remain distinct. **Navigation coverage implemented on the working branch; hosted results linked from its PR. Other L11 evidence remains pending.** See PERFORMANCE-PROFILES.md.
 
 ### L12 — Launch state was scattered across feature notes
 - Category / severity / kind: Delivery/governance; **Low**; opportunity.
@@ -153,6 +153,14 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Remediation: Prepare an independent dev-tool PR after checking all peer constraints and the v10 migration guide; use a real lockfile update without force/legacy-peer-deps or disabling rules.
 - Complexity / dependencies: Low–Medium; compatible Next/TypeScript/React lint plugins and Node (v10 requires ^20.19 / ^22.13 / >=24; CI selects current Node 22).
 - Acceptance / status: Clean install without peer overrides, intended lint coverage/rules preserved, lint/type/unit/build/hosted checks pass. **Blocked on current plugin peer compatibility.** A separate isolated installation of eslint 10.13.0 completed with peer override warnings, but `npm ls eslint --all` exited ELSPROBLEMS: current eslint-plugin-react 7.37.5, eslint-plugin-jsx-a11y 6.10.2 and eslint-plugin-import 2.32.0 exclude v10. Registry checks confirmed these are their latest releases. No forced/legacy-peer install, rule removal or lockfile change is proposed in the foundation PR. Reassess compatible upstream releases or a separately reviewed configuration alternative.
+
+### L15 — Desktop Explorer camera contrast and panel heading order
+- Category / severity / kind: Accessibility; **Medium**; verified defects.
+- Evidence: Run 40851374711, head e8a72c92d7e3f1b9c1d467e6228a3e88ecad45cf, mobile-performance artifact's explorer-2d-desktop.report.json. The color-contrast audit identified camera-description text in components/HealthEngineHUD.tsx at 2.74:1 (selected) and 4.02:1 (unselected) versus the reported 4.5:1 requirement. The heading-order audit identified the health-goal h3 after h1 without an intermediate panel h2. Aggregate accessibility was 94, so the ≥90 category budget alone did not reject these failures.
+- Impact: Low-vision visitors can struggle to read camera explanations, and heading navigation conveys an incomplete panel hierarchy.
+- Remediation: Lighten camera descriptions to slate-300; use actual h2 panel labels above existing h3 content. Preserve labels, layout and control behavior. Require those two audit rules independently of the aggregate score.
+- Complexity / dependencies: Low; one HUD component, existing Lighthouse reports and Firefox/WebKit checks. No new dependency or clinical/legal text.
+- Acceptance / status: Old desktop report is rejected for exactly the two required audits; all eight corrected-build reports pass them, and desktop headings/keyboard camera selection preserve habit settings in both compatibility engines. **Fix and regressions implemented; final-head hosted validation required.** Other manual accessibility/device evidence remains pending.
 
 ## Sources read for this audit
 
