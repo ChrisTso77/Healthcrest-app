@@ -1,4 +1,12 @@
 import { test, expect } from '@playwright/test';
+import { checkPublicFocus } from './e2e/focus-appearance';
+
+for (const width of [390, 1350]) {
+  test('public keyboard focus remains clear on light and dark surfaces at ' + width + 'px', async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: 900 });
+    await checkPublicFocus(page, testInfo, true);
+  });
+}
 
 for (const path of ['/a-missing-healthcrest-page', '/learn/a-missing-healthcrest-guide']) {
   for (const width of [320, 1440]) {

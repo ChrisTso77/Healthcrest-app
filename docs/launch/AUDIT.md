@@ -104,7 +104,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: Incremental upgrades risk inconsistent states, contrast or spacing across calm/light and dark interactive routes.
 - Remediation: Inventory approved tokens and components, compare current screenshots, then migrate one representative control/page at a time. Preserve hummingbird assets and existing layout behavior.
 - Complexity / dependencies: Medium; baseline visual matrix, contrast verification and D05 for material brand changes.
-- Acceptance / status: Documented semantic tokens and before/after review at mobile/tablet/desktop with no lost focus/reflow. **Queued; no wholesale rewrite.**
+- Acceptance / status: Documented semantic tokens and before/after review at mobile/tablet/desktop with no lost focus/reflow. **First scoped palette/focus migration active (L22); see DESIGN-TOKENS.md.** Status, spacing, typography and Explorer migration remain queued; no wholesale rewrite.
 
 ### L09 — Operational recovery/monitoring not demonstrated
 - Category / severity / kind: Operations; **Medium**; unverified risk and Gate D blocker.
@@ -208,7 +208,15 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: Visitors opening Compare on a small screen encounter explanations before the values they came to compare.
 - Remediation: Present the four main controls in a compact native table using existing comparison data/formatting. Keep a concise health caveat visible, move longer instructions/legend into an accessible disclosure, and retain detailed differences, sources/guidance and additional changed inputs below. Preserve reference/restore/view/storage behavior.
 - Complexity / dependencies: Low–Medium; comparison component, existing browser/compatibility and screenshot tooling. No new dependency, state model, health advice or collection.
-- Acceptance / status: Initial 320×568 content fits the complete first numeric row; 390×844 and desktop fit all four. Units/starting/current values agree with detailed cards and update after reference changes/restoration. Changed/Unchanged labels convey state without relying on colour. Native help works by keyboard without changing values; focus/scroll/restore and saved-plan checks pass. Inspect final summary screenshots. **Implemented on the compact-summary branch; exact-head hosted verification required.** This is not a manual screen-reader/device audit.
+- Acceptance / status: Initial 320×568 content fits the complete first numeric row; 390×844 and desktop fit all four. Units/starting/current values agree with detailed cards and update after reference changes/restoration. Changed/Unchanged labels convey state without relying on colour. Native help works by keyboard without changing values; focus/scroll/restore and saved-plan checks pass. Inspect final summary screenshots. **Merged #116: all five jobs, 294 Chromium/16 compatibility cases and eight inspected profiles passed; corrected 320/390/1350px summary screenshots were reviewed.** This is not a manual screen-reader/device audit.
+
+### L22 — Public palette and focus definitions can drift
+- Category / severity / kind: Design/accessibility consistency; **Low**; improvement opportunity.
+- Evidence: Main 7b59604 repeats palette and 3px focus rules across landing, planner, Learn, guide and Start styles. The homepage preview and planner guidance use #11372b; default #648c44 outline contrast is approximately 3.35:1, while planner evidence already uses #c3d99f. This is not evidence of a failed 3:1 requirement.
+- Impact: Separate literals make future state changes harder to maintain; a brighter existing colour makes keyboard focus easier to distinguish on dark sections.
+- Remediation: Centralise the existing semantic public palette/focus dimensions, preserve page appearance, and inherit #c3d99f focus on the preview/guidance dark surfaces. Document the partial migration and keep the Explorer independent.
+- Complexity / dependencies: Low–Medium; scoped CSS and existing hosted browser/artifact tooling. No dependency, provider, clinical or storage change.
+- Acceptance / status: Rendered keyboard focus/activation across home/Learn/guide/planner/Start, outline width/offset at least 3px and contrast at least 3:1 on light/7:1 on dark. Inspect phone/desktop focus screenshots, all five jobs and eight profiles. **Implemented on the public-focus branch; exact-head verification required.** This does not complete manual AT/device/forced-colour review.
 
 ## Sources read for this audit
 

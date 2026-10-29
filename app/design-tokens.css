@@ -1,0 +1,28 @@
+/* Approved public-site palette. The Explorer's slate theme stays independent. */
+.hc-landing {
+  --hc-ink: #183b2d;
+  --hc-muted: #506455;
+  --hc-paper: #f8f7f0;
+  --hc-surface: #fffef9;
+  --hc-surface-muted: #eaf0de;
+  --hc-border: #d4dcc7;
+  --hc-primary: #234e37;
+  --hc-primary-hover: #315e43;
+  --hc-on-primary: #fff;
+  --hc-accent-soft: #d2e7b5;
+  --hc-accent-soft-hover: #e1efcd;
+  --hc-on-accent-soft: #173b2d;
+  --hc-dark-surface: #11372b;
+  --hc-on-dark: #edf2e7;
+  --hc-focus-ring: #648c44;
+  --hc-focus-ring-on-dark: #c3d99f;
+  --hc-focus-width: 3px;
+  --hc-focus-offset: 3px;
+  --hc-focus-offset-wide: 5px;
+}
+
+/* A brighter ring is easier to see against the existing forest-green surfaces. */
+.hc-landing .hc-preview,
+.hc-landing .hc-plan-guidance {
+  --hc-focus-ring: var(--hc-focus-ring-on-dark);
+}
