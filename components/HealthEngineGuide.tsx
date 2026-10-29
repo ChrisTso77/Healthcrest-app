@@ -53,7 +53,7 @@ export function HealthEngineGuide({ state, presets, onClose, motionPaused, onTog
             The scenes are illustrations, not measurements of your body.
           </p>
 
-          <p>The Compare button beside Guide shows your starting and current settings, numerical changes and the related habit guidance. In 2D, a circle marks the starting value and a diamond marks the current value.</p>
+          <p>The Compare button beside Guide shows your starting and current settings, numerical changes and the related habit guidance. Use Restore starting settings there to return the controls to that reference. In 2D, a circle marks the starting value and a diamond marks the current value.</p>
 
           <SceneVisualExplanation state={state} motionPaused={motionPaused} onToggleMotion={onToggleMotion} />
 

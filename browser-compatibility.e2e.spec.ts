@@ -215,6 +215,20 @@ test('labelled 2D settings and guide keyboard focus work without WebGL', async (
     await expect(overview.getByText('Selected topic: ' + label, { exact: true })).toBeVisible();
     await expect(sleep).toHaveValue('4.5');
   }
+  const compare = page.getByRole('button', { name: 'Compare starting and current settings', exact: true });
+  await compare.click();
+  const comparison = page.getByRole('dialog', { name: 'Starting and current settings', exact: true });
+  const restore = comparison.getByRole('button', { name: 'Restore starting settings', exact: true });
+  await restore.focus();
+  await page.keyboard.press('Enter');
+  await expect(comparison.getByRole('status')).toContainText('No settings have changed');
+  await expect(restore).toBeDisabled();
+  await expect(restore).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(compare).toBeFocused();
+  await expect(sleep).toHaveValue('8');
+  await expect(topics.getByRole('button', { name: 'Connected habits', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('canvas')).toHaveCount(0);
 });
 test('guide-to-plan navigation and missing-page recovery are server rendered without JavaScript', async ({ browser, baseURL }) => {
   const context = await browser.newContext({ baseURL, javaScriptEnabled: false, viewport: { width: 390, height: 844 } });

@@ -263,6 +263,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
       {isComparisonOpen && (
         <SettingComparison state={state} start={comparisonStart} journeyConstraint={journeyConstraint}
           onUseCurrent={() => setComparisonStart(captureComparisonStart(state.parameters, 'Your selected settings'))}
+          onRestoreStart={() => dispatch({ type: 'RESTORE_PARAMETERS', payload: comparisonStart.parameters })}
           onClose={() => setIsComparisonOpen(false)} />
       )}
       {isGuideOpen && (

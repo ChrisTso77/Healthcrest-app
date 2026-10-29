@@ -1,12 +1,38 @@
 import { describe, expect, test } from 'vitest';
 
 import { FALLBACK_PRESETS } from '@/lib/presets/fallback';
+import type { PillarParameters, State } from '@/state/PillarsStateTypes';
 import {
   initialPillarsState,
   pillarsReducer,
 } from '@/state/PillarsStateMachine';
 
 describe('pillarsReducer', () => {
+  test('RESTORE_PARAMETERS restores every input atomically while keeping the current topic and view', () => {
+    const starting = Object.freeze({ ...initialPillarsState.parameters, sedentaryHours: 9, regularityScore: 44, upfFrequency: 3, alcoholUnits: 0 });
+    const changed = Object.freeze(Object.fromEntries(Object.entries(starting).map(([key, value]) => [key, value + 1])) as unknown as PillarParameters);
+    const current: State = Object.freeze({ ...initialPillarsState, activeScene: 'nutrition', activePillar: 'Nutrition', renderMode: 'lite-3d', parameters: changed });
+    const result = pillarsReducer(current, { type: 'RESTORE_PARAMETERS', payload: starting });
+    expect(result.parameters).toEqual(starting);
+    expect(result.parameters).not.toBe(starting);
+    expect(result.activeScene).toBe('nutrition');
+    expect(result.activePillar).toBe('Nutrition');
+    expect(result.renderMode).toBe('lite-3d');
+    expect(current.parameters).toBe(changed);
+    expect(Object.values(changed)).toEqual(Object.values(starting).map(value => value + 1));
+    expect(result.activePreset).toBeNull();
+    expect(result.overlay).toEqual({ title: 'Manual configuration', status: 'Manual', keyOutcomes: [], evidenceLevel: null });
+  });
+
+  test('restoring and editing afterwards cannot change the captured starting values', () => {
+    const starting = Object.freeze({ ...initialPillarsState.parameters });
+    const restored = pillarsReducer(initialPillarsState, { type: 'RESTORE_PARAMETERS', payload: starting });
+    const edited = pillarsReducer(restored, { type: 'UPDATE_PARAM', payload: { key: 'sleepDuration', value: 5 } });
+    expect(edited.parameters.sleepDuration).toBe(5);
+    expect(restored.parameters.sleepDuration).toBe(8);
+    expect(starting.sleepDuration).toBe(8);
+  });
+
   test('SET_SCENE updates scene and pillar and clears preset state', () => {
     const result = pillarsReducer(initialPillarsState, {
       type: 'SET_SCENE',

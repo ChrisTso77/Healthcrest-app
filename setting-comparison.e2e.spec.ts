@@ -9,6 +9,96 @@ async function boot(page: Page, query = 'pillar=sleep&view=2d') {
   await expect(page.getByRole('heading', { name: 'HABIT EXPLORER', exact: true })).toBeVisible();
 }
 
+for (const width of [320, 768, 1350]) {
+  test('restore starting settings works by keyboard without touching saved plans at ' + width + 'px', async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: width === 320 ? 568 : 940 });
+    await boot(page);
+    const saved = 'PRIVATE-SAVED-PLAN';
+    await page.evaluate(value => localStorage.setItem('healthcrest.habit-draft.v1', value), saved);
+    for (const [label, value] of [['Weekly aerobic activity', '200'], ['Sleep Duration', '6'], ['Whole Food Ratio', '50'], ['Perceived Stress Level', '5']]) {
+      await page.getByRole('slider', { name: label, exact: true }).fill(value);
+    }
+    await trigger(page).click();
+    const comparison = dialog(page);
+    await expect(comparison.getByRole('status')).toContainText('4 settings differ');
+    const restore = comparison.getByRole('button', { name: 'Restore starting settings', exact: true });
+    await expect(restore).toBeEnabled();
+    await expect(restore).toBeInViewport();
+    await restore.focus();
+    await page.keyboard.press('Enter');
+    await expect(comparison.getByRole('status')).toContainText('No settings have changed');
+    await expect(restore).toBeDisabled();
+    await expect(restore).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(comparison).toContainText('Starting point: Settings when you opened the Explorer');
+    expect(await comparison.evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true);
+    await testInfo.attach(`restored-settings-${width}px`, { body: await page.screenshot(), contentType: 'image/png' });
+    await page.keyboard.press('Escape');
+    await expect(trigger(page)).toBeFocused();
+    for (const [label, value] of [['Weekly aerobic activity', '180'], ['Sleep Duration', '8'], ['Whole Food Ratio', '80'], ['Perceived Stress Level', '2']]) {
+      await expect(page.getByRole('slider', { name: label, exact: true })).toHaveValue(value);
+    }
+    await expect(page.getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByRole('button', { name: /2d diagram/i })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('canvas')).toHaveCount(0);
+    expect(await page.evaluate(() => localStorage.getItem('healthcrest.habit-draft.v1'))).toBe(saved);
+  });
+}
+
+test('restoring a chosen reference keeps the 3D topic, camera, canvas and comparison reference', async ({ page }) => {
+  await page.setViewportSize({ width: 1350, height: 940 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await boot(page, 'pillar=sleep');
+  const canvas = await page.locator('canvas').elementHandle();
+  await page.getByRole('slider', { name: 'Sleep Duration', exact: true }).fill('5');
+  await page.getByRole('navigation', { name: 'Habit topics', exact: true }).getByRole('button', { name: 'Food', exact: true }).click();
+  await page.getByRole('button', { name: /Angled view/i }).click();
+  await page.getByRole('button', { name: /lite 3d/i }).click();
+  const viewport = page.locator('[data-camera-request-revision]');
+  const revision = await viewport.getAttribute('data-camera-request-revision');
+  await trigger(page).click();
+  await dialog(page).getByRole('button', { name: 'Use current settings as starting point', exact: true }).click();
+  await page.keyboard.press('Escape');
+  await page.getByRole('slider', { name: 'Sleep Duration', exact: true }).fill('6');
+  await page.getByRole('slider', { name: 'Whole Food Ratio', exact: true }).fill('20');
+  await trigger(page).click();
+  await dialog(page).getByRole('button', { name: 'Restore starting settings', exact: true }).click();
+  await expect(dialog(page).getByRole('status')).toContainText('No settings have changed');
+  await expect(dialog(page)).toContainText('Starting point: Your selected settings');
+  await expect(dialog(page).getByRole('region', { name: '3D appearance comparison', exact: true })).toContainText('The 3D appearance is unchanged');
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('slider', { name: 'Sleep Duration', exact: true })).toHaveValue('5');
+  await expect(page.getByRole('slider', { name: 'Whole Food Ratio', exact: true })).toHaveValue('80');
+  await expect(page.getByRole('button', { name: 'Food', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: /lite 3d/i })).toHaveAttribute('aria-pressed', 'true');
+  await expect(viewport).toHaveAttribute('data-camera-shot', 'shot-2-failure');
+  await expect(viewport).toHaveAttribute('data-camera-request-revision', revision!);
+  expect(await canvas!.evaluate(node => node === document.querySelector('canvas'))).toBe(true);
+});
+
+test('an unchanged example is not cleared, while restoring edited values remains a manual scenario', async ({ page }) => {
+  await boot(page);
+  const example = FALLBACK_PRESETS.find(item => item.slug === 'single-pillar-failure')!;
+  const exampleButton = page.getByRole('button').filter({ has: page.getByText(example.title, { exact: true }) });
+  await exampleButton.click();
+  await trigger(page).click();
+  const restore = dialog(page).getByRole('button', { name: 'Restore starting settings', exact: true });
+  await expect(restore).toBeDisabled();
+  await restore.focus();
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Escape');
+  await expect(exampleButton).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('slider', { name: 'Sleep Duration', exact: true }).fill('6');
+  await trigger(page).click();
+  await restore.click();
+  await expect(dialog(page)).toContainText('Starting point: ' + example.title);
+  await expect(dialog(page).getByRole('status')).toContainText('No settings have changed');
+  await page.keyboard.press('Escape');
+  await expect(exampleButton).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.getByRole('slider', { name: 'Sleep Duration', exact: true })).toHaveValue('4.5');
+  await expect(page.getByRole('region', { name: '2D health overview', exact: true }).getByText('MANUAL', { exact: true })).toBeVisible();
+});
+
 test('2D shows starting circles, current diamonds and exact changes without loading WebGL', async ({ page }) => {
   await boot(page);
   await page.getByRole('slider', { name: 'Sleep Duration', exact: true }).fill('7.5');
