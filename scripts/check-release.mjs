@@ -258,7 +258,9 @@ try {
   await check('browser-tab icon metadata and fallback', async () => {
     const assertIcon = async response => {
       const bytes = await response.body();
-      ensure(response.status() === 200 && response.headers()['content-type']?.startsWith('image/png'), 'Browser-tab icon did not return a PNG.');
+      ensure(response.status() === 200 && response.headers()['content-type']?.startsWith('image/png'),
+        'Browser-tab icon did not return a PNG: ' + new URL(response.url()).pathname +
+        ' (HTTP ' + response.status() + ', Content-Type ' + (response.headers()['content-type'] || 'missing') + ', ' + bytes.length + ' bytes).');
       ensure(bytes.length >= 32 && bytes.length <= 16384 &&
         bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) &&
         bytes.subarray(-12).equals(Buffer.from([0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130])), 'Browser-tab icon is incomplete or exceeds 16 KiB.');
