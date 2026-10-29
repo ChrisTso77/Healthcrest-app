@@ -35,6 +35,9 @@ jobs:
       - name: Run Unit Tests
         run: npm run test:unit
 
+      - name: Verify performance-budget failure boundaries
+        run: npm run test:performance-budget
+
   validate-cms-seed:
     name: Validate CMS Seed JSON
     runs-on: ubuntu-latest

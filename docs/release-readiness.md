@@ -1,6 +1,6 @@
 # Release readiness
 
-The release check exercises the production build before the full browser suite in CI. It discovers every route in the canonical sitemap, requires the core public pages and practical guides, and checks successful responses, deployment-local URLs, titles, descriptions, canonical/sharing addresses and the no-referrer response header. It checks discovered internal link pathnames, a decoded header logo, the social PNG signature/end marker, the hummingbird JPEG and the WebM prefix.
+The release check exercises the production build before the full browser suite in CI. It discovers every route in the canonical sitemap, requires the core public pages and practical guides, and checks successful responses, deployment-local URLs, unique titles/descriptions, one primary heading, English document language, canonical/sharing addresses and the no-referrer response header. It checks discovered internal link pathnames and fragment IDs against default public page DOMs, a decoded header logo, the social PNG signature/end marker, the hummingbird JPEG and the WebM prefix.
 
 Unknown public and guide paths must return HTTP 404, show Healthcrest's recovery page and carry a noindex directive. The page offers accessible links to the Explorer, learning guides, the homepage and explicit saved-plan restoration. It does not read or restore drafts. Browser tests cover keyboard/small-screen navigation, JavaScript-free recovery and preservation of existing saved drafts.
 
@@ -21,7 +21,9 @@ Once this workflow is on main and the intended Vercel production deployment has 
 
 To check an accessible deployment from a shell, set HEALTHCREST_RELEASE_ORIGIN to its HTTPS origin for that command and run npm run test:release. Supply only an origin, without credentials, a path, query or fragment. Canonical metadata must continue to point to https://www.healthcrest.uk on previews too. A password-protected or redirected preview will fail rather than falsely verify the intended build.
 
-Passing CI proves the tested build's checks; it does not prove that the live domain serves that build. Use the production check after deployment and confirm the Vercel deployment is tied to the intended commit. These checks do not validate every fragment link, external source uptime, provider dashboard configuration or every clinical statement.
+Passing CI proves the tested build's checks; it does not prove that the live domain serves that build. Use the production check after deployment and confirm the Vercel deployment is tied to the intended commit. Fragment checks use default public DOMs, not every query-dependent or user-edited state. These checks do not validate external source uptime, provider dashboard configuration or every clinical statement.
+
+The mobile lab job now fails on raw category scores below 90 (performance, accessibility, best practices, SEO), LCP above 2500ms, CLS above 0.1, or total blocking time above 200ms. It also rejects incomplete/invalid reports, runtime errors and optional measurement requests without permission. Both route summaries/reports remain available before a budget failure. Run `npm run test:performance-budget` for its 20 boundary/error cases. Scope remains the homepage and Start page; TBT is a lab budget, not field INP. See docs/launch/AUDIT.md and ROADMAP.md for representative-route, device, accessibility and real-user evidence still required.
 
 ## Deployment review
 

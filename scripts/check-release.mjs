@@ -21,6 +21,9 @@ let browser;
 const telemetryRequests = [];
 const failedAssets = [];
 const internalPaths = new Set();
+const pageIds = new Map();
+const internalFragments = new Map();
+const pageMetadata = [];
 
 function ensure(condition, message) {
   if (!condition) throw new Error(message);
@@ -97,16 +100,25 @@ try {
       const final = new URL(page.url());
       ensure(final.origin === origin && final.pathname === path, 'Public page redirected away from its expected deployment path: ' + path);
       ensure(response.headers()['referrer-policy'] === 'no-referrer', 'Missing no-referrer header: ' + path);
-      ensure((await page.title()).includes('Healthcrest'), 'Missing Healthcrest title: ' + path);
+      const title = await page.title();
+      ensure(title.includes('Healthcrest'), 'Missing Healthcrest title: ' + path);
       const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
       ensure(canonical && new URL(canonical).href === new URL(path, canonicalOrigin).href, 'Incorrect canonical: ' + path);
-      ensure((await page.locator('meta[name="description"]').getAttribute('content'))?.trim(), 'Missing description: ' + path);
+      const description = await page.locator('meta[name="description"]').getAttribute('content');
+      ensure(description?.trim(), 'Missing description: ' + path);
+      pageMetadata.push({ path, title, description });
+      ensure(await page.locator('h1').count() === 1, 'Expected one primary heading: ' + path);
+      ensure(/^en(?:-|$)/.test(await page.locator('html').getAttribute('lang') || ''), 'Missing English document language: ' + path);
       const sharingUrl = await page.locator('meta[property="og:url"]').getAttribute('content');
       ensure(sharingUrl && new URL(sharingUrl).href === new URL(path, canonicalOrigin).href, 'Incorrect sharing URL: ' + path);
       const hrefs = await page.locator('a[href]').evaluateAll(nodes => nodes.map(node => node.getAttribute('href')));
+      pageIds.set(path, new Set(await page.locator('[id]').evaluateAll(nodes => nodes.map(node => node.id))));
       for (const href of hrefs) {
         const link = new URL(href, page.url());
-        if ([origin, canonicalOrigin].includes(link.origin)) internalPaths.add(link.pathname);
+        if ([origin, canonicalOrigin].includes(link.origin)) {
+          internalPaths.add(link.pathname);
+          if (link.hash) internalFragments.set(link.pathname + link.hash, { path: link.pathname, id: decodeURIComponent(link.hash.slice(1)) });
+        }
       }
       if (path === '/') {
         const logo = page.locator('.hc-header img');
@@ -117,6 +129,18 @@ try {
       return { path, status: response.status() };
     });
   }
+
+  await check('unique public metadata', async () => {
+    ensure(new Set(pageMetadata.map(item => item.title)).size === pageMetadata.length, 'Public pages share a title.');
+    ensure(new Set(pageMetadata.map(item => item.description)).size === pageMetadata.length, 'Public pages share a description.');
+    return { pages: pageMetadata.length };
+  });
+  await check('internal fragment destinations', async () => {
+    for (const [link, target] of internalFragments) {
+      ensure(pageIds.get(target.path)?.has(target.id), 'Missing fragment in the default public page: ' + link);
+    }
+    return { fragments: internalFragments.size };
+  });
 
   await check('internal link destinations', async () => {
     for (const path of internalPaths) {
@@ -157,7 +181,7 @@ try {
 } finally {
   await writeFile(output + '/summary.json', JSON.stringify({
     ...report,
-    scope: 'Read-only smoke checks of a fresh browser against the built application or explicitly supplied origin. No claim about provider dashboards, legal review, external source uptime, fragment links or every clinical statement.',
+    scope: 'Read-only smoke checks of a fresh browser against the built application or explicitly supplied origin. Fragment targets use default public page DOMs; query-dependent states and external sources need separate tests. No claim about provider dashboards, legal review or every clinical statement.',
   }, null, 2));
   await browser?.close();
   server?.kill('SIGTERM');
