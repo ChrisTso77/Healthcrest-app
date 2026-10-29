@@ -49,6 +49,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Remediation: Restore a supported Standard scan environment, perform its threat model/source review/validation and retain its report. Review headers/resources, imports/storage, API/CMS, logs, supply chain and deployment boundaries; design CSP from actual resource needs. Do not install a generic permissive policy.
 - Complexity / dependencies: Medium–High; supported scan/preflight and source access, production checks where authorized.
 - Acceptance / status: Completed source-backed assessment; all Critical/High findings fixed or recorded as explicit blockers with regression evidence. **Pending; not scanned.**
+- Parallel-batch reassessment after #122: the Standard skill is readable, but its referenced scan-prologue remains unavailable and normal tool discovery exposes no security preflight/start/scan tools. Source scanning did not start; no substitute report or invented assurance was produced. Restore a supported scan environment to close this requirement.
 
 ### L02 — Hosting eligibility unresolved
 - Category / severity / kind: Operations/legal; **High**; unverified risk and Gate D blocker.
@@ -80,7 +81,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: A green release could conceal an agreed performance/accessibility/SEO budget failure.
 - Remediation: Evaluate raw scores ≥90 and mobile LCP ≤2500ms, CLS ≤0.1, TBT ≤200ms; reject incomplete/invalid/runtime-failed reports and unpermitted measurement. TBT is a lab budget, not INP. Preserve reports before failing.
 - Complexity / dependencies: Low; existing Lighthouse/Node tooling, no new service.
-- Acceptance / status: Exact-threshold and just-outside/invalid cases tested; actual mobile job passes or fails on recorded evidence. **Implemented on the launch branch; hosted verification pending.**
+- Acceptance / status: Exact-threshold and just-outside/invalid cases tested; actual mobile job passes or fails on recorded evidence. **Merged #109; subsequent run 40952956329 passed all eight enforced profiles and 35 boundary checks.**
 
 ### L06 — Manual accessibility coverage incomplete
 - Category / severity / kind: Accessibility; **Medium**; unverified risk and Gate B/C condition.
@@ -112,7 +113,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: Production errors or content loss may not be detected/recovered promptly.
 - Remediation: Prepare owner-operated runbook, confirm access/retention/restore options and exercise approved recovery; use existing services first without new processors.
 - Complexity / dependencies: Medium; D07 and provider access.
-- Acceptance / status: Commit-bound live smoke plus tested rollback/recovery and privacy-preserving operational ownership. **Pending.**
+- Acceptance / status: Commit-bound live smoke plus tested rollback/recovery and privacy-preserving operational ownership. **Pending.** The parallel batch prepares an ordered operator rehearsal and consolidated worksheet; L29 adds deployed-commit verification. Prepared steps do not establish that rollback, CMS recovery or live smoke has been exercised.
 
 ### L10 — Media originals and runtime delivery need separate review
 - Category / severity / kind: Assets/performance; **Low**; opportunity.
@@ -128,7 +129,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: Good front-door scores do not establish interactive-route performance or Core Web Vitals compliance.
 - Remediation: Expand representative lab coverage after budgets are established; profile 3D/background behavior on actual devices. Use approved privacy-preserving field sources only if available, without enabling measurement by assumption.
 - Complexity / dependencies: Medium; browser/device access, D03 for any measurement changes.
-- Acceptance / status: Inspect all eight exact-head mobile/desktop navigation reports and unchanged budgets; field/INP, actual-device, interaction and 3D/GPU checks remain distinct. **Navigation coverage implemented on the working branch; hosted results linked from its PR. Other L11 evidence remains pending.** See PERFORMANCE-PROFILES.md.
+- Acceptance / status: Inspect all eight exact-head mobile/desktop navigation reports and unchanged budgets; field/INP, actual-device, interaction and 3D/GPU checks remain distinct. **Eight navigation profiles merged #110 and inspected again at #122 / run 40952956329. Other L11 evidence remains pending.** See PERFORMANCE-PROFILES.md.
 
 ### L12 — Launch state was scattered across feature notes
 - Category / severity / kind: Delivery/governance; **Low**; opportunity.
@@ -153,6 +154,7 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Remediation: Prepare an independent dev-tool PR after checking all peer constraints and the v10 migration guide; use a real lockfile update without force/legacy-peer-deps or disabling rules.
 - Complexity / dependencies: Low–Medium; compatible Next/TypeScript/React lint plugins and Node (v10 requires ^20.19 / ^22.13 / >=24; CI selects current Node 22).
 - Acceptance / status: Clean install without peer overrides, intended lint coverage/rules preserved, lint/type/unit/build/hosted checks pass. **Blocked on current plugin peer compatibility.** A separate isolated installation of eslint 10.13.0 completed with peer override warnings, but `npm ls eslint --all` exited ELSPROBLEMS: current eslint-plugin-react 7.37.5, eslint-plugin-jsx-a11y 6.10.2 and eslint-plugin-import 2.32.0 exclude v10. Registry checks confirmed these are their latest releases. No forced/legacy-peer install, rule removal or lockfile change is proposed in the foundation PR. Reassess compatible upstream releases or a separately reviewed configuration alternative.
+- Parallel-batch reassessment after #122: fresh registry checks still show these plugin versions as latest; eslint-config-next 16.4.3 is current, while typescript-eslint 8.72.1 accepts v10 but cannot resolve the other peers. In an isolated copy, `npm install --package-lock-only --dry-run --strict-peer-deps --save-dev eslint@10.13.0 --ignore-scripts` exited 1 / ERESOLVE on eslint-plugin-import's peer range. Package manifest, lockfile and lint config remain byte-identical to main. No installable upgrade candidate exists in this test, so no upgrade test success is claimed; speculative migration is deferred.
 
 ### L15 — Desktop Explorer camera contrast and panel heading order
 - Category / severity / kind: Accessibility; **Medium**; verified defects.
@@ -264,7 +266,15 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Impact: Visitors can bypass the unsaved-edit safeguard by choosing the lower restore control and lose current notes or check-ins they intended to keep.
 - Remediation: Share an origin-aware confirmation path for dirty state, safe Keep my edits focus, explicit all-four-habit scope and nearby failure feedback. Preserve clean explicit restore, storage validation/raw bytes and top saved-week/action focus. Dismiss pending restore on explicit save/import/removal/context changes.
 - Complexity / dependencies: Medium; planner local state/refs, existing styles and browser/artifact coverage. No dependency, storage migration, automatic read/save, health advice or provider change.
-- Acceptance / status: Both controls protect actions/reflections/week notes; cancel makes no saved-key read/write/removal, explicit restore reads once and never rewrites stored bytes. Clean restores stay explicit and one-step. Damaged/blocked data preserves edits and shows linked nearby feedback; focus and pending-save dismissal work. Existing validation/legacy/privacy/removal regressions pass; inspect confirmation/error screenshots, all five jobs and eight profiles. **Implemented on the all-restores branch; exact-head verification required.** Device/AT and broader launch gates remain open.
+- Acceptance / status: Both controls protect actions/reflections/week notes; cancel makes no saved-key read/write/removal, explicit restore reads once and never rewrites stored bytes. Clean restores stay explicit and one-step. Damaged/blocked data preserves edits and shows linked nearby feedback; focus and pending-save dismissal work. **Merged #122: run 40952956329 passed all five jobs, 315 Chromium/34 compatibility cases, 23 release checks and eight inspected profiles; eight confirmation/error images were reviewed.** Reviewed and merged trees match; Vercel production succeeded. Device/AT and broader launch gates remain open.
+
+### L29 — Live smoke did not verify the deployed source revision
+- Category / severity / kind: Release assurance; **Medium**; verified evidence gap and Gate D condition.
+- Evidence: Main 4309697's production-smoke.yml accepts dispatch without an expected commit. scripts/check-release.mjs records the origin and page checks, but no deployed build marker, expected SHA or harness/run binding. Passing checks can therefore describe a different live build from the approved release.
+- Impact: A stale or unintended deployment could satisfy page-level smoke while release evidence is attributed to the wrong source revision.
+- Remediation: Expose only a validated non-sensitive build commit in a build-bound response header. Require the expected full SHA for live smoke, check observed identity and retain source/run/expected/observed provenance even when checks fail. Keep the fixed canonical production origin and explicit manual dispatch; do not add automatic production operations.
+- Complexity / dependencies: Low–Medium; existing Next build configuration, release script/workflows and focused boundary tests. Actual live verification follows an approved merge/deployment.
+- Acceptance / status: Missing/malformed/wrong identities fail; the compiled header is build-bound rather than runtime-derived; the final combined head passes existing gates and identity boundaries. Retain a later canonical live report for the approved merged SHA. **Implemented in the parallel launch batch; final-head verification and actual live execution remain pending.**
 
 ## Sources read for this audit
 

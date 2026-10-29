@@ -2,6 +2,11 @@ name: Production release smoke check
 
 on:
   workflow_dispatch:
+    inputs:
+      expected_commit:
+        description: Full merged main commit SHA expected on the live domain
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -13,6 +18,8 @@ jobs:
     timeout-minutes: 6
     env:
       HEALTHCREST_RELEASE_ORIGIN: https://www.healthcrest.uk
+      HEALTHCREST_EXPECTED_COMMIT: ${{ inputs.expected_commit }}
+      HEALTHCREST_REQUIRE_MAIN: '1'
     steps:
       - name: Checkout code
         uses: actions/checkout@v7

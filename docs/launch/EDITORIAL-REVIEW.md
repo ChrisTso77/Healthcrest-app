@@ -18,13 +18,15 @@ For each correction: identify affected public content and revision, assess scope
 
 ## Initial content register — sign-off pending
 
-| Content | Source revision at inventory | Approver / actual reviewed date / decision | Next review |
+Use the [content approval packet](CONTENT-APPROVAL-PACKET.md) for direct review links, source/population/limitation mappings, all eight scenario identities and blank per-item decision records. Its current baseline is immutable release `4309697dbdc0ffb4eeacc214102f051491c4bbf8` (#122); compare the content scope with the intended launch revision before carrying an approval forward. This preparation does not establish a review outcome.
+
+| Content | Packet items / source revision | Approver / actual reviewed date / decision | Next review |
 | --- | --- | --- | --- |
-| Movement and strength guide | lib/education/learningGuides.ts at 34ca713b | Pending | Set after actual review |
-| Balanced meals guide | Same | Pending | Set after actual review |
-| Sleep routines guide | Same | Pending | Set after actual review |
-| Stress and support guide | Same | Pending | Set after actual review |
-| Eight built-in scenarios / guide explanations | lib/presets/reviewedContent.ts and relevant components at 34ca713b | Pending; existing source-check record is ../scenario-evidence-review.md | Set after actual review |
-| Homepage / About / learning definitions / planner guidance | Current exact release revision | Pending | Set after actual review |
+| Movement and strength guide | G1 / learningGuides.ts at 4309697d | Pending | Set after actual review |
+| Balanced meals guide | G2 / same catalogue and revision | Pending | Set after actual review |
+| Sleep routines guide | G3 / same catalogue and revision | Pending | Set after actual review |
+| Stress and support guide | G4 / same catalogue and revision | Pending | Set after actual review |
+| Eight built-in scenarios / guide explanations | S1–S8 / reviewedContent.ts and packet scope at 4309697d | Pending; existing source-check record is ../scenario-evidence-review.md | Set after actual review |
+| Homepage / About / learning definitions / planner guidance | C1 / listed shared-copy scope at 4309697d | Pending | Set after actual review |
 
 Source references were previously checked on 28 October; this register does not change the public dates. Keep completed review records bound to immutable commits or CMS document revisions. A source update, changed audience, material claim or safety concern triggers another review even within the weekly interval.
