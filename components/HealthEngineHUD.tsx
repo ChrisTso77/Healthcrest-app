@@ -142,7 +142,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       {/* ------------------------------------------------------------------ */}
       {/* 1. TOP HEADER NAVIGATION BAR */}
       {/* ------------------------------------------------------------------ */}
-      <header className="absolute top-0 inset-x-0 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-3 py-2 flex flex-wrap items-center justify-between gap-2 z-50 xl:z-30 xl:h-16 xl:flex-nowrap xl:gap-0 xl:px-6 xl:py-0">
+      <header className="absolute top-0 inset-x-0 bg-slate-900/80 backdrop-blur-md forced-colors:backdrop-blur-none border-b border-slate-800/80 px-3 py-2 flex flex-wrap items-center justify-between gap-2 z-50 xl:z-30 xl:h-16 xl:flex-nowrap xl:gap-0 xl:px-6 xl:py-0">
         
         {/* Brand Logo & Platform Title */}
         <Link href="/" aria-label="Healthcrest home" className="pointer-events-auto flex min-w-0 items-center space-x-3 rounded-lg focus-visible:outline-2 focus-visible:outline-emerald-400">
@@ -249,7 +249,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         role="region"
         aria-label="Scenario summary"
         tabIndex={0}
-        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-800/90 rounded-2xl p-4 shadow-2xl z-40 ${mobilePanel === 'clinical' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-6 xl:right-auto xl:w-80 xl:max-h-[calc(100dvh_-_var(--engine-footer-space,4rem)_-_var(--engine-desktop-dock-space,16rem)_-_6rem)] xl:bg-slate-900/80 xl:z-20`}
+        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md forced-colors:backdrop-blur-none border border-slate-800/90 rounded-2xl p-4 shadow-2xl z-40 ${mobilePanel === 'clinical' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-6 xl:right-auto xl:w-80 xl:max-h-[calc(100dvh_-_var(--engine-footer-space,4rem)_-_var(--engine-desktop-dock-space,16rem)_-_6rem)] xl:bg-slate-900/80 xl:z-20`}
       >
         <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
           <div className="flex items-center space-x-2">
@@ -324,7 +324,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         id={`${controlsId}-camera-panel`}
         role="region"
         aria-label="Camera controls"
-        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-800/90 rounded-2xl p-3 shadow-2xl z-40 ${mobilePanel === 'camera' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-auto xl:right-6 xl:w-60 xl:max-h-[calc(100dvh_-_var(--engine-footer-space,4rem)_-_var(--engine-desktop-dock-space,16rem)_-_6rem)] xl:bg-slate-900/80 xl:z-20`}
+        className={`absolute top-44 left-3 right-3 max-h-[calc(100dvh-18rem)] overflow-y-auto pointer-events-auto bg-slate-900/95 backdrop-blur-md forced-colors:backdrop-blur-none border border-slate-800/90 rounded-2xl p-3 shadow-2xl z-40 ${mobilePanel === 'camera' ? 'block' : 'hidden'} xl:block xl:top-20 xl:left-auto xl:right-6 xl:w-60 xl:max-h-[calc(100dvh_-_var(--engine-footer-space,4rem)_-_var(--engine-desktop-dock-space,16rem)_-_6rem)] xl:bg-slate-900/80 xl:z-20`}
       >
         <div className="flex items-center space-x-2 pb-2.5 border-b border-slate-800/80 mb-2">
           <Camera className="w-3.5 h-3.5 text-cyan-400" />
@@ -365,7 +365,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
       {/* ------------------------------------------------------------------ */}
       {/* 4. RETRACTABLE CONTROL DOCK & SLIDERS (BOTTOM DRAWER) */}
       {/* ------------------------------------------------------------------ */}
-      <div className="absolute bottom-[var(--engine-footer-space,4rem)] inset-x-0 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800/90 transition-all duration-300 z-30 h-[var(--engine-dock-space)] xl:h-[var(--engine-desktop-dock-space)]">
+      <div className="absolute bottom-[var(--engine-footer-space,4rem)] inset-x-0 bg-slate-900/90 backdrop-blur-xl forced-colors:backdrop-blur-none border-t border-slate-800/90 transition-all duration-300 z-30 h-[var(--engine-dock-space)] xl:h-[var(--engine-desktop-dock-space)]">
         
         <button
           onClick={onDockToggle}

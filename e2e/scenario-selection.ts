@@ -1,6 +1,17 @@
 import { expect, type Locator, type Page, type TestInfo } from '@playwright/test';
 import { FALLBACK_PRESETS } from '../lib/presets/fallback';
 
+async function expectForcedColourPaint(page: Page, dialog?: Locator) {
+  if (!await page.evaluate(() => matchMedia('(forced-colors: active)').matches)) return;
+  // Chromium can lose static text after closing a modal over blurred surfaces.
+  // Check the compiled, rendered preference and retain post-close screenshots.
+  const blurred = await page.evaluate(() => Array.from(document.querySelectorAll('body *'))
+    .filter(element => element.getClientRects().length > 0 && !['', 'none'].includes(getComputedStyle(element).backdropFilter))
+    .map(element => element.tagName + ' ' + element.getAttribute('aria-label')));
+  expect(blurred, 'Forced colours must not retain decorative backdrop blur').toEqual([]);
+  if (dialog) expect(await dialog.evaluate(element => getComputedStyle(element, '::backdrop').backdropFilter)).toBe('none');
+}
+
 async function expectScenarioMark(group: Locator, button: Locator) {
   await expect(button).toHaveAttribute('aria-pressed', 'true');
   await expect(group.locator('.hc-selection-mark[data-selected="true"]')).toHaveCount(1);
@@ -25,6 +36,7 @@ export async function checkScenarioSelection(page: Page, testInfo: TestInfo, mod
   const canvas = mode === '3d' ? await page.locator('canvas').elementHandle() : null;
   if (mode === '3d') await expect(page.locator('canvas')).toBeVisible();
   else await expect(page.locator('canvas')).toHaveCount(0);
+  await expectForcedColourPaint(page);
   const group = page.getByRole('group', { name: 'Example scenarios', exact: true });
   await expect(group.getByRole('button')).toHaveCount(FALLBACK_PRESETS.length);
   for (const preset of FALLBACK_PRESETS) {
@@ -63,11 +75,13 @@ export async function checkScenarioSelection(page: Page, testInfo: TestInfo, mod
   const compare = page.getByRole('button', { name: 'Compare starting and current settings', exact: true });
   await compare.click();
   const dialog = page.getByRole('dialog', { name: 'Starting and current settings', exact: true });
+  await expectForcedColourPaint(page, dialog);
   const restore = dialog.getByRole('button', { name: 'Restore starting settings', exact: true });
   await expect(restore).toHaveAttribute('aria-disabled', 'false');
   await restore.click();
   await page.keyboard.press('Escape');
   await expect(compare).toBeFocused();
+  await expectForcedColourPaint(page);
   await expect(sleep).toHaveValue(String(research.parameters.sleepDuration));
   // Matching an example's numbers after restore must not reapply its attribution.
   await expect(group.getByRole('button', { pressed: true })).toHaveCount(0);
@@ -81,8 +95,11 @@ export async function checkScenarioSelection(page: Page, testInfo: TestInfo, mod
   }
   const guide = page.getByRole('button', { name: 'Guide: understand this view', exact: true });
   await guide.click();
-  await expect(page.getByRole('dialog', { name: 'Understand this view', exact: true })).toContainText('Manual settings: no evidence preset is currently applied.');
+  const guideDialog = page.getByRole('dialog', { name: 'Understand this view', exact: true });
+  await expect(guideDialog).toContainText('Manual settings: no evidence preset is currently applied.');
+  await expectForcedColourPaint(page, guideDialog);
   await page.keyboard.press('Escape');
+  await expectForcedColourPaint(page);
   await group.scrollIntoViewIfNeeded();
   await attach('manual-after-restore');
   await selected!.focus();

@@ -234,6 +234,14 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Complexity / dependencies: Low–Medium; existing icon/utilities, HUD and hosted browser/artifact tooling. No dependency, health guidance, state model, storage or provider changes.
 - Acceptance / status: Exact title/category names, one fully visible marker after explicit selection, none after manual edits or restoring the same numbers, and reselect-to-attribute behavior. Verify ordinary/research presets, compact/desktop emulated forced colours, 2D without a canvas, normal 3D canvas/camera continuity, public-marker regressions, screenshots, all five jobs and eight profiles. **Implemented on the scenario-selection branch; exact-head verification required.** No actual OS-theme/AT or WCAG-conformance claim.
 
+### L25 — Forced-colour modal closing can erase static text over blur
+- Category / severity / kind: Accessibility/rendering; **Medium**; verified browser-visible defect.
+- Evidence: Run 40929816842 (b4b92c1) scenario-manual-after-restore 1350px forced light/dark screenshots leave the unchanged goal/2D text blank after closing Compare/Guide, despite passing DOM visibility checks. A local isolated Chromium reproduction using the same native dialog and backdrop-filter pattern persisted across animation frames. Disabling only panel or only modal-backdrop blur retained the defect; disabling both restored static text. The underlying blur styles also exist on baseline 9eba258.
+- Impact: Visitors using forced colours can lose readable health-goal and diagram context after ordinary dialog use; automated visibility alone missed the paint failure.
+- Remediation: Use existing forced-colors Tailwind variants to disable decorative backdrop blur on all four HUD surfaces and shared modal backdrops. Keep normal themes, colours, dialog semantics/focus and state untouched. Check rendered filters and inspect post-close screenshots.
+- Complexity / dependencies: Low–Medium; existing CSS variants, modal/HUD and browser/artifact tooling. No dependencies or changed health/privacy/provider behavior.
+- Acceptance / status: Emulated forced light/dark compact/desktop surfaces and open modal backdrops compute no blur; Compare/Guide close with intact readable goal/diagram text, correct marker/manual state and focus. Normal 3D/public screenshots remain consistent; all five jobs/eight profiles pass at the corrected head. **Correction implemented on the scenario-selection branch; corrected-head verification and visual review required.** Actual OS-theme/AT/device evidence remains pending.
+
 ## Sources read for this audit
 
 Read 29 October 2026; these do not certify Healthcrest:

@@ -56,7 +56,7 @@ export function ModalDialog({ children, labelledBy, onClose, className = '' }: M
           first.focus();
         }
       }}
-      className={`fixed inset-0 m-0 h-dvh w-full max-h-none max-w-none border-0 bg-transparent p-4 text-slate-100 open:flex open:items-center open:justify-center backdrop:bg-slate-950/80 backdrop:backdrop-blur-md ${className}`}
+      className={`fixed inset-0 m-0 h-dvh w-full max-h-none max-w-none border-0 bg-transparent p-4 text-slate-100 open:flex open:items-center open:justify-center backdrop:bg-slate-950/80 backdrop:backdrop-blur-md forced-colors:backdrop:backdrop-blur-none ${className}`}
     >
       {children}
     </dialog>
