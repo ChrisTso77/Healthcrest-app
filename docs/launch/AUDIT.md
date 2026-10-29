@@ -162,6 +162,14 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Complexity / dependencies: Low; one HUD component, existing Lighthouse reports and Firefox/WebKit checks. No new dependency or clinical/legal text.
 - Acceptance / status: Old desktop report is rejected for exactly the two required audits; all eight corrected-build reports pass them, and desktop headings/keyboard camera selection preserve habit settings in both compatibility engines. **Fix and regressions implemented; final-head hosted validation required.** Other manual accessibility/device evidence remains pending.
 
+### L16 — Structured data lacks rendered-content consistency checks
+- Category / severity / kind: SEO/content integrity; **Low**; improvement opportunity.
+- Evidence: lib/education/learningGuideMetadata.ts separately defined breadcrumb labels from app/learn/[slug]/page.tsx; the final structured label used the article title while the visible trail used the topic. Both can describe the same guide; this is not a claim of invalid Google markup. The release script checked canonical/sharing metadata but not JSON-LD, author/date/source agreement or query variants.
+- Impact: Future source/byline/navigation edits could drift from structured representations while release checks remain green.
+- Remediation: Share breadcrumb and responsible-organisation definitions; parse and compare the rendered WebSite/Article/BreadcrumbList, visible byline/date/sources/trail and public preference variants. Do not invent clinical-review/publication dates or treat software checks as human review.
+- Complexity / dependencies: Low–Medium; existing Node, Vitest and hosted browser/release tooling; no new service or dependency. External Search Console actions remain D06-gated.
+- Acceptance / status: 34 parser/mismatch cases, existing catalogue tests and rendered checks across 13 pages/four guide variants pass at an immutable head. **Implemented on the structured-data branch; hosted evidence linked from its PR.** External validation/indexing and actual editorial sign-offs remain pending.
+
 ## Sources read for this audit
 
 Read 29 October 2026; these do not certify Healthcrest:

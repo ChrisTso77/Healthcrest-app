@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Fragment } from 'react';
 import { guideStarterHref } from '@/lib/education/guideStarter';
 import { GuidePrintControl } from '@/components/GuidePrintControl';
 import { SITE_URL } from '@/lib/siteMetadata';
@@ -7,7 +8,7 @@ import { notFound } from 'next/navigation';
 import { SiteHeader, SiteFooter } from '@/components/SiteChrome';
 import { UrgentSupport } from '@/components/UrgentSupport';
 import { getLearningGuide, LEARNING_GUIDES, GUIDE_SOURCE_CHECKED_ON, learningGuideHref, type LearningGuide } from '@/lib/education/learningGuides';
-import { learningGuideMetadata, learningGuideSchema } from '@/lib/education/learningGuideMetadata';
+import { GUIDE_AUTHOR, learningGuideBreadcrumbs, learningGuideMetadata, learningGuideSchema } from '@/lib/education/learningGuideMetadata';
 import { parseJourneyConstraint, journeyPlannerHref, journeyExplorerHref, journeyLearnHref } from '@/lib/education/startJourney';
 import '../../landing.css';
 import '../learn.css';
@@ -43,22 +44,24 @@ export default async function LearningGuidePage({ params, searchParams }: Props)
   const planner = journeyPlannerHref(guide.pillar, constraint);
   const explorer = journeyExplorerHref(guide.pillar, constraint) + (constraint ? '' : '&view=2d');
   const schema = learningGuideSchema(guide);
+  const breadcrumbs = learningGuideBreadcrumbs(guide);
   return (
     <div className="hc-landing hc-guide-page">
       <a className="hc-skip-link" href="#main-content">Skip to content</a>
       <SiteHeader />
       <main id="main-content" tabIndex={-1} className="hc-section hc-guide-main">
         <nav aria-label="Breadcrumb" className="hc-guide-breadcrumb">
-          <Link href="/" prefetch={false}>Home</Link><span aria-hidden="true">/</span>
-          <Link href="/learn" prefetch={false}>Learn</Link><span aria-hidden="true">/</span>
-          <span aria-current="page">{guide.topicLabel}</span>
+          {breadcrumbs.map((item, index) => <Fragment key={item.href}>
+            {index > 0 && <span aria-hidden="true">/</span>}
+            {index === breadcrumbs.length - 1 ? <span aria-current="page">{item.name}</span> : <Link href={item.href} prefetch={false}>{item.name}</Link>}
+          </Fragment>)}
         </nav>
         <article className="hc-guide" aria-labelledby="guide-title">
           <header className="hc-guide-header">
             <span className="hc-eyebrow">A practical guide · {guide.topicLabel}</span>
             <h1 id="guide-title">{guide.title}</h1>
             <p className="hc-guide-summary">{guide.summary}</p>
-            <p className="hc-guide-byline">Published by Healthcrest · Sources checked <time dateTime={GUIDE_SOURCE_CHECKED_ON}>{new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(GUIDE_SOURCE_CHECKED_ON + 'T00:00:00.000Z'))}</time>. <Link href="/about" prefetch={false}>About the creator and our approach</Link>.</p>
+            <p className="hc-guide-byline">Published by <span className="hc-guide-publisher">{GUIDE_AUTHOR.name}</span> · Sources checked <time dateTime={GUIDE_SOURCE_CHECKED_ON}>{new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(GUIDE_SOURCE_CHECKED_ON + 'T00:00:00.000Z'))}</time>. <Link href="/about" prefetch={false}>About the creator and our approach</Link>.</p>
             <p className="hc-guide-audience">{guide.audience}</p>
             <p className="hc-guide-print-only">Online guide and updates: <a href={SITE_URL + '/learn/' + guide.slug}>{SITE_URL + '/learn/' + guide.slug}</a></p>
             <p className="hc-guide-print-only">General educational information for adults. Adapt ideas to your health, ability and circumstances alongside appropriate clinical care.</p>

@@ -6,6 +6,8 @@ Unknown public and guide paths must return HTTP 404, show Healthcrest's recovery
 
 The check uses a fresh browser without visitor measurement permission. It blocks third-party browser requests and rejects observed optional measurement requests and failed static application responses. This checks a basic fresh-visitor boundary; the separate full measurement tests remain required.
 
+Structured-data checks parse the current WebSite/Article/BreadcrumbList shapes and compare guide byline, source-check date, citations and trail with rendered content. The four guides are also revisited with public preferences; canonical/sharing/schema identity must remain query-free. Run npm run test:seo for 34 parser/mismatch cases. See docs/launch/STRUCTURED-DATA.md for exact scope: these are application consistency checks, not external rich-result certification, clinical review or an indexing guarantee.
+
 ## Run against a built application
 
 1. Install dependencies with npm ci.
