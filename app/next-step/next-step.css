@@ -198,3 +198,9 @@
 .hc-backup-compare-copies > div { min-width: 0; padding: 12px; border: 1px solid #d4dcc7; border-radius: 8px; }
 .hc-backup-compare-action { white-space: pre-wrap; overflow-wrap: anywhere; }
 @media (max-width: 600px) { .hc-backup-compare-copies { grid-template-columns: 1fr; } }
+
+.hc-week-calendar { margin-top: 24px; padding: 20px; border: 1px solid #b5c6a1; border-radius: 12px; background: #f2f4e9; }
+.hc-week-calendar h4 { font-size: 19px; line-height: 1.4; }
+.hc-week-calendar p { margin-top: 12px; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+.hc-week-calendar input[type="time"] { max-width: 100%; min-width: 0; }
+@media (max-width: 400px) { .hc-week-calendar { padding: 16px; } }

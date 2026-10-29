@@ -41,6 +41,7 @@ export default function PrivacyPage() {
         <section aria-labelledby="privacy-storage">
           <h2 id="privacy-storage">Your habit drafts stay separate</h2>
           <p>The planner keeps edits in the current page. Only choosing Save on this device stores drafts, reflection notes and current seven-day plans, including dates, check-ins and weekly reviews, in this browser. Restore and Remove are manual. Downloaded text files, JSON backups and printed/PDF copies are separate copies you manage. A backup includes all four pillar drafts and their current weeks. Importing reads your chosen file locally and replaces page edits only after confirmation; it does not upload the file or save it automatically.</p>
+          <p>Optional calendar downloads contain seven generic check-in entries with dates, your chosen time and a public return link, without your pillar, action or notes. They are generated in this browser. If you import a file into a calendar service, that provider may store or sync the entries under its own settings and privacy terms. Downloading does not connect Healthcrest to your calendar, activate notifications or save your plan; later plan changes do not update imported entries.</p>
           <p><Link href="/storage" prefetch={false} className="hc-text-link">Read the browser-storage explanation</Link>. Changing measurement choices does not remove a saved habit plan.</p>
         </section>
         <section aria-labelledby="privacy-services">

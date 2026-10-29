@@ -1,5 +1,6 @@
 'use client';
 
+import { HabitWeekCalendar } from '@/components/HabitWeekCalendar';
 import { HabitWeekSummary } from '@/components/HabitWeekSummary';
 import { HabitWeekRollover } from '@/components/HabitWeekRollover';
 import { useId, useRef, useState, type FormEvent } from 'react';
@@ -113,6 +114,7 @@ export function HabitWeekPlan({ week, draft, onChange, onUseNextAction, onSave, 
             <textarea id={id + '-next'} rows={2} maxLength={300} value={week.nextAction} onChange={event => onChange({ ...week, nextAction: event.target.value })} />
             <button type="button" disabled={!week.nextAction.trim()} onClick={() => onUseNextAction(week.nextAction.trim())}>Use this action in my draft</button>
           </div>
+          <HabitWeekCalendar key={week.startDate} startDate={week.startDate} />
           <HabitWeekRollover week={week} draft={draft} onDownloadBackup={onDownloadBackup}
             onStart={next => { setConfirmClear(false); setStartDate(''); setError(''); onStartNextWeek(next); requestAnimationFrame(() => heading.current?.focus()); }} />
           <div className="hc-week-quick-save">
