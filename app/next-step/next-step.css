@@ -44,6 +44,10 @@
 .hc-plan-save-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .hc-plan-save-actions button { min-height: 44px; padding: 10px 14px; border: 1px solid #8b9d7d; border-radius: 10px; background: #f8f7f0; color: var(--hc-ink); font: inherit; font-size: 13px; cursor: pointer; }
 .hc-plan-save-actions button:hover { background: var(--hc-surface-muted); }
+.hc-plan-removal { margin-top: 18px; padding: 18px; border: 1px solid #a4b893; border-radius: 12px; background: var(--hc-surface-muted); }
+.hc-plan-removal h4 { margin: 0; font-size: 16px; font-weight: 600; }
+.hc-plan-removal p { font-size: 14px; overflow-wrap: anywhere; }
+.hc-plan-removal .hc-plan-removal-error { color: var(--hc-ink); font-weight: 600; }
 
 /* One current week per pillar, with native disclosure controls for daily notes. */
 .hc-week { margin-top: 28px; padding-top: 26px; border-top: 1px solid var(--hc-border); }

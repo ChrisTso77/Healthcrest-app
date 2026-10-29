@@ -22,7 +22,7 @@ No automatic save or restore is introduced. Save on this device writes all four 
 
 Validation bounds every field, seven-day array length, choice enumeration, start date and total raw payload. Invalid storage does not replace current edits. The 120,000-character raw limit accommodates maximum-length escaped text across all four drafts/weeks. Unknown extra properties are not copied.
 
-Remove saved draft removes only this saved key, keeps current edits and never changes measurement choices. A blocked storage operation leaves editing and download available. Download includes the selected pillar only, both the current draft and the explicitly labelled weekly snapshot/check-ins/review.
+Remove saved plan opens a confirmation covering all four habits; Keep saved plan cancels without accessing storage, and Remove saved copy removes only this saved key, keeps current edits and never changes measurement choices. A blocked storage operation leaves editing and download available. Download includes the selected pillar only, both the current draft and the explicitly labelled weekly snapshot/check-ins/review.
 
 The planner remains excluded from both optional measurement services; no check-in event or upload endpoint is added. Public storage/privacy copy covers the new saved fields. The administrative provider-processing review remains separate.
 

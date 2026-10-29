@@ -41,3 +41,7 @@ HUD header/summary/camera/dock surfaces and native modal backdrops now disable b
 About this Explorer and Important information open in-place dialogs; the separate Healthcrest home link navigates home. Information openers use 12px text, explicit dialog hints and at least 44px targets. Header and final close actions also use 44px targets; flexible headers wrap beside a fixed close target. Both final actions say Close and keep exploring and record no acknowledgement. Substantive content/source blocks remain unchanged; this is no legal or clinical re-review.
 
 The ordinary footer reserve is 5.5rem (previously 5rem) to accommodate larger controls without dock overlap. Existing recovery reserve/scrolling is retained. Existing keyboard/modal/recovery/forced-colour coverage remains required alongside compact 2D/desktop 3D screenshots and session/storage checks.
+
+## Saved-copy removal state
+
+The planner's inline removal confirmation uses the existing muted surface, ink, border, focus and 44px button styles. Its heading describes removal of the saved browser copy; body text covers all four habits, notes/check-ins and the separate current-page/downloaded/printed copies. Keep saved plan receives focus first; Remove saved copy is a distinct final action. Failure text remains beside the actions, with the existing status announcement. Cancellation/success restore focus to Remove saved plan. No auto-read/save/restore is introduced; explicit save/restore/import and context changes invalidate a pending removal.

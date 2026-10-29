@@ -140,7 +140,8 @@ test('removing saved drafts keeps current edits and unrelated browser storage', 
   const action = page.getByLabel('One manageable action', { exact: true });
   await action.fill('My current habit.');
   await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-  await page.getByRole('button', { name: 'Remove saved draft', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove saved plan', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove saved copy', exact: true }).click();
   await expect(action).toHaveValue('My current habit.');
   expect(await page.evaluate(() => localStorage.getItem('unrelated-preference'))).toBe('keep');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
@@ -176,7 +177,8 @@ test('blocked browser storage leaves editing and download available', async ({ p
   await expect(page.getByRole('status')).toContainText('Saving is unavailable');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('Saved drafts are unavailable');
-  await page.getByRole('button', { name: 'Remove saved draft', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove saved plan', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove saved copy', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('could not be removed');
   await expect(action).toHaveValue('Read quietly before bed.');
   const downloading = page.waitForEvent('download');

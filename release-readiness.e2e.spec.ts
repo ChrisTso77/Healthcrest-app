@@ -3,6 +3,19 @@ import { checkPublicFocus } from './e2e/focus-appearance';
 import { checkHabitSelection } from './e2e/habit-selection';
 import { checkScenarioSelection } from './e2e/scenario-selection';
 import { checkExplorerInformation } from './e2e/explorer-information';
+import { checkSavedPlanRemoval } from './e2e/saved-plan-removal';
+
+for (const width of [320, 1350]) {
+  test('saved-plan removal requires confirmation and preserves page edits at ' + width + 'px', async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: width === 320 ? 568 : 940 });
+    await checkSavedPlanRemoval(page, testInfo, false, true);
+  });
+}
+
+test('blocked saved-plan removal preserves the copy and explicit save cancels removal', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 320, height: 568 });
+  await checkSavedPlanRemoval(page, testInfo, true, true);
+});
 
 for (const width of [320, 1350]) {
   test('plain Explorer information controls preserve the current session at ' + width + 'px', async ({ page }, testInfo) => {

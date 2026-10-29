@@ -7,6 +7,14 @@ import { checkPublicFocus } from './e2e/focus-appearance';
 import { checkHabitSelection } from './e2e/habit-selection';
 import { checkScenarioSelection } from './e2e/scenario-selection';
 import { checkExplorerInformation } from './e2e/explorer-information';
+import { checkSavedPlanRemoval } from './e2e/saved-plan-removal';
+
+for (const blocked of [false, true]) {
+  test('saved-plan removal preserves edits and handles blocked storage: ' + blocked, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    await checkSavedPlanRemoval(page, testInfo, blocked);
+  });
+}
 
 test('plain information dialogs preserve compact Explorer settings', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 320, height: 568 });
