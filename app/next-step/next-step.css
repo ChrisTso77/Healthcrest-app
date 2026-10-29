@@ -208,3 +208,20 @@
 .hc-plan-guide-origin { padding: 16px; border: 1px solid #b5c6a1; border-radius: 10px; background: #eaf0de; font-size: 14px; line-height: 1.75; overflow-wrap: anywhere; }
 .hc-plan-guide-origin a { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
 .hc-plan-guide-origin a:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
+
+/* Bound the collapsed native selects without changing their options or picker semantics. */
+.hc-week select {
+  appearance: none;
+  -webkit-appearance: none;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 36px;
+  background-image: linear-gradient(45deg, transparent 50%, #183b2d 50%), linear-gradient(135deg, #183b2d 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+@media (forced-colors: active) {
+  .hc-week select { appearance: auto; -webkit-appearance: auto; background-image: none; padding-right: 10px; }
+}

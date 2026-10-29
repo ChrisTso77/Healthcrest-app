@@ -28,7 +28,7 @@ Passing CI proves the tested build's checks; it does not prove that the live dom
 - Keep optional measurement disabled until the existing operator checks in docs/measurement-rollout.md are complete. Neither this check nor a successful deploy enables it.
 - Review the remaining company/provider/enquiry details in docs/privacy-notice-draft.md. Do not infer their completion from passing software tests.
 - Continue to follow docs/editorial-sources.md for health-content work, including reputable UK and global references suited to the claim and audience. This release adds navigation and verification, not clinical advice.
-- Run the full hosted unit/browser suite, production-build release check, preview measurement-off profile, dependency audit and mobile lab audit. Review the Vercel preview before approving a merge.
+- Run the full hosted unit/Chromium suite, focused Firefox/WebKit compatibility job, production-build release check, preview measurement-off profile, dependency audit and mobile lab audit. Review the Vercel preview before approving a merge.
 - After merging, confirm the production commit/deployment and run the live workflow. If a production-only regression appears, promote the previous known-good Vercel deployment while investigating; a code revert should go through a reviewed PR. Changing telemetry settings also requires redeployment as documented in the rollout guide.
 
 Evidence belongs to the exact checked commit and origin in the CI/workflow report. No live-site or administrative checks are claimed merely by adding this workflow.
