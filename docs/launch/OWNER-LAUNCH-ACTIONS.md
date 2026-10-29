@@ -4,6 +4,8 @@ Prepared 29 October 2026 for one consolidated launch-readiness handoff. This wor
 
 Owner update during batch review: a professional registered-office arrangement is **not yet in place**. Actual-device access is confirmed for **iPhone/Safari, Android/Chrome, Windows and Mac**. These are available test platforms, not completed tests. Screen-reader access remains unconfirmed; do not mark the manual matrix complete.
 
+Latest owner update after #125: intended use is **non-commercial education**; the **professional registered address remains outstanding**. The current Vercel plan was not newly confirmed. These answers do not establish provider eligibility or complete company disclosure arrangements.
+
 ## Five grouped actions
 
 | Action | Already known | Minimum outcome needed | Decisions |
