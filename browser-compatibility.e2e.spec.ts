@@ -4,6 +4,26 @@ import { LEARNING_GUIDES } from './lib/education/learningGuides';
 import { createHabitWeek } from './lib/education/habitWeek';
 import type { SavedHabitDraft } from './lib/education/habitDraft';
 
+test('the browser-tab icon and conventional fallback decode locally', async ({ page, request }, testInfo) => {
+  await page.goto('/learn');
+  const href = await page.locator('link[rel="icon"]').getAttribute('href');
+  expect(href).toBeTruthy();
+  const icon = new URL(href!, page.url());
+  expect(icon.origin).toBe(new URL(page.url()).origin);
+  expect(icon.pathname).toBe('/icon');
+  const response = await request.get('/favicon.ico', { maxRedirects: 0 });
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('image/png');
+  const bytes = await response.body();
+  expect(bytes.byteLength).toBeLessThanOrEqual(16384);
+  const dimensions = await page.evaluate(async () => {
+    const image = new Image(); image.src = '/favicon.ico'; await image.decode();
+    return [image.naturalWidth, image.naturalHeight];
+  });
+  expect(dimensions).toEqual([64, 64]);
+  await testInfo.attach('healthcrest-browser-icon', { body: bytes, contentType: 'image/png' });
+});
+
 const KEY = 'healthcrest.habit-draft.v1';
 async function downloadText(file: Download): Promise<string> {
   const stream = await file.createReadStream();
