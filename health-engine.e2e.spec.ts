@@ -1559,7 +1559,7 @@ test('live visual key explains changes and pause stops automatic drawing without
 });
 
 for (const width of [320, 390, 768, 1440]) {
-  test('visual key remains reachable above the dock at ' + width + 'px', async ({ page }) => {
+  test('visual key remains reachable above the dock at ' + width + 'px', async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: width === 320 ? 568 : 900 });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.route('**/api/presets', route => route.fulfill({ status: 503, body: 'unavailable' }));
@@ -1580,5 +1580,8 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(page.getByRole('region', { name: 'Read the illustration', exact: true })).toContainText('Red does not diagnose harm');
     await page.keyboard.press('Escape');
     await expect(explain).toBeFocused();
+    if (width === 320) {
+      await testInfo.attach('compact-3d-topics-320px', { body: await page.screenshot(), contentType: 'image/png' });
+    }
   });
 }
