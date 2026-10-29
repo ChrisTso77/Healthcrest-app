@@ -4,11 +4,12 @@ import type { JourneyConstraint } from './startJourney';
 
 export const GUIDE_SOURCE_CHECKED_ON = '2026-10-28';
 export type GuideSource = { id: string; title: string; url: string; supports: string; scope: string; publisher: string; kind: string };
+export type GuideIdea = { id: string; text: string };
 export type GuideSection = { id: string; title: string; paragraphs: readonly string[]; sourceIds: readonly string[] };
 export type LearningGuide = {
   slug: string; pillar: HabitPillar; topicLabel: string; title: string; description: string; audience: string;
   summary: string; takeaways: readonly string[]; sections: readonly GuideSection[];
-  ideas: readonly string[]; ideaSourceIds: readonly string[]; reflection: string; sources: readonly GuideSource[];
+  ideas: readonly GuideIdea[]; ideaSourceIds: readonly string[]; reflection: string; sources: readonly GuideSource[];
 };
 export const LEARNING_GUIDES: readonly LearningGuide[] = [
   {
@@ -103,8 +104,8 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
       }
     ],
     "ideas": [
-      "Choose a suitable activity you enjoy, or ask for help finding one that fits your ability, seating and available space.",
-      "Read one NHS strength demonstration and decide what support or adaptation you need before trying it."
+      {"id":"movement-suitable-activity","text":"Choose a suitable activity you enjoy, or ask for help finding one that fits your ability, seating and available space."},
+      {"id":"movement-read-strength","text":"Read one NHS strength demonstration and decide what support or adaptation you need before trying it."}
     ],
     "ideaSourceIds": [
       "activity",
@@ -227,9 +228,9 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
       }
     ],
     "ideas": [
-      "Try a higher-fibre version of a familiar starchy food.",
-      "Add a vegetable option you can obtain and prepare to a meal you already eat.",
-      "Consider beans or lentils as a protein option when they fit your diet and meal."
+      {"id":"food-fibre-swap","text":"Try a higher-fibre version of a familiar starchy food."},
+      {"id":"food-vegetable-option","text":"Add a vegetable option you can obtain and prepare to a meal you already eat."},
+      {"id":"food-beans-lentils","text":"Consider beans or lentils as a protein option when they fit your diet and meal."}
     ],
     "ideaSourceIds": [
       "eatwell",
@@ -348,8 +349,8 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
       }
     ],
     "ideas": [
-      "Choose one quiet activity before your main rest period.",
-      "Consider one practical change to light, noise or comfort in your sleep space."
+      {"id":"sleep-quiet-activity","text":"Choose one quiet activity before your main rest period."},
+      {"id":"sleep-room-change","text":"Consider one practical change to light, noise or comfort in your sleep space."}
     ],
     "ideaSourceIds": [
       "sleep"
@@ -465,9 +466,9 @@ export const LEARNING_GUIDES: readonly LearningGuide[] = [
       }
     ],
     "ideas": [
-      "Choose a suitable moment to talk with someone you trust.",
-      "Make space for a comfortable pause, or read the NHS breathing practice.",
-      "Identify one practical task to prioritise and one source of support."
+      {"id":"stress-trusted-person","text":"Choose a suitable moment to talk with someone you trust."},
+      {"id":"stress-comfortable-pause","text":"Make space for a comfortable pause, or read the NHS breathing practice."},
+      {"id":"stress-practical-priority","text":"Identify one practical task to prioritise and one source of support."}
     ],
     "ideaSourceIds": [
       "breathing",
@@ -546,7 +547,7 @@ export function learningGuideHref(pillar: PillarType, constraint?: JourneyConstr
 export function learningGuideSearchText(guide: LearningGuide | undefined): string {
   if (!guide) return '';
   return [guide.title, guide.description, guide.audience, guide.summary, ...guide.takeaways,
-    ...guide.sections.flatMap(section => [section.title, ...section.paragraphs]), ...guide.ideas, guide.reflection,
+    ...guide.sections.flatMap(section => [section.title, ...section.paragraphs]), ...guide.ideas.map(idea => idea.text), guide.reflection,
     ...guide.sources.flatMap(source => [source.title, source.publisher, source.kind, source.supports, source.scope])]
     .join(' ');
 }

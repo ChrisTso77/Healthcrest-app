@@ -89,3 +89,7 @@
   .hc-guide-page .hc-guide-print-source-url { overflow-wrap: anywhere; }
   .hc-guide-page .hc-guide a { color: #000; text-decoration: underline; }
 }
+
+.hc-guide-practice .hc-guide-idea-action { display: block; width: fit-content; min-height: 44px; margin-top: 8px; padding: 10px 0; font-size: 14px; font-weight: 600; }
+.hc-guide-idea-action:focus-visible { outline: 3px solid #648c44; outline-offset: 3px; }
+@media print { .hc-guide-page .hc-guide-idea-action { display: none !important; } }
