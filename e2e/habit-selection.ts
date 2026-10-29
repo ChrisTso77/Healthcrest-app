@@ -19,7 +19,9 @@ async function expectSelectedMark(buttons: Locator, selected: Locator) {
     const box = await button.boundingBox();
     expect(box!.x).toBeGreaterThanOrEqual(0);
     expect(box!.x + box!.width).toBeLessThanOrEqual(button.page().viewportSize()!.width);
-    expect(box!.height).toBeGreaterThanOrEqual(44);
+    expect(await button.evaluate(element => parseFloat(getComputedStyle(element).minHeight))).toBeGreaterThanOrEqual(44);
+    // Firefox can return 43.999969px for a 44px target at fractional scroll offsets.
+    expect(box!.height).toBeGreaterThanOrEqual(44 - 0.01);
     if (await button.getAttribute('aria-pressed') !== 'true') await expect(button.locator('.hc-selection-mark')).toBeHidden();
   }
 }
