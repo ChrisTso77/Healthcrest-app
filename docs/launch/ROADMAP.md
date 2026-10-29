@@ -2,14 +2,16 @@
 
 Read AUDIT.md and PROGRESS.md before each cycle. Preserve the educational mission, canonical https://www.healthcrest.uk, manual planner storage and default-off independent measurement. A checked task is not a passed release gate. [RELEASE-EVIDENCE.md](RELEASE-EVIDENCE.md) separates verified releases from outstanding launch requirements.
 
-## Current priority: parallel launch-readiness batch
+## Current priority: remaining launch evidence
+
+The preparation batch merged in #123; #124 corrected its live favicon MIME mismatch. Canonical run [40967684877](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40967684877) passed all 24 checks for approved merged SHA `603d8e04e7a4bb8fb0b8939a3b714be9046fa20f`. See RELEASE-EVIDENCE.md for exact head/tree/run bindings and limits. The remaining priorities are supported security assessment, owner/provider/content decisions, actual-device checks and recovery evidence.
 
 The owner approved parallel work and one coherent release review on 29 October 2026. Prioritise closure of launch blockers over further cosmetic refinements. Run independent tooling, release-testing, operations and editorial-preparation work concurrently; integrate and review their changes before the final full hosted run. Do not repeat speculative blocked migrations or present prepared documents as exercised operations.
 
 | Workstream | Current outcome / next evidence |
 | --- | --- |
 | Security / tooling | Supported security preflight/resources remain unavailable (L01). Latest stable lint plugins still exclude ESLint 10; a strict resolver probe fails, so keep the unchanged dependency tree (L14). These are explicit unresolved items, not successful audits/migrations. |
-| Release testing | Bind live smoke to the expected full deployment commit and retain mismatches/failures with provenance (L29). Preserve existing browser, privacy and performance gates; hosted verification of the combined head is required. |
+| Release testing | L29 verified by #124 canonical live smoke, including the fallback PNG response. Preserve expected-commit, failure/provenance, browser, privacy and performance gates for each later release. |
 | Operations | Prepare one ordered access/recovery/release rehearsal and owner worksheet (L09/L13); actual dashboard checks and any approved production exercise remain pending. |
 | Editorial preparation | Bind a concise per-content approval packet to immutable source revisions (L04); Chris must actually review and record decisions. |
 
