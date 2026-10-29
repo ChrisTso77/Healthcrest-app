@@ -1,4 +1,5 @@
 import type { JourneyConstraint } from '@/lib/education/startJourney';
+import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
 import { useId, useState, type FC, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ScenarioEvidence } from '@/components/ScenarioEvidence';
@@ -177,7 +178,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
         </div>
 
         {/* Pillar Selector Tabs */}
-        <nav aria-label="Health pillars" className="grid w-full grid-cols-5 gap-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800/80 xl:flex xl:w-auto">
+        <nav aria-label="Habit topics" className="grid w-full grid-cols-5 gap-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800/80 xl:flex xl:w-auto">
           {(['Fitness', 'Nutrition', 'Sleep', 'Stress', 'Systems'] as PillarType[]).map((pillar) => (
             <button
               key={pillar}
@@ -192,7 +193,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
               }`}
             >
               <span className="hidden xl:inline-flex">{pillarIcons[pillar]}</span>
-              <span>{pillar}</span>
+              <span>{HABIT_TOPIC_LABELS[pillar]}</span>
             </button>
           ))}
         </nav>

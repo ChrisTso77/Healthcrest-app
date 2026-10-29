@@ -67,7 +67,7 @@ test.describe('Healthcrest introduction', () => {
       .getByRole('button', { name: 'Sleep', exact: true }).click();
     await page.getByRole('link', { name: 'Explore sleep in the Habit Explorer', exact: true }).click();
     await expect(page).toHaveURL(/\/engine\?pillar=sleep$/);
-    await expect(page.getByRole('navigation', { name: 'Health pillars' })
+    await expect(page.getByRole('navigation', { name: 'Habit topics' })
       .getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
     await expect(page.locator('canvas')).toBeVisible();
     await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
@@ -96,7 +96,7 @@ test.describe('Healthcrest introduction', () => {
     expect(await page.evaluate(() => document.getAnimations().filter((animation) => animation.playState === 'running').length)).toBe(0);
 
     await page.goto('/engine?pillar=__proto__');
-    await expect(page.getByRole('button', { name: 'Systems', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByRole('button', { name: 'Connected habits', exact: true })).toHaveAttribute('aria-pressed', 'true');
     await expect(page.getByRole('slider', { name: 'Sleep Duration', exact: true })).toHaveValue('8');
   });
 });

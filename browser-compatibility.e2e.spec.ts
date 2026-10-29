@@ -206,6 +206,15 @@ test('labelled 2D settings and guide keyboard focus work without WebGL', async (
   await expect(overview).toBeFocused();
   await expect(page.locator('canvas')).toHaveCount(0);
   await expect(sleep).toHaveValue('4.5');
+  const topics = page.getByRole('navigation', { name: 'Habit topics', exact: true });
+  for (const label of ['Movement', 'Food', 'Sleep', 'Stress & support', 'Connected habits']) {
+    const topic = topics.getByRole('button', { name: label, exact: true });
+    await topic.focus();
+    await page.keyboard.press('Enter');
+    await expect(topic).toHaveAttribute('aria-pressed', 'true');
+    await expect(overview.getByText('Selected topic: ' + label, { exact: true })).toBeVisible();
+    await expect(sleep).toHaveValue('4.5');
+  }
 });
 test('guide-to-plan navigation and missing-page recovery are server rendered without JavaScript', async ({ browser, baseURL }) => {
   const context = await browser.newContext({ baseURL, javaScriptEnabled: false, viewport: { width: 390, height: 844 } });

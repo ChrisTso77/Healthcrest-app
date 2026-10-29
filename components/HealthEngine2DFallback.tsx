@@ -2,6 +2,7 @@ import { ComparisonMarkers, ComparisonLegend } from '@/components/SettingCompari
 import { COMPARED_SETTINGS, formatSettingNumber, settingDelta, type ComparisonStart } from '@/lib/education/settingComparison';
 import { useId } from 'react';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
+import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
 
 export interface FallbackProps {
   startingPoint?: ComparisonStart;
@@ -43,14 +44,14 @@ export function HealthEngine2DFallback({
           <span className="rounded-full border border-slate-600 bg-slate-950/60 px-2.5 py-1 text-[10px] font-mono font-bold text-cyan-200">{healthStatus === 'manual' ? 'MANUAL' : 'EXAMPLE'}</span>
         </div>
       </div>
-      <p className="mt-3 text-xs text-slate-300">Selected pillar: {activePillar}</p>
+      <p className="mt-3 text-xs text-slate-300">Selected topic: {HABIT_TOPIC_LABELS[activePillar]}</p>
       <div className="mt-3 space-y-3"><ComparisonLegend />
         {startingPoint && <p className="text-xs text-slate-300">Starting point: {startingPoint.label}</p>}
         {onCompare && <button type="button" onClick={onCompare} className="min-h-10 rounded-lg border border-cyan-500/40 px-3 py-2 text-left text-xs font-medium text-cyan-200 focus-visible:outline-2 focus-visible:outline-cyan-300">Compare settings and habit guidance</button>}
       </div>
       <div role="img" aria-labelledby={id + '-title'} aria-describedby={id + '-description'} className="mt-4">
         <span id={id + '-title'} className="sr-only">Current parameter illustration</span>
-        <span id={id + '-description'} className="sr-only">Selected pillar: {activePillar}. Scenario: {healthStatus === 'manual' ? 'manual settings' : 'example settings'}. Aerobic activity: {aerobicMins} minutes per week. Whole food ratio: {wholeFoodRatio} percent. Sleep duration: {sleepDuration} hours per night. Perceived stress: {stressLevel} out of 10. Markers show selected inputs, not predicted outcomes.{startingPoint && ' Starting values: activity ' + startingPoint.parameters.aerobicVolume + ' minutes per week; food setting ' + startingPoint.parameters.wholeFoodRatio + ' percent; sleep ' + startingPoint.parameters.sleepDuration + ' hours per night; perceived stress ' + startingPoint.parameters.perceivedStress + ' out of 10.'}</span>
+        <span id={id + '-description'} className="sr-only">Selected topic: {HABIT_TOPIC_LABELS[activePillar]}. Scenario: {healthStatus === 'manual' ? 'manual settings' : 'example settings'}. Aerobic activity: {aerobicMins} minutes per week. Whole food ratio: {wholeFoodRatio} percent. Sleep duration: {sleepDuration} hours per night. Perceived stress: {stressLevel} out of 10. Markers show selected inputs, not predicted outcomes.{startingPoint && ' Starting values: activity ' + startingPoint.parameters.aerobicVolume + ' minutes per week; food setting ' + startingPoint.parameters.wholeFoodRatio + ' percent; sleep ' + startingPoint.parameters.sleepDuration + ' hours per night; perceived stress ' + stressLevel + ' out of 10.'}</span>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {scales.map(scale => {
             return (

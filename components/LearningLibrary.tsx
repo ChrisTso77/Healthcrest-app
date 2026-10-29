@@ -1,5 +1,7 @@
 'use client';
 
+import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
+
 import { findGuideSearchMatch, LEARNING_SEARCH_LIMIT, matchesLearningQuery } from '@/lib/education/learningSearch';
 import { guideForPillar, learningGuideHref, learningGuideSearchText } from '@/lib/education/learningGuides';
 import { journeyPlannerHref, journeyExplorerHref, type JourneyConstraint } from '@/lib/education/startJourney';
@@ -9,11 +11,11 @@ import { UrgentSupport, URGENT_SUPPORT_SEARCH_TERMS } from '@/components/UrgentS
 import { ENGINE_GLOSSARY, EVIDENCE_GUIDES, PARAMETER_GUIDES, PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
 const topics = [
-  { key: 'Fitness', label: 'Movement', slug: 'fitness' },
-  { key: 'Nutrition', label: 'Food', slug: 'nutrition' },
-  { key: 'Sleep', label: 'Sleep', slug: 'sleep' },
-  { key: 'Stress', label: 'Stress & support', slug: 'stress' },
-  { key: 'Systems', label: 'Connecting the habits', slug: 'systems' },
+  { key: 'Fitness', label: HABIT_TOPIC_LABELS.Fitness, slug: 'fitness' },
+  { key: 'Nutrition', label: HABIT_TOPIC_LABELS.Nutrition, slug: 'nutrition' },
+  { key: 'Sleep', label: HABIT_TOPIC_LABELS.Sleep, slug: 'sleep' },
+  { key: 'Stress', label: HABIT_TOPIC_LABELS.Stress, slug: 'stress' },
+  { key: 'Systems', label: HABIT_TOPIC_LABELS.Systems, slug: 'systems' },
 ] as const;
 const terms: ReadonlyArray<readonly [string, string]> = [
   ['Non-pharmacological', 'Actions that do not involve a medicine, such as everyday movement, food, sleep and ways to manage stress. These can complement appropriate clinical care.'],

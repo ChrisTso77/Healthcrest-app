@@ -22,22 +22,22 @@ test.describe('Healthcrest production regression', () => {
     const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
     await sleep.fill('7.5');
 
-    for (const [pillar, goal, source] of [
-      ['Fitness', 'Move more and build capacity', 'https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/'],
-      ['Nutrition', 'Build a balanced eating pattern', 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/'],
-      ['Sleep', 'Support sleep and recovery', 'https://www.nhs.uk/conditions/insomnia/'],
-      ['Stress', 'Make room for coping and recovery', 'https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/feelings-and-symptoms/stress/'],
-      ['Systems', 'Connect the habits', 'https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/five-steps-to-mental-wellbeing/'],
+    for (const [pillar, label, goal, source] of [
+      ['Fitness', 'Movement', 'Move more and build capacity', 'https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/'],
+      ['Nutrition', 'Food', 'Build a balanced eating pattern', 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/'],
+      ['Sleep', 'Sleep', 'Support sleep and recovery', 'https://www.nhs.uk/conditions/insomnia/'],
+      ['Stress', 'Stress & support', 'Make room for coping and recovery', 'https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/feelings-and-symptoms/stress/'],
+      ['Systems', 'Connected habits', 'Connect the habits', 'https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/five-steps-to-mental-wellbeing/'],
     ]) {
-      await page.getByRole('navigation', { name: 'Health pillars' })
-        .getByRole('button', { name: pillar, exact: true }).click();
+      await page.getByRole('navigation', { name: 'Habit topics' })
+        .getByRole('button', { name: label, exact: true }).click();
       const summary = page.getByRole('region', { name: 'Scenario summary', exact: true });
       const goalCard = summary.getByRole('region', { name: 'Health goal', exact: true });
       await expect(goalCard.getByRole('heading', { name: goal, exact: true })).toBeVisible();
       const why = goalCard.getByRole('button', { name: 'Why this matters', exact: true });
       await why.click();
       const dialog = page.getByRole('dialog', { name: 'Understand this view', exact: true });
-      await expect(dialog.getByRole('heading', { name: `${pillar}: ${goal}`, exact: true })).toBeVisible();
+      await expect(dialog.getByRole('heading', { name: `${label}: ${goal}`, exact: true })).toBeVisible();
       await expect(dialog.getByRole('link', { name: /^NHS:/ })).toHaveAttribute('href', source);
       if (pillar === 'Stress') {
         const urgent = dialog.getByRole('complementary', { name: 'Urgent mental health support' });
@@ -75,7 +75,7 @@ test.describe('Healthcrest production regression', () => {
     await expect(selected).toContainText('Research example: timed sound during sleep');
     await expect(selected).toContainText('Experimental');
     await expect(selected).toContainText('Exploratory content. It does not establish a proven health intervention or a routine recommendation.');
-    await expect(dialog.getByRole('region', { name: 'Current pillar' })).toContainText('Choose a consistent getting-up time');
+    await expect(dialog.getByRole('region', { name: 'Current topic' })).toContainText('Choose a consistent getting-up time');
     const content = dialog.getByRole('region', { name: 'Health guide content', exact: true });
     expect(await content.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
     await page.keyboard.press('Escape');
@@ -109,7 +109,7 @@ test.describe('Healthcrest production regression', () => {
     const overview = page.getByRole('region', { name: '2D health overview', exact: true });
     const illustration = overview.getByRole('img', { name: 'Current parameter illustration', exact: true });
     await expect(illustration).toHaveAccessibleDescription(
-      /Selected pillar: Systems\. Scenario: example settings\..*Sleep duration: 4\.5 hours per night/
+      /Selected topic: Connected habits\. Scenario: example settings\..*Sleep duration: 4\.5 hours per night/
     );
     await expect(overview.getByText('EXAMPLE', { exact: true })).toBeVisible();
     await expect(overview.getByRole('definition')).toHaveText([
@@ -132,7 +132,7 @@ test.describe('Healthcrest production regression', () => {
       '220 minutes/week', '75%', '7.5 hours/night', '3 / 10',
     ]);
     await expect(illustration).toHaveAccessibleDescription(
-      /Selected pillar: Sleep\. Scenario: manual settings\..*Aerobic activity: 220 minutes per week\..*Whole food ratio: 75 percent\..*Sleep duration: 7\.5 hours per night\..*Perceived stress: 3 out of 10/
+      /Selected topic: Sleep\. Scenario: manual settings\..*Aerobic activity: 220 minutes per week\..*Whole food ratio: 75 percent\..*Sleep duration: 7\.5 hours per night\..*Perceived stress: 3 out of 10/
     );
 
     for (const mode of [/lite 3d/i, /high 3d/i, /2d diagram/i]) {
@@ -462,9 +462,9 @@ test.describe('Healthcrest production regression', () => {
     test(`compact layout keeps engine controls usable at ${viewport.width}px`, async ({ page }, testInfo) => {
       await page.setViewportSize(viewport);
       await page.goto('/engine?compact-layout-test=1');
-      const navigation = page.getByRole('navigation', { name: 'Health pillars' });
+      const navigation = page.getByRole('navigation', { name: 'Habit topics' });
       await expect(navigation).toBeVisible();
-      for (const pillar of ['Fitness', 'Nutrition', 'Sleep', 'Stress', 'Systems']) {
+      for (const pillar of ['Movement', 'Food', 'Sleep', 'Stress & support', 'Connected habits']) {
         const button = navigation.getByRole('button', { name: pillar, exact: true });
         await button.click();
         await expect(button).toHaveAttribute('aria-pressed', 'true');
@@ -558,13 +558,64 @@ test.describe('Healthcrest production regression', () => {
     await expect(canvas).toHaveCount(1);
   });
 
+  for (const width of [320, 768, 1350]) {
+    test(`plain topic names preserve legacy links, keyboard selection and settings at ${width}px`, async ({ page }, testInfo) => {
+      await page.setViewportSize({ width, height: 940 });
+      await page.route('**/api/presets', route => route.fulfill({
+        status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
+      }));
+      const topics = [
+        ['fitness', 'Movement', 'Move more and build capacity'],
+        ['nutrition', 'Food', 'Build a balanced eating pattern'],
+        ['sleep', 'Sleep', 'Support sleep and recovery'],
+        ['stress', 'Stress & support', 'Make room for coping and recovery'],
+        ['systems', 'Connected habits', 'Connect the habits'],
+      ];
+      for (const [slug, label] of topics) {
+        await page.goto('/engine?pillar=' + slug + '&view=2d');
+        const navigation = page.getByRole('navigation', { name: 'Habit topics', exact: true });
+        await expect(navigation.getByRole('button', { name: label, exact: true })).toHaveAttribute('aria-pressed', 'true');
+        const overview = page.getByRole('region', { name: '2D health overview', exact: true });
+        await expect(overview.getByText('Selected topic: ' + label, { exact: true })).toBeVisible();
+        await expect(overview.getByRole('img')).toHaveAccessibleDescription(new RegExp('Selected topic: ' + label));
+      }
+      const navigation = page.getByRole('navigation', { name: 'Habit topics', exact: true });
+      const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
+      await sleep.fill('7.5');
+      for (const [slug, label, goal] of topics) {
+        const button = navigation.getByRole('button', { name: label, exact: true });
+        await button.focus();
+        await page.keyboard.press('Enter');
+        await expect(button).toHaveAttribute('aria-pressed', 'true');
+        await expect(sleep).toHaveValue('7.5');
+        expect(await button.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+        const guideButton = page.getByRole('button', { name: 'Guide: understand this view', exact: true });
+        await guideButton.click();
+        const guide = page.getByRole('dialog', { name: 'Understand this view', exact: true });
+        await expect(guide.getByRole('heading', { name: label + ': ' + goal, exact: true })).toBeVisible();
+        await expect(guide.getByRole('link', { name: 'Make a manageable next step', exact: true }))
+          .toHaveAttribute('href', slug === 'systems' ? '/next-step' : '/next-step?pillar=' + slug);
+        await page.keyboard.press('Escape');
+        await expect(guideButton).toBeFocused();
+      }
+      const overview = page.getByRole('region', { name: '2D health overview', exact: true });
+      const header = await page.locator('header').boundingBox();
+      const diagram = await overview.boundingBox();
+      expect(header).not.toBeNull(); expect(diagram).not.toBeNull();
+      expect(diagram!.y).toBeGreaterThanOrEqual(header!.y + header!.height);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      await expect(page.locator('canvas')).toHaveCount(0);
+      await testInfo.attach(`topic-labels-${width}px`, { body: await page.screenshot(), contentType: 'image/png' });
+    });
+  }
+
   test('pillar controls remain interactive', async ({ page }) => {
     for (const pillar of [
-      'Fitness',
-      'Nutrition',
+      'Movement',
+      'Food',
       'Sleep',
-      'Stress',
-      'Systems',
+      'Stress & support',
+      'Connected habits',
     ]) {
       const pillarButton = page.getByRole('button', {
         name: pillar,
@@ -625,7 +676,7 @@ test.describe('Healthcrest production regression', () => {
     await sleep.focus();
     await page.keyboard.press('Enter');
     await expect(sleep).toHaveAttribute('aria-pressed', 'true');
-    await expect(page.getByRole('button', { name: 'Systems', exact: true }))
+    await expect(page.getByRole('button', { name: 'Connected habits', exact: true }))
       .toHaveAttribute('aria-pressed', 'false');
 
     const macro = page.getByRole('button', { name: /Close-up view/i });
@@ -751,7 +802,7 @@ test.describe('Healthcrest production regression', () => {
     await expect(sleep).toHaveClass(/border-slate-700\/50/);
 
     const fitness = page.getByRole('button', {
-      name: 'Fitness',
+      name: 'Movement',
       exact: true,
     });
 
@@ -774,7 +825,7 @@ test.describe('Healthcrest production regression', () => {
     ).toBeVisible();
 
     await page.getByRole('button', {
-      name: 'Fitness',
+      name: 'Movement',
       exact: true,
     }).click();
 
@@ -794,13 +845,13 @@ test.describe('Healthcrest production regression', () => {
     ).toBeVisible();
 
     await page.getByRole('button', {
-      name: 'Fitness',
+      name: 'Movement',
       exact: true,
     }).click();
 
     await expect(
       page.getByRole('button', {
-        name: 'Fitness',
+        name: 'Movement',
         exact: true,
       })
     ).toBeVisible();
@@ -869,7 +920,7 @@ test.describe('Healthcrest production regression', () => {
     }).click();
 
     await page.getByRole('button', {
-      name: 'Fitness',
+      name: 'Movement',
       exact: true,
     }).click();
 
@@ -1339,9 +1390,9 @@ test.describe('Inline setting explanations', () => {
     await page.goto('/engine');
     const explanation = page.getByRole('region', { name: 'Whole Food Ratio explained', exact: true });
     await page.getByLabel('Explain this setting: Whole Food Ratio', { exact: true }).click();
-    await expect(explanation).toContainText('This setting does not change the Systems 3D scene.');
+    await expect(explanation).toContainText('This setting does not change the Connected habits 3D scene.');
     await expect(explanation).toContainText('It does not set a whole-food percentage target');
-    await page.getByRole('navigation', { name: 'Health pillars' }).getByRole('button', { name: 'Nutrition', exact: true }).click();
+    await page.getByRole('navigation', { name: 'Habit topics' }).getByRole('button', { name: 'Food', exact: true }).click();
     await expect(explanation).toContainText('The nutrition scene responds to food-pattern inputs');
     await expect(explanation).not.toContainText('This setting does not change');
     await expect(explanation).toContainText('a small change can leave the same colour');

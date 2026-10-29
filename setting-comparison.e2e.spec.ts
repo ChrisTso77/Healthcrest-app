@@ -33,7 +33,7 @@ test('2D shows starting circles, current diamonds and exact changes without load
 test('the starting point survives scene, mode and camera changes until explicitly replaced', async ({ page }) => {
   await boot(page);
   await page.getByRole('slider', { name: 'Sleep Duration', exact: true }).fill('5');
-  await page.getByRole('navigation', { name: 'Health pillars', exact: true }).getByRole('button', { name: 'Nutrition', exact: true }).click();
+  await page.getByRole('navigation', { name: 'Habit topics', exact: true }).getByRole('button', { name: 'Food', exact: true }).click();
   await page.getByRole('button', { name: /lite 3d/i }).click();
   await page.getByRole('button', { name: /^Wide view/i }).click();
   await trigger(page).click();
