@@ -923,6 +923,7 @@ test.describe('Healthcrest production regression', () => {
   });
 
   test('camera viewing angles and reset remain usable', async ({ page }, testInfo) => {
+    await page.setViewportSize({ width: 1350, height: 940 });
     const shots = [
       /^Wide view/i,
       /Angled view/i,
