@@ -9,6 +9,51 @@ async function boot(page: Page, query = 'pillar=sleep&view=2d') {
   await expect(page.getByRole('heading', { name: 'HABIT EXPLORER', exact: true })).toBeVisible();
 }
 
+for (const viewport of [{ width: 320, height: 568 }, { width: 390, height: 844 }, { width: 1350, height: 940 }]) {
+  test('comparison values lead the reading order at ' + viewport.width + 'px', async ({ page }, testInfo) => {
+    await page.setViewportSize(viewport);
+    await boot(page);
+    for (const [label, value] of [['Weekly aerobic activity', '200'], ['Sleep Duration', '6'], ['Whole Food Ratio', '50'], ['Perceived Stress Level', '5']]) {
+      await page.getByRole('slider', { name: label, exact: true }).fill(value);
+    }
+    await trigger(page).click();
+    const comparison = dialog(page);
+    const table = comparison.getByRole('table', { name: 'Settings at a glance', exact: true });
+    await expect(table.getByRole('columnheader')).toHaveText(['Input', 'Starting', 'Current']);
+    await expect(table.getByRole('row')).toHaveCount(5);
+    for (const [label, unit, start, current] of [['Weekly aerobic activity', 'minutes/week', '180', '200'], ['Whole-food setting', '%', '80', '50'], ['Sleep duration', 'hours/night', '8', '6'], ['Perceived stress', 'out of 10', '2', '5']]) {
+      const row = table.getByRole('row').filter({ hasText: label });
+      await expect(row.getByRole('rowheader')).toContainText(unit);
+      await expect(row.getByRole('cell').first()).toHaveText(start);
+      await expect(row.getByRole('cell').nth(1)).toHaveText(new RegExp('^' + current + '\\s*Changed$'));
+    }
+    const content = comparison.getByRole('region', { name: 'Settings comparison content', exact: true });
+    const contentBox = (await content.boundingBox())!;
+    const firstRow = (await table.getByRole('row').nth(1).boundingBox())!;
+    expect(firstRow.y).toBeGreaterThanOrEqual(contentBox.y);
+    expect(firstRow.y + firstRow.height).toBeLessThanOrEqual(contentBox.y + contentBox.height);
+    if (viewport.width !== 320) {
+      const lastRow = (await table.getByRole('row').last().boundingBox())!;
+      expect(lastRow.y + lastRow.height).toBeLessThanOrEqual(contentBox.y + contentBox.height);
+    }
+    await expect(comparison.getByText('Changes in settings do not measure changes in health.', { exact: true })).toBeInViewport();
+    expect(await content.evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true);
+    await testInfo.attach(`comparison-summary-${viewport.width}px`, { body: await page.screenshot(), contentType: 'image/png' });
+    const help = comparison.getByText('How to read this comparison', { exact: true }).locator('..');
+    await expect(help).toHaveJSProperty('open', false);
+    await help.locator('summary').focus();
+    await page.keyboard.press('Enter');
+    await expect(help).toHaveJSProperty('open', true);
+    await expect(help).toContainText('a higher value is not automatically better');
+    await page.keyboard.press('Enter');
+    await expect(help).toHaveJSProperty('open', false);
+    await expect(comparison.getByRole('status')).toContainText('4 settings differ');
+    await page.keyboard.press('Escape');
+    await expect(trigger(page)).toBeFocused();
+    await expect(page.getByRole('slider', { name: 'Sleep Duration', exact: true })).toHaveValue('6');
+  });
+}
+
 for (const width of [320, 768, 1350]) {
   test('restore starting settings works by keyboard without touching saved plans at ' + width + 'px', async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: width === 320 ? 568 : 940 });
@@ -21,12 +66,19 @@ for (const width of [320, 768, 1350]) {
     await trigger(page).click();
     const comparison = dialog(page);
     await expect(comparison.getByRole('status')).toContainText('4 settings differ');
+    const summarySleep = comparison.getByRole('table', { name: 'Settings at a glance', exact: true }).getByRole('row').filter({ hasText: 'Sleep duration' });
+    await expect(summarySleep.getByRole('cell').first()).toHaveText('8');
+    await expect(summarySleep.getByRole('cell').nth(1)).toHaveText(/^6\s*Changed$/);
     const restore = comparison.getByRole('button', { name: 'Restore starting settings', exact: true });
     await expect(restore).toBeEnabled();
     await expect(restore).toBeInViewport();
     await restore.focus();
     await page.keyboard.press('Enter');
     await expect(comparison.getByRole('status')).toContainText('No settings have changed');
+    await expect(summarySleep.getByRole('cell').first()).toHaveText('8');
+    await expect(summarySleep.getByRole('cell').nth(1)).toHaveText(/^8\s*Unchanged$/);
+    const unchangedLabel = summarySleep.getByText('Unchanged', { exact: true });
+    expect(await unchangedLabel.evaluate(node => node.getBoundingClientRect().height <= 17 && node.scrollWidth <= node.clientWidth)).toBe(true);
     await expect(restore).toBeDisabled();
     await expect(restore).toBeFocused();
     await page.keyboard.press('Enter');
@@ -58,12 +110,19 @@ test('restoring a chosen reference keeps the 3D topic, camera, canvas and compar
   const revision = await viewport.getAttribute('data-camera-request-revision');
   await trigger(page).click();
   await dialog(page).getByRole('button', { name: 'Use current settings as starting point', exact: true }).click();
+  const summarySleep = dialog(page).getByRole('table', { name: 'Settings at a glance', exact: true }).getByRole('row').filter({ hasText: 'Sleep duration' });
+  await expect(summarySleep.getByRole('cell').first()).toHaveText('5');
+  await expect(summarySleep.getByRole('cell').nth(1)).toHaveText(/^5\s*Unchanged$/);
   await page.keyboard.press('Escape');
   await page.getByRole('slider', { name: 'Sleep Duration', exact: true }).fill('6');
   await page.getByRole('slider', { name: 'Whole Food Ratio', exact: true }).fill('20');
   await trigger(page).click();
+  await expect(summarySleep.getByRole('cell').first()).toHaveText('5');
+  await expect(summarySleep.getByRole('cell').nth(1)).toHaveText(/^6\s*Changed$/);
   await dialog(page).getByRole('button', { name: 'Restore starting settings', exact: true }).click();
   await expect(dialog(page).getByRole('status')).toContainText('No settings have changed');
+  await expect(summarySleep.getByRole('cell').first()).toHaveText('5');
+  await expect(summarySleep.getByRole('cell').nth(1)).toHaveText(/^5\s*Unchanged$/);
   await expect(dialog(page)).toContainText('Starting point: Your selected settings');
   await expect(dialog(page).getByRole('region', { name: '3D appearance comparison', exact: true })).toContainText('The 3D appearance is unchanged');
   await page.keyboard.press('Escape');
