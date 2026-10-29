@@ -1,5 +1,22 @@
 import { test, expect } from '@playwright/test';
 import { checkPublicFocus } from './e2e/focus-appearance';
+import { checkHabitSelection } from './e2e/habit-selection';
+
+for (const width of [320, 1350]) {
+  for (const colorScheme of ['light', 'dark'] as const) {
+    test('habit selection stays visible in forced ' + colorScheme + ' colours at ' + width + 'px', async ({ page }, testInfo) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.emulateMedia({ forcedColors: 'active', colorScheme });
+      expect(await page.evaluate(() => matchMedia('(forced-colors: active)').matches)).toBe(true);
+      await checkHabitSelection(page, testInfo, true);
+    });
+  }
+}
+
+test('habit selection and labels fit the narrow public journey in normal colours', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await checkHabitSelection(page, testInfo, true);
+});
 
 for (const width of [390, 1350]) {
   test('public keyboard focus remains clear on light and dark surfaces at ' + width + 'px', async ({ page }, testInfo) => {

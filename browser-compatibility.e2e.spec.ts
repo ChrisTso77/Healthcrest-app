@@ -4,6 +4,12 @@ import { LEARNING_GUIDES } from './lib/education/learningGuides';
 import { createHabitWeek } from './lib/education/habitWeek';
 import type { SavedHabitDraft } from './lib/education/habitDraft';
 import { checkPublicFocus } from './e2e/focus-appearance';
+import { checkHabitSelection } from './e2e/habit-selection';
+
+test('selected public habits remain distinguishable without changing labels or drafts', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await checkHabitSelection(page, testInfo);
+});
 
 test('public keyboard focus works on light and dark surfaces', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 900 });
