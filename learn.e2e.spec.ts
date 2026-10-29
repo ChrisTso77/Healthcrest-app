@@ -37,8 +37,8 @@ test('topic guidance leads to the matching planner and engine view', async ({ pa
   await page.getByRole('article', { name: 'Food', exact: true })
     .getByRole('link', { name: 'Explore in the Habit Explorer', exact: true }).click();
   await expect(page).toHaveURL(/\/engine\?pillar=nutrition$/);
-  await expect(page.getByRole('navigation', { name: 'Health pillars' })
-    .getByRole('button', { name: 'Nutrition', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('navigation', { name: 'Habit topics' })
+    .getByRole('button', { name: 'Food', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('landing navigation and engine guide expose the learning library', async ({ page }) => {

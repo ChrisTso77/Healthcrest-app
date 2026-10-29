@@ -86,7 +86,7 @@ test('engine guide links to its pillar plan and plan links back to that engine v
   await expect(page).toHaveURL(/\/next-step\?pillar=sleep$/);
   await page.getByRole('link', { name: 'Explore sleep in the Habit Explorer', exact: true }).click();
   await expect(page).toHaveURL(/\/engine\?pillar=sleep$/);
-  await expect(page.getByRole('navigation', { name: 'Health pillars' })
+  await expect(page.getByRole('navigation', { name: 'Habit topics' })
     .getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });
 

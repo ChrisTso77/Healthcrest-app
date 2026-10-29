@@ -11,6 +11,7 @@ import type { CanonicalScenarioPreset } from '@/lib/presets/types';
 import type { State } from '@/state/PillarsStateTypes';
 import { resolveActivePreset, resolveAvailablePresets } from '@/lib/presets/presetSelection';
 import { EVIDENCE_GUIDES, ENGINE_GLOSSARY, PARAMETER_GUIDES, PILLAR_GUIDES } from '@/lib/education/healthGuide';
+import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
 
 type HealthEngineGuideProps = {
   state: State;
@@ -48,7 +49,7 @@ export function HealthEngineGuide({ state, presets, onClose, motionPaused, onTog
           <p>
             Explore everyday movement, food, sleep and ways to manage stress. These are non-pharmacological
             approaches: actions that do not involve a medicine and can complement clinical care.
-            Choose a pillar, change one setting, then connect what you see to a practical habit.
+            Choose a topic, change one setting, then connect what you see to a practical habit.
             The scenes are illustrations, not measurements of your body.
           </p>
 
@@ -60,8 +61,8 @@ export function HealthEngineGuide({ state, presets, onClose, motionPaused, onTog
             Browse health topics and terms
           </Link>
 
-          <section aria-label="Current pillar" className="space-y-3 rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4">
-            <h3 className="font-semibold text-emerald-300">{state.activePillar}: {pillar.heading}</h3>
+          <section aria-label="Current topic" className="space-y-3 rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4">
+            <h3 className="font-semibold text-emerald-300">{HABIT_TOPIC_LABELS[state.activePillar]}: {pillar.heading}</h3>
             <p>{pillar.goal}</p>
             <p><strong className="text-slate-100">One possible first step: </strong>{pillar.firstStep}</p>
             <p>{pillar.guidance}</p>

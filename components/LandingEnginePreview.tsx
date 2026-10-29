@@ -1,5 +1,7 @@
 'use client';
 
+import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
+
 import { useId, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Activity, Apple, Moon, Brain } from 'lucide-react';
@@ -7,10 +9,10 @@ import { UrgentSupport } from '@/components/UrgentSupport';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
 const pillars = [
-  { key: 'Fitness', label: 'Movement', slug: 'fitness', icon: Activity, x: 100, y: 70 },
-  { key: 'Nutrition', label: 'Food', slug: 'nutrition', icon: Apple, x: 320, y: 70 },
-  { key: 'Sleep', label: 'Sleep', slug: 'sleep', icon: Moon, x: 320, y: 270 },
-  { key: 'Stress', label: 'Stress & support', slug: 'stress', icon: Brain, x: 100, y: 270 },
+  { key: 'Fitness', label: HABIT_TOPIC_LABELS.Fitness, slug: 'fitness', icon: Activity, x: 100, y: 70 },
+  { key: 'Nutrition', label: HABIT_TOPIC_LABELS.Nutrition, slug: 'nutrition', icon: Apple, x: 320, y: 70 },
+  { key: 'Sleep', label: HABIT_TOPIC_LABELS.Sleep, slug: 'sleep', icon: Moon, x: 320, y: 270 },
+  { key: 'Stress', label: HABIT_TOPIC_LABELS.Stress, slug: 'stress', icon: Brain, x: 100, y: 270 },
 ] as const;
 
 export function LandingEnginePreview() {

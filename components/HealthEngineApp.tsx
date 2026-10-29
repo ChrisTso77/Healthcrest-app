@@ -1,5 +1,7 @@
 'use client';
 
+import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
+
 import Link from 'next/link';
 import { SettingComparison } from '@/components/SettingComparison';
 import { captureComparisonStart } from '@/lib/education/settingComparison';
@@ -329,7 +331,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
                   <div className="p-4 bg-slate-950/50 border border-slate-800/80 rounded-xl space-y-2">
                     <div className="flex items-center space-x-2 text-emerald-400 font-semibold text-xs">
                       <Activity className="w-4 h-4" />
-                      <span>1. Fitness & Movement</span>
+                      <span>1. {HABIT_TOPIC_LABELS.Fitness}</span>
                     </div>
                     <p className="text-[11px] text-slate-300 leading-relaxed">
                       {PILLAR_GUIDES.Fitness.guidance}
@@ -341,7 +343,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
                   <div className="p-4 bg-slate-950/50 border border-slate-800/80 rounded-xl space-y-2">
                     <div className="flex items-center space-x-2 text-amber-400 font-semibold text-xs">
                       <Apple className="w-4 h-4" />
-                      <span>2. Nutrition</span>
+                      <span>2. {HABIT_TOPIC_LABELS.Nutrition}</span>
                     </div>
                     <p className="text-[11px] text-slate-300 leading-relaxed">
                       {PILLAR_GUIDES.Nutrition.guidance}
@@ -353,7 +355,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
                   <div className="p-4 bg-slate-950/50 border border-slate-800/80 rounded-xl space-y-2">
                     <div className="flex items-center space-x-2 text-violet-400 font-semibold text-xs">
                       <Moon className="w-4 h-4" />
-                      <span>3. Sleep</span>
+                      <span>3. {HABIT_TOPIC_LABELS.Sleep}</span>
                     </div>
                     <p className="text-[11px] text-slate-300 leading-relaxed">
                       {PILLAR_GUIDES.Sleep.guidance}
@@ -365,7 +367,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
                   <div className="p-4 bg-slate-950/50 border border-slate-800/80 rounded-xl space-y-2">
                     <div className="flex items-center space-x-2 text-rose-400 font-semibold text-xs">
                       <Brain className="w-4 h-4" />
-                      <span>4. Stress Regulation</span>
+                      <span>4. {HABIT_TOPIC_LABELS.Stress}</span>
                     </div>
                     <p className="text-[11px] text-slate-300 leading-relaxed">
                       {PILLAR_GUIDES.Stress.guidance}

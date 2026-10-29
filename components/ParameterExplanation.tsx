@@ -2,6 +2,7 @@ import { journeyPlannerHref, type JourneyConstraint } from '@/lib/education/star
 import Link from 'next/link';
 import type { PillarType, RenderMode } from '@/lib/presets/types';
 import { PARAMETER_GUIDES, PILLAR_GUIDES } from '@/lib/education/healthGuide';
+import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
 
 type ParameterKey = keyof typeof PARAMETER_GUIDES;
 const relatedPillar = {
@@ -26,7 +27,7 @@ export function ParameterExplanation({ parameter, value, activePillar, renderMod
     ? 'The 2D overview labels this setting with a marker on its control scale. Read the value alongside the guidance; scale limits are not health targets.'
     : affects3D
       ? PILLAR_GUIDES[activePillar].visual
-      : 'This setting does not change the ' + activePillar + ' 3D scene. Its value still changes in your scenario. Choose the ' + pillar + ' pillar or the 2D overview to explore its illustration.';
+      : 'This setting does not change the ' + HABIT_TOPIC_LABELS[activePillar] + ' 3D scene. Its value still changes in your scenario. Choose the ' + HABIT_TOPIC_LABELS[pillar] + ' topic or the 2D overview to explore its illustration.';
 
   return (
     <details className="min-w-0 rounded-lg border border-slate-700/70 bg-slate-950/40 text-xs leading-relaxed text-slate-300 open:border-emerald-500/40">

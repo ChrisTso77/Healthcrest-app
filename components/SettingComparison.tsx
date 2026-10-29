@@ -6,6 +6,7 @@ import { X } from 'lucide-react';
 import { ModalDialog } from '@/components/ModalDialog';
 import { UrgentSupport } from '@/components/UrgentSupport';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
+import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
 import { journeyPlannerHref, type JourneyConstraint } from '@/lib/education/startJourney';
 import { compareSettings, compareSceneAppearance, drivesScene, formatSettingNumber, markerPosition, otherSettingChanges, type ComparisonStart } from '@/lib/education/settingComparison';
 import type { State } from '@/state/PillarsStateTypes';
@@ -83,7 +84,7 @@ export function SettingComparison({ state, start, journeyConstraint, onUseCurren
           {state.renderMode !== '2d-canvas' && (
             <section aria-label="3D appearance comparison" className="space-y-3 rounded-xl border border-cyan-500/30 bg-cyan-500/5 p-4">
               <h3 className="font-semibold text-cyan-200">How the 3D illustration responds</h3>
-              <p>Both descriptions use the current pillar: {state.activePillar}.</p>
+              <p>Both descriptions use the current topic: {HABIT_TOPIC_LABELS[state.activePillar]}.</p>
               <dl className="grid gap-3 sm:grid-cols-2">
                 {[{ label: 'Starting', visual: appearance.start }, { label: 'Current', visual: appearance.current }].map(({ label, visual }) => (
                   <div key={label} className="min-w-0"><dt className="font-semibold text-slate-100">{label}</dt><dd className="mt-1"><span aria-hidden="true" style={{ backgroundColor: visual.colour }} className="mr-2 inline-block size-3 rounded-full" />{visual.colourName} core · {visual.glow} · {visual.texture}</dd></div>
