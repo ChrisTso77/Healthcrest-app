@@ -9,7 +9,7 @@ Updated 29 October 2026. Read ROADMAP.md before each cycle. Continue safe work i
 - Original /workspace/Healthcrest-app remains clean at 81758f7a50d8995747cddce585e97beea6fd6d95 on work. Do not overwrite it. Agent-owned /workspace/healthcrest-launch-34ca713 matched all 212 baseline Git blobs before this cycle's edits; it has a clean npm ci from the preceding cycle. No dependency changes are proposed.
 
 ## Completed work
-- Five required launch documents and administrative editorial/operations runbooks exist. AUDIT.md records fourteen ranked findings and distinguishes evidence from unverified risks.
+- Five required launch documents and administrative editorial/operations runbooks exist. AUDIT.md records fifteen ranked findings and distinguishes evidence from unverified risks.
 - L05/L07 first slice merged in #109: raw mobile budgets, boundary tests, unique metadata, exposed headings/language and fragment checks. A first overly broad heading assertion was corrected to preserve the planner's hidden print-only h1; exact-head CI above verified the correction.
 - Owner supplied company number 15318363/England registration and hobby-first intent. Chris Tsoto will approve content and review/correct at least weekly. Actual company/credential verification, office arrangement and per-content sign-offs remain pending. No private office address was retrieved or published.
 - L14: ESLint 9 is unsupported; an isolated ESLint 10 experiment produced invalid current React/a11y/import plugin peers. No forced peers, rule removal, lockfile change or tooling PR was published. This dependency is blocked.
@@ -21,7 +21,11 @@ Eight profiles cover home/Start on mobile, plus balanced-meals guide, Sleep plan
 
 Historical script/report/artifact locations and five CI jobs are retained. The performance step is bounded to five minutes within the unchanged fifteen-minute job. No content/control is hidden, 3D removed, visitor plan read/seeded, consent granted, threshold relaxed or provider enabled.
 
-Focused local evidence: 28 Node budget/configuration cases passed; lint/script syntax passed before publication. Hosted build, all eight reports and browser/privacy checks must be reviewed at the final PR head.
+First expanded [run 40851374711](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40851374711), head e8a72c92d7e3f1b9c1d467e6228a3e88ecad45cf, passed all five jobs/aggregate budgets. Reading all eight actual report JSONs found desktop Explorer contrast and heading-order failures despite its accessibility score of 94; the other seven reports had no weighted accessibility audit failures. This is new verified finding L15.
+
+The follow-up fixes HUD camera-description contrast and adds real h2 panel headings, with no changed wording, control behavior or layout sizing. Specific color-contrast/heading-order audits now gate every profile independently; the saved pre-fix report is rejected for exactly those two failures. Firefox/WebKit additionally verify desktop heading semantics and keyboard camera selection without changing the slider value. These changes require final-head hosted validation.
+
+Focused local evidence: 32 Node budget/configuration cases passed; lint/script syntax passed before publication. Hosted build, all eight reports and browser/privacy checks must be reviewed at the final PR head.
 
 ## Dependencies and unavailable evidence
 - Local Turbopack/PostCSS build previously failed on a child-process port bind denied by the execution sandbox, including with supported network permission. Do not alter app config to bypass this; hosted build verification is required.

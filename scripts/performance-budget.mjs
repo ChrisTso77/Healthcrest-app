@@ -1,6 +1,7 @@
 export const PERFORMANCE_BUDGET = Object.freeze({ score: 0.9, lcpMs: 2500, cls: 0.1, totalBlockingMs: 200 });
 // Retain the original entry points for existing local tooling.
 export const MOBILE_BUDGET = PERFORMANCE_BUDGET;
+export const REQUIRED_ACCESSIBILITY_AUDITS = Object.freeze(['color-contrast', 'heading-order']);
 export function assessMobileReport(report) {
   return assessPerformanceReport(report);
 }
@@ -23,6 +24,13 @@ export function assessPerformanceReport(report, { formFactor = 'mobile', url } =
         failures.push('Report address does not match the requested route and query.');
       }
     } catch { failures.push('Report route evidence is missing or invalid.'); }
+  }
+  // A high category score must not mask these confirmed Explorer regressions.
+  for (const id of REQUIRED_ACCESSIBILITY_AUDITS) {
+    const audit = report?.audits?.[id];
+    if (!(audit?.score === 1 || (audit?.score === null && audit?.scoreDisplayMode === 'notApplicable'))) {
+      failures.push('Required accessibility audit failed or is missing: ' + id);
+    }
   }
   for (const name of ['performance', 'accessibility', 'best-practices', 'seo']) {
     const score = report?.categories?.[name]?.score;

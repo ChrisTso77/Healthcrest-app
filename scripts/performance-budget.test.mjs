@@ -13,6 +13,8 @@ function fixture() {
       'cumulative-layout-shift': { numericValue: 0.1 },
       'total-blocking-time': { numericValue: 200 },
       'network-requests': { details: { items: [{ url: 'http://127.0.0.1:3001/_next/static/app.js' }] } },
+      'color-contrast': { score: 1, scoreDisplayMode: 'binary' },
+      'heading-order': { score: 1, scoreDisplayMode: 'binary' },
     },
   };
 }
@@ -129,4 +131,23 @@ test('every profile audits a fixed public route without notes, storage permissio
   for (const path of ['/learn/balanced-meals', '/next-step?pillar=sleep', '/engine?pillar=sleep&view=2d']) {
     assert.deepEqual(PERFORMANCE_PROFILES.filter(profile => profile.path === path).map(profile => profile.formFactor).sort(), ['desktop', 'mobile']);
   }
+});
+for (const id of ['color-contrast', 'heading-order']) {
+  test('a high aggregate accessibility score cannot mask a failed ' + id + ' audit', () => {
+    const report = fixture(); report.categories.accessibility.score = 0.99;
+    report.audits[id].score = 0;
+    assert.equal(assessMobileReport(report).passed, false);
+  });
+}
+test('missing or unscorable required accessibility evidence cannot pass', () => {
+  const report = fixture(); delete report.audits['heading-order'];
+  assert.equal(assessMobileReport(report).passed, false);
+  report.audits['heading-order'] = { score: null, scoreDisplayMode: 'error' };
+  assert.equal(assessMobileReport(report).passed, false);
+});
+test('a legitimately inapplicable required audit is distinct from missing evidence', () => {
+  const report = fixture(); report.audits['heading-order'] = { score: null, scoreDisplayMode: 'notApplicable' };
+  assert.equal(assessMobileReport(report).passed, true);
+  delete report.audits['heading-order'].scoreDisplayMode;
+  assert.equal(assessMobileReport(report).passed, false);
 });

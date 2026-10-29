@@ -154,6 +154,14 @@ Severity describes launch impact, not an invented exploit score. **Verified defe
 - Complexity / dependencies: Low–Medium; compatible Next/TypeScript/React lint plugins and Node (v10 requires ^20.19 / ^22.13 / >=24; CI selects current Node 22).
 - Acceptance / status: Clean install without peer overrides, intended lint coverage/rules preserved, lint/type/unit/build/hosted checks pass. **Blocked on current plugin peer compatibility.** A separate isolated installation of eslint 10.13.0 completed with peer override warnings, but `npm ls eslint --all` exited ELSPROBLEMS: current eslint-plugin-react 7.37.5, eslint-plugin-jsx-a11y 6.10.2 and eslint-plugin-import 2.32.0 exclude v10. Registry checks confirmed these are their latest releases. No forced/legacy-peer install, rule removal or lockfile change is proposed in the foundation PR. Reassess compatible upstream releases or a separately reviewed configuration alternative.
 
+### L15 — Desktop Explorer camera contrast and panel heading order
+- Category / severity / kind: Accessibility; **Medium**; verified defects.
+- Evidence: Run 40851374711, head e8a72c92d7e3f1b9c1d467e6228a3e88ecad45cf, mobile-performance artifact's explorer-2d-desktop.report.json. The color-contrast audit identified camera-description text in components/HealthEngineHUD.tsx at 2.74:1 (selected) and 4.02:1 (unselected) versus the reported 4.5:1 requirement. The heading-order audit identified the health-goal h3 after h1 without an intermediate panel h2. Aggregate accessibility was 94, so the ≥90 category budget alone did not reject these failures.
+- Impact: Low-vision visitors can struggle to read camera explanations, and heading navigation conveys an incomplete panel hierarchy.
+- Remediation: Lighten camera descriptions to slate-300; use actual h2 panel labels above existing h3 content. Preserve labels, layout and control behavior. Require those two audit rules independently of the aggregate score.
+- Complexity / dependencies: Low; one HUD component, existing Lighthouse reports and Firefox/WebKit checks. No new dependency or clinical/legal text.
+- Acceptance / status: Old desktop report is rejected for exactly the two required audits; all eight corrected-build reports pass them, and desktop headings/keyboard camera selection preserve habit settings in both compatibility engines. **Fix and regressions implemented; final-head hosted validation required.** Other manual accessibility/device evidence remains pending.
+
 ## Sources read for this audit
 
 Read 29 October 2026; these do not certify Healthcrest:
