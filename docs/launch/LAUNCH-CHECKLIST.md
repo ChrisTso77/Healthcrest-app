@@ -67,3 +67,17 @@ Confirm ownership and a practical review cadence for uptime/deployment errors, b
 Owner-reported desktop Chrome results: skip link moved actual focus to MAIN#main-content; Important information opened by keyboard and Escape restored trigger focus; cancelling inline saved-draft restoration preserved the synthetic reflection exactly, then the reflection was cleared. OS/Chrome version were not supplied. No save, overwrite, submission or deployment was performed; existing saved-copy loading was not verified.
 
 The requested 1280×800 viewport produced 320×200 CSS pixels with DPR 4. Explorer Guide and About controls overlapped (Guide y111–147, About y117–161). Browser zoom percentage and return to 100% could not be independently verified, so the 400% zoom matrix row remains pending. Home/planner had no page-level horizontal overflow in that check. The viewport override was reset. The short-viewport fix must be retested on a real browser at verified 400% zoom; automated effective-viewport regression is supporting evidence only.
+
+### Owner retest — 30 October 2026
+
+Reported browser: Chrome 156.0.8078.80 (64-bit); exact Windows version remains unverified. This follow-up records the supplied report, not a new independent inspection of the browser/version or deployed commit.
+
+At 420×236 CSS pixels, the owner reported no overlap and passing skip-link actual focus, Guide close-button focus/Escape return, settings-dock collapse/reopen plus scrolling/keyboard reachability, and both information dialogs' close focus/Escape return. Cancelling planner restoration preserved the exact synthetic edit; original field content was restored afterwards. No saved plan was overwritten and no code was deployed during the check.
+
+Chrome's menu zoom percentage remained inaccessible to the automation used. Verified 400% zoom and restoration to verified 100% therefore remain blocked. The earlier 320×200 case has not been manually revalidated by this report. #130's automated effective-viewport checks at 320/640/1350×200 passed, but do not certify real browser zoom or close this manual matrix item. Retest the exact 320×200 condition and independently confirmed browser zoom separately; retain the 420×236 passes at their actual scope.
+
+### Owner-confirmed manual zoom result — 30 October 2026
+
+The owner subsequently confirmed: “I have checked the zoom manually and everything is working fine.” In the context of the requested 400% Chrome zoom retest, record the manual 400% Explorer zoom check as an owner-reported pass. This supersedes the earlier inability to confirm the zoom setting for that specific check; it is separate from automated CSS viewport evidence. No further overlap or unusable-control issue was reported.
+
+The previously reported browser was Chrome156.0.8078.80 (64-bit). Exact Windows version, the effective CSS viewport during this manual check and restoration to100% were not newly confirmed. Do not infer those details or completion of the entire device/assistive-technology matrix. This confirmation is accessibility test evidence, not merge or launch approval.
