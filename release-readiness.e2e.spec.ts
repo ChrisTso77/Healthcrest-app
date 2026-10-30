@@ -140,6 +140,13 @@ test('short Explorer viewport separates controls at ' + width + 'px', async ({ p
   const about = page.getByRole('button', { name: 'About this Explorer', exact: true });
   const guideBox = await guide.boundingBox();
   const aboutBox = await about.boundingBox();
+  const dock = page.getByRole('button', { name: /Explore habits & scenarios/ });
+  const dockBox = await dock.boundingBox();
+  expect(dockBox).not.toBeNull();
+  expect(dockBox!.y).toBeGreaterThanOrEqual(guideBox!.y + guideBox!.height);
+  expect(dockBox!.y + dockBox!.height).toBeLessThanOrEqual(aboutBox!.y);
+  await dock.focus();
+  await expect(dock).toBeInViewport();
   expect(guideBox).not.toBeNull();
   expect(aboutBox).not.toBeNull();
   expect(guideBox!.y + guideBox!.height).toBeLessThanOrEqual(aboutBox!.y);

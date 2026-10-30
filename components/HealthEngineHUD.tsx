@@ -133,7 +133,7 @@ export const HealthEngineHUD: FC<HealthEngineHUDProps> = ({
 
   return (
     <div
-      className="relative w-full h-dvh xl:h-screen bg-transparent text-slate-100 font-sans overflow-hidden select-none"
+      className="relative w-full h-full bg-transparent text-slate-100 font-sans overflow-hidden select-none"
       data-alcohol-units={parameters.alcoholUnits}
     >
 
