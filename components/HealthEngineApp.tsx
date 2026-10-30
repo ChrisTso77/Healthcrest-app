@@ -124,10 +124,10 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
     <main
       style={{
         '--engine-footer-space': apiError ? '8rem' : '5.5rem',
-        '--engine-dock-space': isDockOpen ? 'min(16rem,35dvh)' : '2.5rem',
+        '--engine-dock-space': isDockOpen ? 'min(16rem,max(12rem,35dvh))' : '2.5rem',
         '--engine-desktop-dock-space': isDockOpen ? '16rem' : '2.5rem',
       } as CSSProperties}
-      className="relative w-full h-dvh bg-slate-950 text-slate-100 font-sans overflow-hidden select-none xl:h-screen"
+      className="hc-engine relative w-full h-dvh bg-slate-950 text-slate-100 font-sans overflow-hidden select-none xl:h-screen"
     >
       {/* ------------------------------------------------------------------ */}
       {/* 1. VISUAL VIEWPORT LAYER */}

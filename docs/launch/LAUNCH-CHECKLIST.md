@@ -61,3 +61,9 @@ For each row record date, commit, browser/OS/device or AT/version, task, result,
 ## Post-launch monitoring plan — preparation only
 
 Confirm ownership and a practical review cadence for uptime/deployment errors, broken routes, CMS fallback rates, Search Console indexing, accessibility/content corrections and existing provider quota alerts. Do not log planner text, query preferences or backups. Do not add a processor, enable optional telemetry, schedule external campaigns or incur costs without approval. Field performance coverage must respect consent/exclusions and be labelled unavailable when insufficient.
+
+## Owner desktop check — 30 October 2026
+
+Owner-reported desktop Chrome results: skip link moved actual focus to MAIN#main-content; Important information opened by keyboard and Escape restored trigger focus; cancelling inline saved-draft restoration preserved the synthetic reflection exactly, then the reflection was cleared. OS/Chrome version were not supplied. No save, overwrite, submission or deployment was performed; existing saved-copy loading was not verified.
+
+The requested 1280×800 viewport produced 320×200 CSS pixels with DPR 4. Explorer Guide and About controls overlapped (Guide y111–147, About y117–161). Browser zoom percentage and return to 100% could not be independently verified, so the 400% zoom matrix row remains pending. Home/planner had no page-level horizontal overflow in that check. The viewport override was reset. The short-viewport fix must be retested on a real browser at verified 400% zoom; automated effective-viewport regression is supporting evidence only.
