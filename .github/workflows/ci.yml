@@ -44,6 +44,25 @@ jobs:
       - name: Verify release identity boundaries
         run: node scripts/release-identity.test.mjs
 
+      - name: Verify private backup failure boundaries with synthetic data
+        run: node --test scripts/sanity-backup.test.mjs
+
+  private-backup-windows:
+    name: Private backup runner on Windows (synthetic data)
+    runs-on: windows-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Verify Windows backup failure boundaries without credentials
+        run: node --test scripts/sanity-backup.test.mjs
+
   validate-cms-seed:
     name: Validate CMS Seed JSON
     runs-on: ubuntu-latest

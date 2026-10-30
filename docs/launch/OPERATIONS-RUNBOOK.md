@@ -40,6 +40,8 @@ The owner confirms visibility of deployment `a0ad203` and its rollback controls,
 
 ### Implementing and verifying the backup policy
 
+The owner selected a private folder on their Windows computer. Use [WINDOWS-CMS-BACKUP.md](WINDOWS-CMS-BACKUP.md) for the operator-local runner and Task Scheduler setup. It is preparation, not an installed schedule, actual export or successful restore. Local-only storage also needs consideration of device/disk loss; no external storage service is selected here.
+
 1. Identify the exact project/dataset and an existing private storage location with restricted access. Keep credentials, datasets and export contents out of Git/public Actions artifacts. Confirm whether exports include the required assets and whether restoring references needs additional steps.
 2. Configure and verify a daily export with completion monitoring. Occasional manual exports do not meet the 24-hour data-loss objective. Export before bulk edits/imports; failure or a latest successful backup older than 24 hours requires operator investigation. Do not delete older backups until a newer successful copy is verified; retain successful copies for 30 days.
 3. Record the last successful export time, dataset identity, archive integrity/readability, asset coverage and private evidence location without publishing content or credentials. Scheduling, storage, monitoring and an actual backup have not been configured or verified here.

@@ -4,9 +4,10 @@ Updated 30 October 2026. The owner authorised parallel launch-readiness work and
 
 Read ROADMAP.md, RELEASE-EVIDENCE.md and LAUNCH-CHECKLIST.md together. Preserve the educational mission, canonical https://www.healthcrest.uk, manual saved-plan handling, default-off independent measurement and approved assets. Do not publish unreviewed advice or invented legal/provider facts.
 
-## Current verified release
+## Current verified release and runtime baseline
 
-- Main is `be24c69c9ef78d0646dae4133df899d0eded4589` after owner-approved [PR #134](https://github.com/ChrisTso77/Healthcrest-app/pull/134). Reviewed head `a8d465339c49eeeeebf7f1acf73201df2eb81fcf` and merged source share tree `221b19f068eef7ec977ade49eaca8088723b79bd`.
+- Current main is `14bce2cf31dc45e35ddb9e3ba28e818fb7aa12a4` after approved documentation/recovery-policy PR #135. Reviewed head `39978a09913a6f6aa88f121a25198186a9ad5546` and merged source share tree `b7b907fba635659f8a82de1482a2586de3d46392`. All five jobs passed in run 41074075226 after one failed-job rerun: mobile 2D Explorer TBT was initially 202 ms against 200 ms, then 190 ms; the original failure is retained in the PR and budgets stayed unchanged. Canonical run [41077804804](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41077804804) passed all 24 checks with matching identity.
+- Runtime/toolchain baseline remains approved [PR #134](https://github.com/ChrisTso77/Healthcrest-app/pull/134), `be24c69c9ef78d0646dae4133df899d0eded4589`. Reviewed head `a8d465339c49eeeeebf7f1acf73201df2eb81fcf` and merged source share tree `221b19f068eef7ec977ade49eaca8088723b79bd`.
 - All five hosted PR jobs passed in [41056351489](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41056351489); Vercel production succeeded. [Canonical live run 41061693500](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41061693500) passed all 24 checks with expected/observed identity equal to merged main, 22 typed assets and no failed assets/invalid types/telemetry requests.
 - Live favicon is HTTP 200, `image/png`, `nosniff` and the complete expected 2,787-byte PNG. RELEASE-EVIDENCE.md retains the original failed #123 run and corrected #124 evidence separately.
 - #126 added nosniff/MIME verification; #130 fixed short-viewport Explorer overlap. Later approved dependency changes and checks are recorded in ../dependency-upgrades.md. This documentation branch reconciles current evidence; it changes no application, dependency or workflow.
@@ -28,3 +29,9 @@ Read ROADMAP.md, RELEASE-EVIDENCE.md and LAUNCH-CHECKLIST.md together. Preserve 
 4. Complete the runbook's access/recovery-point/settings worksheet before any recovery action. A live rollback, dataset write/restore or paid/provider change needs approval of its concrete target and impact.
 
 Gate A remains partial, B blocked, C partial and D blocked. Current live smoke verifies the release; it does not establish launch readiness.
+
+## Windows backup preparation
+
+The owner selected a private backup location on their Windows computer. The separate operator-local runner and [Windows setup](WINDOWS-CMS-BACKUP.md) implement export staging, private CLI logs/temporary files, warning rejection, archive/checksum checks, 24-hour freshness failure and reporting of copies older than 30 days. No automatic pruning, restore, dataset write or public artifact upload is added. CLI tooling is installed separately from website dependencies. Synthetic Linux/Windows CI tests need no Sanity credentials or dataset access; every existing release gate remains.
+
+This prepares the runner, not the owner's machine. Private folder/ACL checks, local tooling/authentication, actual manual and scheduled export, task-result monitoring, retention review and an authorised test-dataset restore remain pending. Nothing in CI establishes those outcomes or closes D07/L09. The backup implementation requires its own merge approval.
