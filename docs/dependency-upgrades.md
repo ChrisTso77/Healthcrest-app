@@ -52,3 +52,11 @@ Independent strict resolver/type checks accepted the Node22 candidate without so
 The real-device 400% browser zoom retest for #130 remains pending. Effective CSS viewport automation does not complete it. These dependency changes do not close accessibility/provider/security/recovery gates; merging requires separate approval.
 
 Accessibility follow-up,30 October2026: the owner confirmed the requested zoom check was performed manually and everything worked. The manual400% Explorer zoom check is now recorded as an owner-reported pass in LAUNCH-CHECKLIST.md. Earlier pending statements above describe the evidence available at those checkpoints; restoration to100%, exact Windows version and broader device/AT coverage remain unconfirmed. This test confirmation does not approve merging the renderer dependency PR.
+
+## Transitive runtime patches — 30 October 2026
+
+After approved #131 (`df0780cc1dd3e6be55c45207cfbbafe1dfa6eedc`), all direct production dependencies match their current stable registry versions. Node22 declarations remain intentionally aligned to CI; ESLint10 and TypeScript7 remain peer-blocked. A full audit including development packages reported zero vulnerabilities. This is maintenance, not a claimed vulnerability fix.
+
+Select four compatible runtime patches: @babel/runtime7.29.7→7.29.10, draco3d1.5.7→1.5.9, hls.js1.7.3→1.7.4 and zustand5.0.15→5.0.16. A scoped strict npm lock update generated the complete entries, which were retained in the original lock without its incidental unrelated optional-WASI metadata additions. Root declarations, nested tunnel-rat/zustand4.5.7, gainmap and the rest of the lock remain unchanged. No forced peers, overrides or application/workflow changes.
+
+Validate with a clean strict install, lint/types/unit/build/release checks and Explorer browser/state/camera continuity. HLS/Draco are inherited loader dependencies; these scene checks do not claim live streaming or compressed-model workflows that the application does not currently exercise. Full hosted CI at the final head remains required. Merge approval applies only to the identified PR; previous approval stops at #131.
