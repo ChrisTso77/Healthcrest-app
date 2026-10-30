@@ -6,6 +6,8 @@ Prepared for Chris Tsoto's actual review; **every decision below is pending**. T
 
 Review baseline: [4309697dbdc0ffb4eeacc214102f051491c4bbf8](https://github.com/ChrisTso77/Healthcrest-app/tree/4309697dbdc0ffb4eeacc214102f051491c4bbf8), the approved #122 release. Immutable source links below identify the wording being submitted; live links are navigation aids and may later change. Before signing off a later release, compare its listed content files with this baseline and review every material difference. An approval of this packet's format is not content approval or launch approval.
 
+Comparison checkpoint, 30 October 2026: against current approved #134 `be24c69c9ef78d0646dae4133df899d0eded4589`, all three catalogue blobs below and 17 of 19 unique linked content files match the #122 baseline. HealthEngineApp.tsx and HealthEngineHUD.tsx have only layout changes from #130; app/globals.css also adds the short-viewport rule. No linked content wording changed. For C1, review the current rendered Explorer for short-viewport readability, scrolling, control access and focus. This comparison does not approve any content: G1–G4, S1–S8 and C1 remain pending actual decisions.
+
 For each item: read the rendered text and its source record, open the cited original material, check the audience and limits, then record **Approve** or **Changes required**, the actual date, reviewer and evidence. Use the existing [source policy](../editorial-sources.md) and [scenario source-check record](../scenario-evidence-review.md); their 28 October source checks do not substitute for this review.
 
 ## Four learning guides

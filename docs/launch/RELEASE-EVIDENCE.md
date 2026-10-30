@@ -1,8 +1,25 @@
 # Release evidence and remaining launch work
 
-29 October 2026. This ledger distinguishes completed software releases, build checks and actual launch requirements. A successful deployment does not close legal, editorial, security, accessibility or operational gates. Use [LAUNCH-CHECKLIST.md](LAUNCH-CHECKLIST.md) for acceptance, [OWNER-LAUNCH-ACTIONS.md](OWNER-LAUNCH-ACTIONS.md) for consolidated operator tasks and [PROGRESS.md](PROGRESS.md) to resume engineering work.
+Updated 30 October 2026. This ledger distinguishes completed software releases, build checks and actual launch requirements. A successful deployment does not close legal, editorial, security, accessibility or operational gates. Use [LAUNCH-CHECKLIST.md](LAUNCH-CHECKLIST.md) for acceptance, [OWNER-LAUNCH-ACTIONS.md](OWNER-LAUNCH-ACTIONS.md) for consolidated operator tasks and [PROGRESS.md](PROGRESS.md) to resume engineering work.
 
-## Latest verified production release: PR #124
+## Latest verified production release: PR #134
+
+| Evidence | Recorded result |
+| --- | --- |
+| Approved release | Owner explicitly approved [PR #134](https://github.com/ChrisTso77/Healthcrest-app/pull/134); merged 30 October 2026 at 13:13:53 UTC (13:13:53 Europe/London). Approval covers this release, not launch acceptance or future merges. |
+| Reviewed head | `a8d465339c49eeeeebf7f1acf73201df2eb81fcf` |
+| Merged main | `be24c69c9ef78d0646dae4133df899d0eded4589` |
+| Identical reviewed/merged tree | `221b19f068eef7ec977ade49eaca8088723b79bd`, verified with local Git objects after fetching main |
+| Hosted PR checks | [41056351489](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41056351489), all five jobs passed: lint/type/unit/boundaries, CMS validation, Chromium E2E/WebGL/performance, preview measurement-off, Firefox/WebKit compatibility |
+| Local supporting checks | Clean strict install with scripts enabled, lint/types, 305 unit tests, 35 structured-data, 35 performance-budget, 29 release-identity cases, production build, six focused browser checks and all 24 local release checks passed. Effective client/server lint rule maps unchanged. System Chromium and CMS fallback were used locally; no live-CMS or non-Linux native-binding coverage is inferred. |
+| Production deployment | [Vercel production](https://vercel.com/tsotsoft/healthcrest-app/DeuVcqpBpLRYGCxBcqANiRU5akvp) reported success; canonical favicon response carried the merged SHA |
+| Canonical live smoke | [41061693500](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41061693500), main at the merged SHA; all 24 checks passed. Expected/observed commit both `be24c69c9ef78d0646dae4133df899d0eded4589`, mode `canonical-live`. 22 typed assets, zero invalid types, failed assets or telemetry requests. |
+| Live favicon | HTTP 200, `image/png`, `nosniff`, complete 64×64 PNG, 2,787 bytes; SHA-256 `ec50cba97dc423f7fe1f5cf1799730ea8a936b18a136679fcb204703aab108f0` |
+| Coverage limits | No provider-dashboard access, rollback/CMS recovery exercise, clinical content approval, full manual device/AT coverage or launch acceptance established. |
+
+Subsequent approved maintenance after #124 includes response MIME/`nosniff` checks (#126), runtime/compiler/tooling updates (#127–#129, #131–#134) and the short-viewport Explorer fix (#130). Detailed dependency scope and limitations are in [dependency-upgrades.md](../dependency-upgrades.md). Those releases do not change the outstanding launch gates. The #124 results below remain historical evidence for their own revision.
+
+## Historical verified production release: PR #124
 
 | Evidence | Recorded result |
 | --- | --- |
@@ -41,15 +58,15 @@ PR #123 merged as `f262542754e9336038a46392460232dae2b07a69`. Production run [40
 
 Reports are retained by Actions for 14 days. Preserve required evidence privately before expiry; links and this summary are not a permanent archive of every artifact. The run tests the PR build; it does not establish live-domain behavior or actual provider settings.
 
-## Remaining launch requirements after #124
+## Remaining launch requirements after #134
 
-PR #123 delivered the preparation/release-identity batch; #124 fixed its confirmed live MIME mismatch. Both releases are merged. Approval does not extend to another PR or public launch. The canonical live identity requirement now has evidence; recovery and the other launch requirements below remain open.
+PR #123 delivered the preparation/release-identity batch; #124 fixed its confirmed live MIME mismatch. Later releases through #134 are also merged and its current evidence is recorded above. Approval does not extend to another PR or public launch. The canonical live identity requirement now has evidence; recovery and the other launch requirements below remain open.
 
 | Launch requirement | State after baseline | Work that can progress now | Evidence still required |
 | --- | --- | --- | --- |
 | L01 supported application-security assessment | Blocked by unavailable referenced resources/preflight tooling | Record exact capability limitation and restore a supported scan environment | Completed supported assessment and resolution of launch-blocking findings; dependency audit is insufficient |
 | L14 supported lint toolchain | Upstream peer compatibility blocked | Retain normal resolution/no forced peers; latest strict probe evidence in AUDIT.md | Compatible supported toolchain, or separately documented owner disposition of the maintenance gap |
-| L09/L29 live release identity and recovery | L29 verified by #124 canonical live smoke; L09 recovery incomplete | Preserve expected-commit assertions and actual run provenance | Operator access, recovery point and exercised recovery evidence; a passing smoke is not a rollback rehearsal |
+| L09/L29 live release identity and recovery | L29 verified through #134 canonical live smoke; L09 recovery incomplete | Preserve expected-commit assertions and actual run provenance | Operator access, recovery point and exercised recovery evidence; a passing smoke is not a rollback rehearsal |
 | L02/L03 hosting/company/privacy/provider facts | Pending owner/operator verification | Consolidated worksheet and reviewable drafts | Verified facts, suitable hosting eligibility and approved public wording; no private home address in this repository |
 | L04 health-content accountability | Approver and weekly cadence confirmed; actual sign-offs pending | Immutable content approval packet | Chris's real per-content decisions and verified credential claims |
 | L06/L11/D09 real devices and accessibility | Substantial automation; manual evidence incomplete | Preserve gates and prepare specific tasks | Dated browser/device/AT results and fixes/retests; lab scores are not WCAG or field-INP evidence |

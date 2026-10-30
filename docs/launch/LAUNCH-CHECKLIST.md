@@ -6,7 +6,7 @@ Unchecked means pending, including checks unavailable in the current environment
 - [x] Immutable source inventory and exact-main CI baseline recorded (34ca713b; run 40840624311).
 - [x] Existing automation covers homepage/navigation, practical learning journeys, Explorer scenarios/2D fallback/keyboard settings, planner save/restore/backup/calendar/failure and no-JavaScript/404 recovery.
 - [x] Legacy draft parsing, explicit save/import boundaries and storage-blocked cases remain covered.
-- [x] Latest approved release #124 has five passing PR jobs, matching reviewed/merged trees, successful production deployment and 24 passing commit-bound canonical live checks; see RELEASE-EVIDENCE.md. This is release evidence, not launch acceptance.
+- [x] Latest approved release #134 has five passing PR jobs, matching reviewed/merged trees, successful production deployment and 24 passing commit-bound canonical live checks; see RELEASE-EVIDENCE.md. This is release evidence, not launch acceptance.
 - [ ] Current launch PR exact head passes all five CI jobs and Vercel preview; reports reviewed, not just presence of checks.
 - [ ] Representative real-device/touch/back-forward/error journeys recorded; confirm no critical functional defects across the agreed support matrix.
 - [ ] Final Gate A reviewer/date/evidence recorded.
@@ -28,9 +28,9 @@ For each row record date, commit, browser/OS/device or AT/version, task, result,
 
 | Task | Representative routes | Required evidence | Status |
 | --- | --- | --- | --- |
-| Keyboard order/skip/focus | Home, Learn, guide, planner, Explorer, privacy | All actions reachable; visible focus; no trap; dialogs close and return focus | Pending manual; partial automation exists |
+| Keyboard order/skip/focus | Home, Learn, guide, planner, Explorer, privacy | All actions reachable; visible focus; no trap; dialogs close and return focus | Partial owner desktop pass; remaining routes/device matrix pending |
 | Screen-reader structure | Same routes | Landmarks/headings/names, check-in/status errors and 2D description understandable; dialog announcements | Pending; choose available NVDA/Firefox and VoiceOver/Safari combinations |
-| 400% zoom and text resize | Same routes at desktop zoom plus 320 CSS px | Reflow without lost content/actions; usable forms/dock/dialog scrolling | Pending manual; 320px automated coverage exists |
+| 400% zoom and text resize | Same routes at desktop zoom plus 320 CSS px | Reflow without lost content/actions; usable forms/dock/dialog scrolling | Owner-reported manual Explorer 400% pass; other routes/text resize pending |
 | Forced colours/contrast | Light pages, planner selects, dark Explorer | Text/focus/states/chevrons identifiable; colour is not the only explanation | Pending manual; L23 covers public selection; L24/L25 add Explorer selection, manual attribution and modal-close paint checks |
 | Touch and orientation | Mobile/tablet learning/planning/Explorer | Target sizes, no hover-only help, usable landscape/portrait | Pending actual devices |
 | Reduced motion/static/errors | Home and 2D/3D Explorer | No essential content lost; pause and failed-video/WebGL alternatives usable | Automated cases exist; manual pending |
@@ -51,10 +51,10 @@ For each row record date, commit, browser/OS/device or AT/version, task, result,
 - [ ] Current hosting plan and intended use confirmed eligible (D01); any paid changes separately approved.
 - [ ] DNS/HTTPS/canonical domain, production/preview settings and least-privilege access verified by operator without exposing values.
 - [ ] Incident owner, privacy-preserving logs/monitoring, CMS recovery, rollback access and recovery exercise recorded (D07).
-- [x] Owner explicitly approved #124 merge/resulting deployment; merged SHA 603d8e04e7a4bb8fb0b8939a3b714be9046fa20f. This approval does not apply to future releases or launch acceptance.
+- [x] Owner explicitly approved #134 merge/resulting deployment; merged SHA be24c69c9ef78d0646dae4133df899d0eded4589. This approval does not apply to future releases or launch acceptance.
 - [ ] All five CI jobs and preview pass at that exact head; merge result and deployed SHA checked.
-- [x] #124 manual canonical production run [40967684877](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40967684877) on intended main passed all 24 checks. Artifacts expire after 14 days; durable private preservation remains an operator task.
-- [x] Canonical live expected/observed marker and workflow source match approved merged SHA 603d8e04e7a4bb8fb0b8939a3b714be9046fa20f in run 40967684877. Preserve mismatch/failure assertions for future releases.
+- [x] #134 manual canonical production run [41061693500](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41061693500) on intended main passed all 24 checks. Artifacts expire after 14 days; durable private preservation remains an operator task.
+- [x] Canonical live expected/observed marker and workflow source match approved merged SHA be24c69c9ef78d0646dae4133df899d0eded4589 in run 41061693500. Preserve mismatch/failure assertions for future releases.
 - [ ] External legal/provider/credential/accessibility/security checks complete or explicit owner risk decision recorded; unresolved required gates are never silently waived.
 - [ ] Final launch approver/date/evidence and post-launch observation/rollback trigger recorded.
 

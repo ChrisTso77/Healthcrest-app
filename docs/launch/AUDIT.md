@@ -287,3 +287,9 @@ Read 29 October 2026; these do not certify Healthcrest:
 - https://developer.chrome.com/docs/lighthouse/performance/performance-scoring — lab scores/variability, distinct from field evidence.
 
 The official-source review does not independently verify professional registration, company identity, medical claims or legal compliance. No public legal/clinical statements, provider configuration or production resources were changed by the audit.
+
+## Current maintenance checkpoint — 30 October 2026
+
+The historical findings above retain their original source context. Owner-approved #134 is current production at `be24c69c9ef78d0646dae4133df899d0eded4589`; all five PR jobs and canonical run [41061693500](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41061693500) passed, including all 24 live checks and matching release identity. See RELEASE-EVIDENCE.md for exact reviewed/merged tree and coverage limits. The short-viewport Explorer defect was fixed in #130; partial owner desktop checks and subsequent manual zoom confirmation are recorded in LAUNCH-CHECKLIST.md.
+
+Supported compatible dependencies have been updated through #134; the full dependency audit on 30 October reported zero vulnerabilities. L14 remains unresolved because ESLint 10 is outside current plugin peer support; TypeScript 7 is also outside parser support. No supported application-security scan tools are exposed in the current session. No new supported assessment or security sign-off is claimed, and L01 remains blocked. Provider, recovery, editorial and remaining device/AT gates are unchanged; release verification does not close them.
