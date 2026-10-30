@@ -20,3 +20,13 @@ ESLint 10.13.0 still fails strict resolution: latest eslint-plugin-react 7.37.5,
 TypeScript 7.0.2 fails strict resolution because typescript-eslint 8.72.1 requires TypeScript `>=4.8.4 <6.1.0`. TypeScript 6.0.3 passed isolated strict resolution and a compiler check on the existing source/configuration, but needs a deliberate migration review with lint, build and hosted evidence. It is not included in this batch.
 
 Registry versions and peer ranges are dated observations. Reassess before a future migration. Merging this batch requires approval; it does not enable measurement or complete security, provider, editorial, recovery or device launch requirements.
+
+## TypeScript 6 migration — 30 October 2026
+
+Following approved #127 (`efb96aff21741cb9243930d088c50457e559a6ac`), the separate compiler migration selects TypeScript 6.0.3 from 5.9.3. Use `~6.0.3` to keep future normal resolution within the reviewed 6.0 line and typescript-eslint's current `<6.1.0` peer range. The exact compiler is retained in the lockfile. TypeScript 7 remains outside that range.
+
+Independent isolated review and integrated strict resolution support this candidate. The existing `strict`, target/module/lib/path settings, Next plugin, lint rules and application source remain unchanged. No deprecation suppression, peer override or weakening of checking is needed. This updates the development compiler, not the React/Next runtime packages.
+
+The integrated source passed lint, type checking, 302 unit tests, 35 structured-data cases, 35 performance-budget cases and 29 release-identity cases. The clean-install production build and all 24 commit-bound local browser smoke checks passed (22 typed assets). Existing hosted browser/measurement/performance jobs still need to pass at the final PR revision. A successful compiler invocation alone does not establish runtime or deployment compatibility. Microsoft’s official TypeScript 6 release notes were reviewed through their GitHub source after the documentation hostname was blocked. Changed defaults for global types, rootDir and side-effect import checks were considered; the existing Next references/configuration and application passed without compatibility flags. Local smoke used system Chromium and existing CMS fallback after Sanity DNS failures; it does not establish live CMS availability.
+
+Sanity and lucide upgrades were reviewed independently as separate runtime candidates and are not included in this compiler change. ESLint 10's incompatible plugin peers remain unresolved. Merge/deployment still requires approval for this PR.
