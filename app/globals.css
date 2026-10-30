@@ -21,3 +21,15 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Short windows (including zoomed desktops) scroll the complete Explorer.
+   Keep enough layout space for the wrapping header, overview, dock and footer. */
+@media (max-height: 400px) {
+  .hc-engine {
+    height: max(100dvh, 52rem);
+  }
+  .hc-engine [role="region"][aria-label="Scenario summary"],
+  .hc-engine [role="region"][aria-label="Camera controls"] {
+    max-height: 20rem;
+  }
+}

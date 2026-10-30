@@ -131,3 +131,31 @@ test('missing page recovery remains readable without JavaScript', async ({ brows
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await context.close();
 });
+
+for (const width of [320, 640, 1350]) {
+test('short Explorer viewport separates controls at ' + width + 'px', async ({ page }) => {
+  await page.setViewportSize({ width, height: 200 });
+  await page.goto('/engine?view=2d');
+  const guide = page.getByRole('button', { name: 'Guide: understand this view', exact: true });
+  const about = page.getByRole('button', { name: 'About this Explorer', exact: true });
+  const guideBox = await guide.boundingBox();
+  const aboutBox = await about.boundingBox();
+  const dock = page.getByRole('button', { name: /Explore habits & scenarios/ });
+  const dockBox = await dock.boundingBox();
+  expect(dockBox).not.toBeNull();
+  expect(dockBox!.y).toBeGreaterThanOrEqual(guideBox!.y + guideBox!.height);
+  expect(dockBox!.y + dockBox!.height).toBeLessThanOrEqual(aboutBox!.y);
+  await dock.focus();
+  await expect(dock).toBeInViewport();
+  expect(guideBox).not.toBeNull();
+  expect(aboutBox).not.toBeNull();
+  expect(guideBox!.y + guideBox!.height).toBeLessThanOrEqual(aboutBox!.y);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await about.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('dialog', { name: 'About this Explorer', exact: true })).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(about).toBeFocused();
+});
+
+}
