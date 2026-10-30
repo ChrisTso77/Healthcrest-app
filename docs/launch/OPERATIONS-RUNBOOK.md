@@ -18,11 +18,39 @@ Pause the affected release/deployment if the reviewed head/base changes, a requi
 | Recovery point | Specific retained deployment/source, confirmed promotion access and settings differences, without secret values |
 | Follow-up | Observation cadence/owner, rollback triggers, outstanding issues and next review |
 
-Latest release: owner-approved [PR #124](https://github.com/ChrisTso77/Healthcrest-app/pull/124), merged as `603d8e04e7a4bb8fb0b8939a3b714be9046fa20f`; reviewed head and merged commit share tree `2fc562ef34bbd4b9c1f965854ddf0aeffbaf8913`. All five PR jobs passed in run 40964311761. Vercel reported production success, and [canonical live run 40967684877](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/40967684877) passed all 24 checks with matching expected/observed identity. See RELEASE-EVIDENCE.md for the failed #123 run, corrected favicon response and coverage limits. This is actual release verification, not an exercised rollback/CMS recovery or launch acceptance. No observation cadence, recovery access or future production action is approved by this record.
+Latest release: owner-approved [PR #134](https://github.com/ChrisTso77/Healthcrest-app/pull/134), merged as `be24c69c9ef78d0646dae4133df899d0eded4589`; reviewed head `a8d465339c49eeeeebf7f1acf73201df2eb81fcf` and merged commit share tree `221b19f068eef7ec977ade49eaca8088723b79bd`. All five PR jobs passed in [41056351489](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41056351489). Vercel production succeeded, and [canonical run 41061693500](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41061693500) passed all 24 checks with matching identity. See RELEASE-EVIDENCE.md for retained historical failures/results and coverage limits. No monitoring cadence, exercised provider promotion, CMS recovery or launch acceptance is established.
+
+Candidate for a paper recovery worksheet: approved #133 source `a0ad203925e0d489324d3f33b6c090df93829050` had passing canonical run [41054914570](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41054914570). It contains the release marker. The owner subsequently confirmed they can view this deployment and its rollback controls. Settings equivalence and successful promotion remain unverified; it is a candidate recovery point, not an exercised recovery. Do not roll back or restore a dataset to validate this worksheet; first record operator/access, target deployment and acceptable recovery-time/data-loss limits.
+
+Owner update, 30 October 2026: the current Vercel plan is Hobby and the owner will operate recovery in Vercel and Sanity. Operator designation is recorded. The later owner evidence and accepted targets below supersede the initial access/target gaps; successful recovery remains pending. Do not infer access from this designation.
+
+## Agreed recovery targets — 30 October 2026
+
+The owner accepted these operating targets for current non-commercial educational use. They are objectives, not measured recovery results or a provider guarantee.
+
+| Area | Agreed target |
+| --- | --- |
+| Website service recovery | Within 4 elapsed hours of detecting an incident |
+| CMS content recovery | Within 1 working day of detecting an incident |
+| Maximum CMS data loss | No more than 24 hours of edits |
+| Backup schedule | Private daily Sanity dataset export, plus an export before bulk edits/imports |
+| Backup retention | Retain exports for 30 days in operator-controlled private storage |
+
+The owner confirms visibility of deployment `a0ad203` and its rollback controls, and manual Sanity export availability through `sanity dataset export`. No export, restore or rollback was executed by this documentation update. Seeing controls establishes availability, not a successful recovery or permission test.
+
+### Implementing and verifying the backup policy
+
+1. Identify the exact project/dataset and an existing private storage location with restricted access. Keep credentials, datasets and export contents out of Git/public Actions artifacts. Confirm whether exports include the required assets and whether restoring references needs additional steps.
+2. Configure and verify a daily export with completion monitoring. Occasional manual exports do not meet the 24-hour data-loss objective. Export before bulk edits/imports; failure or a latest successful backup older than 24 hours requires operator investigation. Do not delete older backups until a newer successful copy is verified; retain successful copies for 30 days.
+3. Record the last successful export time, dataset identity, archive integrity/readability, asset coverage and private evidence location without publishing content or credentials. Scheduling, storage, monitoring and an actual backup have not been configured or verified here.
+4. Prepare a restore rehearsal into a separately authorised non-production dataset. Verify document/asset completeness and app behaviour, record actual timings and compare them with the targets. Do not overwrite production or create paid resources for this rehearsal without a concrete approved scope.
+5. Keep a known-good Vercel deployment available and compare relevant settings before relying on rollback. Production rollback/restore still requires approval of the specific action and target. Define operator working hours/time zone for the CMS working-day target before measuring adherence; the website target uses elapsed hours from detection.
+
+Visitor browser-local plans are outside these website/CMS backups. Recovery targets do not authorise collecting them. L09/D07 remain partial until a working backup schedule, retained recovery evidence and a successful agreed rehearsal exist.
 
 ## Rehearsal before requesting launch approval
 
-1. **Assign ownership/access.** Record who can inspect GitHub reports, inspect/promote Vercel deployments, inspect Sanity backup/restore options and handle enquiries. Verify access without copying tokens. The owner sets acceptable recovery time and tolerable CMS data-loss targets; neither is established here.
+1. **Assign ownership/access.** Record who can inspect GitHub reports, inspect/promote Vercel deployments, inspect Sanity backup/restore options and handle enquiries. Verify access without copying tokens. Use the owner-accepted targets below; verify actual access and whether the backup schedule can meet them.
 2. **Identify a recovery point.** Select a specific retained Vercel deployment and immutable source. Confirm actual promotion availability and domain behaviour under the current plan. Compare relevant provider settings; source rollback need not restore changed settings. Stop if no usable recovery point/access is available.
 3. **Exercise preview journeys.** With synthetic data, follow Home → Learn → guide → Explorer → planner; save, edit, cancel restore/removal, export and re-import a synthetic backup. Verify edits/unrelated storage survive. Complete the agreed actual-device/AT matrix and record defects. Linux browser engines do not establish actual iOS/Safari or manual screen-reader coverage.
 4. **Review failure evidence.** Inspect automated CMS-failure/fallback, storage-blocked and no-JavaScript cases. Do not disable production to simulate an outage. Repository fallback examples support availability; they are not a live-dataset backup.
