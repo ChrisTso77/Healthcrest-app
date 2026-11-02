@@ -1,6 +1,6 @@
 # Content approval packet
 
-Prepared for Chris Tsoto's actual review; **every decision below is pending**. The confirmed weekly review commitment is not a completed content review. This packet adds no health advice and does not verify professional credentials.
+Prepared for Chris Tsoto's actual review. **Only items explicitly approved in the decision record below are complete; all others remain pending.** The confirmed weekly review commitment alone is not a completed content review. This packet adds no health advice and does not verify professional credentials.
 
 ## Revision and review method
 
@@ -56,7 +56,7 @@ Fill these fields only after the stated review. Evidence can link to a dated sub
 
 | Item | Decision | Actual reviewer / review date | Evidence / required corrections | Next review due |
 | --- | --- | --- | --- | --- |
-| G1 | Pending | — | — | Set after review |
+| G1 | Approved | Chris Tsoto / 2 November 2026 | Owner explicitly stated “G1 approved” after the guide/source-review request. Scope: Movement and strength only, at served source `14bce2cf31dc45e35ddb9e3ba28e818fb7aa12a4`; catalogue blob `6c31886566c405abe2562f5b0bb2c7a64df02cf9` matches the immutable baseline. No corrections requested. This does not approve other items, verify credentials or authorise merge/launch. | 9 November 2026; earlier for material changes or safety concerns |
 | G2 | Pending | — | — | Set after review |
 | G3 | Pending | — | — | Set after review |
 | G4 | Pending | — | — | Set after review |

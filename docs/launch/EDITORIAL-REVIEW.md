@@ -1,6 +1,6 @@
 # Editorial review and corrections
 
-Owner-confirmed process, 29 October 2026: Chris Tsoto will approve health content and review/correct it at least once a week. This administrative record does not claim that existing content has already received that approval, independently verify credentials or certify the illustrative model.
+Owner-confirmed process, 29 October 2026: Chris Tsoto will approve health content and review/correct it at least once a week. Actual item-specific decisions are recorded below; the process commitment alone does not approve unreviewed content, independently verify credentials or certify the illustrative model.
 
 ## Before publishing or materially changing advice
 
@@ -16,13 +16,13 @@ At least once a week, review correction emails received through the existing con
 
 For each correction: identify affected public content and revision, assess scope/urgency, draft the smallest correction, verify the source, obtain Chris's approval, test links/content contracts and record the release revision/date. Any production rollback or emergency release still follows the explicit operational approval boundary. Do not silently change historical review records.
 
-## Initial content register — sign-off pending
+## Content register — item-specific decisions
 
-Use the [content approval packet](CONTENT-APPROVAL-PACKET.md) for direct review links, source/population/limitation mappings, all eight scenario identities and blank per-item decision records. Its current baseline is immutable release `4309697dbdc0ffb4eeacc214102f051491c4bbf8` (#122); compare the content scope with the intended launch revision before carrying an approval forward. This preparation does not establish a review outcome.
+Use the [content approval packet](CONTENT-APPROVAL-PACKET.md) for direct review links, source/population/limitation mappings, all eight scenario identities and blank per-item decision records. Its current baseline is immutable release `4309697dbdc0ffb4eeacc214102f051491c4bbf8` (#122); compare the content scope with the intended launch revision before carrying an approval forward. Packet preparation alone does not establish a review outcome; use only the completed item-specific decisions below.
 
 | Content | Packet items / source revision | Approver / actual reviewed date / decision | Next review |
 | --- | --- | --- | --- |
-| Movement and strength guide | G1 / learningGuides.ts at 4309697d | Pending | Set after actual review |
+| Movement and strength guide | G1 / learningGuides.ts at `14bce2cf31dc45e35ddb9e3ba28e818fb7aa12a4`; same catalogue blob as packet baseline | Chris Tsoto / 2 November 2026 / Approved; explicit owner message “G1 approved”. See packet decision record for scope/limits. | 9 November 2026; earlier for material changes or safety concerns |
 | Balanced meals guide | G2 / same catalogue and revision | Pending | Set after actual review |
 | Sleep routines guide | G3 / same catalogue and revision | Pending | Set after actual review |
 | Stress and support guide | G4 / same catalogue and revision | Pending | Set after actual review |
