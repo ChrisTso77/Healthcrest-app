@@ -23,7 +23,7 @@ Use the [content approval packet](CONTENT-APPROVAL-PACKET.md) for direct review 
 | Content | Packet items / source revision | Approver / actual reviewed date / decision | Next review |
 | --- | --- | --- | --- |
 | Movement and strength guide | G1 / learningGuides.ts at `14bce2cf31dc45e35ddb9e3ba28e818fb7aa12a4`; same catalogue blob as packet baseline | Chris Tsoto / 2 November 2026 / Approved; explicit owner message “G1 approved”. See packet decision record for scope/limits. | 9 November 2026; earlier for material changes or safety concerns |
-| Balanced meals guide | G2 / same catalogue and revision | Pending | Set after actual review |
+| Balanced meals guide | G2 / learningGuides.ts at `14bce2cf31dc45e35ddb9e3ba28e818fb7aa12a4`; same catalogue blob as packet baseline | Chris Tsoto / 2 November 2026 / Approved; explicit owner message “G2 approved”. See packet decision record for scope/limits. | 9 November 2026; earlier for material changes or safety concerns |
 | Sleep routines guide | G3 / same catalogue and revision | Pending | Set after actual review |
 | Stress and support guide | G4 / same catalogue and revision | Pending | Set after actual review |
 | Eight built-in scenarios / guide explanations | S1–S8 / reviewedContent.ts and packet scope at 4309697d | Pending; existing source-check record is ../scenario-evidence-review.md | Set after actual review |
