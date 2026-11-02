@@ -38,7 +38,7 @@ The explicit private-directory flag records your folder check; the runner cannot
 Create **Healthcrest CMS daily backup** under your own account in Windows Task Scheduler:
 
 - Trigger: daily at a time the computer is normally on, for example 10:00 local Windows time. Record the actual time/time zone chosen.
-- Action: **Start a program**. Use the absolute `node.exe` path shown by `(Get-Command node).Source`.
+- Action: **Start a program**. Use **Browse** to select the absolute `node.exe` path shown by `(Get-Command node).Source`. Verify the saved Execute field afterwards; paths containing spaces must not be split into arguments.
 - Arguments: the quoted absolute runner path, then the export arguments from the successful manual command above. Substitute actual project/dataset/folder values; do not include tokens. Example structure:
 
 ```text
@@ -52,6 +52,28 @@ Create **Healthcrest CMS daily backup** under your own account in Windows Task S
 Run the freshness command daily, including after missed starts. It fails if no checked archive exists, the newest checked archive is at least 24 hours old, its timestamp is in the future, or its checksum differs. Task Scheduler does not automatically notify you of these failures: review its history/result and the freshness check daily until an existing alert mechanism is configured and tested. This is not yet unattended monitoring.
 
 Run an additional export using the same command before bulk CMS edits/imports. This backup tool performs no dataset writes or restore actions.
+
+### Check the saved action if Windows reports file not found
+
+`0x80070002` (decimal 2147942402) can mean the executable path was split. Inspect the saved action:
+
+```powershell
+(Get-ScheduledTask -TaskName 'Healthcrest CMS daily backup').Actions |
+    Format-List Execute, Arguments, WorkingDirectory
+```
+
+Execute must contain the full node.exe path, not `C:\Program`. Arguments must begin with the quoted runner file, not the remainder of the Node executable path. To avoid GUI splitting, construct the action in PowerShell using the normal account's already-verified variables:
+
+```powershell
+$backupArguments = '"{0}" --project "{1}" --dataset "{2}" --tools "{3}" --destination "{4}" --private-directory-confirmed' -f `
+    $runnerFile, $sanityProject, $sanityDataset, $backupTools, $backupRoot
+$backupAction = New-ScheduledTaskAction -Execute (Get-Command node).Source -Argument $backupArguments
+Set-ScheduledTask -TaskName 'Healthcrest CMS daily backup' -Action $backupAction -ErrorAction Stop | Out-Null
+```
+
+If editing returns Access denied, the existing task may require an elevated editor. Use the same verified normal-user file paths when editing; do not substitute an administrator account's LOCALAPPDATA. Elevation to edit is separate from the task's execution account: retain the intended normal account and leave highest privileges off. Verify the saved action before running again. Do not weaken folder permissions to fix a launch-path error.
+
+Owner setup/export/scheduled-run outcomes are recorded in [OPERATIONS-RUNBOOK.md](OPERATIONS-RUNBOOK.md). A manual task run and a confirmed 18:00 trigger run are distinct evidence; neither establishes a successful restore.
 
 ## What the runner verifies
 

@@ -10,6 +10,8 @@ Owner update, 30 October 2026: current Vercel plan is **Hobby** and the owner wi
 
 Owner recovery follow-up, 30 October 2026: confirms visibility of deployment `a0ad203` and rollback controls, plus manual export through `sanity dataset export`. Accepted targets: website recovery within 4 hours of detection; CMS recovery within 1 working day; no more than 24 hours of CMS edits lost; private daily and pre-bulk-change exports retained for 30 days. The runbook records implementation/rehearsal steps; no scheduled backup or successful recovery is claimed.
 
+Later owner results, recorded 2 November 2026: Windows export setup, archive/checksum/freshness checks and a successful automatic 18:00 task run confirmed. Local structural checks reported 13 documents and 4 archive entries. Private test datasets are unavailable on the current plan, so restore rehearsal remains pending. The runbook preserves the supplied results and their limits; no production restore, public test dataset or paid upgrade occurred. Continue daily monitoring and retention review.
+
 ## Five grouped actions
 
 | Action | Already known | Minimum outcome needed | Decisions |
