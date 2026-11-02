@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const CLI_VERSION = '8.27.0';
-const repository = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const runnerDirectory = path.dirname(fileURLToPath(import.meta.url));
 const day = 86400000;
 const inside = (parent, child) => {
   const relative = path.relative(parent, child);
@@ -17,6 +17,22 @@ async function digest(file) {
   const hash = createHash('sha256');
   for await (const chunk of createReadStream(file)) hash.update(chunk);
   return hash.digest('hex');
+}
+
+async function gitRoot(directory) {
+  for (let current = directory; ; current = path.dirname(current)) {
+    try {
+      const marker = await stat(path.join(current, '.git'));
+      if (marker.isFile()) return current; // Linked worktree Git metadata.
+      if (marker.isDirectory()) {
+        await stat(path.join(current, '.git', 'HEAD'));
+        return current;
+      }
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+    if (path.dirname(current) === current) return undefined;
+  }
 }
 
 function command(executable, args, output, cwd, environment = {}) {
@@ -38,8 +54,10 @@ async function configuration(config) {
     throw new Error('Confirm an existing absolute private destination outside the repository.');
   }
   const destination = await realpath(config.destination);
-  const repo = await realpath(repository);
-  if (inside(repo, destination) || inside(destination, repo)) throw new Error('Backup destination must be separate from the repository.');
+  const repo = await gitRoot(await realpath(runnerDirectory));
+  if (await gitRoot(destination) || (repo && (inside(repo, destination) || inside(destination, repo)))) {
+    throw new Error('Backup destination must be separate from the repository.');
+  }
   if (!(await stat(destination)).isDirectory()) throw new Error('Backup destination must be a directory.');
   return { ...config, destination };
 }
@@ -121,7 +139,7 @@ export async function exportBackup(input) {
   }
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (process.argv[1] && await realpath(process.argv[1]).catch(() => undefined) === await realpath(fileURLToPath(import.meta.url))) {
   const args = process.argv.slice(2);
   const value = name => { const index = args.indexOf(name); return index < 0 ? undefined : args[index + 1]; };
   const allowed = new Set(['--project', '--dataset', '--destination', '--tools', '--private-directory-confirmed', '--check']);

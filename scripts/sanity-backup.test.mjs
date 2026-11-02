@@ -1,9 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, readdir, rm } from 'node:fs/promises';
+import { openSync, closeSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
 import { CLI_VERSION, exportBackup, checkBackup } from './sanity-backup.mjs';
 
 async function fixture(t, mode = 'success') {
@@ -118,4 +120,25 @@ test('requires explicit target/private folder and exact reviewed tooling', async
   await assert.rejects(exportBackup({ ...config, destination: path.resolve('.') }), /separate from the repository/);
   await writeFile(path.join(config.tools, 'node_modules', '@sanity', 'cli', 'package.json'), '{"version":"0.0.0"}');
   await assert.rejects(exportBackup(config), /reviewed/);
+});
+
+test('copied standalone runner permits sibling private folder and still rejects Git checkouts', async t => {
+  const config = await fixture(t);
+  const installed = path.join(path.dirname(config.destination), 'BackupRunner');
+  await mkdir(installed);
+  const script = path.join(installed, 'sanity-backup.mjs');
+  await writeFile(script, await readFile(new URL('./sanity-backup.mjs', import.meta.url)));
+  const standalone = await import(pathToFileURL(script).href);
+  assert.equal((await standalone.exportBackup(config)).status, 'archive-checked');
+  const args = [script, '--check', '--project', config.project, '--dataset', config.dataset, '--destination', config.destination, '--private-directory-confirmed'];
+  const resultFile = path.join(installed, 'check-result.json');
+  const output = openSync(resultFile, 'wx');
+  let checked;
+  try { checked = spawnSync(process.execPath, args, { stdio: ['ignore', output, output] }); }
+  finally { closeSync(output); }
+  assert.equal(checked.status, 0);
+  assert.equal(JSON.parse(await readFile(resultFile, 'utf8')).status, 'fresh');
+  await mkdir(path.join(config.destination, '.git'));
+  await writeFile(path.join(config.destination, '.git', 'HEAD'), 'ref: refs/heads/main\n');
+  await assert.rejects(standalone.exportBackup(config), /separate from the repository/);
 });
