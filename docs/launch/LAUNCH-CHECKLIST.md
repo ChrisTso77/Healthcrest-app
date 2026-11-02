@@ -29,7 +29,7 @@ For each row record date, commit, browser/OS/device or AT/version, task, result,
 | Task | Representative routes | Required evidence | Status |
 | --- | --- | --- | --- |
 | Keyboard order/skip/focus | Home, Learn, guide, planner, Explorer, privacy | All actions reachable; visible focus; no trap; dialogs close and return focus | Partial owner desktop pass; remaining routes/device matrix pending |
-| Screen-reader structure | Same routes | Landmarks/headings/names, check-in/status errors and 2D description understandable; dialog announcements | Pending; choose available NVDA/Firefox and VoiceOver/Safari combinations |
+| Screen-reader structure | Same routes | Landmarks/headings/names, check-in/status errors and 2D description understandable; dialog announcements | Partial owner NVDA 2026.3 Windows walkthrough passed for Home, Explorer dialogs/2D explanation and planner labels/unsaved-edit cancellation; see scoped record below. Remaining routes, error/status and device/AT combinations pending. |
 | 400% zoom and text resize | Same routes at desktop zoom plus 320 CSS px | Reflow without lost content/actions; usable forms/dock/dialog scrolling | Owner-reported manual Explorer 400% pass; other routes/text resize pending |
 | Forced colours/contrast | Light pages, planner selects, dark Explorer | Text/focus/states/chevrons identifiable; colour is not the only explanation | Pending manual; L23 covers public selection; L24/L25 add Explorer selection, manual attribution and modal-close paint checks |
 | Touch and orientation | Mobile/tablet learning/planning/Explorer | Target sizes, no hover-only help, usable landscape/portrait | Pending actual devices |
@@ -81,3 +81,22 @@ Chrome's menu zoom percentage remained inaccessible to the automation used. Veri
 The owner subsequently confirmed: “I have checked the zoom manually and everything is working fine.” In the context of the requested 400% Chrome zoom retest, record the manual 400% Explorer zoom check as an owner-reported pass. This supersedes the earlier inability to confirm the zoom setting for that specific check; it is separate from automated CSS viewport evidence. No further overlap or unusable-control issue was reported.
 
 The previously reported browser was Chrome156.0.8078.80 (64-bit). Exact Windows version, the effective CSS viewport during this manual check and restoration to100% were not newly confirmed. Do not infer those details or completion of the entire device/assistive-technology matrix. This confirmation is accessibility test evidence, not merge or launch approval.
+
+## Owner NVDA walkthrough — recorded 2 November 2026
+
+Owner reported NVDA 2026.3 running on their Windows computer during the guided Chrome walkthrough. Current Chrome/Windows versions were not reconfirmed; do not reuse October's browser version as a newly verified fact. These are owner-reported observations, not an independent screen-reader inspection, transcript or WCAG conformance assessment.
+
+| Focused check | Owner-reported result |
+| --- | --- |
+| Home heading navigation | H recognised page headings. Initial broad reading report alone did not establish skip-link focus. |
+| Home skip link | After activating Skip to content and pressing Insert+Tab, owner reported “main land focus”, interpreted as main-landmark focus. No independent DOM-focus inspection was performed in this walkthrough. |
+| Explorer Guide | Dialog and close button announced; Escape followed by Insert+Tab announced “Guide button”. |
+| Explorer Important information | Dialog/close announced; after Escape, the trigger's name and button function were announced. |
+| Explorer About this Explorer | Owner separately confirmed dialog/close announcements and trigger name after Escape. |
+| Planner labels | Owner reported field labels and button purposes clearly announced during tab navigation. No claim that every validation/error state was exercised. |
+| Planner unsaved-edit cancellation | Using synthetic text only, owner confirmed the warning was announced and Keep my edits preserved the text. No overwrite/restore confirmation was requested. Removal/restoration of the temporary in-memory text was instructed but not separately confirmed; no saved-copy inspection is established. |
+| Explorer 2D explanation | At `/engine?view=2d`, owner reported the topic/example/limits and controls were understandable through speech. This is a qualitative focused result, not exhaustive coverage of every scenario/control. |
+
+Production identity inspected while recording these results: canonical Home returned HTTP 200 and marker `14bce2cf31dc45e35ddb9e3ba28e818fb7aa12a4` (#135). That observation binds the currently served release, not a captured build marker from every earlier owner action or an attestation about an already-open tab.
+
+Keep remaining coverage pending: Learn/individual guide/privacy routes; validation/status/error announcements; broader saved-plan/import/removal flows; all scenario/control states; actual mobile/touch, forced colours, reduced-motion/error alternatives and other AT/browser combinations. No accessibility gate, editorial approval, merge or launch acceptance is granted by this record.

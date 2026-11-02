@@ -38,4 +38,6 @@ Owner setup follow-up recorded 2 November 2026: private folder and trusted accou
 
 Private test datasets are unavailable on the owner's current Sanity plan. Restore rehearsal remains pending; no public dataset or paid upgrade was used. Ongoing monitoring, retention review, off-device recovery and actual restore/rollback capability remain unverified; D07/L09 stay partial. The backup implementation in PR #136 remains unmerged and needs separate approval. CI does not establish the owner's device outcomes.
 
-Next manual accessibility step: owner reports NVDA is not installed yet. Installation and a dated screen-reader walkthrough are pending; no screen-reader result is claimed.
+NVDA follow-up recorded 2 November 2026: owner installed NVDA 2026.3 and reported passes for Home headings/skip link, all three Explorer dialog announcements and trigger-focus returns, planner labels/unsaved-edit cancellation and the 2D explanation. LAUNCH-CHECKLIST.md preserves individual observations, identity/version limits and pending coverage. These focused results do not complete the manual matrix or establish WCAG conformance. Temporary planner-text cleanup was instructed but not separately confirmed.
+
+Next owner work: begin actual per-content review with G1 (Movement and strength) using CONTENT-APPROVAL-PACKET.md. The learning-guide blob on current main still matches the immutable packet baseline; unchanged wording does not constitute approval. All content decisions remain pending until the owner completes the review and records an explicit decision.
