@@ -193,7 +193,8 @@ jobs:
   browser-compatibility:
     name: Firefox and WebKit compatibility
     needs: [lint-and-typecheck, validate-cms-seed]
-    runs-on: ubuntu-latest
+    # Keep WebKit system dependencies stable after ubuntu-latest moved to 26.04.
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: read
