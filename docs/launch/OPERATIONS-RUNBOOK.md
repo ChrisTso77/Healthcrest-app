@@ -40,13 +40,33 @@ The owner confirms visibility of deployment `a0ad203` and its rollback controls,
 
 ### Implementing and verifying the backup policy
 
+The owner selected a private folder on their Windows computer. Use [WINDOWS-CMS-BACKUP.md](WINDOWS-CMS-BACKUP.md) for setup and the owner-reported results below. A working export does not establish a successful restore. Local-only storage also needs consideration of device/disk loss; no external storage service is selected here.
+
 1. Identify the exact project/dataset and an existing private storage location with restricted access. Keep credentials, datasets and export contents out of Git/public Actions artifacts. Confirm whether exports include the required assets and whether restoring references needs additional steps.
 2. Configure and verify a daily export with completion monitoring. Occasional manual exports do not meet the 24-hour data-loss objective. Export before bulk edits/imports; failure or a latest successful backup older than 24 hours requires operator investigation. Do not delete older backups until a newer successful copy is verified; retain successful copies for 30 days.
-3. Record the last successful export time, dataset identity, archive integrity/readability, asset coverage and private evidence location without publishing content or credentials. Scheduling, storage, monitoring and an actual backup have not been configured or verified here.
+3. Record the last successful export time, dataset identity, archive integrity/readability, asset coverage and private evidence location without publishing content or credentials. Initial exports and scheduling are owner-reported below; continuous monitoring and asset/restore completeness remain unverified.
 4. Prepare a restore rehearsal into a separately authorised non-production dataset. Verify document/asset completeness and app behaviour, record actual timings and compare them with the targets. Do not overwrite production or create paid resources for this rehearsal without a concrete approved scope.
 5. Keep a known-good Vercel deployment available and compare relevant settings before relying on rollback. Production rollback/restore still requires approval of the specific action and target. Define operator working hours/time zone for the CMS working-day target before measuring adherence; the website target uses elapsed hours from detection.
 
 Visitor browser-local plans are outside these website/CMS backups. Recovery targets do not authorise collecting them. L09/D07 remain partial until a working backup schedule, retained recovery evidence and a successful agreed rehearsal exist.
+
+### Owner-operated backup evidence — recorded 2 November 2026
+
+These are supplied terminal/task results, not independent access to the owner's Windows computer. No archive, log contents or credentials were collected.
+
+| Check | Owner-reported outcome |
+| --- | --- |
+| Operator environment | PowerShell 7.6.9, Node 26.13.0, npm 11.20.0, Git 2.56.0.windows.4, bsdtar 3.8.9; standalone Sanity CLI 8.27.0 authenticated successfully |
+| Private destination | Folder created outside the checkout; owner confirmed their account and a trusted administrator account appear in its permissions. Full ACL/encryption audit and off-device copy are not established. |
+| Runner identity | Downloaded pinned revision `c8969d4536b02dc74d8bf2db9449267c63816a70`; expected SHA-256 verification reported successful. |
+| First export and integrity | `archive-checked`, `restoreTested:false`; subsequent check returned `fresh`, ageHours 0, olderThan30Days 0 |
+| Task action correction | Initial 0x80070002 traced to truncated executable `C:\Program`; action corrected with New-ScheduledTaskAction/Set-ScheduledTask. Elevated editing was needed; this does not justify elevated backup execution. |
+| Task execution | Supplied manual-run record: 2 November 2026 19:35:54 on the owner's Windows clock, state Ready/result 0; subsequent checksum/freshness check passed. Owner later explicitly confirmed a successful automatic 18:00 run. That automatic run's exact calendar date/time-zone setting was not supplied. |
+| Daily trigger | 18:00 in the computer's local time. Owner must keep the computer on, connected and appropriately logged in; missed starts and freshness still require monitoring. |
+| Local structural validation | Owner reported matching checksum, readable metadata/archive and 13 parseable documents with unique IDs; 4 archive entries. Counts do not establish asset completeness or a successful import. |
+| Restore constraint | Owner reports private test datasets are unavailable on their plan. No public test dataset, paid upgrade, production import or restore was performed. Private restore rehearsal stays pending; local validation is supporting evidence only. |
+
+Continue daily result/freshness checks and manual 30-day retention review. No automatic expiry, alert delivery, durable off-device backup, successful Vercel rollback or measured CMS recovery target is established. D07/L09 remain partial.
 
 ## Rehearsal before requesting launch approval
 
