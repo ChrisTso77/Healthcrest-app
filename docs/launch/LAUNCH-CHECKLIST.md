@@ -17,8 +17,8 @@ Unchecked means pending, including checks unavailable in the current environment
 - [ ] Current dependency audit, observed security headers and resource-based CSP review; no generic unsafe policy installed to obtain a score.
 - [ ] Provider dashboards, scope, environment separation and optional measurement payload/withdrawal checks reviewed per ../measurement-rollout.md. Default-off behavior retained; do not enable by assumption.
 - [ ] Company disclosures, current credentials and privacy/provider/retention/rights process verified and public changes approved (D02–D04).
-- [ ] Four guides and scenarios receive accountable human editorial sign-off; source-check dates are not clinical-review dates.
-- [ ] Complete the per-content records in [CONTENT-APPROVAL-PACKET.md](CONTENT-APPROVAL-PACKET.md); keep pending decisions blank and bind actual approvals to the reviewed source.
+- [x] G1–G4, S1–S8 and C1 received explicit owner editorial approval at the revisions/dates in CONTENT-APPROVAL-PACKET.md (2/6 November 2026). Source-check dates are not review dates; credential verification and other gates remain separate.
+- [x] All 13 per-content decisions are recorded in [CONTENT-APPROVAL-PACKET.md](CONTENT-APPROVAL-PACKET.md), bound to reviewed source with item-specific next-review dates. This does not grant launch acceptance.
 - [ ] Manual accessibility matrix below completed and blocking defects fixed/retested.
 - [ ] Final Gate B reviewer/date/evidence recorded.
 
