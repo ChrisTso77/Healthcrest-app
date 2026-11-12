@@ -7,7 +7,7 @@ Unchecked means pending, including checks unavailable in the current environment
 - [x] Existing automation covers homepage/navigation, practical learning journeys, Explorer scenarios/2D fallback/keyboard settings, planner save/restore/backup/calendar/failure and no-JavaScript/404 recovery.
 - [x] Legacy draft parsing, explicit save/import boundaries and storage-blocked cases remain covered.
 - [x] Latest approved release #134 has five passing PR jobs, matching reviewed/merged trees, successful production deployment and 24 passing commit-bound canonical live checks; see RELEASE-EVIDENCE.md. This is release evidence, not launch acceptance.
-- [ ] Current launch PR exact head passes all five CI jobs and Vercel preview; reports reviewed, not just presence of checks.
+- [x] PR #137 head aa7495a passes all six defined CI jobs; provider reports Vercel Preview success and scoped owner journeys pass. Four authenticated reports reviewed (RELEASE-EVIDENCE.md, 12 November). Preview served identity and manual save remain separately unverified; this does not accept Gate A.
 - [ ] Representative real-device/touch/back-forward/error journeys recorded; confirm no critical functional defects across the agreed support matrix.
 - [ ] Final Gate A reviewer/date/evidence recorded.
 
@@ -39,9 +39,9 @@ For each row record date, commit, browser/OS/device or AT/version, task, result,
 ## Gate C — Marketing readiness
 - [ ] Owner-reviewed brand/value proposition/CTA and responsive visual baseline, with the existing hummingbird assets preserved.
 - [ ] Complete useful Home/Learn/Explorer/About/Contact/privacy journeys; no misleading clinical/service promises.
-- [ ] Canonical/sitemap/robots/404/sharing/unique metadata/headings/internal fragments pass on current build.
+- [x] Candidate aa7495a / CI checkout 1c4ceb9 passes canonical/sitemap/robots/404/sharing/unique metadata/internal-fragment checks and required heading audit; bound to run 43233728546, not a production-deployment assertion.
 - [ ] Structured data checked against visible content/current Google documentation; external validation recorded without inventing eligibility or ranking guarantees.
-- [ ] Representative mobile/desktop lab results reviewed, plus real-user/INP evidence or explicitly pending field coverage. No disabled feature used to game scores.
+- [x] Eight candidate mobile/desktop navigation lab profiles reviewed and raw budgets re-evaluated; real-user/INP, real devices and 3D/GPU performance remain explicitly pending. Explorer lab profiles intentionally use 2D per the existing policy; no feature removed to change a score. See RELEASE-EVIDENCE.md.
 - [ ] Editorial briefs/content clusters and correction process approved; new advice reviewed before publication.
 - [ ] Search Console/domain ownership, sitemap submission, indexing monitoring and social/partnership plan approved before external actions (D06).
 - [ ] Final Gate C reviewer/date/evidence recorded.
@@ -52,7 +52,7 @@ For each row record date, commit, browser/OS/device or AT/version, task, result,
 - [ ] DNS/HTTPS/canonical domain, production/preview settings and least-privilege access verified by operator without exposing values.
 - [ ] Incident owner, privacy-preserving logs/monitoring, CMS recovery, rollback access and recovery exercise recorded (D07).
 - [x] Owner explicitly approved #134 merge/resulting deployment; merged SHA be24c69c9ef78d0646dae4133df899d0eded4589. This approval does not apply to future releases or launch acceptance.
-- [ ] All five CI jobs and preview pass at that exact head; merge result and deployed SHA checked.
+- [x] #137 reviewed candidate aa7495a passed all six jobs/preview; merged tree matches reviewed tree. Production 021341d identity observed, canonical run 43244366643 PASS and all six post-merge jobs in 43244145077 PASS. This release evidence does not accept the other launch gates.
 - [x] #134 manual canonical production run [41061693500](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41061693500) on intended main passed all 24 checks. Artifacts expire after 14 days; durable private preservation remains an operator task.
 - [x] Canonical live expected/observed marker and workflow source match approved merged SHA be24c69c9ef78d0646dae4133df899d0eded4589 in run 41061693500. Preserve mismatch/failure assertions for future releases.
 - [ ] External legal/provider/credential/accessibility/security checks complete or explicit owner risk decision recorded; unresolved required gates are never silently waived.
@@ -100,3 +100,23 @@ Owner reported NVDA 2026.3 running on their Windows computer during the guided C
 Production identity inspected while recording these results: canonical Home returned HTTP 200 and marker `14bce2cf31dc45e35ddb9e3ba28e818fb7aa12a4` (#135). That observation binds the currently served release, not a captured build marker from every earlier owner action or an attestation about an already-open tab.
 
 Keep remaining coverage pending: Learn/individual guide/privacy routes; validation/status/error announcements; broader saved-plan/import/removal flows; all scenario/control states; actual mobile/touch, forced colours, reduced-motion/error alternatives and other AT/browser combinations. No accessibility gate, editorial approval, merge or launch acceptance is granted by this record.
+
+## Owner batch follow-up — 12 November 2026
+
+Owner confirms hosting eligibility and reports independent credential checks done;
+see DECISION-REGISTER.md for source/verification limits. Analytics/Speed Insights
+are reported ON; this does not confirm the Production application switch. Current
+backup freshness/off-device/private-restore evidence and iPhone/Safari remain
+pending. Owner says remaining device checks are done without browser/OS versions
+or individual additional outcomes; retain this broad report without inventing
+matrix-row passes. The earlier explicit candidate manual-save UNTESTED result
+remains. This follow-up provides no merge/deployment approval or launch acceptance.
+
+## Approved preparation release #137 — 12 November 2026
+
+Owner approved exact head aa7495a merge/resulting deployment/canonical checks after
+confirming absent Production app switch, no pending settings changes and rollback
+access. Merge/deployed source 021341d matches the reviewed tree. Canonical smoke
+and all six post-merge CI jobs PASS; live header rechecked. Measurement remains
+inactive in served privacy markup. No CMS writes, actual rollback or launch-gate
+waiver. This approval applies only to #137; full Gate D acceptance remains pending.

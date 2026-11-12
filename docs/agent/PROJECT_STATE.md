@@ -1,92 +1,78 @@
 # Current engineering state
 
-Updated 12 November 2026. This file summarises current local work; launch evidence
-and owner decisions remain in the existing linked registers.
+Updated 12 November 2026. Current local work is separate from deployed production.
 
-## Repository and stage
-- Root: `/workspace/Healthcrest-app`; branch: `codex/healthcrest-release-readiness`.
-- Source baseline before this work: `6dd8d57e83d39225ef57f4f26be5a253e88fa890` (#136).
-- Local implementation commit: `6ded2ef`; subsequent handoff-only commits do not
-  change application code. Use `git log -1` for the latest documentation HEAD.
-- Educational website in controlled launch preparation. No launch acceptance.
-- Next.js/React public pages, reviewed Sanity scenarios, 2D/3D Explorer and manual
-  browser-local planner. See ../../AGENTS.md for invariants and commands.
-- GitHub CI run 42299146937: all six jobs passed at source HEAD 6dd8d57. This
-  predates local edits; current deployed identity not independently verified.
+## Repository and released baseline
+- Root: `/workspace/Healthcrest-app`; branch: `codex/healthcrest-browser-policy`.
+- Branch starts at deployed main `021341d6be51bcd6d49b7f44ab676cede64bceb2` (#137).
+- Previous local handoff branch `codex/healthcrest-release-readiness` is preserved;
+  its six documentation-only updates were brought forward into this candidate.
+- Educational Next.js/React/Sanity site, 2D/3D Explorer and manual browser planner.
+- #137 had explicit owner merge/deployment approval. Its merged/reviewed source
+  tree matches; canonical workflow 43244366643 and all six main CI jobs in
+  43244145077 PASS. Optional app measurement remains inactive in served markup.
+- Full launch acceptance remains open; #137 approval does not authorise this patch.
 
-## Objective and acceptance
-- Owner's new autonomous-development directive authorises routine local changes,
-  dedicated-branch commits and release-candidate preparation. Stricter production,
-  protected-gate and human-accountability boundaries remain in force.
-- Branch: `codex/healthcrest-release-readiness` (created without discarding changes).
-- Release acceptance: build and affected tests pass; current-head CI/browser,
-  privacy/SEO/performance and existing launch gates have evidence; content/legal/
-  recovery/security decisions completed before production release approval.
-- Current work: reject malformed scene requests, avoid provider-detail logging,
-  remove unused analytics adapter, restore specified tagline, prevent pre-hydration
-  planner edits from losing entered dates, and verify core journeys.
+## Current objective and risk
+- Implement a narrow containment policy after observed absence of live CSP/framing
+  headers. HIGH response-policy boundary; no production change performed.
+- Invariant: foreign framing and foreign form/base targets blocked, embedded objects
+  blocked; self framing, planner editing and ordinary scripts/styles/forms work.
+- Changes: next.config.ts adds CSP base-uri self, object-src none, frame-ancestors
+  self, form-action self and legacy X-Frame-Options SAMEORIGIN.
+- Six new browser-policy cases join the existing Chromium CI suite. No dependencies,
+  lockfile, data schema, processor, CMS content or production settings changed.
+- Intentional behavior change: third-party sites cannot embed Healthcrest pages.
+  Same-origin framing stays supported. Broad script/style/nonce CSP remains separate.
 
-## Completed and verification
-- [Baseline audit](AUDIT.md) retained unchanged as assessment-time evidence.
-- Framework installed; contradictory current claims in launch/PROGRESS reconciled.
-- Baseline: 305 unit tests, 109 synthetic boundary tests, lint and TypeScript PASS
-  on Node 24.19.0. CI targets Node 22; build/browser/live checks NOT VERIFIED.
-- Framework follow-up: local Markdown links/line budgets and
-  `git diff --check` PASS. New development checks: build, lint, 314 unit tests
-  and seven focused system-Chromium calendar/hydration cases PASS. Node 22.23.5
-  also passes 314 unit tests, lint and TypeScript. Default-off local smoke: 23 PASS.
-- Broad system-Chromium run: 308 passed, 11 failed (18.6m). Three Explorer tests
-  timed out; eight telemetry failures used the wrong default-off build profile.
-  Correct-profile telemetry: 15 PASS; isolated Explorer cases: 3 PASS under the
-  original timeouts. Original failures preserved; no full-suite PASS claimed.
-  Exact preview profile (operator flag true, VERCEL_ENV preview): 1 PASS.
-- Candidate branch was not pushed or deployed. Owner-approved rehearsal branch
-  pushes created a separate Vercel preview; no merge, production promotion or CMS
-  write. Latest local documentation commit is available from `git log -1`.
+## Local verification
+- Build PASS, lint PASS, TypeScript --noEmit --incremental false PASS.
+- Six enforcement/header/positive-frame cases PASS using system Chromium.
+- 54 affected cases PASS: guided start, print plan/guide, calendar, next-week,
+  consent/withdrawal/privacy and planner hydration. Production-enabled local test
+  profile used; actual production flag/settings were not changed.
+- Initial fixture failures retained: a route-fulfilled attacker page hit Local
+  Network Access first. A real second loopback server isolates CSP without
+  disabling browser security; same-origin test also targets the visible heading.
+- Local release smoke PASS: 23 checks, 13 pages, 22 valid typed assets and no
+  failed/invalid assets or optional measurement requests. No local commit identity
+  was supplied; no compiled-identity assertion claimed for this smoke.
+- Pinned-browser/full CI not run for this new candidate yet; no remote preview
+  or production claim for this branch.
 
-## Blockers and next actionable work
-- HC-01: owner completed G1–G4/S1–S3 review on 12 November, explicitly retaining
-  approval without corrections; unchanged content hashes verified. Next due
-  19 November, per packet follow-up. S4–S8/C1 remain due 13 November.
-- HC-02: owner approved a separate website preview recovery rehearsal. Recovery
-  source 6dd8d57 was pushed on codex/healthcrest-recovery-rehearsal; empty trigger
-  e8e102c has exactly the same source tree. Vercel Preview deployment 7738540326
-  succeeded; automated HTTP/identity checks blocked by proxy 403 for
-  healthcrest-8gvaxfdrz-tsotsoft.vercel.app. Allow this exact hostname to continue.
-  Owner reports homepage, Learn guide, Explorer settings/Guide and Planner
-  save/edit/restore-cancel passes on the preview; browser/version not captured.
-  Canonical HEAD still reports 6dd8d57. Full recovery/time target NOT VERIFIED;
-  private CMS restore/off-device recovery and production rollback remain pending.
-- Dependency audit: zero production vulnerabilities; full audit has eight moderate
-  dev-tool entries from minimatch (see DECISIONS.md). No compatible fix identified.
-- Browser download blocked: cdn.playwright.dev returns policy 403. System Chromium
-  is local evidence only (video disabled in scratch config); pinned Chromium/
-  Firefox/WebKit and current-head hosted CI gates remain pending.
-- HC-03/L01: supported security reference failed to load; no preflight tool was
-  exposed during audit. Restore capability before claiming supported assessment.
-- HC-05: remaining actual-device/AT matrix pending; retain narrower owner passes.
-- HC-06: unused analytics adapter removed under the new development directive;
-  active pageview/performance consent implementation is preserved.
-- Provider eligibility, disclosure, credential and processing facts remain owner
-  evidence gaps; see ../launch/OWNER-LAUNCH-ACTIONS.md.
-- Current local changes address observed actionable defects. Release remains
-  BLOCKED by supported security tooling, pinned-browser/current-head CI and
-  outstanding recovery/provider/legal/device evidence; no production approval
-  requested while these gates remain open.
+## Approval and completion boundary
+- Current user authorised autonomous local engineering and asked for the next
+  actionable step. Push/PR and production require their explicit scope approval.
+- Candidate must pass required hosted checks and report review before merge.
+- No push, merge or deployment for this new branch. Keep deployed 021341d stable.
+- Reuse existing passing evidence for unaffected logic; do not repeat full local
+  suites without a relevant change/failure. Do not raise performance/test gates.
 
-## Evidence
-- [Launch progress](../launch/PROGRESS.md),
-  [gates](../launch/LAUNCH-CHECKLIST.md),
-  [editorial decisions](../launch/CONTENT-APPROVAL-PACKET.md),
-  [recovery](../launch/OPERATIONS-RUNBOOK.md),
-  [release provenance](../launch/RELEASE-EVIDENCE.md).
+## Remaining launch requirements
+- L01 supported security assessment blocked by unavailable preflight/resources.
+  This focused containment patch does not replace it or establish XSS prevention.
+- Owner confirms Hobby eligibility and independent credential checks; underlying
+  evidence not supplied here. Existing-office public wording remains pending;
+  no private address was collected or published.
+- GoDaddy Business Basics and Analytics/Speed Insights ON are owner-reported;
+  Production app flag absent/no queued changes confirmed for #137. Exact retention,
+  deletion/rights/provider processing evidence remains pending; no activation scope.
+- Private CMS restore/off-device recovery and actual production rollback rehearsal
+  remain pending. Source-recovery preview passed scoped owner journeys only.
+- iPhone/Safari pending; remaining devices broadly reported done without versions
+  or individual additional outcomes. Candidate manual save explicitly untested.
+- G1–G4/S1–S3 renewed on 12 November, next due 19 November; S4–S8/C1 due 13 November.
+- Reviewed prior candidate: 319 Chromium + 34 compatibility, zero retries/failures/
+  skips; 24 release checks and eight raw performance profiles PASS. Mobile 2D TBT
+  was 194/200 ms. These are prior-source results, not this patch's hosted results.
 
-## Local evidence locations
-- Scratch logs/reports/screenshots: `/workspace/work/healthcrest/` (not committed).
-- Original broad failures: `broad-default-off-results/`, `browser-regression.log`.
-- Profile recheck: `enabled-telemetry.log`; timing recheck: `explorer-isolated.log`.
-- Node 22 checks: `node22-unit.log`; default-off smoke report:
-  `release-readiness-default-off/summary.json`. These are local, not live results.
-
-Final commit-bound local smoke, if executed, writes `artifacts/release-readiness/`
-then is preserved under the scratch evidence directory; it does not attest live state.
+## Evidence and next work
+- Current scratch: `/workspace/work/healthcrest-final-batch/browser-policy-*`.
+- [Decisions](DECISIONS.md), [lessons](LESSONS.md),
+  [release provenance](../launch/RELEASE-EVIDENCE.md),
+  [launch gates](../launch/LAUNCH-CHECKLIST.md),
+  [owner facts](../launch/OWNER-LAUNCH-ACTIONS.md),
+  [operations](../launch/OPERATIONS-RUNBOOK.md).
+- Local implementation, targeted verification and diff review complete. Freeze the
+  commit, then seek one combined remote verification/preparation-release approval;
+  act on production only after required hosted checks/report review pass.

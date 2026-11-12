@@ -73,3 +73,136 @@ PR #123 delivered the preparation/release-identity batch; #124 fixed its confirm
 | D06 external discovery/marketing | Preparation only | Existing metadata and submission instructions | Explicit authorisation before external accounts/submissions/campaigns |
 
 Gate A remains partial, B blocked, C partial and D blocked. Optional polish does not substitute for closing these requirements. No launch date or readiness claim is implied.
+
+## Draft candidate #137 — 12 November 2026
+
+- PR: https://github.com/ChrisTso77/Healthcrest-app/pull/137 (draft; no merge or production approval).
+- Candidate head: `aa7495a35481d1155c23943461afb53d99f9976a`.
+- CI merge checkout: `1c4ceb90c18f356e1a0500ff3dcf9973384d86a4`; both share tree `bab0852ac1d21c50820ae7016942ab2b97d87c27`. Main/base remains `6dd8d57e83d39225ef57f4f26be5a253e88fa890`.
+- Run https://github.com/ChrisTso77/Healthcrest-app/actions/runs/43233728546 completed successfully. All six jobs passed: lint/type/unit/boundaries, CMS seed validation, Windows synthetic backup, Chromium/WebGL/release/performance, preview measurement-off, Firefox/WebKit compatibility. Existing thresholds unchanged; no rerun requested.
+- Vercel GitHub deployment `7739467846`, environment Preview, reports success for candidate head. URL: https://healthcrest-5nqj24z5q-tsotsoft.vercel.app . Build success is provider metadata, not independently observed served identity.
+- Owner reports Home → Learn → Movement and Strength guide PASS; Explorer sleep 8→7.5, 2D and Guide open/close PASS, then settings restored; Planner restore confirmation/Keep my edits preserves exact synthetic text, then original field value restored. Manual save explicitly UNTESTED; existing saved copy left intact. These details supersede the initial broad all-pass reply. Browser/OS/version not captured.
+- Report/log review BLOCKED: download of release-readiness and run logs receives Forbidden from the environment's artifact-storage host policy (`productionresultssa13.blob.core.windows.net`). Signed URLs are not recorded here. No underlying report metrics, exact hosted test counts, screenshots or compiled-marker values are claimed inspected. Next evidence needed: release-readiness, mobile-performance, playwright-report and browser-compatibility-report artifacts from this run.
+- At the initial hosted-status checkpoint, detailed evidence review was pending; the uploaded-artifact review below now resolves that four-report gap. Supported security assessment, private CMS restore/production rollback, remaining device/AT and provider/legal gates remain open. No launch acceptance; do not equate six green jobs with full security, legal compliance or operational readiness.
+
+Later local handoff documentation does not change the frozen PR head. Evidence is
+bound to the head and run above; a future source change needs its own verification.
+
+### Uploaded artifact review completed — 12 November 2026
+
+All four uploaded ZIPs match GitHub's SHA-256 artifact digests, sizes, workflow run
+43233728546 and candidate aa7495a. Direct download/log restrictions remain, but
+these authenticated copies complete the requested four-report review. The earlier
+BLOCKED report-review entry is historical and superseded for these four artifacts.
+
+| Artifact | GitHub-matching SHA-256 |
+| --- | --- |
+| release-readiness | `426d4fcacb81d80159bf6b15de8381da6e5abca2a64f6ff1bfd074aea1f4c431` |
+| playwright-report | `188f6d560360371ef46465e29e47234458b4251a5ce2eb872b80b3025418373c` |
+| browser-compatibility-report | `52aab3f160c98bf9954d7db918555c4f84516d1188eb76d65f2c22aa4d91e7ec` |
+| mobile-performance | `ec4a5b661b4ef77e30d67e548ae130cfb8755fda051558ba6c342f486a9588a9` |
+
+- Release: all 24 checks passed. Expected, compiled and observed commits equal CI
+  checkout `1c4ceb90c18f356e1a0500ff3dcf9973384d86a4`; runtime identity probe passed.
+  This is localhost CI build identity, not the served Vercel preview or production.
+  All 13 pages passed; 22 typed assets, zero failed/invalid assets and zero optional
+  measurement requests in the fresh-visitor check.
+- Chromium: 319 actual passed results, zero unexpected/flaky/skipped/global errors;
+  every case has exactly one result at retry 0. New delayed-script planner regression
+  passed. No hidden expected-failure annotations found.
+- Compatibility: 34 actual passed results (17 Firefox, 17 WebKit), zero retries,
+  failures, flakiness, skips or global errors. Linux engines are not real devices.
+- Visual review: inspected 12 representative Playwright captures/portions covering
+  landing, restore confirmations, forced colours, 2D/3D, comparison and guide views,
+  plus all eight Lighthouse final screenshots. No new visible regression identified
+  in those reviewed areas; no full-device/AT or all-page visual-conformance claim.
+- Performance: re-evaluated every raw Lighthouse JSON with the unchanged repository
+  assessor, correct fixed route/query and mobile/desktop profile; compared raw
+  metrics with summary.json. All eight pass, including required contrast/heading,
+  console, network/privacy and browser checks. Original raw values determine PASS;
+  displayed table values below are rounded only for readability.
+
+| Profile | Performance / accessibility / best practices / SEO | LCP ms | CLS | TBT ms |
+| --- | --- | --- | --- | --- |
+| Home mobile | 100 / 100 / 100 / 100 | 918.4 | 0.000715 | 87 |
+| Start mobile | 100 / 100 / 100 / 100 | 913.9 | 0 | 87.5 |
+| Guide mobile | 100 / 100 / 100 / 100 | 912.3 | 0 | 87.5 |
+| Planner mobile | 100 / 100 / 100 / 100 | 919.2 | 0 | 83 |
+| Explorer 2D mobile | 97 / 100 / 100 / 100 | 767.6 | 0 | 194 |
+| Guide desktop | 100 / 100 / 100 / 100 | 267.9 | 0 | 11 |
+| Planner desktop | 100 / 100 / 100 / 100 | 257.5 | 0 | 2.5 |
+| Explorer 2D desktop | 100 / 100 / 100 / 100 | 217.0 | 0 | 4 |
+
+Mobile 2D Explorer has only 6 ms headroom under the 200 ms TBT budget. Preserve the
+threshold and original measurements; a passing run is no reason to rerun for a
+better number or introduce speculative optimisation. This is single-run navigation
+lab evidence, not field INP/percentiles, 3D/GPU performance or WCAG conformance.
+Manual saving is still untested by the owner; the automated save/restore cases pass.
+The requested technical report review passes, but separate security, operational,
+provider/legal and remaining device/AT gates still block launch acceptance. No
+merge, production release or gate waiver was authorised by uploading the files.
+
+Review data/scripts and selected captures are retained under
+`/workspace/work/healthcrest-artifact-review/`; raw reports/embedded Git metadata
+were not copied into the public repository. The run's measurement-off job passed,
+but its separate fifth artifact was not part of this upload/review request.
+
+### Consolidated remaining-work pass — 12 November 2026
+
+- Read-only canonical HEAD remains HTTP 200 with source marker 6dd8d57; HSTS
+  max-age 63072000, nosniff and no-referrer observed. No CSP or frame header was
+  present in this response. Header/resource-policy review remains partial, not a
+  security clearance or a validated clickjacking finding.
+- Served privacy markup has both measurement checkboxes disabled/unchecked and the
+  inactive notice. This is a markup observation, not dashboard or runtime collector
+  verification. No visitor choice or production setting was changed.
+- Additional fresh-browser live inspection failed at managed-proxy certificate
+  trust (ERR_CERT_AUTHORITY_INVALID); no TLS verification bypass was used. Zero
+  recorded optional requests from that failed navigation is not a privacy PASS.
+- CI raw network inventory for the eight lab profiles contains same-origin
+  document/fetch/image/media/script/style resources on localhost. This is not a
+  complete deployed CSP design; inline execution and provider resources need review.
+- Current candidate/head/base/checks remain unchanged. The requested technical
+  report gap is closed; unavailable supported scan tooling and owner/provider/
+  recovery/device evidence remain distinct. No redundant application suites rerun.
+- The existing runbook explicitly permits a separately approved preparation
+  release while launch decisions remain open, provided the change does not depend
+  on those decisions. A proposed #137 preparation release would ship the tested
+  hydration/API/unused-adapter/tagline changes only. Before any approved deployment,
+  the operator must confirm the Production measurement flag is false/unset and
+  there are no unreviewed Production settings/dashboard changes waiting to apply.
+  Current inactive markup alone does not prove those build-time settings. It would not declare launch
+  acceptance or waive any outstanding gate. Production action still needs exact
+  merge/deployment approval; no such approval or action is recorded by this pass.
+
+## Approved preparation release #137 — 12 November 2026
+
+- Owner explicitly confirmed Production `HEALTHCREST_TELEMETRY_ENABLED` absent,
+  no pending Production settings changes, rollback access available to previous
+  source 6dd8d57, and approval of #137 merge/resulting deployment/canonical checks.
+  This is preparation-release approval, not full launch acceptance or permission
+  to activate measurement, change providers, restore CMS data or incur new costs.
+- Before action: PR head aa7495a, base 6dd8d57, all six CI jobs and Vercel successful;
+  no source drift. Marked ready and squash-merged without admin bypass or branch
+  deletion. Merge: `021341d6be51bcd6d49b7f44ab676cede64bceb2`, 15:06:06 UTC.
+- Merged tree equals reviewed candidate tree `bab0852ac1d21c50820ae7016942ab2b97d87c27`;
+  parent is previous main `6dd8d57e83d39225ef57f4f26be5a253e88fa890`.
+- GitHub Production deployment `7741002799` reports success at 15:06:44 UTC;
+  Vercel deployment `3uV3rkH7zAbtdZgP6kdmDXwqRTHr`.
+- Canonical HTTP observation: www.healthcrest.uk serves X-Healthcrest-Commit
+  `021341d6be51bcd6d49b7f44ab676cede64bceb2`. Served privacy markup has both
+  measurement choices disabled/unchecked and the inactive notice. No configuration
+  or consent choice was changed by this verification.
+- Canonical workflow https://github.com/ChrisTso77/Healthcrest-app/actions/runs/43244366643
+  completed successfully for that exact main SHA, with expected_commit supplied as
+  the same full SHA. Its live verification step passed. No rollback was performed.
+- Production report artifact metadata: production-release-readiness, 1,280 bytes,
+  SHA-256 `5e9c9ecf089ac47e3e0df33e900cfeba6463476ad42d44afc664fb66ff661fe2`.
+  Contents were not independently downloaded/reviewed because of the established
+  storage-host policy restriction. Workflow success and direct live identity/markup
+  observations are verified; individual live report counters are not quoted here.
+  Preserve the artifact privately before the existing 14-day retention expires.
+- Automatic post-merge CI: https://github.com/ChrisTso77/Healthcrest-app/actions/runs/43244145077 completed SUCCESS for exact merged SHA 021341d; all six jobs passed, including Chromium/WebGL and performance. No rerun or threshold change requested. Main and the canonical marker were rechecked afterwards and remain 021341d. Detailed main-run reports were not re-downloaded; reviewed PR reports cover the identical source tree.
+  Separate supported security, provider/legal, actual-device and CMS/production-
+  recovery requirements remain open. This release does not establish compliance,
+  full public-launch acceptance or a measured recovery-time guarantee.

@@ -46,3 +46,24 @@ benefit, runtime cost, and CI/dependency impact before installing it.
 - Consequences: homepage title regression updated; landing and sharing checks must
   run against a fresh build. Historical C1 approval stays bound to its old revision;
   this copy change does not create a new clinical/editorial approval record.
+
+## 12 November 2026 — Narrow browser containment policy
+- Decision: add CSP base-uri self, object-src none, frame-ancestors self and
+  form-action self, with X-Frame-Options SAMEORIGIN for legacy coverage.
+- Context: deployed 021341d has nosniff/no-referrer/HSTS but no observed CSP or
+  frame header. Source uses same-origin forms, with no iframe/object/embed feature.
+- Alternatives: deny all framing (unnecessarily blocks self framing); install a
+  generic broad script/style policy (requires nonce/static-rendering work); leave
+  the missing containment unchanged.
+- Rationale: constrain browser entry/embedding destinations while preserving own
+  frames, normal scripts/styles, print/downloads and existing form flows.
+- Consequences: third-party sites will no longer embed Healthcrest pages. This is
+  intentional; any future trusted embedding needs an explicit reviewed allowlist.
+  Script/style/resource/XSS coverage and supported assessment L01 remain pending.
+- Invariant: a foreign origin cannot frame the planner or retarget forms/base URLs;
+  same-origin planner editing and existing save/print/calendar/consent flows work.
+- Risk/verification: HIGH response-policy boundary; six browser enforcement tests
+  and 54 affected system-Chromium regressions pass locally. Full pinned-browser CI
+  and production approval remain required before publishing this new candidate.
+- Scope: local development only; source starts from deployed 021341d. Prior local
+  release-handoff records were brought forward without changing the released app.
