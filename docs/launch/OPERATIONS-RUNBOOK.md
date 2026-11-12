@@ -12,15 +12,23 @@ Pause the affected release/deployment if the reviewed head/base changes, a requi
 | --- | --- |
 | Owner, date and approval | Named responsible person; actual approval link and its production scope |
 | Source | PR, immutable head, base/main and reviewed tree |
-| Integrated checks | Exact-head run, all five jobs, inspected release/browser/compatibility/measurement/performance reports and coverage limits |
+| Integrated checks | Exact-head run, all required jobs (currently six), inspected release/browser/compatibility/measurement/performance reports and coverage limits |
 | Deployments | Preview URL; after approval, merge SHA, production deployment ID/URL and deployed source/tree comparison |
 | Canonical check | Live smoke run/report, origin, time, expected/observed deployed revision and actual conclusion |
 | Recovery point | Specific retained deployment/source, confirmed promotion access and settings differences, without secret values |
 | Follow-up | Observation cadence/owner, rollback triggers, outstanding issues and next review |
 
-Latest release: owner-approved [PR #134](https://github.com/ChrisTso77/Healthcrest-app/pull/134), merged as `be24c69c9ef78d0646dae4133df899d0eded4589`; reviewed head `a8d465339c49eeeeebf7f1acf73201df2eb81fcf` and merged commit share tree `221b19f068eef7ec977ade49eaca8088723b79bd`. All five PR jobs passed in [41056351489](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41056351489). Vercel production succeeded, and [canonical run 41061693500](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41061693500) passed all 24 checks with matching identity. See RELEASE-EVIDENCE.md for retained historical failures/results and coverage limits. No monitoring cadence, exercised provider promotion, CMS recovery or launch acceptance is established.
+Current release: owner-approved [PR #138](https://github.com/ChrisTso77/Healthcrest-app/pull/138),
+`076a85369c1826f98b6b92ac5bad515cc9d6546e`; deployment 7742651420, canonical smoke
+43255707119 and all six main CI jobs in 43255604123 PASS. See RELEASE-EVIDENCE.md
+for exact source/tree and report scope. The recorded recovery reference is previous
+release `021341d6be51bcd6d49b7f44ab676cede64bceb2`; promotion/settings equivalence,
+measured production rollback and CMS recovery remain unverified. Local candidates
+are not production releases. No future deployment is authorised by this pointer.
 
-Candidate for a paper recovery worksheet: approved #133 source `a0ad203925e0d489324d3f33b6c090df93829050` had passing canonical run [41054914570](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41054914570). It contains the release marker. The owner subsequently confirmed they can view this deployment and its rollback controls. Settings equivalence and successful promotion remain unverified; it is a candidate recovery point, not an exercised recovery. Do not roll back or restore a dataset to validate this worksheet; first record operator/access, target deployment and acceptable recovery-time/data-loss limits.
+Historical release: owner-approved [PR #134](https://github.com/ChrisTso77/Healthcrest-app/pull/134), merged as `be24c69c9ef78d0646dae4133df899d0eded4589`; reviewed head `a8d465339c49eeeeebf7f1acf73201df2eb81fcf` and merged commit share tree `221b19f068eef7ec977ade49eaca8088723b79bd`. All five PR jobs passed in [41056351489](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41056351489). Vercel production succeeded, and [canonical run 41061693500](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41061693500) passed all 24 checks with matching identity. See RELEASE-EVIDENCE.md for retained historical failures/results and coverage limits. No monitoring cadence, exercised provider promotion, CMS recovery or launch acceptance is established.
+
+Historical candidate for the original paper recovery worksheet (current reference above): approved #133 source `a0ad203925e0d489324d3f33b6c090df93829050` had passing canonical run [41054914570](https://github.com/ChrisTso77/Healthcrest-app/actions/runs/41054914570). It contains the release marker. The owner subsequently confirmed they can view this deployment and its rollback controls. Settings equivalence and successful promotion remain unverified; it is a candidate recovery point, not an exercised recovery. Do not roll back or restore a dataset to validate this worksheet; first record operator/access, target deployment and acceptable recovery-time/data-loss limits.
 
 Owner update, 30 October 2026: the current Vercel plan is Hobby and the owner will operate recovery in Vercel and Sanity. Operator designation is recorded. The later owner evidence and accepted targets below supersede the initial access/target gaps; successful recovery remains pending. Do not infer access from this designation.
 

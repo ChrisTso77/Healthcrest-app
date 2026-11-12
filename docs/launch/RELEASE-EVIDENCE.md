@@ -1,8 +1,13 @@
 # Release evidence and remaining launch work
 
-Updated 30 October 2026. This ledger distinguishes completed software releases, build checks and actual launch requirements. A successful deployment does not close legal, editorial, security, accessibility or operational gates. Use [LAUNCH-CHECKLIST.md](LAUNCH-CHECKLIST.md) for acceptance, [OWNER-LAUNCH-ACTIONS.md](OWNER-LAUNCH-ACTIONS.md) for consolidated operator tasks and [PROGRESS.md](PROGRESS.md) to resume engineering work.
+Updated 12 November 2026. This ledger distinguishes completed software releases, build checks and actual launch requirements. A successful deployment does not close legal, editorial, security, accessibility or operational gates. Use [LAUNCH-CHECKLIST.md](LAUNCH-CHECKLIST.md) for acceptance, [OWNER-LAUNCH-ACTIONS.md](OWNER-LAUNCH-ACTIONS.md) for consolidated operator tasks and [PROGRESS.md](PROGRESS.md) to resume engineering work.
 
-## Latest verified production release: PR #134
+Current verified production release: [PR #138](https://github.com/ChrisTso77/Healthcrest-app/pull/138),
+`076a85369c1826f98b6b92ac5bad515cc9d6546e`. See the approved containment preparation
+release section below for six-job CI, deployment and canonical evidence. Local
+checkpoint 0cd449e and subsequent preparation work are not deployed.
+
+## Historical verified production release: PR #134
 
 | Evidence | Recorded result |
 | --- | --- |
@@ -260,3 +265,91 @@ assessment and concrete privacy/provider/disclosure/recovery evidence. Existing
 launch gates remain open; no compliance or full launch acceptance claim.
 Logs/raw reports: /workspace/work/healthcrest-advisory/. Hosted checks and production
 release are not performed for this local candidate.
+
+## Accelerated programme — 12 November 2026
+
+Verified clean start0cd449e47154c1151b78ca9a4f4b922b5341a451. Five independent
+read-only/scratch-owned workstreams ran concurrently; root alone integrated shared
+source/config/docs. Production remained076a853; live HEAD returned200 and that
+marker plus expected CSP/SAMEORIGIN. No production action or dependency re-audit.
+Canonical current requirement/status/owner matrix is LAUNCH-CHECKLIST.md; the older
+gate sections retain acceptance criteria and historical approvals, not competing
+current summaries. Source candidate is separate from deployed source.
+
+### Changes integrated
+- app/landing.css: caption uses existing --hc-muted (#506455) instead of #647450.
+  Normal12px text against actual gradient background was below4.5:1. Pixel-level
+  glyph/background comparison at320/1280 measured minimum4.423963754 before and
+  5.579543346 after. Zero final samples below4.5 among854/867 sampled glyph pixels.
+  Conservative check across every declared gradient stop also exceeds5.294:1.
+  Wording/assets/layout preserved. These measurements do not establish all contrast.
+- e2e/explorer-information.ts: home locator includes native visible Explorer wording
+  introduced in0cd449e, matching landing regression. Both initial navigation failures
+  were stale exact-name expectations after otherwise passing dialog/session checks.
+- .github/workflows/ci.yml: explicit workflow contents:read. Inspection found no
+  token-dependent API writes in six jobs; artifact/cache services use runtime
+  credentials. Parser comparison confirms only top-level permissions changed, with
+  all triggers/jobs/steps/job overrides identical. Hosted execution remains pending.
+- Runbook/release summary current pointers corrected to #138/076a853 and six jobs;
+  historical #134/#133 records preserved. Recovery reference021341d remains access-
+  reported, not an exercised promotion or settings-equivalence result.
+
+### Verification performed
+- npm run build PASS; npm run lint PASS; tsc --noEmit --incremental false PASS.
+- npm run test:unit:314 tests /31 files PASS on Node24.19.0.
+- node --test scripts/{sanity-backup,release-identity,structured-data-contract,performance-budget}.test.mjs:
+  initial concurrent run108PASS/1FAIL. The configuration-failure child process
+  returned null exit status during concurrent build/unit load; its14691ms test
+  duration exceeded configured10000ms child timeout. Exact original termination
+  cause was not captured; do not label conclusively infrastructure-only. Unchanged
+  targeted check passed in687ms. With heavy build/unit workers finished, one full
+  sequential recheck passed109/109 in3953ms. No timeout/assertion/gate changed;
+  original failure remains under boundary.log.
+- Functional programme:14 distinct existing Chromium cases, workers1, original
+ 30s limits and retries0. Initial12PASS/2FAIL; both final home locators in shared
+  helper were stale. After helper correction, only affected2 rerun:2PASS, zero
+  retries/failures/skips/flaky/global errors. This is split passing evidence, not
+  an uninterrupted14-case pass. Cases cover mobile settings/Guide,4 CMS failures/
+  empty responses and retry preserving manual parameters, learning search recovery,
+  both restore controls/Keep my edits at320/1350, invalid/blocked storage, weekly
+  explicit save/refresh, responsive dialogs/focus/session/home navigation.
+- Bounded focus sweep: first35 Tab presses per Home/Learn/Planner/Explorer at
+ 320x200 CSS pixels,140 actions with visible unobscured client-rect centres. Initial
+  multiline bounding-box false positives were refined to actual client rectangles.
+  Not full keyboard coverage, focus-ring paint acceptance or verified browser zoom.
+- Focused axe4.14 contrast-only runs at1280: Home116 passing text nodes/9 incomplete;
+  Explorer54 passing nodes/49 incomplete, no reported contrast violations. Computed
+  background composites for49 Explorer incompletes >=6.895:1; obscuration/scroll/
+  actual manual visibility remain separate. Actual caption raster then exposed the
+  confirmed defect above. No repeat of baseline16 full axe scans.
+- Existing0cd449e23 browser cases/final navigation and prior #138 eight Lighthouse
+  profiles reused with original source/scope; no new performance bottleneck found.
+  TBT is not INP; previous2D navigation results are not3D/device/field evidence.
+- Final local release smoke PASS:23 checks,13 public pages,22 valid typed assets,
+  zero failed/invalid assets and optional measurement requests. No supplied commit
+  identity: expected/observed/compiled null; no source-bound identity pass claimed.
+  Programme root inspected final320px caption raster; wording/layout preserved.
+
+### Security, SEO and operational limits
+Bounded static security review found no new confirmed exploit in inspected API,
+planner,privacy paths. Public site has no intended account/private planner service;
+provider IAM is separate. Supported scan resource/preflight unavailable; Semgrep,
+CodeQL,gitleaks,Trivy executables absent. Limited tracked-file signatures/filename
+screen is not comprehensive secrets/history/entropy scanning. Existing moderate
+dev advisory remains open without reinvestigation; no full security pass claimed.
+
+Metadata/canonical/robots/sitemap/Article/breadcrumb/visible-content contracts
+reviewed against existing code/evidence; no defect found. Official Google Article
+documentation fetch failed CONNECT403 once. External rich-result validation,
+Search Console/domain/submission/indexing, real field CWV/INP, final-head hosted
+Chromium/Firefox/WebKit and actual-device evidence remain NOT VERIFIED/BLOCKED as
+specified in the matrix. No speculative performance optimization or external
+submission performed.
+
+Private backup freshness/off-device copy, private restore destination, actual
+rollback/settings recovery and measured objectives, concrete retention/deletion/
+rights/provider facts, disclosures/credential evidence, monitoring cadence and
+manual accessibility/AT/device checks remain owner/platform dependencies. Full
+launch acceptance and concrete production deployment approval are not granted.
+All raw workstream logs/reports and before/after images retained under
+/workspace/work/healthcrest-programme/{a,b,c,d,e}/ and integration logs in its root.

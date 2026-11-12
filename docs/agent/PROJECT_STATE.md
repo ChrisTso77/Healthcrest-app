@@ -1,10 +1,10 @@
 # Current engineering state
 
-Updated 12 November 2026. Production remains approved #138 / 076a853. Local accessibility candidate is not deployed.
+Updated 12 November 2026. Production remains approved #138 / 076a853. Local accelerated-programme candidate is not deployed.
 
 ## Repository and current release
 - Root `/workspace/Healthcrest-app`; local records branch
-  `codex/healthcrest-advisory-accessibility` continues local checkpoint 73f55f0.
+  `codex/healthcrest-launch-programme` continues verified clean checkpoint0cd449e.
 - PR #138 squash merge `076a85369c1826f98b6b92ac5bad515cc9d6546e` has parent
   `021341d6be51bcd6d49b7f44ab676cede64bceb2` and reviewed tree
   `28548ab5033bda67e9aed42a6b7badc93b72081a`.
@@ -42,40 +42,47 @@ Updated 12 November 2026. Production remains approved #138 / 076a853. Local acce
   canonical-live checks pass, exact 021341d. Direct connector replaces manual ZIP
   roundtrips for available GitHub artifacts; shell storage-host block still exists.
 
-## Completion boundary
+## Prior #138 completion boundary
 - Approved pipeline complete. Evidence records saved locally and in closed PR #138.
   Do not push documentation-only follow-up and trigger another release.
 - Stop if final verification fails; preserve evidence and avoid weakening gates.
 - No actual rollback, CMS restore, paid service, provider setting or measurement
   activation performed. Preparation release does not declare full launch acceptance.
 
-## Current local checkpoint — advisory and accessibility
-- Dependency investigation complete: no supported compatible update removes
-  GHSA-g3hv-75wg-m249. Latest parser8.72.2 still requires minimatch10; fixed11
-  requires a major override with matching changes. Dependency files unchanged.
-- Current audit: seven moderate affected entries, one dev-only advisory, zero
-  high/critical; production audit zero. Not fixed or risk-accepted. Source and
-  focused runtime checks show current parser service disabled, glob validation
-  rejects triggering patterns, and actual caller uses unaffected optimization1.
-- Automatically continued to accessibility. Axe4.14 at320/1280 on eight routes
-  found a serious Explorer home-link visible-label/name mismatch at both widths.
-  Removed overriding aria-label; native visible text plus sr-only home destination
-  now names the link. Updated existing navigation regression to protect that name.
-- Final build/lint/types PASS. Before label-only edit: 314 unit tests,109 boundary
-  tests,23 system-Chromium integration cases and23 local smoke checks PASS.
-  Final Explorer-home integration case PASS; both affected axe scans now report
-  zero violations/no horizontal overflow. Other14 original scans had none.
-- Axe incomplete contrast results: Home9 nodes per width; Explorer30 at320 and49
-  at1280. These require manual review, not a conformance pass. Real AT/device checks
-  remain open. Firefox/WebKit launch attempts failed: binaries absent locally.
-- Supported scan/preflight still unavailable. No full application-security claim.
-- Next work depends on compatible upstream remediation, supported scan capability
-  and manual contrast/AT/device evidence. Retain concrete privacy/provider/recovery
-  owner gates; no repeated unchanged approval request. No push/merge/deploy in this
-  checkpoint; do not treat prior production approval as applying to this candidate.
-- Evidence: [dependency investigation](../dependency-upgrades.md) and
-  [local verification](../launch/RELEASE-EVIDENCE.md); scratch
-  `/workspace/work/healthcrest-advisory/`. Existing failed label revision retained.
+## Current local checkpoint — accelerated programme
+- Five parallel scratch-owned workstreams completed: accessibility,security,
+  functional QA,SEO/performance,production readiness. Root serialized shared edits.
+- Single canonical current matrix: [launch checklist](../launch/LAUNCH-CHECKLIST.md),
+  with requirement,severity,PASS/FAIL/BLOCKED/NOT VERIFIED,evidence,responsible.
+  Historical gates/decisions/evidence retained; unresolved gates not waived.
+- Fixed demonstrated Home caption contrast: existing --hc-muted token improves
+  actual glyph-background minimum4.424 to5.580:1 at320/1280. No layout/copy change.
+- Fixed stale home-link locator in shared Explorer test helper; native accessible
+  name introduced in0cd449e is unchanged. Initial functional run12PASS/2FAIL; after
+  helper correction targeted2PASS, original failures retained. All14 distinct scoped
+  cases have passing split evidence; not an uninterrupted14-case green run.
+- Added explicit CI workflow contents:read; all six job/trigger/step/override values
+  unchanged under parsed YAML comparison. Hosted current-head execution pending.
+- Corrected runbook/evidence latest-source and six-job pointers, retaining history.
+- Final build/lint/types PASS;314 unit tests PASS; initial boundary108PASS/1 null
+  child-status failure under concurrent load, unchanged targeted check PASS then
+  sequential full109PASS. Cause not conclusively captured; no timeout/gate change.
+- Final local23-check smoke PASS; no source identity supplied, no compiled identity
+  claim.140 bounded Tab focus checks at320x200 PASS; manual AT/zoom/paint/device
+  coverage remains incomplete. Contrast incompletes are not blanket PASS.
+- Prior0cd449e browser/axe evidence and #138 eight lab profiles reused with exact
+  scope. No new full browser/performance/security assessment claimed. No demonstrated
+  performance bottleneck found. TBT is not INP; no field/3D/device performance claim.
+- Supported security tools/resources absent; current Google docs fetch blocked403.
+  Dev advisory remains unresolved at prior verified scope, no repeated investigation.
+- Local candidate only: no push/merge/deployment/provider/CMS/telemetry change.
+  Current production and remote main rechecked076a853. Recovery reference021341d.
+- Remaining work depends on platform/manual/operator evidence in canonical matrix,
+  exact-head hosted checks/report review and concrete production approval. Do not
+  ask for unchanged facts again or trigger an automatic deployment to obtain proof.
+- Durable results: [release evidence](../launch/RELEASE-EVIDENCE.md), accelerated
+  programme section. Scratch `/workspace/work/healthcrest-programme/`, reports a–e,
+  raw tests, original failures and before/after contrast images retained.
 
 ## Remaining launch requirements
 - L01 supported security assessment blocked by unavailable preflight/resources.

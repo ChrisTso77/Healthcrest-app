@@ -84,7 +84,7 @@ export async function checkExplorerInformation(page: Page, testInfo: TestInfo, m
   }
   expect(await page.evaluate(() => ({ ...localStorage }))).toEqual(storage);
   expect(posts).toEqual([]);
-  await page.getByRole('link', { name: 'Healthcrest home', exact: true }).click();
+  await page.getByRole('link', { name: /^HABIT EXPLORER\s*EXPLORE EVERYDAY HABITS\s*— Healthcrest home$/ }).click();
   await expect(page).toHaveURL(new URL('/', originalURL).href);
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 }
