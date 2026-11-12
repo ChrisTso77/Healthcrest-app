@@ -5,7 +5,9 @@ and owner decisions remain in the existing linked registers.
 
 ## Repository and stage
 - Root: `/workspace/Healthcrest-app`; branch: `codex/healthcrest-release-readiness`.
-- Source HEAD: `6dd8d57e83d39225ef57f4f26be5a253e88fa890` (#136).
+- Source baseline before this work: `6dd8d57e83d39225ef57f4f26be5a253e88fa890` (#136).
+- Local implementation commit: `6ded2ef`; subsequent handoff-only commits do not
+  change application code. Use `git log -1` for the latest documentation HEAD.
 - Educational website in controlled launch preparation. No launch acceptance.
 - Next.js/React public pages, reviewed Sanity scenarios, 2D/3D Explorer and manual
   browser-local planner. See ../../AGENTS.md for invariants and commands.
