@@ -223,3 +223,40 @@ Owner approved one conditional pipeline for exact head `c283efc62f8274fbeb1ccfcf
 - Production deployment 7742651420 reports success at 16:10:02 UTC. Canonical home/privacy/planner/presets API/favicon return expected source marker, exact CSP, SAMEORIGIN, no-referrer and nosniff; icon remains PNG. Privacy HTML contains two disabled unchecked choices and inactive notice.
 - Canonical workflow https://github.com/ChrisTso77/Healthcrest-app/actions/runs/43255707119 PASS. Directly downloaded production report (1,282 bytes), SHA-256 `8238f1c2d6a5fdd1215bc44727e653592c0a8fbcb5881ce168053b9ada9ce433` matches metadata. All 24 canonical-live checks pass; expected/observed 076a853, 22 valid typed assets, zero failed/invalid assets and zero optional measurement requests. Automatic main CI https://github.com/ChrisTso77/Healthcrest-app/actions/runs/43255604123 PASS for exact 076a853; all six jobs successful, including browser and performance. Main and canonical identity/containment headers rechecked after completion, unchanged. Detailed main artifacts were not independently re-downloaded; reviewed PR reports cover the identical source tree. No rollback performed. Full launch/security/privacy/provider/device/private-recovery gates remain open.
 - Follow-up evidence: the previously unavailable #137 production artifact was downloaded directly through the connector and SHA-256 verified (`5e9c9ecf089ac47e3e0df33e900cfeba6463476ad42d44afc664fb66ff661fe2`). Its summary has 24 passing canonical-live checks, expected/observed 021341d. This supersedes the prior download limitation for that artifact only.
+
+## Local advisory/accessibility checkpoint — 12 November 2026
+
+Continues local73f55f0; production076a853 remains separate. No production action.
+Dependency investigation is documented in ../dependency-upgrades.md: no supported
+compatible fix, installed advisory remains open. Full audit seven moderate entries
+for one dev-only advisory; production-only audit zero; no high/critical.
+
+Verification before the accessibility edit: lint/build/types PASS,314 unit tests
+(31 files) PASS,109 backup/identity/structured-data/performance-boundary tests PASS,
+23 system-Chromium policy/hydration/planner cases PASS,23 local release checks PASS.
+Smoke found13 public pages,22 valid typed assets,zero failed/invalid assets or
+optional measurement requests. No supplied build identity: no compiled/source-bound
+release assertion claimed. No new full performance/hosted compatibility claim.
+
+Next blocker investigated automatically: axe-core4.14 WCAG2/2.1/2.2 A/AA tag checks
+on Home,Learn,Movement guide,Planner,About,Contact,Privacy and2D Explorer, at320 and
+1280 CSS pixels. Initial16 runs had one serious label-content-name-mismatch on the
+Explorer home link at both widths; all16 had no document horizontal overflow.
+Source fix in HealthEngineHUD.tsx derives the accessible name from visible title
+and subtitle plus sr-only home destination. Existing landing regression updated.
+No user-visible wording, route, data/storage, health guidance, settings or asset
+changed. Initial aria-label revision still failed axe; evidence preserved.
+
+Final candidate: build,lint,TypeScript noEmit/incremental false PASS. Focused
+Explorer-to-home browser case PASS (1 case); rerun affected axe scans both report
+zero violations/no horizontal overflow. Fourteen unaffected initial scans had no
+reported violations. System Chromium only; Firefox/WebKit launch attempts report
+missing executables. This is not actual Safari/iPhone/Android evidence.
+
+Unresolved axe checks: contrast on Home9 nodes per width; Explorer30 at320 and49
+at1280. Incomplete is not PASS or a confirmed contrast violation. Manual contrast,
+AT,device/touch/native downloads/printing remain pending, as does supported security
+assessment and concrete privacy/provider/disclosure/recovery evidence. Existing
+launch gates remain open; no compliance or full launch acceptance claim.
+Logs/raw reports: /workspace/work/healthcrest-advisory/. Hosted checks and production
+release are not performed for this local candidate.

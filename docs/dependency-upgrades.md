@@ -98,3 +98,45 @@ Next: evaluate an upstream compatible parser/tooling release, or separately revi
 and test a narrowly scoped override; retain this finding pending remediation.
 Do not close the aggregate dependency/security launch gate on this evidence alone.
 Raw reports: `/workspace/work/healthcrest-resume/` (full and production JSON).
+
+## Advisory investigation — 12 November 2026, checkpoint 73f55f0
+
+Outcome: **no compatible supported fix available; advisory remains open**.
+The official GitHub advisory API for GHSA-g3hv-75wg-m249 identifies minimatch
+>=7 <11.0.1, first patched 11.0.1. Registry metadata lists minimatch10 releases
+only through 10.2.6. Latest typescript-estree/typescript-eslint8.72.2 still requests
+minimatch^10.2.2; latest eslint-config-next16.4.6 requests typescript-eslint^8.56.0.
+Updating those packages cannot remove this finding. Do not adopt unrelated updates.
+Minimatch11 changes the matching engine and semantics; a cross-major override is
+not the preferred supported update. No dependency/lockfile/suppression changed.
+Registry engine/peer checks: parser Node^18.18||^20.9||>=21.1, TypeScript>=4.8.4
+<6.1; installed TS6.0.3 and CI22/local24 fit. This does not validate minimatch11.
+
+Independent read-only investigation agreed with the direct source trace:
+`@typescript-eslint/typescript-estree/dist/useProgramFromProjectService.js` uses
+minimatch(filePath, allowDefaultProject pattern, {dot:true}). The effective project
+ESLint configuration does not enable projectService; inputs come from lint config,
+not planner/API/browser submissions. Even when enabled, the parser validates and
+rejects allowDefaultProject globs containing **. The call does not select the
+optimizationLevel>=2 required by the advisory; minimatch defaults to1.
+
+Focused runtime checks passed: effective service off, two triggering pattern
+classes rejected by the actual parser validator, default matching does not enter
+firstPhasePreProcess, ordinary match/miss controls succeed, and explicit level2
+control enters the instrumented preprocessing. These verify existing constraints,
+not remediation of the installed vulnerable version or a new security control.
+Keep lint config changes trusted/reviewed; do not enable level2 matching on untrusted
+patterns or disable the parser's glob validation. Await a patched compatible
+minimatch10 release or parser release adopting a patched supported dependency.
+No launch risk acceptance or automatic exemption is granted.
+
+Fresh full audit: seven moderate affected entries for the same advisory, zero
+high/critical; production-only audit zero. Earlier eight-entry result remains
+historical: package graph/lock did not change, audit metadata changed. Current
+entries are minimatch and six typescript-eslint packages; eslint-config-next no
+longer appears in the fresh report. Raw current/final audit JSON and official
+advisory are under `/workspace/work/healthcrest-advisory/`.
+
+Skill storage-reference reads were unavailable; no supported scan/workbench artifact
+or full security assessment is claimed. Workspace scratch and these repository
+records follow the user's existing local-checkpoint instructions.

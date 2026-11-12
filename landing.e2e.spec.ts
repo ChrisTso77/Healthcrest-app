@@ -74,7 +74,9 @@ test.describe('Healthcrest introduction', () => {
     const dialog = page.getByRole('dialog', { name: 'Understand this view' });
     await expect(dialog.getByRole('heading', { name: 'Sleep: Support sleep and recovery', exact: true })).toBeVisible();
     await page.keyboard.press('Escape');
-    await page.getByRole('link', { name: 'Healthcrest home', exact: true }).click();
+    const home = page.getByRole('link', { name: /^HABIT EXPLORER\s*EXPLORE EVERYDAY HABITS\s*— Healthcrest home$/ });
+    await expect(home).toHaveAttribute('href', '/');
+    await home.click();
     await expect(page).toHaveURL(/\/$/);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Small habits.');
   });
