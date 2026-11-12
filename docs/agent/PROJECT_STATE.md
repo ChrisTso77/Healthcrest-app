@@ -51,8 +51,10 @@ and owner decisions remain in the existing linked registers.
 - HC-02: owner approved a separate website preview recovery rehearsal. Recovery
   source 6dd8d57 was pushed on codex/healthcrest-recovery-rehearsal; empty trigger
   e8e102c has exactly the same source tree. Vercel Preview deployment 7738540326
-  succeeded; HTTP/identity/journeys blocked by proxy 403 for
+  succeeded; automated HTTP/identity checks blocked by proxy 403 for
   healthcrest-8gvaxfdrz-tsotsoft.vercel.app. Allow this exact hostname to continue.
+  Owner reports homepage, Learn guide, Explorer settings/Guide and Planner
+  save/edit/restore-cancel passes on the preview; browser/version not captured.
   Canonical HEAD still reports 6dd8d57. Full recovery/time target NOT VERIFIED;
   private CMS restore/off-device recovery and production rollback remain pending.
 - Dependency audit: zero production vulnerabilities; full audit has eight moderate

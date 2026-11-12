@@ -124,7 +124,8 @@ was performed. This exercises reconstruction from source, not production rollbac
 | Source equality | Both trees are exactly `8ea9eb5087db808bf8f6885ee19de0d657a376a5`; no application differences |
 | Provider result | GitHub deployment `7738540326`, environment Preview; success recorded 12 November 2026 13:27:07 UTC |
 | Preview | https://healthcrest-8gvaxfdrz-tsotsoft.vercel.app |
-| Preview HTTP/identity/journeys | BLOCKED: environment proxy rejects CONNECT to the preview hostname with HTTP 403; no served identity or journey PASS claimed |
+| Preview automated access / identity | BLOCKED: environment proxy rejects CONNECT to the preview hostname with HTTP 403; served commit header NOT VERIFIED |
+| Owner browser check | Owner reports homepage loads and all requested Learn, Explorer and Planner steps pass; scoped record below |
 | Canonical observation | Read-only HEAD request returned HTTP 200 and `X-Healthcrest-Commit: 6dd8d57e83d39225ef57f4f26be5a253e88fa890` after the preview deployment |
 | Timing | End-to-end recovery time NOT VERIFIED; provider success alone does not establish the four-hour objective |
 
@@ -138,3 +139,20 @@ Local evidence is under `/workspace/work/healthcrest-recovery/`. An auxiliary lo
 archive build failed because Turbopack rejected a dependency symlink outside its
 source root; it provides no local rebuild PASS and was not substituted for the
 provider build. No archive/backup contents or credentials were published.
+
+### Owner browser journey results — 12 November 2026
+
+On the preview URL above, the owner reported that the homepage loads, then replied
+“all pass” to these requested checks:
+- Learn: open a guide.
+- Habit Explorer: change a setting, then open and close Guide.
+- Planner: enter synthetic text, save, edit, attempt restore, choose Keep my edits
+  and confirm the edit remains.
+
+These are owner-reported functional passes. Browser/OS/version, exact tested text,
+served commit header and measured recovery duration were not independently captured.
+Synthetic text was requested; no actual notes were supplied or recorded. This
+supports the preview source-recovery rehearsal; it does not establish production
+rollback, CMS restoration, off-device recovery, full accessibility or launch acceptance.
+The remaining step for independent preview validation is network access followed
+by commit-bound smoke. No additional production action was authorised by the results.
