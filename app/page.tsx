@@ -10,7 +10,7 @@ import { UrgentSupport } from '@/components/UrgentSupport';
 import './landing.css';
 
 export const metadata = pageMetadata(
-  "Healthcrest | Health through everyday habits",
+  "Healthcrest | OPTIMISING HEALTH",
   "Understand the connections between movement, food, sleep and stress. Explore evidence-informed education and practical tools for everyday health.",
   '/',
 );
@@ -31,7 +31,7 @@ export default function HealthcrestHomePage() {
       <main id="main-content" tabIndex={-1}>
         <section className="hc-hero hc-section" aria-labelledby="hero-title">
           <div className="hc-hero-copy">
-            <span className="hc-eyebrow">Health through everyday habits</span>
+            <span className="hc-eyebrow">OPTIMISING HEALTH</span>
             <h1 id="hero-title">Small habits.<br /><em>Connected health.</em></h1>
             <p className="hc-hero-description">Understand how movement, food, sleep and stress relate to your health—and find practical ways to care for yourself, every day.</p>
             <div className="hc-hero-actions">

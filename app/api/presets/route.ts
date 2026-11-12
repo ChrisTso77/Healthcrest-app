@@ -114,7 +114,10 @@ export async function GET(request: NextRequest) {
 
     // If query requests a specific scene (e.g. ?scene=5)
     if (scene) {
-      const sceneNum = parseInt(scene, 10);
+      const sceneNum = Number(scene);
+      if (!/^[1-9]\d*$/.test(scene) || !Number.isSafeInteger(sceneNum)) {
+        return NextResponse.json({ error: 'Scene must be a positive integer' }, { status: 400 });
+      }
       const scenes = await sanityClient.fetch<StoryboardScene[]>(
         STORYBOARD_SCENES_QUERY,
         {},
@@ -203,8 +206,10 @@ export async function GET(request: NextRequest) {
       count: presets.length,
       data: presets,
     });
-  } catch (error) {
-    console.error('Failed to fetch scenario presets from Sanity:', error);
+  } catch {
+    // Provider exceptions can contain request details or CMS content. Keep a
+    // stable operational signal without serializing the untrusted exception.
+    console.error('Failed to fetch scenario presets from Sanity');
     return NextResponse.json(
       { error: 'Internal Server Error fetching scenario presets' },
       { status: 500 }

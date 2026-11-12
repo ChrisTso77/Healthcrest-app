@@ -15,7 +15,7 @@ export default function Page() {
       <a className="hc-skip-link" href="#main-content">Skip to content</a>
       <SiteHeader />
       <main id="main-content" tabIndex={-1} className="hc-section hc-info-main">
-        <span className="hc-eyebrow">Health through everyday habits</span>
+        <span className="hc-eyebrow">OPTIMISING HEALTH</span>
         <h1>Browser storage</h1>
         <section aria-labelledby="draft-storage-title">
           <h2 id="draft-storage-title">Your habit drafts</h2>

@@ -14,7 +14,7 @@ test.describe('Healthcrest introduction', () => {
         if (new URL(request.url()).pathname === '/api/presets') presetRequests += 1;
       });
       await page.goto('/');
-      await expect(page).toHaveTitle('Healthcrest | Health through everyday habits');
+      await expect(page).toHaveTitle('Healthcrest | OPTIMISING HEALTH');
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Small habits\.\s*Connected health\./);
       await expect(page.getByRole('heading', { name: /Prevention starts with understanding/ })).toBeVisible();
       await expect(page.getByRole('navigation', { name: 'Main navigation' })).toBeVisible();

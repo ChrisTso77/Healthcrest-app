@@ -38,7 +38,7 @@ export function HealthEngineGuide({ state, presets, onClose, motionPaused, onTog
         <div className="flex shrink-0 items-start justify-between gap-3 border-b border-slate-800 bg-slate-950/60 p-4">
           <div>
             <h2 id="health-guide-title" className="text-base font-semibold">Understand this view</h2>
-            <p className="mt-1 text-xs text-emerald-300">Health through everyday habits</p>
+            <p className="mt-1 text-xs text-emerald-300">OPTIMISING HEALTH</p>
           </div>
           <button type="button" aria-label="Close health guide" onClick={onClose} className="rounded-lg p-2 text-slate-300 hover:bg-slate-800">
             <X className="size-5" />
