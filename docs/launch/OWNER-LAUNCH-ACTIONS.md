@@ -86,3 +86,14 @@ inactive and canonical workflow 43244366643 PASS. Post-merge CI final result is
 recorded in RELEASE-EVIDENCE.md. No actual rollback or CMS restore was performed.
 Full launch acceptance, concrete retention/rights/provider evidence, remaining
 recovery/device and supported security requirements remain separate and open.
+
+## Approved containment preparation release #138 — 12 November 2026
+
+Owner approved the combined conditional pipeline for exact c283efc. Required PR
+checks and direct report review passed; merged/deployed source 076a853 matches the
+reviewed tree. Canonical identity/headers and authenticated 24-check live smoke
+passed; optional app measurement remains inactive. All six automatic main CI jobs in 43255604123 PASS for exact 076a853.
+Recovery reference remains previous release 021341d. This grants no further release,
+full launch acceptance, provider setting, CMS restore or measurement activation.
+Remaining owner facts/recovery/device/security gates retain their prior status.
+See RELEASE-EVIDENCE.md for final verification and provenance.

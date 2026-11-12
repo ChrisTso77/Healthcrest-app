@@ -19,3 +19,14 @@ Owner update during this batch: D02 professional registered-office arrangement i
 | D09 | Chromium, Firefox and Linux WebKit automation exists; target WCAG 2.2 AA. Owner now reports NVDA 2026.3 focused Windows walkthrough results. | Complete remaining actual device/AT matrix; retain dated scope/version limits, task results, defects/retests and justified exceptions. | Owner desktop, manual zoom and focused Home/Explorer/planner screen-reader results recorded. On 12 November owner reports iPhone/Safari pending and remaining checks done; browser/OS versions and individual additional outcomes not supplied. Keep this as a broad owner report; earlier explicit manual-save UNTESTED result is preserved. Remaining scoped matrix evidence pending. Linux WebKit is not an actual iPhone/Safari check; neither lab scores nor this walkthrough establish WCAG conformance. |
 
 Each resolution records date, approver, scope, evidence and affected tasks. Public legal/clinical wording needs concrete review; supplied facts do not authorise invented claims. Keep sensitive provider evidence outside this public repository and record minimum non-sensitive outcomes/references here.
+
+## Approved containment preparation release #138 — 12 November 2026
+
+Owner approved the combined conditional pipeline for exact c283efc. Required PR
+checks and direct report review passed; merged/deployed source 076a853 matches the
+reviewed tree. Canonical identity/headers and authenticated 24-check live smoke
+passed; optional app measurement remains inactive. All six automatic main CI jobs in 43255604123 PASS for exact 076a853.
+Recovery reference remains previous release 021341d. This grants no further release,
+full launch acceptance, provider setting, CMS restore or measurement activation.
+Remaining owner facts/recovery/device/security gates retain their prior status.
+See RELEASE-EVIDENCE.md for final verification and provenance.

@@ -120,3 +120,14 @@ access. Merge/deployed source 021341d matches the reviewed tree. Canonical smoke
 and all six post-merge CI jobs PASS; live header rechecked. Measurement remains
 inactive in served privacy markup. No CMS writes, actual rollback or launch-gate
 waiver. This approval applies only to #137; full Gate D acceptance remains pending.
+
+## Approved containment preparation release #138 — 12 November 2026
+
+Owner approved the combined conditional pipeline for exact c283efc. Required PR
+checks and direct report review passed; merged/deployed source 076a853 matches the
+reviewed tree. Canonical identity/headers and authenticated 24-check live smoke
+passed; optional app measurement remains inactive. All six automatic main CI jobs in 43255604123 PASS for exact 076a853.
+Recovery reference remains previous release 021341d. This grants no further release,
+full launch acceptance, provider setting, CMS restore or measurement activation.
+Remaining owner facts/recovery/device/security gates retain their prior status.
+See RELEASE-EVIDENCE.md for final verification and provenance.
