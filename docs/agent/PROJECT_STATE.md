@@ -49,6 +49,17 @@ Updated 12 November 2026. Approved preparation release #138 is deployed and fina
 - No actual rollback, CMS restore, paid service, provider setting or measurement
   activation performed. Preparation release does not declare full launch acceptance.
 
+## Resume checkpoint — 12 November 2026
+- Clean saved handoff c53fa35 verified; remote main and live marker still 076a853,
+  expected CSP/SAMEORIGIN present. No production action performed on resume.
+- Current dependency check: production-only audit zero findings; full audit has
+  eight moderate package entries tracing to one dev-only minimatch advisory
+  GHSA-g3hv-75wg-m249 (locked 10.2.6 through typescript-eslint 8.72.1).
+  Zero high/critical. No complete npm automatic fix; not remediated.
+- Next engineering item: evaluate compatible upstream tooling remediation before
+  considering an override. Details in [dependency record](../dependency-upgrades.md).
+- Supported scan/preflight tools remain unavailable; no full security claim.
+
 ## Remaining launch requirements
 - L01 supported security assessment blocked by unavailable preflight/resources.
   This focused containment patch does not replace it or establish XSS prevention.

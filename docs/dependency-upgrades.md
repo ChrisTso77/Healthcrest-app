@@ -76,3 +76,25 @@ After approved #133 (`a0ad203925e0d489324d3f33b6c090df93829050`), review Rolldow
 The Rolldown changes affect transforms/module chunk ordering/resolution and native-worker handling, so install with scripts enabled and exercise the real Vitest/build paths. Every native binding version must match; do not treat this as an independent patch-only binary change. Axe4.14 satisfies JSX-a11y6.10.2's existing range. The plugin imports its autocomplete virtual rule; new axe browser-audit rules do not automatically become enabled ESLint rules or establish WCAG conformance. Compare the effective client/server lint rule maps and run lint/types/unit/build/browser checks.
 
 Keep full final-head hosted release, Chromium/WebGL, Firefox/WebKit, measurement-off and performance gates. A successful local native install does not validate macOS/Windows/other binding binaries. No peer overrides, rule suppression or release-budget changes are included. Merge approval is separate; prior approval stops at #133.
+
+## Resume checkpoint — 12 November 2026
+
+Source: deployed 076a853; local documentation handoff c53fa35. Read-only
+`npm audit --json` completed with exit 1: eight moderate affected package entries,
+zero high/critical. Entries trace to one advisory,
+[GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249),
+minimatch globparts-amplification denial of service (reported range >=7 <11.0.1).
+Locked/installed affected minimatch 10.2.6 is marked dev-only, under
+typescript-eslint/typescript-estree 8.72.1 via eslint-config-next 16.4.3.
+`npm ls minimatch @typescript-eslint/typescript-estree --all` confirms the chain.
+Eight entries are not eight independent vulnerabilities.
+
+`npm audit --omit=dev --json` exit 0: zero reported production vulnerabilities.
+This does not prove application security, build-tool safety or absence of unknown
+advisories. No public request-to-tooling attack path was established in this check.
+The full audit reports no complete automatic fix for the affected chain. No
+forced fix, major-version override, lockfile edit, push or deployment performed.
+Next: evaluate an upstream compatible parser/tooling release, or separately review
+and test a narrowly scoped override; retain this finding pending remediation.
+Do not close the aggregate dependency/security launch gate on this evidence alone.
+Raw reports: `/workspace/work/healthcrest-resume/` (full and production JSON).
