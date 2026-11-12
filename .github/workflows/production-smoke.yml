@@ -1,10 +1,10 @@
-name: Production release smoke check
+name: Healthcrest protected Preview verification
 
 on:
   workflow_dispatch:
     inputs:
       expected_commit:
-        description: Full merged main commit SHA expected on the live domain
+        description: Frozen PR139 target SHA; does not deploy
         required: true
         type: string
 
@@ -12,32 +12,85 @@ permissions:
   contents: read
 
 jobs:
-  smoke:
-    name: Check live Healthcrest release
+  preview:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 8
+    permissions:
+      contents: read
+      deployments: read
+      id-token: write
     env:
-      HEALTHCREST_RELEASE_ORIGIN: https://www.healthcrest.uk
-      HEALTHCREST_EXPECTED_COMMIT: ${{ inputs.expected_commit }}
-      HEALTHCREST_REQUIRE_MAIN: '1'
+      HEALTHCREST_RELEASE_ORIGIN: https://healthcrest-9ivz4lh3f-tsotsoft.vercel.app
+      HEALTHCREST_EXPECTED_COMMIT: 9d5dbca88426152c3dad56c41d2db05a68acf7b9
     steps:
-      - name: Checkout code
+      - name: Require approved manual trusted branch and frozen target
+        env:
+          REQUESTED_COMMIT: ${{ inputs.expected_commit }}
+        run: |
+          python3 - <<'PY'
+          import os
+          expected = {
+              'GITHUB_EVENT_NAME': 'workflow_dispatch',
+              'GITHUB_REPOSITORY': 'ChrisTso77/Healthcrest-app',
+              'GITHUB_REF': 'refs/heads/codex/healthcrest-preview-auth',
+              'GITHUB_WORKFLOW': 'Healthcrest protected Preview verification',
+              'REQUESTED_COMMIT': '9d5dbca88426152c3dad56c41d2db05a68acf7b9',
+          }
+          assert all(os.environ.get(k) == v for k, v in expected.items()), 'Unapproved verification context'
+          PY
+      - name: Checkout trusted verification harness
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
-      - name: Install dependencies
-        run: npm ci
+      - name: Install locked verification dependencies without lifecycle hooks
+        run: npm ci --ignore-scripts
+        env:
+          ACTIONS_ID_TOKEN_REQUEST_TOKEN: ''
+          ACTIONS_ID_TOKEN_REQUEST_URL: ''
+      - name: Check authentication boundaries only
+        run: node --test scripts/protected-preview-auth.test.mjs
+        env:
+          ACTIONS_ID_TOKEN_REQUEST_TOKEN: ''
+          ACTIONS_ID_TOKEN_REQUEST_URL: ''
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
-      - name: Verify live public pages and recovery
-        run: npm run test:release
-      - name: Upload release readiness report
-        uses: actions/upload-artifact@v7
-        if: always()
+        run: npx --no-install playwright install --with-deps chromium
+        env:
+          ACTIONS_ID_TOKEN_REQUEST_TOKEN: ''
+          ACTIONS_ID_TOKEN_REQUEST_URL: ''
+      - name: Confirm deployment provenance and acquire short-lived identity
+        id: oidc
+        uses: actions/github-script@v7
         with:
-          name: production-release-readiness
+          script: |
+            const sha = '9d5dbca88426152c3dad56c41d2db05a68acf7b9';
+            const origin = 'https://healthcrest-9ivz4lh3f-tsotsoft.vercel.app';
+            if (context.eventName !== 'workflow_dispatch' || process.env.GITHUB_REF !== 'refs/heads/codex/healthcrest-preview-auth' ||
+                context.repo.owner !== 'ChrisTso77' || context.repo.repo !== 'Healthcrest-app') throw new Error('Unapproved identity request');
+            const args = { ...context.repo, deployment_id: 7747066599 };
+            const deployment = (await github.rest.repos.getDeployment(args)).data;
+            const statuses = (await github.rest.repos.listDeploymentStatuses(args)).data;
+            if (deployment.sha !== sha || deployment.environment !== 'Preview' ||
+                statuses[0]?.state !== 'success' || statuses[0]?.environment_url !== origin) throw new Error('Preview provenance changed');
+            const token = await core.getIDToken('https://github.com/ChrisTso77');
+            core.setSecret(token);
+            core.setOutput('token', token);
+      - name: Verify authenticated frozen Preview identity and public journeys
+        run: node scripts/check-release.mjs
+        env:
+          HEALTHCREST_PREVIEW_OIDC_TOKEN: ${{ steps.oidc.outputs.token }}
+          ACTIONS_ID_TOKEN_REQUEST_TOKEN: ''
+          ACTIONS_ID_TOKEN_REQUEST_URL: ''
+      - name: Preserve sanitized protected Preview report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: protected-preview-release-readiness
           path: artifacts/release-readiness/
+          if-no-files-found: error
           retention-days: 14

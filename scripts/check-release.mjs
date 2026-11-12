@@ -1,3 +1,4 @@
+import { protectedPreviewAuth, protectedPreviewGet, protectedPreviewRoute, protectedPreviewIdentity, anonymousPreviewProtection, redactPreviewCredential } from './protected-preview-auth.mjs';
 import { spawn } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -6,6 +7,9 @@ import { assertStructuredData } from './structured-data-contract.mjs';
 import { CANONICAL_ORIGIN, RELEASE_HEADER, assertReleaseCommit, releaseProvenance, releaseTarget } from './release-identity.mjs';
 
 const canonicalOrigin = CANONICAL_ORIGIN;
+const previewCredential = process.env.HEALTHCREST_PREVIEW_OIDC_TOKEN;
+for (const key of ['HEALTHCREST_PREVIEW_OIDC_TOKEN', 'GH_TOKEN', 'GITHUB_TOKEN', 'ACTIONS_ID_TOKEN_REQUEST_TOKEN', 'ACTIONS_ID_TOKEN_REQUEST_URL']) delete process.env[key];
+const redact = value => redactPreviewCredential(value, previewCredential);
 let origin = null;
 let expectedCommit = null;
 const output = 'artifacts/release-readiness';
@@ -71,11 +75,11 @@ async function check(name, run) {
   try {
     const detail = await run();
     report.checks.push({ name, passed: true, ...detail });
-    console.log('RELEASE_CHECK ' + JSON.stringify({ name, passed: true, ...detail }));
+    console.log(redact('RELEASE_CHECK ' + JSON.stringify({ name, passed: true, ...detail })));
     return detail;
   } catch (error) {
-    report.checks.push({ name, passed: false, message: error.message });
-    throw error;
+    report.checks.push({ name, passed: false, message: redact(error.message) });
+    throw new Error(redact(error.message));
   }
 }
 
@@ -87,6 +91,7 @@ try {
   report.origin = origin;
   report.release.mode = target.mode;
   report.release.expectedCommit = expectedCommit;
+  const auth = protectedPreviewAuth({ ...process.env, HEALTHCREST_PREVIEW_OIDC_TOKEN: previewCredential }, origin, expectedCommit);
   if (!target.suppliedOrigin) {
     // Deliberately use a different runtime value in commit-bound local CI. The
     // response must retain the build manifest's commit, proving a runtime env
@@ -114,7 +119,8 @@ try {
   context.setDefaultTimeout(10_000);
   context.setDefaultNavigationTimeout(20_000);
   // Audit a fresh visitor without contacting unrelated third-party services.
-  await context.route('**/*', route => new URL(route.request().url()).origin === origin ? route.continue() : route.abort());
+  await context.route('**/*', route => protectedPreviewRoute(route, auth));
+  const get = (url, options) => protectedPreviewGet(context.request, url, options, auth);
   const page = await context.newPage();
   page.on('request', request => {
     if (/\/_vercel\/(?:insights|speed-insights)\//.test(request.url())) telemetryRequests.push(new URL(request.url()).pathname);
@@ -130,6 +136,9 @@ try {
     checkedAssetTypes.add(url.pathname);
     if (!expectedTypes.includes(type) || response.headers()['x-content-type-options'] !== 'nosniff') invalidAssetTypes.add(url.pathname);
   });
+  await check('anonymous Preview protection remains enabled', async () => anonymousPreviewProtection(
+    await context.request.get(origin + '/', { maxRedirects: 0 })
+  ));
   if (expectedCommit) await check('build-bound release identity', async () => {
     if (!target.suppliedOrigin) {
       const manifest = JSON.parse(await readFile('.next/routes-manifest.json', 'utf8'));
@@ -137,9 +146,9 @@ try {
       ensure(markers.length === 1, 'Expected one compiled release identity header.');
       report.release.compiledCommit = assertReleaseCommit(markers[0].value, expectedCommit);
     }
-    const response = await context.request.get(origin + '/', { maxRedirects: 0 });
+    const response = await get(origin + '/', { maxRedirects: 0 });
     report.release.identityHttpStatus = response.status();
-    ensure(response.status() === 200, `Release identity request returned HTTP ${response.status()}; expected HTTP 200 without redirects.`);
+    protectedPreviewIdentity(response, expectedCommit);
     const observed = response.headers()[RELEASE_HEADER.toLowerCase()];
     // Retain only a well-formed public SHA, never arbitrary server header text.
     report.release.observedCommit = /^[a-f0-9]{40}$/.test(observed || '') ? observed : null;
@@ -150,7 +159,7 @@ try {
   });
   const paths = [];
   await check('canonical sitemap and robots', async () => {
-    const sitemap = await context.request.get(origin + '/sitemap.xml', { maxRedirects: 0 });
+    const sitemap = await get(origin + '/sitemap.xml', { maxRedirects: 0 });
     ensure(sitemap.status() === 200, 'Sitemap did not return HTTP 200.');
     const xml = await sitemap.text();
     const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
@@ -162,7 +171,7 @@ try {
       paths.push(url.pathname);
     }
     ensure(requiredPaths.every(path => paths.includes(path)), 'Sitemap is missing a required public page or practical guide.');
-    const robots = await context.request.get(origin + '/robots.txt', { maxRedirects: 0 });
+    const robots = await get(origin + '/robots.txt', { maxRedirects: 0 });
     ensure(robots.status() === 200 && (await robots.text()).includes('Sitemap: ' + canonicalOrigin + '/sitemap.xml'), 'Robots discovery is missing its canonical sitemap.');
     return { pages: paths.length };
   });
@@ -249,19 +258,19 @@ try {
   await check('internal link destinations', async () => {
     for (const path of internalPaths) {
       if (paths.includes(path)) continue;
-      const response = await context.request.get(new URL(path, origin).href, { maxRedirects: 0 });
+      const response = await get(new URL(path, origin).href, { maxRedirects: 0 });
       ensure(response.status() === 200, 'Broken or redirected internal link: ' + path);
     }
     return { destinations: internalPaths.size };
   });
   await check('social image and hummingbird media', async () => {
-    const image = await context.request.get(origin + '/opengraph-image', { maxRedirects: 0 });
+    const image = await get(origin + '/opengraph-image', { maxRedirects: 0 });
     const imageBytes = await image.body();
     ensure(image.status() === 200 && imageBytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) && imageBytes.subarray(-12).equals(Buffer.from([0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130])), 'Social image is not a complete PNG response.');
-    const still = await context.request.get(origin + '/media/healthcrest-hummingbird-still.jpg', { maxRedirects: 0 });
+    const still = await get(origin + '/media/healthcrest-hummingbird-still.jpg', { maxRedirects: 0 });
     const stillBytes = await still.body();
     ensure(still.status() === 200 && stillBytes[0] === 255 && stillBytes[1] === 216, 'Hummingbird still did not load as JPEG.');
-    const film = await context.request.get(origin + '/media/healthcrest-hummingbird-opaque.webm', { maxRedirects: 0, headers: { Range: 'bytes=0-31' } });
+    const film = await get(origin + '/media/healthcrest-hummingbird-opaque.webm', { maxRedirects: 0, headers: { Range: 'bytes=0-31' } });
     const filmBytes = await film.body();
     ensure([200, 206].includes(film.status()) && filmBytes.subarray(0, 4).equals(Buffer.from([26, 69, 223, 163])), 'Hummingbird film did not load as WebM.');
     return { assets: 3 };
@@ -280,9 +289,9 @@ try {
     };
     ensure(iconPaths.size > 0, 'No public icon metadata was checked.');
     for (const path of iconPaths) {
-      await assertIcon(await context.request.get(origin + path, { maxRedirects: 0 }));
+      await assertIcon(await get(origin + path, { maxRedirects: 0 }));
     }
-    await assertIcon(await context.request.get(origin + '/favicon.ico', { maxRedirects: 0 }));
+    await assertIcon(await get(origin + '/favicon.ico', { maxRedirects: 0 }));
     // Playwright's Request._isFavicon matches URLs ending in /favicon.ico,
     // and FrameManager.requestStarted aborts those when routing is enabled.
     // The exact URL is checked above; a fixed public query lets the decoder
@@ -314,14 +323,14 @@ try {
   });
   report.passed = true;
 } catch (error) {
-  report.error = error.message;
-  throw error;
+  report.error = redact(error.message);
+  throw new Error(redact(error.message));
 } finally {
   try {
-    await writeFile(output + '/summary.json', JSON.stringify({
+    await writeFile(output + '/summary.json', redact(JSON.stringify({
       ...report,
       scope: 'Read-only smoke checks of a fresh browser against the built application or explicitly supplied origin. Expected/observed commit headers identify the claimed build; they do not independently attest provider settings or source integrity. A GitHub PR source checkout can be a synthetic merge commit. Fragment targets use default public page DOMs; query-dependent states and external sources need separate tests. No claim about provider dashboards, legal review or every clinical statement.',
-    }, null, 2));
+    }, null, 2)));
   } finally {
     try { await browser?.close(); }
     finally { server?.kill('SIGTERM'); }
