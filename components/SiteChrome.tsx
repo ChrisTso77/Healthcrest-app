@@ -5,7 +5,7 @@ import logo from '@/public/media/healthcrest-logo.png';
 
 export function SiteBrand({ footer = false }: { footer?: boolean }) {
   return (
-    <Link href="/" aria-label="Healthcrest home" className="hc-brand">
+    <Link href="/" prefetch={false} aria-label="Healthcrest home" className="hc-brand">
       <Image src={logo} alt="Healthcrest" loading={footer ? 'lazy' : 'eager'} sizes={footer ? '(max-width: 700px) 280px, 220px' : '(max-width: 700px) 200px, 220px'} />
     </Link>
   );
