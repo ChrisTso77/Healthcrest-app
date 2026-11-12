@@ -1,10 +1,10 @@
-name: Production release smoke check
+name: Preview redirect diagnostic (read-only)
 
 on:
   workflow_dispatch:
     inputs:
       expected_commit:
-        description: Full merged main commit SHA expected on the live domain
+        description: Frozen PR139 candidate SHA; diagnostics never deploy
         required: true
         type: string
 
@@ -12,32 +12,51 @@ permissions:
   contents: read
 
 jobs:
-  smoke:
-    name: Check live Healthcrest release
+  diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
-    env:
-      HEALTHCREST_RELEASE_ORIGIN: https://www.healthcrest.uk
-      HEALTHCREST_EXPECTED_COMMIT: ${{ inputs.expected_commit }}
-      HEALTHCREST_REQUIRE_MAIN: '1'
+    timeout-minutes: 2
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-      - name: Setup Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: 22
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
-      - name: Verify live public pages and recovery
-        run: npm run test:release
-      - name: Upload release readiness report
-        uses: actions/upload-artifact@v7
+      - name: Read Preview response without redirects or authentication
+        env:
+          EXPECTED_COMMIT: ${{ inputs.expected_commit }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, re, urllib.request, urllib.error, urllib.parse
+          expected = '9d5dbca88426152c3dad56c41d2db05a68acf7b9'
+          assert os.environ['EXPECTED_COMMIT'] == expected, 'Unexpected diagnostic target'
+          origin = 'https://healthcrest-9ivz4lh3f-tsotsoft.vercel.app'
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  return None
+          result = {'origin': origin, 'expectedCommit': expected, 'method': 'GET'}
+          try:
+              opener = urllib.request.build_opener(NoRedirect())
+              try:
+                  response = opener.open(urllib.request.Request(origin, method='GET'), timeout=20)
+              except urllib.error.HTTPError as error:
+                  response = error
+              with response:
+                  result['status'] = response.status
+                  destination = urllib.parse.urlsplit(urllib.parse.urljoin(origin, response.headers.get('location', '')))
+                  result['hasLocation'] = bool(response.headers.get('location'))
+                  result['redirectOrigin'] = destination.scheme + '://' + (destination.hostname or '') if result['hasLocation'] else None
+                  # Authentication nonces, return URLs, cookies and bodies are never retained.
+                  result['redirectPath'] = destination.path if destination.hostname in ['vercel.com', 'www.vercel.com', 'www.healthcrest.uk'] else None
+                  result['vercelAuthRedirect'] = destination.hostname in ['vercel.com', 'www.vercel.com'] and destination.path in ['/sso-api', '/login']
+                  marker = response.headers.get('x-healthcrest-commit', '')
+                  result['observedCommit'] = marker if re.fullmatch('[a-f0-9]{40}', marker) else None
+                  code = response.headers.get('x-vercel-error', '')
+                  result['vercelErrorCode'] = code if re.fullmatch('[A-Z0-9_-]{1,80}', code) else None
+          except Exception as error:
+              result['transportErrorType'] = type(error).__name__
+          pathlib.Path('diagnostics').mkdir(exist_ok=True)
+          pathlib.Path('diagnostics/preview-redirect.json').write_text(json.dumps(result, indent=2))
+          print(json.dumps(result))
+          PY
+      - name: Preserve sanitized diagnostic
         if: always()
+        uses: actions/upload-artifact@v7
         with:
-          name: production-release-readiness
-          path: artifacts/release-readiness/
+          name: preview-redirect-diagnostic
+          path: diagnostics/
           retention-days: 14
