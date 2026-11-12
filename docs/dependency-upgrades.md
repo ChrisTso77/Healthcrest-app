@@ -76,3 +76,67 @@ After approved #133 (`a0ad203925e0d489324d3f33b6c090df93829050`), review Rolldow
 The Rolldown changes affect transforms/module chunk ordering/resolution and native-worker handling, so install with scripts enabled and exercise the real Vitest/build paths. Every native binding version must match; do not treat this as an independent patch-only binary change. Axe4.14 satisfies JSX-a11y6.10.2's existing range. The plugin imports its autocomplete virtual rule; new axe browser-audit rules do not automatically become enabled ESLint rules or establish WCAG conformance. Compare the effective client/server lint rule maps and run lint/types/unit/build/browser checks.
 
 Keep full final-head hosted release, Chromium/WebGL, Firefox/WebKit, measurement-off and performance gates. A successful local native install does not validate macOS/Windows/other binding binaries. No peer overrides, rule suppression or release-budget changes are included. Merge approval is separate; prior approval stops at #133.
+
+## Resume checkpoint — 12 November 2026
+
+Source: deployed 076a853; local documentation handoff c53fa35. Read-only
+`npm audit --json` completed with exit 1: eight moderate affected package entries,
+zero high/critical. Entries trace to one advisory,
+[GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249),
+minimatch globparts-amplification denial of service (reported range >=7 <11.0.1).
+Locked/installed affected minimatch 10.2.6 is marked dev-only, under
+typescript-eslint/typescript-estree 8.72.1 via eslint-config-next 16.4.3.
+`npm ls minimatch @typescript-eslint/typescript-estree --all` confirms the chain.
+Eight entries are not eight independent vulnerabilities.
+
+`npm audit --omit=dev --json` exit 0: zero reported production vulnerabilities.
+This does not prove application security, build-tool safety or absence of unknown
+advisories. No public request-to-tooling attack path was established in this check.
+The full audit reports no complete automatic fix for the affected chain. No
+forced fix, major-version override, lockfile edit, push or deployment performed.
+Next: evaluate an upstream compatible parser/tooling release, or separately review
+and test a narrowly scoped override; retain this finding pending remediation.
+Do not close the aggregate dependency/security launch gate on this evidence alone.
+Raw reports: `/workspace/work/healthcrest-resume/` (full and production JSON).
+
+## Advisory investigation — 12 November 2026, checkpoint 73f55f0
+
+Outcome: **no compatible supported fix available; advisory remains open**.
+The official GitHub advisory API for GHSA-g3hv-75wg-m249 identifies minimatch
+>=7 <11.0.1, first patched 11.0.1. Registry metadata lists minimatch10 releases
+only through 10.2.6. Latest typescript-estree/typescript-eslint8.72.2 still requests
+minimatch^10.2.2; latest eslint-config-next16.4.6 requests typescript-eslint^8.56.0.
+Updating those packages cannot remove this finding. Do not adopt unrelated updates.
+Minimatch11 changes the matching engine and semantics; a cross-major override is
+not the preferred supported update. No dependency/lockfile/suppression changed.
+Registry engine/peer checks: parser Node^18.18||^20.9||>=21.1, TypeScript>=4.8.4
+<6.1; installed TS6.0.3 and CI22/local24 fit. This does not validate minimatch11.
+
+Independent read-only investigation agreed with the direct source trace:
+`@typescript-eslint/typescript-estree/dist/useProgramFromProjectService.js` uses
+minimatch(filePath, allowDefaultProject pattern, {dot:true}). The effective project
+ESLint configuration does not enable projectService; inputs come from lint config,
+not planner/API/browser submissions. Even when enabled, the parser validates and
+rejects allowDefaultProject globs containing **. The call does not select the
+optimizationLevel>=2 required by the advisory; minimatch defaults to1.
+
+Focused runtime checks passed: effective service off, two triggering pattern
+classes rejected by the actual parser validator, default matching does not enter
+firstPhasePreProcess, ordinary match/miss controls succeed, and explicit level2
+control enters the instrumented preprocessing. These verify existing constraints,
+not remediation of the installed vulnerable version or a new security control.
+Keep lint config changes trusted/reviewed; do not enable level2 matching on untrusted
+patterns or disable the parser's glob validation. Await a patched compatible
+minimatch10 release or parser release adopting a patched supported dependency.
+No launch risk acceptance or automatic exemption is granted.
+
+Fresh full audit: seven moderate affected entries for the same advisory, zero
+high/critical; production-only audit zero. Earlier eight-entry result remains
+historical: package graph/lock did not change, audit metadata changed. Current
+entries are minimatch and six typescript-eslint packages; eslint-config-next no
+longer appears in the fresh report. Raw current/final audit JSON and official
+advisory are under `/workspace/work/healthcrest-advisory/`.
+
+Skill storage-reference reads were unavailable; no supported scan/workbench artifact
+or full security assessment is claimed. Workspace scratch and these repository
+records follow the user's existing local-checkpoint instructions.

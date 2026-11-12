@@ -2,11 +2,63 @@
 
 Unchecked means pending, including checks unavailable in the current environment. This register is not a statement of legal, clinical, security or WCAG compliance. Record evidence/approver/date, not just a tick. Baseline evidence is in AUDIT.md and [RELEASE-EVIDENCE.md](RELEASE-EVIDENCE.md); implementation results go in PROGRESS.md. The owner has approved parallel launch-readiness work and combined release review. Optional visual refinements do not take priority over these gates.
 
+## Canonical launch-readiness matrix — 12 November 2026
+
+This is the single current status matrix. Gate sections below retain acceptance
+criteria and historical evidence; owner decisions stay in DECISION-REGISTER.md,
+and actual executions stay in RELEASE-EVIDENCE.md. Scope: local candidate from
+43365db; production remains076a853. PASS applies only to the stated scope, not full
+launch acceptance. Severity expresses release impact/priority, not a discovered
+vulnerability rating. FAIL means a known unmet requirement; BLOCKED identifies an
+absent capability; NOT VERIFIED means required evidence is incomplete. Unknown
+security coverage must not be interpreted as absence of vulnerabilities.
+Execution classes: AUTO (local action/evidence), HOSTED (authorised preview/CI),
+OWNER (operator facts/decisions), EXTERNAL (assessment/capability), BLOCKED (no safe
+current path). Completed rows retain the class used. Phase6 corrected35 physical
+rows to34 by combining duplicate production identity/deployment evidence; no
+independent requirement was removed or waived.
+
+| Requirement | Severity | Current status | Execution class | Evidence reference | Responsible |
+| --- | --- | --- | --- | --- | --- |
+| Build/lint/types and unit/boundary foundation (A) | High | PASS | AUTO | [Release evidence](RELEASE-EVIDENCE.md), local0cd449e: new final build/lint/types,314 unit,109 sequential boundary PASS; initial boundary subprocess failure retained | Engineering |
+| Automated Explorer/learning/planner positive, error and persistence journeys (A) | High | PASS | AUTO | Programme14 distinct cases:12 initial successes +2 targeted passes after stale helper fix; prior23 cases/navigation reused; see release evidence for failures/limits | QA lead |
+| Actual-device Safari/iOS/Android touch/native files/print (A) | High | NOT VERIFIED | OWNER | Scoped owner reports and manual matrix below; remaining exact device/OS/browser evidence absent | Device QA / owner |
+| Explorer visible-label/name regression (B) | High | PASS | AUTO | Local0cd449e final navigation and affected axe scans; correction is local, not deployed | Accessibility lead |
+| Automated WCAG tags/reflow baseline (B) | High | PASS | AUTO | 16 scoped axe runs at320/1280 with affected Explorer retests; no remaining reported violations, no overflow; incomplete checks excluded | Accessibility lead |
+| Home caption normal-text contrast (B) | Medium | PASS | AUTO | Actual background under caption glyphs:4.424 before /5.580:1 after at320/1280, zero final samples below4.5; existing palette token only | Accessibility lead |
+| Manual contrast and forced-colour verification (B) | High | NOT VERIFIED | OWNER | Computed/raster checks narrowed incompletes;49 Explorer composites >=6.895:1 do not prove forced-colour/scroll/paint/AT acceptance; manual matrix below remains open | Accessibility lead / manual reviewer |
+| Bounded keyboard/focus short-viewport coverage (B) | High | PASS | AUTO | First35 Tab actions on Home/Learn/Planner/Explorer at320x200:140 visible unobscured client-rect centres; not full route/dialog/paint/AT coverage | Accessibility lead |
+| Real screen-reader/status/error and verified400% zoom (B) | High | NOT VERIFIED | OWNER | Partial owner NVDA/Explorer zoom results below, not full route/state/support coverage | Manual AT reviewer / owner |
+| Supported Standard application security assessment (L01/B) | High | BLOCKED | EXTERNAL | Required scan reference/preflight tools unavailable; bounded review is not substitute | Platform operator / security lead |
+| Public API/input/failure controls (B) | High | PASS | AUTO | Programme bounded static review: fixed query, strict scene parser, normalized fallback, generic logs; not full SAST/dynamic assessment | Security lead |
+| Planner import/storage isolation controls (B) | High | PASS | AUTO | Programme static review plus baseline boundary/browser tests: bounded versioned parsing, explicit saves, guards and stale-read cancellation | Security lead / QA |
+| Comprehensive secrets/history and provider IAM review (B/D) | High | NOT VERIFIED | EXTERNAL | Limited tracked-file screen only; no complete history/entropy/binary scan or provider-access attestation | Security lead / operator |
+| Production dependencies, advisory-database result (B) | High | PASS | AUTO | Reused current production-only audit at0cd449e: zero reported vulnerabilities, not absence-of-vulnerability claim | Security lead |
+| Development dependency advisory remediation (B) | Moderate | FAIL | BLOCKED | [Dependency investigation](../dependency-upgrades.md): GHSA-g3hv-75wg-m249, seven affected entries; no compatible supported fix, current caller constraints verified; no acceptance/waiver | Engineering / upstream maintainer |
+| Production containment headers and release identity (B/D) | High | PASS | AUTO | Production076a853/CSP/SAMEORIGIN; #138 deployment7742651420, canonical43255707119, six-job main43255604123; combined duplicate identity/deployment evidence | Release engineer |
+| CI explicit least privilege configuration (B/D) | Medium | PASS | AUTO | Candidate workflow contents:read; parsed YAML equals baseline after removing only permissions; six jobs/triggers/steps/overrides unchanged; hosted execution remains separately NOT VERIFIED | Release engineer |
+| App measurement stays inactive; separate consent boundary (B) | High | PASS | AUTO | 076a853 inactive served markup and source review; production flag/provider switches unchanged | Engineering / operator |
+| Concrete privacy, retention, deletion, rights and processor facts (D03/B) | High | NOT VERIFIED | OWNER | Business Basics and dashboardON owner-reported; “industry standard” is not retention criteria; [decision register](DECISION-REGISTER.md) | Owner / privacy reviewer |
+| Hosting eligibility/public company disclosure/credential evidence (D01/D02/D04) | High | NOT VERIFIED | OWNER | Owner confirms eligibility/credential checks; supporting facts and approved disclosure wording incomplete; no private address collected | Owner |
+| Editorial cadence at reviewed source (B/C) | High | PASS | AUTO | [Content packet](CONTENT-APPROVAL-PACKET.md): G1–G4/S1–S3 next19Nov; S4–S8/C1 next13Nov; no automatic renewal or new wording approval | Editorial owner |
+| Metadata/canonicals/robots/sitemap/internal links/schema consistency (C) | Medium | PASS | AUTO | Reused23 local smoke/35 structured-data boundary tests; programme source review found no defect | SEO lead |
+| Current Google guidance/external rich-result validation (C) | Medium | NOT VERIFIED | EXTERNAL | Official Article/Breadcrumb/CWV guidance now reviewed using available web connector; actual external rich-result test report still absent | Environment operator / SEO owner |
+| Search Console ownership/submission/index coverage (D06/C) | Medium | NOT VERIFIED | OWNER | No owner account evidence/submission result; no external discovery action performed | SEO owner |
+| Eight navigation lab performance budgets (C) | Medium | PASS | HOSTED | Reused #138 profiles,performance99–100, all other categories100; exact prior-source scope, not candidate run | Performance lead |
+| Field CWV/INP,3D/GPU and device performance (C) | Medium | NOT VERIFIED | EXTERNAL | No field percentiles/device evidence;2D navigation TBT is not interaction INP | Performance lead / owner |
+| Final candidate exact-head hosted CI/reports/preview identity (D08/D) | High | NOT VERIFIED | HOSTED | New local candidate not hosted; six required jobs/artifact review remain required before release | Release engineer |
+| Production environment separation/settings equivalence/access (D03/D08) | High | NOT VERIFIED | OWNER | Earlier owner absent-flag/no-queued-settings statement is scoped to prior release; provider/IAM review incomplete | Production operator |
+| Source-reconstruction preview rehearsal only (D07/L09) | Medium | PASS | AUTO | [Runbook](OPERATIONS-RUNBOOK.md): source/tree equality and scoped owner preview journeys; not measured recovery or production promotion | Engineering / owner |
+| Current private backup freshness/off-device copy/retention (D07/L09) | High | NOT VERIFIED | OWNER | Earlier2Nov export/task evidence does not establish current freshness/off-device protection | Backup operator |
+| Private CMS restore rehearsal (D07/L09) | High | BLOCKED | BLOCKED | No available private test destination; no production overwrite/public dataset/paid workaround authorised | Owner / provider |
+| Actual rollback/settings recovery and measured RTO/RPO (D07/L09) | High | NOT VERIFIED | OWNER | 021341d recovery reference/access reported; actual promotion/settings equivalence/objectives not exercised | Production operator |
+| Monitoring cadence, named responder and provider-log retention (D03/D07) | High | NOT VERIFIED | OWNER | Runbook preparation only; actual settings/alert delivery/ownership evidence incomplete | Production operator |
+| Acceptance of GatesA–C and concrete deployment approval (D08/D) | Critical | NOT VERIFIED | OWNER | Preparation authorised; current candidate has no production deployment approval; no launch acceptance inferred | Owner / release manager |
 ## Gate A — Functional foundation
 - [x] Immutable source inventory and exact-main CI baseline recorded (34ca713b; run 40840624311).
 - [x] Existing automation covers homepage/navigation, practical learning journeys, Explorer scenarios/2D fallback/keyboard settings, planner save/restore/backup/calendar/failure and no-JavaScript/404 recovery.
 - [x] Legacy draft parsing, explicit save/import boundaries and storage-blocked cases remain covered.
-- [x] Latest approved release #134 has five passing PR jobs, matching reviewed/merged trees, successful production deployment and 24 passing commit-bound canonical live checks; see RELEASE-EVIDENCE.md. This is release evidence, not launch acceptance.
+- [x] Historical approved release #134 has five passing PR jobs, matching reviewed/merged trees, successful production deployment and 24 passing commit-bound canonical live checks; see RELEASE-EVIDENCE.md. This is release evidence, not launch acceptance.
 - [x] PR #137 head aa7495a passes all six defined CI jobs; provider reports Vercel Preview success and scoped owner journeys pass. Four authenticated reports reviewed (RELEASE-EVIDENCE.md, 12 November). Preview served identity and manual save remain separately unverified; this does not accept Gate A.
 - [ ] Representative real-device/touch/back-forward/error journeys recorded; confirm no critical functional defects across the agreed support matrix.
 - [ ] Final Gate A reviewer/date/evidence recorded.
@@ -120,3 +172,14 @@ access. Merge/deployed source 021341d matches the reviewed tree. Canonical smoke
 and all six post-merge CI jobs PASS; live header rechecked. Measurement remains
 inactive in served privacy markup. No CMS writes, actual rollback or launch-gate
 waiver. This approval applies only to #137; full Gate D acceptance remains pending.
+
+## Approved containment preparation release #138 — 12 November 2026
+
+Owner approved the combined conditional pipeline for exact c283efc. Required PR
+checks and direct report review passed; merged/deployed source 076a853 matches the
+reviewed tree. Canonical identity/headers and authenticated 24-check live smoke
+passed; optional app measurement remains inactive. All six automatic main CI jobs in 43255604123 PASS for exact 076a853.
+Recovery reference remains previous release 021341d. This grants no further release,
+full launch acceptance, provider setting, CMS restore or measurement activation.
+Remaining owner facts/recovery/device/security gates retain their prior status.
+See RELEASE-EVIDENCE.md for final verification and provenance.

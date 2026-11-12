@@ -1,14 +1,14 @@
 # Healthcrest privacy notice — operational review draft
 
-Updated 28 October 2026. This administrative draft is not the public notice. The site now publishes /privacy with the implemented optional-measurement choices and known processing information. The remaining operational details below still require review; publishing a page is not a claim of full compliance.
+Operational facts updated 12 November 2026; reference-review dates below are unchanged. This administrative draft is not the public notice. The site now publishes /privacy with the implemented optional-measurement choices and known processing information. The remaining operational details below still require review; publishing a page is not a claim of full compliance.
 
 ## Confirmed information
 
 - Operator: Healthcrest Ltd, supplied by the owner.
 - Public privacy/contact route: chris@healthcrest.uk.
-- Email provider: GoDaddy, supplied by the owner. The exact email product, downstream processors and region still need checking.
+- Email provider: GoDaddy Business Basics, owner-reported12November. Downstream processors, configured region and actual retention/deletion still need checking.
 - Website hosting/deployment: Vercel; content management: Sanity.
-- Vercel plan: Hobby, confirmed by the owner. The owner previously saw Enable buttons; the current dashboard enablement state has not been independently verified.
+- Vercel plan: Hobby, confirmed by the owner. Owner reports Analytics/Speed Insights dashboards ON12November; no independent dashboard inspection. Production app flag was confirmed absent for #137/#138; served app measurement remains inactive. Dashboard ON does not authorise activation.
 - No account, newsletter signup, payment flow or user-health-data upload endpoint is implemented.
 - The planner keeps current edits in page memory. Only an explicit Save writes the four drafts, reflection notes and their current seven-day plans (dates, chosen action, daily check-ins and weekly review) to localStorage. Restore and Remove are explicit; text download, all-pillar JSON backup and print/PDF create separate user-managed copies. A chosen backup is validated locally, previewed and applied only after explicit confirmation. Import replaces page memory; only Save changes browser storage. Backup files are not uploaded or encrypted by Healthcrest.
 - Start here puts topic/preference choices in the URL. They can appear in browser history and hosting request logs. It asks for no symptoms or diagnoses and does not upload a habit draft.
@@ -35,7 +35,7 @@ Vercel and Sanity can process technical requests needed to deliver and protect t
 
 1. Follow docs/measurement-rollout.md: review deployed provider payloads and settings, then deliberately enable the production-only switch. Source/CI tests cannot inspect dashboard configuration or proprietary collector processing.
 2. Confirm whether this Healthcrest Ltd site qualifies for Hobby's personal, non-commercial restriction. Change plan only with the owner's authorization if needed.
-3. Confirm the exact GoDaddy email product/sub-processors, configured retention and deletion practices.
+3. For the already-reported GoDaddy Business Basics product, confirm sub-processors/regions and configured retention/deletion practices; do not request the product name again.
 4. Record actual hosting/CMS log retention, recipient categories, international transfers and applicable safeguards. Provider links are not a substitute for this operational record.
 5. Document lawful bases for enquiry handling and security logs; do not invent a legitimate-interests assessment or consent history. Optional measurement uses the explicit permissions implemented on /privacy.
 6. Set an actual enquiry-retention period or criteria and a process for access, correction, deletion, restriction, objection and complaints. The public page supplies the contact and ICO route.

@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main, master ]
 
+permissions:
+  contents: read
+
 jobs:
   lint-and-typecheck:
     name: Lint & Type Check
@@ -43,6 +46,9 @@ jobs:
 
       - name: Verify release identity boundaries
         run: node scripts/release-identity.test.mjs
+
+      - name: Verify preview selection boundaries
+        run: node --test scripts/check-preview-release.test.mjs
 
       - name: Verify private backup failure boundaries with synthetic data
         run: node --test scripts/sanity-backup.test.mjs
@@ -158,6 +164,9 @@ jobs:
     needs: [lint-and-typecheck, validate-cms-seed]
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
+      deployments: read
     env:
       HEALTHCREST_TELEMETRY_ENABLED: 'true'
       VERCEL_ENV: preview
@@ -188,6 +197,21 @@ jobs:
         with:
           name: measurement-off-report
           path: playwright-report/
+          retention-days: 14
+
+      - name: Verify exact pull-request Vercel preview
+        if: github.event_name == 'pull_request'
+        run: node scripts/check-preview-release.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEALTHCREST_PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+
+      - name: Upload hosted preview release report
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: preview-release-readiness
+          path: artifacts/release-readiness/
           retention-days: 14
 
   browser-compatibility:

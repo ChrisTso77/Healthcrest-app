@@ -86,3 +86,16 @@ www.healthcrest.uk reports that SHA and inactive measurement markup. Canonical
 workflow 43244366643 PASS. See RELEASE-EVIDENCE.md for the automatic post-merge CI
 result, evidence provenance and remaining limits. No CMS write, configuration
 change, actual rollback or full launch acceptance occurred.
+
+## Approved containment preparation release #138 — 12 November 2026
+
+Approved conditional pipeline completed CI/report gates: six hosted jobs, 325
+Chromium cases, 34 compatibility cases, preview measurement-off case, 24 release
+checks and eight raw performance profiles pass without gate changes or reruns.
+Merged 076a853 matches reviewed tree. Production deployment 7742651420 succeeded;
+canonical identity and containment headers verified on five endpoints, optional
+measurement remains inactive. Live smoke 43255707119 PASS; authenticated report confirms 24 live checks and zero
+optional measurement requests. All six automatic main CI jobs in 43255604123 PASS for exact 076a853.
+Main/live source and headers rechecked after completion, unchanged.
+Full launch acceptance and outstanding owner/security/private-recovery gates remain
+open. See RELEASE-EVIDENCE.md for provenance and final results.

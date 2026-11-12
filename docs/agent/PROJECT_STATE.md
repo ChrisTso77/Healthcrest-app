@@ -1,52 +1,81 @@
 # Current engineering state
 
-Updated 12 November 2026. Current local work is separate from deployed production.
+Updated 12 November 2026. Production remains approved #138 / 076a853. Local accelerated-programme candidate is not deployed.
 
-## Repository and released baseline
-- Root: `/workspace/Healthcrest-app`; branch: `codex/healthcrest-browser-policy`.
-- Branch starts at deployed main `021341d6be51bcd6d49b7f44ab676cede64bceb2` (#137).
-- Previous local handoff branch `codex/healthcrest-release-readiness` is preserved;
-  its six documentation-only updates were brought forward into this candidate.
-- Educational Next.js/React/Sanity site, 2D/3D Explorer and manual browser planner.
-- #137 had explicit owner merge/deployment approval. Its merged/reviewed source
-  tree matches; canonical workflow 43244366643 and all six main CI jobs in
-  43244145077 PASS. Optional app measurement remains inactive in served markup.
-- Full launch acceptance remains open; #137 approval does not authorise this patch.
+## Repository and current release
+- Root `/workspace/Healthcrest-app`; local records branch
+  `codex/healthcrest-launch-programme` continues verified clean checkpoint43365db.
+- PR #138 squash merge `076a85369c1826f98b6b92ac5bad515cc9d6546e` has parent
+  `021341d6be51bcd6d49b7f44ab676cede64bceb2` and reviewed tree
+  `28548ab5033bda67e9aed42a6b7badc93b72081a`.
+- Owner approved one combined conditional publish/PR/CI/report/merge/deploy/live
+  verification pipeline for exact candidate c283efc. All pre-merge gates passed;
+  no repeated permission needed within that scope. No settings/CMS/provider change.
+- Vercel Production 7742651420 successful 16:10:02 UTC; canonical source and policy
+  confirmed on five public endpoints. Recovery reference remains previous 021341d.
 
-## Current objective and risk
-- Implement a narrow containment policy after observed absence of live CSP/framing
-  headers. HIGH response-policy boundary; no production change performed.
-- Invariant: foreign framing and foreign form/base targets blocked, embedded objects
-  blocked; self framing, planner editing and ordinary scripts/styles/forms work.
-- Changes: next.config.ts adds CSP base-uri self, object-src none, frame-ancestors
-  self, form-action self and legacy X-Frame-Options SAMEORIGIN.
-- Six new browser-policy cases join the existing Chromium CI suite. No dependencies,
-  lockfile, data schema, processor, CMS content or production settings changed.
-- Intentional behavior change: third-party sites cannot embed Healthcrest pages.
-  Same-origin framing stays supported. Broad script/style/nonce CSP remains separate.
+## Implemented scope and verification
+- Narrow CSP base-uri self, object-src none, frame-ancestors self, form-action self;
+  X-Frame-Options SAMEORIGIN. Foreign embedding intentionally blocked; self works.
+- No script/style/resource CSP claim; no dependency/schema/app flow changes.
+- Six policy browser cases cover headers/API/icon, cross-origin framing rejection,
+  working same-origin planner editing, base/form rejection and embedded objects.
+- Local build/lint/types, six policy cases, 54 affected regression cases and 23
+  local smoke checks PASS using system Chromium. Initial fixture failures retained;
+  real second loopback origin avoids Local Network Access confounding frame test.
+- All six hosted jobs in 43253496816 PASS. Direct artifacts digest/size verified.
+  325 Chromium + 34 Firefox/WebKit + one preview-off case PASS; zero retries,
+  flaky/failures/skips/global errors. All 24 release checks pass, exact synthetic
+  checkout 42660e7 tree matches reviewed candidate and actual merged release.
+- Eight raw performance profiles reassessed against unchanged limits PASS; maximum
+  LCP 918.1276ms, CLS 0.000714731, TBT 134.5ms. Reviewed eight Lighthouse finals and
+  twelve Playwright image portions without visible regression in viewed areas.
+- Five canonical endpoints return exact new CSP/framing/identity plus existing
+  headers; favicon remains PNG. Privacy choices disabled/unchecked, inactive notice.
+- Canonical workflow 43255707119 PASS; digest-verified report has 24 passing live
+  checks, exact 076a853 identity, 22 valid typed assets and zero failed assets or
+  optional measurement requests. All six automatic main CI jobs
+  in 43255604123 PASS for exact merged 076a853. Main and live source/policy rechecked
+  after completion, unchanged. Main report contents were not independently
+  re-downloaded; detailed PR reports cover the identical source tree.
+- Prior #137 canonical artifact now independently downloaded/digest verified: 24
+  canonical-live checks pass, exact 021341d. Direct connector replaces manual ZIP
+  roundtrips for available GitHub artifacts; shell storage-host block still exists.
 
-## Local verification
-- Build PASS, lint PASS, TypeScript --noEmit --incremental false PASS.
-- Six enforcement/header/positive-frame cases PASS using system Chromium.
-- 54 affected cases PASS: guided start, print plan/guide, calendar, next-week,
-  consent/withdrawal/privacy and planner hydration. Production-enabled local test
-  profile used; actual production flag/settings were not changed.
-- Initial fixture failures retained: a route-fulfilled attacker page hit Local
-  Network Access first. A real second loopback server isolates CSP without
-  disabling browser security; same-origin test also targets the visible heading.
-- Local release smoke PASS: 23 checks, 13 pages, 22 valid typed assets and no
-  failed/invalid assets or optional measurement requests. No local commit identity
-  was supplied; no compiled-identity assertion claimed for this smoke.
-- Pinned-browser/full CI not run for this new candidate yet; no remote preview
-  or production claim for this branch.
+## Prior #138 completion boundary
+- Approved pipeline complete. Evidence records saved locally and in closed PR #138.
+  Do not push documentation-only follow-up and trigger another release.
+- Stop if final verification fails; preserve evidence and avoid weakening gates.
+- No actual rollback, CMS restore, paid service, provider setting or measurement
+  activation performed. Preparation release does not declare full launch acceptance.
 
-## Approval and completion boundary
-- Current user authorised autonomous local engineering and asked for the next
-  actionable step. Push/PR and production require their explicit scope approval.
-- Candidate must pass required hosted checks and report review before merge.
-- No push, merge or deployment for this new branch. Keep deployed 021341d stable.
-- Reuse existing passing evidence for unaffected logic; do not repeat full local
-  suites without a relevant change/failure. Do not raise performance/test gates.
+## Phase 6 — release candidate finalisation
+- Verified clean43365db start. Phase6 authorises non-production hosted verification,
+  not production deployment. Freeze this branch, publish draftPR for six hostedjobs
+  and existing Vercel Preview; never merge/deployproduction in this phase.
+- Canonical matrix now physically34 requirements with execution classes; corrected
+  prior35-row miscount by merging duplicate production deployment/identity scope.
+- Existing four parallel reviews reused valid prior work. No repeat of minimatch
+  investigation/absent-tool checks. Moderate advisory remains open; monitor only
+  compatible-release,reachability or severity changes.
+- Updated administrative privacy draft from owner facts already recorded. One owner
+  package in OWNER-LAUNCH-ACTIONS.md covers only missing operational/security/manual
+  device/recovery/discovery evidence; no new request for answered facts.
+- Available supported web connector read official Google Article/Breadcrumb/CWV
+  guidance. External actual validation/index/field data still NOT VERIFIED.
+- Added exact-head hosted preview smoke discovery/selection helper and20 tests;
+  local tests,lint,types PASS; parsedCI sixjobs and scopedread-onlymetadata confirmed.
+  Parent manually reviewed source/token/URL/source-selection/failure boundaries.
+- CI verifies candidatePR merge checkout; Preview must serve actualPR headSHA.
+  New PR-only step binds both explicitly, preserving original localidentity checks,
+  previewdefault-off and all browser/performance gates. No protection bypass.
+- Next: exact frozen candidate full hosted lint/types/unit/boundary/build/browser/
+  compatibility/smoke/performance and artifactreview. Hosted result not yet claimed.
+  Afterwards keep record-only updates local to avoid redeploying immutablecandidate.
+- Production/main remain076a853; recoveryreference021341d. No provider/settings/CMS/
+  measurement/production action authorised. Mandatory external gates remain open.
+- Evidence: RELEASE-EVIDENCE Phase6 section, OWNER-LAUNCH-ACTIONS Phase6 package,
+  scratch /workspace/work/healthcrest-phase6/ and unchanged priorprogramme reports.
 
 ## Remaining launch requirements
 - L01 supported security assessment blocked by unavailable preflight/resources.
@@ -62,17 +91,11 @@ Updated 12 November 2026. Current local work is separate from deployed productio
 - iPhone/Safari pending; remaining devices broadly reported done without versions
   or individual additional outcomes. Candidate manual save explicitly untested.
 - G1–G4/S1–S3 renewed on 12 November, next due 19 November; S4–S8/C1 due 13 November.
-- Reviewed prior candidate: 319 Chromium + 34 compatibility, zero retries/failures/
-  skips; 24 release checks and eight raw performance profiles PASS. Mobile 2D TBT
-  was 194/200 ms. These are prior-source results, not this patch's hosted results.
 
 ## Evidence and next work
-- Current scratch: `/workspace/work/healthcrest-final-batch/browser-policy-*`.
+- Scratch evidence `/workspace/work/healthcrest-browser-policy-release/`.
 - [Decisions](DECISIONS.md), [lessons](LESSONS.md),
   [release provenance](../launch/RELEASE-EVIDENCE.md),
   [launch gates](../launch/LAUNCH-CHECKLIST.md),
   [owner facts](../launch/OWNER-LAUNCH-ACTIONS.md),
   [operations](../launch/OPERATIONS-RUNBOOK.md).
-- Local implementation, targeted verification and diff review complete. Freeze the
-  commit, then seek one combined remote verification/preparation-release approval;
-  act on production only after required hosted checks/report review pass.
