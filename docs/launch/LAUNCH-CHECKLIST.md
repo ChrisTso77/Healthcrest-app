@@ -1,5 +1,12 @@
 # Controlled-launch checklist
 
+**Recovered historical copy:** this checkout predates local checkpoints469cd1a/dbecd67.
+Reported current totals are17PASS/1FAIL/2BLOCKED/14NOT VERIFIED=34; recover the
+current documentation checkpoint before reconciling rows. No status changed here.
+See [Gemini source validation](GEMINI-ASSESSMENT-VALIDATION.md): the HIGH telemetry
+claim is false; provider/professional review remains open.
+
+
 Unchecked means pending, including checks unavailable in the current environment. This register is not a statement of legal, clinical, security or WCAG compliance. Record evidence/approver/date, not just a tick. Baseline evidence is in AUDIT.md and [RELEASE-EVIDENCE.md](RELEASE-EVIDENCE.md); implementation results go in PROGRESS.md. The owner has approved parallel launch-readiness work and combined release review. Optional visual refinements do not take priority over these gates.
 
 ## Canonical launch-readiness matrix — 12 November 2026
