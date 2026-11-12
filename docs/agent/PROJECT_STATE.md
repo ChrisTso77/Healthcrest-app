@@ -40,15 +40,21 @@ and owner decisions remain in the existing linked registers.
   Correct-profile telemetry: 15 PASS; isolated Explorer cases: 3 PASS under the
   original timeouts. Original failures preserved; no full-suite PASS claimed.
   Exact preview profile (operator flag true, VERCEL_ENV preview): 1 PASS.
-- No push, merge, deployment or external write performed. Local candidate commit
-  authorised by the new directive; its identifier is available from `git log -1`.
+- Candidate branch was not pushed or deployed. Owner-approved rehearsal branch
+  pushes created a separate Vercel preview; no merge, production promotion or CMS
+  write. Latest local documentation commit is available from `git log -1`.
 
 ## Blockers and next actionable work
 - HC-01: owner completed G1–G4/S1–S3 review on 12 November, explicitly retaining
   approval without corrections; unchanged content hashes verified. Next due
   19 November, per packet follow-up. S4–S8/C1 remain due 13 November.
-- HC-02: private restore rehearsal/off-device recovery remain unverified; prepare
-  a concrete scoped target before requesting any operational approval.
+- HC-02: owner approved a separate website preview recovery rehearsal. Recovery
+  source 6dd8d57 was pushed on codex/healthcrest-recovery-rehearsal; empty trigger
+  e8e102c has exactly the same source tree. Vercel Preview deployment 7738540326
+  succeeded; HTTP/identity/journeys blocked by proxy 403 for
+  healthcrest-8gvaxfdrz-tsotsoft.vercel.app. Allow this exact hostname to continue.
+  Canonical HEAD still reports 6dd8d57. Full recovery/time target NOT VERIFIED;
+  private CMS restore/off-device recovery and production rollback remain pending.
 - Dependency audit: zero production vulnerabilities; full audit has eight moderate
   dev-tool entries from minimatch (see DECISIONS.md). No compatible fix identified.
 - Browser download blocked: cdn.playwright.dev returns policy 403. System Chromium
