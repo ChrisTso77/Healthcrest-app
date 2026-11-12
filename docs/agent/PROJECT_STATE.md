@@ -4,7 +4,7 @@ Updated 12 November 2026. Production remains approved #138 / 076a853. Local acce
 
 ## Repository and current release
 - Root `/workspace/Healthcrest-app`; local records branch
-  `codex/healthcrest-launch-programme` continues verified clean checkpoint0cd449e.
+  `codex/healthcrest-launch-programme` continues verified clean checkpoint43365db.
 - PR #138 squash merge `076a85369c1826f98b6b92ac5bad515cc9d6546e` has parent
   `021341d6be51bcd6d49b7f44ab676cede64bceb2` and reviewed tree
   `28548ab5033bda67e9aed42a6b7badc93b72081a`.
@@ -49,40 +49,33 @@ Updated 12 November 2026. Production remains approved #138 / 076a853. Local acce
 - No actual rollback, CMS restore, paid service, provider setting or measurement
   activation performed. Preparation release does not declare full launch acceptance.
 
-## Current local checkpoint — accelerated programme
-- Five parallel scratch-owned workstreams completed: accessibility,security,
-  functional QA,SEO/performance,production readiness. Root serialized shared edits.
-- Single canonical current matrix: [launch checklist](../launch/LAUNCH-CHECKLIST.md),
-  with requirement,severity,PASS/FAIL/BLOCKED/NOT VERIFIED,evidence,responsible.
-  Historical gates/decisions/evidence retained; unresolved gates not waived.
-- Fixed demonstrated Home caption contrast: existing --hc-muted token improves
-  actual glyph-background minimum4.424 to5.580:1 at320/1280. No layout/copy change.
-- Fixed stale home-link locator in shared Explorer test helper; native accessible
-  name introduced in0cd449e is unchanged. Initial functional run12PASS/2FAIL; after
-  helper correction targeted2PASS, original failures retained. All14 distinct scoped
-  cases have passing split evidence; not an uninterrupted14-case green run.
-- Added explicit CI workflow contents:read; all six job/trigger/step/override values
-  unchanged under parsed YAML comparison. Hosted current-head execution pending.
-- Corrected runbook/evidence latest-source and six-job pointers, retaining history.
-- Final build/lint/types PASS;314 unit tests PASS; initial boundary108PASS/1 null
-  child-status failure under concurrent load, unchanged targeted check PASS then
-  sequential full109PASS. Cause not conclusively captured; no timeout/gate change.
-- Final local23-check smoke PASS; no source identity supplied, no compiled identity
-  claim.140 bounded Tab focus checks at320x200 PASS; manual AT/zoom/paint/device
-  coverage remains incomplete. Contrast incompletes are not blanket PASS.
-- Prior0cd449e browser/axe evidence and #138 eight lab profiles reused with exact
-  scope. No new full browser/performance/security assessment claimed. No demonstrated
-  performance bottleneck found. TBT is not INP; no field/3D/device performance claim.
-- Supported security tools/resources absent; current Google docs fetch blocked403.
-  Dev advisory remains unresolved at prior verified scope, no repeated investigation.
-- Local candidate only: no push/merge/deployment/provider/CMS/telemetry change.
-  Current production and remote main rechecked076a853. Recovery reference021341d.
-- Remaining work depends on platform/manual/operator evidence in canonical matrix,
-  exact-head hosted checks/report review and concrete production approval. Do not
-  ask for unchanged facts again or trigger an automatic deployment to obtain proof.
-- Durable results: [release evidence](../launch/RELEASE-EVIDENCE.md), accelerated
-  programme section. Scratch `/workspace/work/healthcrest-programme/`, reports a–e,
-  raw tests, original failures and before/after contrast images retained.
+## Phase 6 — release candidate finalisation
+- Verified clean43365db start. Phase6 authorises non-production hosted verification,
+  not production deployment. Freeze this branch, publish draftPR for six hostedjobs
+  and existing Vercel Preview; never merge/deployproduction in this phase.
+- Canonical matrix now physically34 requirements with execution classes; corrected
+  prior35-row miscount by merging duplicate production deployment/identity scope.
+- Existing four parallel reviews reused valid prior work. No repeat of minimatch
+  investigation/absent-tool checks. Moderate advisory remains open; monitor only
+  compatible-release,reachability or severity changes.
+- Updated administrative privacy draft from owner facts already recorded. One owner
+  package in OWNER-LAUNCH-ACTIONS.md covers only missing operational/security/manual
+  device/recovery/discovery evidence; no new request for answered facts.
+- Available supported web connector read official Google Article/Breadcrumb/CWV
+  guidance. External actual validation/index/field data still NOT VERIFIED.
+- Added exact-head hosted preview smoke discovery/selection helper and20 tests;
+  local tests,lint,types PASS; parsedCI sixjobs and scopedread-onlymetadata confirmed.
+  Parent manually reviewed source/token/URL/source-selection/failure boundaries.
+- CI verifies candidatePR merge checkout; Preview must serve actualPR headSHA.
+  New PR-only step binds both explicitly, preserving original localidentity checks,
+  previewdefault-off and all browser/performance gates. No protection bypass.
+- Next: exact frozen candidate full hosted lint/types/unit/boundary/build/browser/
+  compatibility/smoke/performance and artifactreview. Hosted result not yet claimed.
+  Afterwards keep record-only updates local to avoid redeploying immutablecandidate.
+- Production/main remain076a853; recoveryreference021341d. No provider/settings/CMS/
+  measurement/production action authorised. Mandatory external gates remain open.
+- Evidence: RELEASE-EVIDENCE Phase6 section, OWNER-LAUNCH-ACTIONS Phase6 package,
+  scratch /workspace/work/healthcrest-phase6/ and unchanged priorprogramme reports.
 
 ## Remaining launch requirements
 - L01 supported security assessment blocked by unavailable preflight/resources.

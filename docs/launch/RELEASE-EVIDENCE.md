@@ -353,3 +353,40 @@ manual accessibility/AT/device checks remain owner/platform dependencies. Full
 launch acceptance and concrete production deployment approval are not granted.
 All raw workstream logs/reports and before/after images retained under
 /workspace/work/healthcrest-programme/{a,b,c,d,e}/ and integration logs in its root.
+
+## Phase 6 candidate preparation — 12 November 2026
+
+Clean start43365db verified; production/main remain076a853. Four parallel focused
+reviews reused valid prior evidence and found no new application defect. Root
+classified all requirements, merged duplicated production identity/deployment
+requirements (35 physical rows had previously been miscounted as34), and validated
+exactly34 rows using cell-aware parsing. No independent gate was removed.
+
+Administrative privacy draft now reflects already-reported Business Basics and
+dashboardON facts while retaining unknown operational details. Newly available
+supported web connector reviewed current official Google Article/Breadcrumb/CWV
+guidance; source shape meets applicable guidance, with no invented dates/images.
+External Rich Results/URLInspection/field evidence is still missing, so the combined
+guidance/external-validation row is NOT VERIFIED rather than BLOCKED or PASS.
+
+Added scripts/check-preview-release.mjs and20 focused tests. The read-only PR-only
+CI step discovers exact-head Preview deployment/status through fixed api.github.com
+GET endpoints with scoped deployments:read; rejects Production, wrong source,
+non-Vercel/credential/path/query origins and failed/invalid status; bounded180s
+wait and request deadlines. GitHub tokens are stripped before existing public
+release-smoke child runs with explicit preview origin/head identity. No deployment,
+provider mutation, protection bypass or production traffic change is performed by
+this verifier. Reports use a separate preview-release-readiness artifact.
+
+Local20 selection/context/status/failure/token-isolation boundary tests PASS.
+Parsed workflow validates six jobs and PR-only verification with contents:read plus
+read-only deployments access only on preview job. Local lint/types results and
+full exact-candidate hosted outcomes are recorded below after execution. Earlier
+43365db314unit/109boundary/23smoke/contrast results remain source-scoped prior
+evidence. Final CI merge checkout and Vercel candidate head must be distinguished
+and reviewed by tree/actual served identity; green local output is not hosted proof.
+
+One consolidated owner evidence procedure is in OWNER-LAUNCH-ACTIONS.md, Phase6
+section. It preserves answered facts and prior scoped manual passes; missing
+privacy/security/AT/device/recovery/external-search gates remain open. No production
+approval, optional measurement activation, provider change or CMS write granted.

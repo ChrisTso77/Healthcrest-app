@@ -97,3 +97,61 @@ Recovery reference remains previous release 021341d. This grants no further rele
 full launch acceptance, provider setting, CMS restore or measurement activation.
 Remaining owner facts/recovery/device/security gates retain their prior status.
 See RELEASE-EVIDENCE.md for final verification and provenance.
+
+## Phase 6 — single owner decision/evidence package
+
+Use the frozen Phase6 PR head/preview URL recorded in RELEASE-EVIDENCE.md. Existing
+answers remain accepted at their scope: Business Basics, dashboardON, Hobby use
+confirmation, credential-check confirmation, operator Chris and accepted recovery
+targets. Supply only missing evidence or changed facts; no passwords/tokens, private
+addresses, enquiry records, real planner text or backup contents in chat.
+
+1. **Privacy/disclosures and monitoring:** Provide actual enquiry/log retention
+   periods or criteria, deletion/rights handling and responder/cadence, plus known
+   GoDaddy/Vercel/Sanity processing regions/sub-processors/transfers/safeguards or
+   dated authoritative references. Industry standard alone cannot finalize notice.
+   Supply approved public company wording and available public credential/provider
+   references through an appropriate channel; do not send a private home address.
+   Report only changed operator-switch/settings facts since the accepted inactive
+   production state. DashboardON does not approve measurement activation.
+2. **Independent security capability:** Arrange a supported exact-source assessment
+   covering threat model, API/CMS/import/storage/logging/supply-chain/deployment,
+   secrets/history and operator IAM. Return report scope/date/source, findings and
+   retest/acceptance records. Do not self-certify a security PASS. The moderate dev
+   advisory stays open until compatible upstream remediation or explicit reviewed
+   release-risk decision; no automatic waiver is requested.
+3. **One manual acceptance session:** Record candidate URL/SHA,date,device/OS/browser
+   and AT versions with per-task PASS/FAIL/NOT TESTED and issue/retest. Reuse reliable
+   earlier scoped passes; cover remaining Learn/guide/privacy headings/landmarks and
+   status/errors; Planner synthetic save/edit/restore/Keep my edits and invalid-file
+   announcements; actual400% zoom/focus/forced-colour contrast; iPhone Safari/VoiceOver
+   portrait/landscape and native import/export/calendar/print. Supply missing scoped
+   Android/other-device records rather than a blanket repeat. Use a fresh browser
+   profile and synthetic plan/export only; never overwrite an existing saved plan.
+   Failure means lost edits, unreachable/unreadable controls, missing announcements
+   or a focus trap. Automated axe/WebKit is not actual AT/iPhone acceptance.
+4. **Private recovery evidence:** Provide latest successful export/checksum/asset
+   completeness/freshness result, private off-device protection and actual retention
+   status, not contents. For a restore exercise, identify an available approved
+   private destination and asset/document comparison procedure; absent one, retain
+   BLOCKED without production/public-dataset/paid workaround. Confirm retained
+  021341d deployment7741002799 promotion availability/settings differences if changed.
+   Source-preview passes are not actual production rollback or measuredRTO/RPO.
+   A real promotion/restore needs its own exact-target approval; none is requested
+   or performed by these preparation checks.
+5. **Public discovery/performance evidence:** Run Google's Rich Results Test for
+   the four public guide URLs (movement-and-strength,balanced-meals,sleep-routines,
+   stress-and-support under /learn/), recording URL/date/detected Article/Breadcrumb
+   and actual errors/warnings. Provide existing SearchConsole ownership/sitemap/
+   indexing/URLInspection records; no submission/change is authorised by a report.
+   Provide available fieldLCP/INP/CLS percentiles/window/device class, or record
+   insufficient data; do not activate telemetry to create evidence. Actual3D/device
+   performance is separate from eight2D navigation lab profiles.
+6. **Production decision — later:** After exact-head hosted reports/preview identity
+   and required gates are reviewed, approve a concrete merge/deployment target,
+   current recovery/settings plan and observation triggers in one decision. This
+   package is preparation only; production remains076a853. No approval is requested
+   now while mandatory security/manual/privacy/recovery evidence remains missing.
+
+Editorial follow-up remains due: S4–S8/C1 on13November, G1–G4/S1–S3 on19November.
+Only an actual review can renew dates; source dates/approved wording are preserved.
