@@ -15,7 +15,7 @@ export default function Page() {
       <a className="hc-skip-link" href="#main-content">Skip to content</a>
       <SiteHeader />
       <main id="main-content" tabIndex={-1} className="hc-section hc-info-main">
-        <span className="hc-eyebrow">Health through everyday habits</span>
+        <span className="hc-eyebrow">OPTIMISING HEALTH</span>
         <h1>About Healthcrest</h1>
         <section aria-labelledby="creator-title">
           <h2 id="creator-title">Who is behind Healthcrest?</h2>

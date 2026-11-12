@@ -2,7 +2,7 @@
 
 import { HabitSelectionMark } from '@/components/HabitSelectionMark';
 
-import { useId, useRef, useState } from 'react';
+import { useId, useRef, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { HabitDraftOverview } from '@/components/HabitDraftOverview';
 import { HabitPlanEvidence } from '@/components/HabitPlanEvidence';
@@ -15,6 +15,11 @@ import { UrgentSupport } from '@/components/UrgentSupport';
 import { Download, Printer, ArrowUpRight } from 'lucide-react';
 import { HABIT_DRAFT_KEY, parseSavedHabitDraft, type HabitPillar, type HabitDraft as Draft, type SavedHabitDraft } from '@/lib/education/habitDraft';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
+
+// Prevent edits before React can retain them. Server-rendered guidance stays readable.
+const subscribeToReadiness = () => () => {};
+const clientReady = () => true;
+const serverReady = () => false;
 
 export type { HabitPillar } from '@/lib/education/habitDraft';
 type RestoreOrigin = 'return' | 'saved';
@@ -38,6 +43,7 @@ function initialDrafts(): Record<HabitPillar, Draft> {
 export function HabitPlanner({ initialPillar, initialAction, initialGuideSource }: {
   initialPillar: HabitPillar; initialAction?: string; initialGuideSource?: { title: string; href: string };
 }) {
+  const ready = useSyncExternalStore(subscribeToReadiness, clientReady, serverReady);
   const removeError = 'The saved plan could not be removed in this browser. Your current edits are unchanged.';
   const [selected, setSelected] = useState<HabitPillar>(initialPillar);
   const [drafts, setDrafts] = useState(() => {
@@ -237,7 +243,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
   }
 
   return (
-    <div className="hc-plan">
+    <fieldset className="hc-plan" disabled={!ready} aria-label="Habit planner" aria-busy={!ready}>
       <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save, .hc-plan-print-button, .hc-plan-backup, .hc-week-next, .hc-draft-overview { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
       <section id="return-to-plan" tabIndex={-1} aria-labelledby={id + '-return-title'} className="hc-plan-return">
         <h2 id={id + '-return-title'}>Return to your plan</h2>
@@ -382,6 +388,6 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
         </aside>
       </div>
       <HabitPlanPrint label={option.label} draft={draft} />
-    </div>
+    </fieldset>
   );
 }

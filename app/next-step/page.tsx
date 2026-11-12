@@ -26,7 +26,7 @@ export default async function NextStepPage({ searchParams }: {
       <a className="hc-skip-link" href="#main-content">Skip to content</a>
       <SiteHeader />
       <main id="main-content" tabIndex={-1} className="hc-section hc-plan-main">
-        <span className="hc-eyebrow">Health through everyday habits</span>
+        <span className="hc-eyebrow">OPTIMISING HEALTH</span>
         <h1>One habit.<br /><em>Your next step.</em></h1>
         <p className="hc-plan-intro">Choose a pillar, adapt a starter idea and give it a place in your routine. Try a seven-day plan with optional daily check-ins and a weekly review. Start with something manageable; you can adjust it as you learn.</p>
         <HabitPlanner initialPillar={initialPillar}

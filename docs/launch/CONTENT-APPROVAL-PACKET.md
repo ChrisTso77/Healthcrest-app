@@ -105,3 +105,18 @@ These are Git blob IDs, not generated review dates or claims of correctness. Oth
 [rollover]: https://github.com/ChrisTso77/Healthcrest-app/blob/4309697dbdc0ffb4eeacc214102f051491c4bbf8/components/HabitWeekRollover.tsx
 [habit-evidence]: https://github.com/ChrisTso77/Healthcrest-app/blob/4309697dbdc0ffb4eeacc214102f051491c4bbf8/components/HabitPlanEvidence.tsx
 [urgent]: https://github.com/ChrisTso77/Healthcrest-app/blob/4309697dbdc0ffb4eeacc214102f051491c4bbf8/components/UrgentSupport.tsx
+
+## Weekly follow-up — 12 November 2026
+
+The owner reported completing G1–G4/S1–S3 reviews today and explicitly confirmed:
+“All seven remain approved; no corrections needed.” This records an editorial
+outcome, not credential verification, release approval or launch acceptance.
+
+| Items | Reviewer / actual date | Outcome | Content revision | Next review due |
+| --- | --- | --- | --- | --- |
+| G1, G2, G3, G4, S1, S2, S3 | Chris / 12 November 2026 (owner report) | Remain approved; no corrections needed | Guide catalogue `6c31886566c405abe2562f5b0bb2c7a64df02cf9`; scenario catalogue `468209416c7cdb97b3c5b5e8d9cce42355e9c288`, both verified unchanged in checkout based on `6dd8d57` | 19 November 2026; earlier for material changes or safety concerns |
+
+This follow-up supersedes the 9 November due dates for these seven items without
+rewriting their original approvals. S4–S8 and C1 retain the 13 November dates.
+The new brand tagline is separately authorised by the development directive;
+this follow-up does not expand the seven-item scope to shared copy or other content.

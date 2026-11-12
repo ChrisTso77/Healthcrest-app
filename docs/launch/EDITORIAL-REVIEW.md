@@ -37,3 +37,13 @@ Use the [content approval packet](CONTENT-APPROVAL-PACKET.md) for direct review 
 | Homepage / About / learning definitions / planner guidance | C1 / full listed shared-copy/practical-tools scope at `14bce2cf31dc45e35ddb9e3ba28e818fb7aa12a4` | Chris Tsoto / 6 November 2026 / Approved; explicit owner message “C1 approved”. See packet for scope/limits. | 13 November 2026; earlier for material changes or safety concerns |
 
 Source references were previously checked on 28 October; this register does not change the public dates. Keep completed review records bound to immutable commits or CMS document revisions. A source update, changed audience, material claim or safety concern triggers another review even within the weekly interval.
+
+## Current weekly follow-up — 12 November 2026
+
+Chris reports completing G1–G4/S1–S3 and explicitly confirms all seven remain
+approved with no corrections. The unchanged catalogue hashes and actual outcome
+are recorded once in [the packet follow-up](CONTENT-APPROVAL-PACKET.md#weekly-follow-up--12-november-2026).
+Their next review is 19 November 2026 (earlier for material changes/safety concerns).
+The original table above retains the historical approvals/due dates; this follow-up
+supersedes those seven due dates. S4–S8/C1 remain due 13 November. Credential and
+other launch gates remain separate.

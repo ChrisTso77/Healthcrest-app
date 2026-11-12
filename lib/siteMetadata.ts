@@ -9,7 +9,7 @@ export function pageMetadata(title: string, description: string, path: string): 
     url: new URL('/opengraph-image', SITE_URL).toString(),
     width: 1200,
     height: 630,
-    alt: 'Healthcrest — Health through everyday habits. Explore movement, food, sleep and stress support.',
+    alt: 'Healthcrest — OPTIMISING HEALTH. Explore movement, food, sleep and stress support.',
   }];
   return {
     title,

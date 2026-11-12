@@ -1,11 +1,12 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 const { fetchMock } = vi.hoisted(() => ({ fetchMock: vi.fn() }));
 vi.mock('@sanity/client', () => ({ createClient: () => ({ fetch: fetchMock }) }));
 import { GET } from '../../app/api/presets/route';
 import seed from '../../pillars-seed-data-v3.json';
 
-beforeEach(() => fetchMock.mockReset());
+beforeEach(() => { fetchMock.mockReset(); });
+afterEach(() => vi.restoreAllMocks());
 describe('reviewed content API paths', () => {
   const source = seed.scenarioPresets[0];
   const old = { ...source, slug: source.slug.current, title: 'Legacy clinical claim',
@@ -31,6 +32,21 @@ describe('reviewed content API paths', () => {
     expect(body.data.presets[0].narrativeOverlay.headline).toBe(body.data.presets[0].headline);
     expect(body.data.associatedPillar).toEqual({ _id: 'pillar-systems', title: 'Systems', slug: 'systems' });
     expect(JSON.stringify(body)).not.toMatch(/Guaranteed recovery|Tissue damage|Oxytocin Shield/);
+  });
+  test.each(['5junk', '5.1', '0', '-1', 'Infinity', '9007199254740992', ' 5', '05'])(
+    'rejects invalid scene %s before contacting the CMS', async scene => {
+      const response = await GET(new NextRequest('https://example.test/api/presets?scene=' + encodeURIComponent(scene)));
+      expect(response.status).toBe(400);
+      expect(await response.json()).toEqual({ error: 'Scene must be a positive integer' });
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
+  test('CMS failure preserves a generic response and logs no provider details', async () => {
+    const log = vi.spyOn(console, 'error').mockImplementation(() => {});
+    fetchMock.mockRejectedValue(new Error('synthetic-private-provider-detail'));
+    const response = await GET(new NextRequest('https://example.test/api/presets'));
+    expect(response.status).toBe(500);
+    expect(await response.json()).toEqual({ error: 'Internal Server Error fetching scenario presets' });
+    expect(log).toHaveBeenCalledExactlyOnceWith('Failed to fetch scenario presets from Sanity');
   });
   test('narrative uses reviewed wording without publishing arbitrary CMS claims', async () => {
     const body = await (await GET(new NextRequest('https://example.test/api/presets?type=narrative'))).json();

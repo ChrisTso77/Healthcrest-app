@@ -29,7 +29,7 @@ export default async function StartPage({ searchParams }: {
       <a className="hc-skip-link" href="#main-content">Skip to content</a>
       <SiteHeader />
       <main id="main-content" tabIndex={-1} className="hc-section hc-info-main hc-journey-main">
-        <span className="hc-eyebrow">Health through everyday habits</span>
+        <span className="hc-eyebrow">OPTIMISING HEALTH</span>
         <h1>Find your<br /><em>starting point.</em></h1>
         <p className="hc-journey-intro">Choose what you want to understand and one way to make a first step fit your day. This selects educational content and an editable idea. No account needed.</p>
         <form action="/start#your-starting-point" method="get" className="hc-journey-form">

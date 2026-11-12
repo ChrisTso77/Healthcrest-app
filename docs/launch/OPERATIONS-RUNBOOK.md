@@ -108,3 +108,51 @@ Visitor plans remain browser-local and user-managed. Deployment/CMS recovery mus
 Use existing deployment/function errors, manual canonical smoke, CMS/fallback reports and contact channels first. Confirm responsible person and actual cadence, including provider quota checks. Never log planner text, backups or preference query values; distinguish dashboard visibility from retention/deletion. Search Console actions need D06 approval. Optional Analytics/Speed Insights are not an uptime/recovery plan.
 
 Use [OWNER-LAUNCH-ACTIONS.md](OWNER-LAUNCH-ACTIONS.md) for the consolidated handoff. This runbook closes preparation gaps only until real access, exercise and live evidence exist.
+
+## Website source-recovery rehearsal — 12 November 2026 (partial)
+
+Owner selected a separate Vercel preview and approved pushing the recovery source
+on the dedicated rehearsal branch. No production promotion, rollback or CMS write
+was performed. This exercises reconstruction from source, not production rollback.
+
+| Evidence | Actual result |
+| --- | --- |
+| Recovery source | `6dd8d57e83d39225ef57f4f26be5a253e88fa890`; remote main confirmed at that SHA before rehearsal |
+| Dedicated remote branch | `codex/healthcrest-recovery-rehearsal`; initial source push succeeded |
+| Trigger | Existing SHA produced no new registered deployment at observation; an empty forward-only commit triggered the preview |
+| Trigger commit | `e8e102c72e1a78201f38ff655c72081400b5381c`, parent is the recovery source |
+| Source equality | Both trees are exactly `8ea9eb5087db808bf8f6885ee19de0d657a376a5`; no application differences |
+| Provider result | GitHub deployment `7738540326`, environment Preview; success recorded 12 November 2026 13:27:07 UTC |
+| Preview | https://healthcrest-8gvaxfdrz-tsotsoft.vercel.app |
+| Preview automated access / identity | BLOCKED: environment proxy rejects CONNECT to the preview hostname with HTTP 403; served commit header NOT VERIFIED |
+| Owner browser check | Owner reports homepage loads and all requested Learn, Explorer and Planner steps pass; scoped record below |
+| Canonical observation | Read-only HEAD request returned HTTP 200 and `X-Healthcrest-Commit: 6dd8d57e83d39225ef57f4f26be5a253e88fa890` after the preview deployment |
+| Timing | End-to-end recovery time NOT VERIFIED; provider success alone does not establish the four-hour objective |
+
+Next: allow the exact preview hostname in this execution environment, then verify
+its expected commit `e8e102c72e1a78201f38ff655c72081400b5381c` and public/synthetic
+journeys with the existing smoke harness. Do not disable Vercel access protection
+or change production to make the check pass. Existing rehearsal approval persists.
+CMS restoration/off-device recovery and actual production rollback remain pending.
+
+Local evidence is under `/workspace/work/healthcrest-recovery/`. An auxiliary local
+archive build failed because Turbopack rejected a dependency symlink outside its
+source root; it provides no local rebuild PASS and was not substituted for the
+provider build. No archive/backup contents or credentials were published.
+
+### Owner browser journey results — 12 November 2026
+
+On the preview URL above, the owner reported that the homepage loads, then replied
+“all pass” to these requested checks:
+- Learn: open a guide.
+- Habit Explorer: change a setting, then open and close Guide.
+- Planner: enter synthetic text, save, edit, attempt restore, choose Keep my edits
+  and confirm the edit remains.
+
+These are owner-reported functional passes. Browser/OS/version, exact tested text,
+served commit header and measured recovery duration were not independently captured.
+Synthetic text was requested; no actual notes were supplied or recorded. This
+supports the preview source-recovery rehearsal; it does not establish production
+rollback, CMS restoration, off-device recovery, full accessibility or launch acceptance.
+The remaining step for independent preview validation is network access followed
+by commit-bound smoke. No additional production action was authorised by the results.
