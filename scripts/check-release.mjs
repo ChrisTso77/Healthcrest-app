@@ -138,7 +138,8 @@ try {
       report.release.compiledCommit = assertReleaseCommit(markers[0].value, expectedCommit);
     }
     const response = await context.request.get(origin + '/', { maxRedirects: 0 });
-    ensure(response.status() === 200, 'Release identity request did not return HTTP 200 without redirects.');
+    report.release.identityHttpStatus = response.status();
+    ensure(response.status() === 200, `Release identity request returned HTTP ${response.status()}; expected HTTP 200 without redirects.`);
     const observed = response.headers()[RELEASE_HEADER.toLowerCase()];
     // Retain only a well-formed public SHA, never arbitrary server header text.
     report.release.observedCommit = /^[a-f0-9]{40}$/.test(observed || '') ? observed : null;
