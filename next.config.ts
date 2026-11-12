@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
       { source: '/:path*', headers: [
         { key: 'Referrer-Policy', value: 'no-referrer' },
         { key: 'X-Content-Type-Options', value: 'nosniff' },
+        // Baseline containment only. Script/style/resource restrictions need a
+        // separate nonce/static-rendering review; do not claim full XSS coverage.
+        { key: 'Content-Security-Policy', value: "base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'" },
+        { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
         ...releaseHeaders,
       ] },
       // The fallback contains the same PNG as /icon. Static hosts can infer an

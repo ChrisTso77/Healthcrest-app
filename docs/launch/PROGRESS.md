@@ -1,6 +1,6 @@
 # Resumable launch progress
 
-Current handoff reconciled 12 November 2026 against local HEAD `6dd8d57` (#136). Remote main and the current deployment were not queried. Historical release results below retain their original revisions/dates. The owner authorised parallel launch-readiness work and separately approved releases through #134. Each future merge/resulting deployment requires its own approval; no public launch is authorised by development work.
+Current handoff updated 12 November 2026 after owner-approved preparation release #137, merged/deployed as `021341d`. Canonical identity and live workflow are verified; see ../agent/PROJECT_STATE.md and RELEASE-EVIDENCE.md for current results and limits. Historical sections below retain their original revisions/dates. Future releases need their own approval; full launch acceptance remains pending.
 
 Read ROADMAP.md, RELEASE-EVIDENCE.md and LAUNCH-CHECKLIST.md together. Preserve the educational mission, canonical https://www.healthcrest.uk, manual saved-plan handling, default-off independent measurement and approved assets. Do not publish unreviewed advice or invented legal/provider facts.
 
@@ -76,3 +76,13 @@ Required browser downloads are blocked by cdn.playwright.dev policy 403. Existin
 six-job hosted CI passed at 6dd8d57 before these edits; it does not validate them.
 See [current state](../agent/PROJECT_STATE.md) for final profile verification,
 remaining gates and local evidence paths. Production release remains blocked.
+
+## Approved preparation release #137 — 12 November 2026
+
+Owner confirmed Production app flag absent, no pending settings changes and rollback
+access, then approved the exact #137 merge/deployment/canonical-check scope. Merge
+021341d has the reviewed candidate's identical tree. Vercel Production succeeded;
+www.healthcrest.uk reports that SHA and inactive measurement markup. Canonical
+workflow 43244366643 PASS. See RELEASE-EVIDENCE.md for the automatic post-merge CI
+result, evidence provenance and remaining limits. No CMS write, configuration
+change, actual rollback or full launch acceptance occurred.

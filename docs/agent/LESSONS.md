@@ -34,3 +34,14 @@ Append only when an evidenced mistake warrants a reusable prevention rule.
   browser timing/load exposed the gap. No user-data loss incident is claimed.
 - Prevention: gate planner form controls until client readiness and keep guidance/
   links readable. Retain delayed-script coverage without adding sleeps to tests.
+
+## 12 November 2026 — Avoid address-space confounding in frame-policy tests
+- Mistake: the route-fulfilled foreign parent hit Local Network Access before CSP;
+  waiting for a frame response or CSP message could not test the intended policy.
+- Evidence: initial browser-policy traces show a chrome-error child and the
+  public-page-to-local-network denial. Five checks passed while that fixture failed.
+- Root cause: the synthetic fulfilled parent was treated as public address space.
+- Prevention: use a real second loopback HTTP server on an ephemeral port, with
+  browser protections enabled. Require reachable target, policy-specific block and
+  no rendered planner; retain same-origin editing as the positive control. All six
+  cases pass after this fixture correction; no production policy was loosened.

@@ -19,6 +19,8 @@
 - Do not invent credentials, addresses, approvals, provenance or compliance.
 - Use synthetic data; keep secrets and personal records out of logs and commits.
 - Preserve release identity assertions, performance thresholds and failure evidence.
+- Browser containment permits self framing/forms/base URLs and rejects embedded
+  objects. Review intentional embedding changes; retain browser-policy regressions.
 
 ## Verified commands
 These passed at the baseline on Node 24.19.0; CI uses Node 22.
