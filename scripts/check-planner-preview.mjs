@@ -11,7 +11,7 @@ for (const key of ['HEALTHCREST_PREVIEW_OIDC_TOKEN', 'GH_TOKEN', 'GITHUB_TOKEN',
   'ACTIONS_ID_TOKEN_REQUEST_TOKEN', 'ACTIONS_ID_TOKEN_REQUEST_URL']) delete process.env[key];
 const report = { createdAt: new Date().toISOString(), candidate: PREVIEW_COMMIT,
   origin: PREVIEW_ORIGIN, workflowHead: process.env.GITHUB_SHA,
-  workflowRun: process.env.GITHUB_RUN_ID, deploymentId: 7769237792,
+  workflowRun: process.env.GITHUB_RUN_ID, deploymentId: 7769985368,
   protection: null, identity: null, scenarios: [], cms: { status: 'NOT VERIFIED' },
   accessibility: { automated: 'NOT VERIFIED', actualScreenReader: 'NOT VERIFIED', physicalDevices: 'NOT VERIFIED' },
   legacyDeletion: 'NOT PERFORMED', passed: false };
@@ -65,9 +65,28 @@ try {
     assert.equal(await action.inputValue(),'Synthetic Preview private canary');
     await page.getByRole('button',{name:'Start seven-day plan',exact:true}).click();
     const week=page.waitForEvent('download');await page.getByRole('button',{name:'Export week and all drafts',exact:true}).click();await week;
-    await page.evaluate(()=>{URL.createObjectURL=()=>{throw new Error('synthetic export failure');};});
+    const pageErrors=[];page.on('pageerror',error=>pageErrors.push(error.message));
+    await page.evaluate(()=>{
+      window.reviewExportTransport={create:URL.createObjectURL.bind(URL),append:document.body.appendChild};
+      URL.createObjectURL=()=>{throw new Error('synthetic export failure');};
+    });
     await exportButton.click();assert.match(await page.getByRole('status').innerText(),/download is unavailable/);
     assert.equal(await action.inputValue(),'Synthetic Preview private canary');
+    await page.getByRole('button',{name:'Download my next step',exact:true}).click();
+    assert.match(await page.getByRole('status').innerText(),/Text download is unavailable/);
+    assert.equal(await action.inputValue(),'Synthetic Preview private canary');
+    await page.evaluate(()=>{
+      URL.createObjectURL=window.reviewExportTransport.create;
+      document.body.appendChild=function(node){
+        if(node instanceof HTMLAnchorElement&&node.download)throw new Error('synthetic attachment failure');
+        return window.reviewExportTransport.append.call(this,node);
+      };
+    });
+    await page.getByRole('button',{name:'Download my next step',exact:true}).click();
+    assert.match(await page.getByRole('status').innerText(),/Text download is unavailable/);
+    assert.equal(await action.inputValue(),'Synthetic Preview private canary');
+    await page.evaluate(()=>{document.body.appendChild=window.reviewExportTransport.append;});
+    assert.deepEqual(pageErrors,[]);
     assert.equal(await page.locator('.hc-plan-unsaved').getAttribute('aria-live'),'polite');
     assert.equal(await page.getByRole('status').count(),1);
     await exportButton.focus();
@@ -87,7 +106,7 @@ try {
       overflow:document.documentElement.scrollWidth>innerWidth}));
     assert.deepEqual(state.writes,[]);assert.equal(state.preserved,true);assert.equal(state.overflow,false);
     report.scenarios.push({width,version,status:'PASS',storageWrites:0,legacyBytesPreserved:true,
-      scope:'edit; read-only legacy recovery; restore cancellation/focus; JSON export/integrity/import; week export; export failure retains edits; removal cancellation only; internal navigation cancellation; keyboard targets; live-region semantics; reflow; export privacy messaging'});
+      scope:'edit; read-only legacy recovery; restore cancellation/focus; JSON export/integrity/import; week export; JSON and text URL/attachment failures retain edits; removal cancellation only; internal navigation cancellation; keyboard targets; live-region semantics; reflow; export privacy messaging'});
     console.log(`PASS: ${width}px legacy v${version}; zero writes; legacy preserved`);
     await context.close();
   }

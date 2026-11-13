@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       expected_commit:
-        description: Approved PR140 Planner target SHA; does not deploy
+        description: Approved separate Planner review-fix SHA; PR140 unchanged; does not deploy
         required: true
         type: string
 
@@ -20,8 +20,8 @@ jobs:
       deployments: read
       id-token: write
     env:
-      HEALTHCREST_RELEASE_ORIGIN: https://healthcrest-m6bpoi064-tsotsoft.vercel.app
-      HEALTHCREST_EXPECTED_COMMIT: f0d39a4fb5b19b5a3b836303a11352342579a2e0
+      HEALTHCREST_RELEASE_ORIGIN: https://healthcrest-55j1i65dz-tsotsoft.vercel.app
+      HEALTHCREST_EXPECTED_COMMIT: e6bd9d793f034c6d7a1df4334ea869c1782ec20a
     steps:
       - name: Require approved manual trusted branch and exact Planner target
         env:
@@ -34,7 +34,7 @@ jobs:
               'GITHUB_REPOSITORY': 'ChrisTso77/Healthcrest-app',
               'GITHUB_REF': 'refs/heads/codex/healthcrest-preview-auth',
               'GITHUB_WORKFLOW': 'Healthcrest protected Preview verification',
-              'REQUESTED_COMMIT': 'f0d39a4fb5b19b5a3b836303a11352342579a2e0',
+              'REQUESTED_COMMIT': 'e6bd9d793f034c6d7a1df4334ea869c1782ec20a',
           }
           assert all(os.environ.get(k) == v for k, v in expected.items()), 'Unapproved verification context'
           PY
@@ -68,11 +68,11 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const sha = 'f0d39a4fb5b19b5a3b836303a11352342579a2e0';
-            const origin = 'https://healthcrest-m6bpoi064-tsotsoft.vercel.app';
+            const sha = 'e6bd9d793f034c6d7a1df4334ea869c1782ec20a';
+            const origin = 'https://healthcrest-55j1i65dz-tsotsoft.vercel.app';
             if (context.eventName !== 'workflow_dispatch' || process.env.GITHUB_REF !== 'refs/heads/codex/healthcrest-preview-auth' ||
                 context.repo.owner !== 'ChrisTso77' || context.repo.repo !== 'Healthcrest-app') throw new Error('Unapproved identity request');
-            const args = { ...context.repo, deployment_id: 7769237792 };
+            const args = { ...context.repo, deployment_id: 7769985368 };
             const deployment = (await github.rest.repos.getDeployment(args)).data;
             const statuses = (await github.rest.repos.listDeploymentStatuses(args)).data;
             if (deployment.sha !== sha || deployment.environment !== 'Preview' || deployment.production_environment === true ||

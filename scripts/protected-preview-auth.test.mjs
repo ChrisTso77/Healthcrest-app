@@ -41,7 +41,7 @@ test('API token is confined to fixed origin; redirects disabled and Range preser
   assert.equal(calls[0][1].maxRedirects, 0);
   assert.equal(calls[0][1].headers.Range, 'bytes=0-31');
   assert.equal(calls[0][1].headers['x-vercel-trusted-oidc-idp-token'], credential);
-  for (const url of ['https://www.healthcrest.uk', PREVIEW_ORIGIN + '.evil.test', 'http://healthcrest-m6bpoi064-tsotsoft.vercel.app', PREVIEW_ORIGIN.replace('https://', 'https://user:password@')]) {
+  for (const url of ['https://www.healthcrest.uk', PREVIEW_ORIGIN + '.evil.test', 'http://healthcrest-55j1i65dz-tsotsoft.vercel.app', PREVIEW_ORIGIN.replace('https://', 'https://user:password@')]) {
     assert.equal(isProtectedPreviewRequest(url, auth()), false);
     assert.throws(() => protectedPreviewGet(request, url, {}, auth()));
   }
