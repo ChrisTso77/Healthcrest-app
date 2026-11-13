@@ -57,7 +57,7 @@ test('download contains the chosen habit, routine, support and relevant source',
   expect(text).toContain('Keep a tin of beans in the cupboard.');
   expect(text).toContain('https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/');
   expect(text).toContain('not a prescription generated from Habit Explorer settings');
-  await expect(page.getByRole('status')).toContainText('Plan download started.');
+  await expect(page.getByRole('status')).toContainText('Text download requested.');
   await action.fill('Try a smaller version.');
   await expect(page.getByRole('status')).toBeEmpty();
 });
@@ -257,3 +257,57 @@ test('legacy/export fixture compatibility: earlier plans restore with empty refl
   await expect(page.getByLabel('What did I learn?', { exact: false })).toHaveValue('A useful first attempt.');
   await expect(page.getByLabel('One manageable action', { exact: true })).toHaveValue('My earlier Sleep action.');
 });
+
+for (const width of [320, 1280]) for (const failure of ['url', 'attachment'] as const) {
+  test(`text fallback failures preserve edits and legacy storage: ${failure} at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.addInitScript(() => {
+      localStorage.setItem('healthcrest.habit-draft.v1', 'SYNTHETIC-LEGACY-KEEP');
+      const probe = { writes: [] as string[], urls: 0, revoked: 0 };
+      Object.assign(window, { exportReviewProbe: probe });
+      for (const method of ['setItem', 'removeItem', 'clear'] as const) {
+        const original = Storage.prototype[method];
+        Storage.prototype[method] = function (...args: string[]) {
+          probe.writes.push(method);
+          return Reflect.apply(original, this, args);
+        };
+      }
+    });
+    const errors: string[] = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto('/next-step?pillar=sleep');
+    const action = page.getByLabel('One manageable action', { exact: true });
+    await action.fill('Synthetic fallback canary');
+    await page.evaluate(failure => {
+      const probe = (window as unknown as { exportReviewProbe: { urls: number; revoked: number } }).exportReviewProbe;
+      const create = URL.createObjectURL.bind(URL), revoke = URL.revokeObjectURL.bind(URL);
+      URL.createObjectURL = value => {
+        if (failure === 'url') throw new Error('Synthetic download unavailable');
+        probe.urls++;
+        return create(value);
+      };
+      URL.revokeObjectURL = value => { probe.revoked++; revoke(value); };
+      const append = document.body.appendChild;
+      document.body.appendChild = function <T extends Node>(node: T): T {
+        if (node instanceof HTMLAnchorElement && node.download) throw new Error('Synthetic attachment unavailable');
+        return append.call(this, node) as T;
+      };
+    }, failure);
+    await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+    await expect(page.getByRole('status')).toContainText('Backup download is unavailable');
+    await page.getByRole('button', { name: 'Download my next step', exact: true }).click();
+    await expect(page.getByRole('status')).toContainText('Text download is unavailable');
+    await expect(page.getByRole('status')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Download my next step', exact: true })).toBeFocused();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await expect(action).toHaveValue('Synthetic fallback canary');
+    expect(await page.evaluate(() => localStorage.getItem('healthcrest.habit-draft.v1'))).toBe('SYNTHETIC-LEGACY-KEEP');
+    expect(await page.evaluate(() => (window as unknown as { exportReviewProbe: { writes: string[] } }).exportReviewProbe.writes)).toEqual([]);
+    expect(errors).toEqual([]);
+    await expect(page.locator('a[download]')).toHaveCount(0);
+    if (failure === 'attachment') await expect.poll(() => page.evaluate(() => {
+      const probe = (window as unknown as { exportReviewProbe: { urls: number; revoked: number } }).exportReviewProbe;
+      return probe.revoked === probe.urls;
+    })).toBe(true);
+  });
+}

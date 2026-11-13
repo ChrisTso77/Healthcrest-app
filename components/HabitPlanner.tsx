@@ -232,20 +232,30 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
       'This is my chosen habit idea, not a prescription generated from Habit Explorer settings.',
       'General educational information for adults. Adapt to health, ability and circumstances alongside appropriate clinical care.',
     ].join('\n');
-    const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'healthcrest-next-step.txt';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-    setStatus('Plan download started. Your browser may ask where to save it.');
+    let url: string | undefined;
+    let link: HTMLAnchorElement | undefined;
+    try {
+      url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+      link = document.createElement('a');
+      link.href = url;
+      link.download = 'healthcrest-next-step.txt';
+      document.body.appendChild(link);
+      link.click();
+      setStatus('Text download requested. Check that your browser saved the file. It may contain unencrypted sensitive notes; your page edits and old saved copy are unchanged.');
+    } catch {
+      setStatus('Text download is unavailable in this browser. Your page edits and old saved copy are unchanged; you can try printing.');
+    } finally {
+      link?.remove();
+      if (url) {
+        const downloadUrl = url;
+        window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+      }
+    }
   }
 
   return (
     <fieldset className="hc-plan" disabled={!ready} aria-label="Habit planner" aria-busy={!ready}>
-      <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save, .hc-plan-print-button, .hc-plan-backup, .hc-week-next, .hc-draft-overview { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
+      <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save, .hc-plan-print-button, .hc-plan-backup, .hc-week-next, .hc-draft-overview { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and exporting also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
       <section id="return-to-plan" tabIndex={-1} aria-labelledby={id + '-return-title'} className="hc-plan-return">
         <h2 id={id + '-return-title'}>Return to your plan</h2>
         <p>Restore my plan reads an older saved copy only when you ask. It does not change that copy. New edits remain in page memory and do not sync. Exported files are user-managed and unencrypted.</p>
@@ -357,7 +367,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
                 <button type="button" aria-describedby={id + '-remove-scope'} onClick={removeSavedDraft}>Remove saved copy</button>
               </div>
             </div>}
-            <p className="hc-plan-storage">Without saving, drafts are discarded when you leave or reload. You can also download a plan to keep a separate copy.</p>
+            <p className="hc-plan-storage">Page edits may be lost when you leave or reload. Export and verify a separate file before leaving if you want to keep them.</p>
           </section>
           <HabitPlanBackup drafts={drafts} onDownload={downloadBackup} onImport={importBackup} onStatus={setStatus} />
           <div className="hc-plan-export-actions">

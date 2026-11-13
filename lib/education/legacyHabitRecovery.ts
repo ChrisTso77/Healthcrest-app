@@ -1,7 +1,7 @@
 import { HABIT_DRAFT_KEY, parseSavedHabitDraft, type SavedHabitDraft } from './habitDraft';
 
-// Preparation only: deliberately not wired to UI. Call only after explicit user
-// restore consent. No persistent-storage writer or migration capability accepted.
+// Read-only boundary used by the explicit legacy restore controls.
+// No persistent-storage writer or migration capability accepted.
 export type LegacyRecovery =
   | { status: 'available'; saved: SavedHabitDraft }
   | { status: 'missing' | 'invalid' | 'unavailable' };
