@@ -11,3 +11,7 @@ Telemetry failure and private Windows claims are disproven; plaintext persistenc
 is disclosed; mutable action tags have a separate local LOW hardening proposal.
 Gemini/Copilot/internal AI review is not professional independent sign-off.
 No production, access, procurement or release approval is granted.
+
+New13November reconciliation: see PHASE11-RECONCILIATION.md and canonical matrix.
+Three digest-verified reports retained under evidence/2026-11-13. Independent
+assessment remains BLOCKED; AI validation is supporting evidence only.
