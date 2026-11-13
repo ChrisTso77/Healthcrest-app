@@ -1,0 +1,22 @@
+
+Running 15 tests using 1 worker
+
+(node:35358) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › telemetry.e2e.spec.ts:37:5 › no optional script or beacon is sent before permission, after decline or on private pages (3.6s)
+  ✓   2 [chromium] › telemetry.e2e.spec.ts:57:5 › independent opt-in runs the installed SDKs and sends only filtered URL metadata (3.7s)
+  ✓   3 [chromium] › telemetry.e2e.spec.ts:87:5 › a later withdrawal blocks queued SDK calls and does not touch a saved habit draft (1.8s)
+  ✓   4 [chromium] › telemetry.e2e.spec.ts:106:5 › entering the planner blocks already-loaded SDK callbacks on client navigation (2.6s)
+  ✓   5 [chromium] › telemetry.e2e.spec.ts:123:7 › measurement fails closed for expired (1.9s)
+  ✓   6 [chromium] › telemetry.e2e.spec.ts:123:7 › measurement fails closed for malformed (2.0s)
+  ✓   7 [chromium] › telemetry.e2e.spec.ts:123:7 › measurement fails closed for privacy-signal (1.8s)
+  ✓   8 [chromium] › telemetry.e2e.spec.ts:123:7 › measurement fails closed for blocked-storage (1.4s)
+  ✓   9 [chromium] › telemetry.e2e.spec.ts:140:7 › privacy controls are readable and keyboard accessible at 320px (2.0s)
+  ✓  10 [chromium] › telemetry.e2e.spec.ts:140:7 › privacy controls are readable and keyboard accessible at 390px (2.2s)
+  ✓  11 [chromium] › telemetry.e2e.spec.ts:140:7 › privacy controls are readable and keyboard accessible at 768px (1.9s)
+  ✓  12 [chromium] › telemetry.e2e.spec.ts:140:7 › privacy controls are readable and keyboard accessible at 1440px (1.5s)
+  ✓  13 [chromium] › telemetry.e2e.spec.ts:157:5 › JavaScript-disabled privacy page explains that optional measurement is off (1.1s)
+  ✓  14 [chromium] › telemetry.e2e.spec.ts:168:5 › a failed choice write stays off and preserves unrelated draft storage (1.9s)
+  ✓  15 [chromium] › telemetry.e2e.spec.ts:187:5 › sensitive incoming referrers block collection and responses suppress outgoing referrers (1.4s)
+
+  15 passed (33.5s)

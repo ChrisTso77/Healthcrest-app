@@ -30,3 +30,20 @@ Recovery reference remains previous release 021341d. This grants no further rele
 full launch acceptance, provider setting, CMS restore or measurement activation.
 Remaining owner facts/recovery/device/security gates retain their prior status.
 See RELEASE-EVIDENCE.md for final verification and provenance.
+
+
+## D10 — formal security assurance policy adoption,13 November 2026
+
+Owner explicitly APPROVED the direction at ee7ddc7 with ten conditions. Exact
+proposed text checked against those conditions and adopted in ../../SECURITY.md
+with explicit precedence interpretations. Original de91811 decision/proposal
+preserved. Broad internal paid-test prerequisite replaced by risk-based assurance
+plus targeted qualified independent human review. External obligations preserved,
+not verified away. No Vercel Hobby pentesting. Classified potentially sensitive
+Planner text makes ASVS14.3.3 FAIL as documented in CONTROL-ASSURANCE-REGISTER.md;
+acceptance is not technical compliance. No implicit data purge or redesign.
+Matrix classifications unchanged11/1/2/20; narrow parser/storage-integrity PASS is
+not confidentiality compliance. Security gate remainsBLOCKED. No procurement,
+access,provider changes,merge/deploy or other mandatory-gate waiver authorised.
+Next: targeted independent review of data minimisation/storage treatment and
+owner-supplied external-obligation evidence; formal findings/retests/sign-off remain.

@@ -1,0 +1,19 @@
+Checking 320px legacy v1
+Internal link cancellation verified
+Checking programmatic beforeunload
+Checking 320px legacy v2
+Internal link cancellation verified
+Checking programmatic beforeunload
+Checking 320px legacy v3
+Internal link cancellation verified
+Checking programmatic beforeunload
+Checking 1280px legacy v1
+Internal link cancellation verified
+Checking programmatic beforeunload
+Checking 1280px legacy v2
+Internal link cancellation verified
+Checking programmatic beforeunload
+Checking 1280px legacy v3
+Internal link cancellation verified
+Checking programmatic beforeunload
+6 Chromium scenario groups PASS

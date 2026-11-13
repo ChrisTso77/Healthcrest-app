@@ -1,7 +1,16 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect } from '@playwright/test';
 import { LEARNING_GUIDES } from './lib/education/learningGuides';
 import { createHabitWeek } from './lib/education/habitWeek';
 import { journeyAction } from './lib/education/startJourney';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 const KEY = 'healthcrest.habit-draft.v1';
 const choices = [
@@ -84,7 +93,7 @@ test('a chosen starter preserves saved records until explicit restore and save a
   await page.locator('#seven-day-plan summary').first().click();
   await expect(page.getByLabel('Day 1: a note', { exact: false })).toHaveValue('PRIVATE-SAVED-NOTE');
   await page.getByLabel('One manageable action', { exact: true }).fill('PRIVATE-ADAPTED-ACTION');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), KEY);
   expect(saved.drafts.Sleep.action).toBe('PRIVATE-ADAPTED-ACTION');
   expect(saved.drafts.Sleep.week.days[0].note).toBe('PRIVATE-SAVED-NOTE');

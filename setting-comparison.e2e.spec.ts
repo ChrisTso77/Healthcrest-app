@@ -1,6 +1,14 @@
 import { test, expect, type Page } from '@playwright/test';
 import { FALLBACK_PRESETS } from './lib/presets/fallback';
 
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
+
 const trigger = (page: Page) => page.getByRole('button', { name: 'Compare starting and current settings', exact: true });
 const dialog = (page: Page) => page.getByRole('dialog', { name: 'Starting and current settings', exact: true });
 async function boot(page: Page, query = 'pillar=sleep&view=2d') {

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/PlannerSafeLink';
 import { guideForPillar, GUIDE_SOURCE_CHECKED_ON } from '@/lib/education/learningGuides';
 import type { HabitPillar } from '@/lib/education/habitDraft';
 

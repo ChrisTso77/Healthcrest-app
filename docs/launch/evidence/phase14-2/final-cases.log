@@ -1,0 +1,11 @@
+
+Running 4 tests using 1 worker
+
+(node:36799) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › health-engine.e2e.spec.ts:12:7 › Healthcrest production regression › pillar goals lead to contextual habit guidance without resetting the Habit Explorer (10.4s)
+  ✓  2 [chromium] › health-engine.e2e.spec.ts:1440:7 › Inline setting explanations › a setting explanation opens its own habit plan even from another pillar (1.6s)
+  ✓  3 [chromium] › release-readiness.e2e.spec.ts:61:9 › habit selection stays visible in forced dark colours at 320px (4.5s)
+  ✓  4 [chromium] › return-plan.e2e.spec.ts:48:5 › legacy/export fixture compatibility: exported check-ins recover while page edits remain unsaved (1.3s)
+
+  4 passed (19.2s)

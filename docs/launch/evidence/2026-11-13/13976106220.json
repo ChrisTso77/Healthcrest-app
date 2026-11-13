@@ -1,0 +1,168 @@
+{
+  "origin": "http://127.0.0.1:3002",
+  "canonicalOrigin": "https://www.healthcrest.uk",
+  "passed": true,
+  "checks": [
+    {
+      "name": "build-bound release identity",
+      "passed": true,
+      "expectedCommit": "5e5c8c21bdee027ae43dcdb937169c20bc106b25",
+      "observedCommit": "5e5c8c21bdee027ae43dcdb937169c20bc106b25",
+      "mode": "local-build",
+      "compiledCommit": "5e5c8c21bdee027ae43dcdb937169c20bc106b25",
+      "runtimeIdentityProbe": true
+    },
+    {
+      "name": "canonical sitemap and robots",
+      "passed": true,
+      "pages": 13
+    },
+    {
+      "name": "public page /",
+      "passed": true,
+      "path": "/",
+      "status": 200
+    },
+    {
+      "name": "public page /start",
+      "passed": true,
+      "path": "/start",
+      "status": 200
+    },
+    {
+      "name": "public page /learn",
+      "passed": true,
+      "path": "/learn",
+      "status": 200
+    },
+    {
+      "name": "public page /engine",
+      "passed": true,
+      "path": "/engine",
+      "status": 200
+    },
+    {
+      "name": "public page /next-step",
+      "passed": true,
+      "path": "/next-step",
+      "status": 200
+    },
+    {
+      "name": "public page /about",
+      "passed": true,
+      "path": "/about",
+      "status": 200
+    },
+    {
+      "name": "public page /contact",
+      "passed": true,
+      "path": "/contact",
+      "status": 200
+    },
+    {
+      "name": "public page /storage",
+      "passed": true,
+      "path": "/storage",
+      "status": 200
+    },
+    {
+      "name": "public page /privacy",
+      "passed": true,
+      "path": "/privacy",
+      "status": 200
+    },
+    {
+      "name": "public page /learn/movement-and-strength",
+      "passed": true,
+      "path": "/learn/movement-and-strength",
+      "status": 200
+    },
+    {
+      "name": "public page /learn/balanced-meals",
+      "passed": true,
+      "path": "/learn/balanced-meals",
+      "status": 200
+    },
+    {
+      "name": "public page /learn/sleep-routines",
+      "passed": true,
+      "path": "/learn/sleep-routines",
+      "status": 200
+    },
+    {
+      "name": "public page /learn/stress-and-support",
+      "passed": true,
+      "path": "/learn/stress-and-support",
+      "status": 200
+    },
+    {
+      "name": "structured data and visible guide references",
+      "passed": true,
+      "pages": 13,
+      "guides": 4,
+      "citations": 18
+    },
+    {
+      "name": "guide discovery metadata with public preferences",
+      "passed": true,
+      "guides": 4
+    },
+    {
+      "name": "unique public metadata",
+      "passed": true,
+      "pages": 13
+    },
+    {
+      "name": "internal fragment destinations",
+      "passed": true,
+      "fragments": 66
+    },
+    {
+      "name": "internal link destinations",
+      "passed": true,
+      "destinations": 13
+    },
+    {
+      "name": "social image and hummingbird media",
+      "passed": true,
+      "assets": 3
+    },
+    {
+      "name": "browser-tab icon metadata and fallback",
+      "passed": true,
+      "pages": 13,
+      "metadataIcons": 1,
+      "fallbackRedirects": 0,
+      "maximumBytes": 16384
+    },
+    {
+      "name": "missing page recovery and indexing",
+      "passed": true,
+      "pages": 2
+    },
+    {
+      "name": "fresh-visitor assets and measurement",
+      "passed": true,
+      "failedAssets": 0,
+      "telemetryRequests": 0,
+      "typedAssets": 22,
+      "invalidAssetTypes": 0
+    }
+  ],
+  "provenance": {
+    "sourceCommit": "5e5c8c21bdee027ae43dcdb937169c20bc106b25",
+    "event": "pull_request",
+    "checkoutScope": "GitHub pull-request merge checkout; not the pull-request head SHA",
+    "workflowRunUrl": "https://github.com/ChrisTso77/Healthcrest-app/actions/runs/43287617779"
+  },
+  "release": {
+    "mode": "local-build",
+    "expectedCommit": "5e5c8c21bdee027ae43dcdb937169c20bc106b25",
+    "observedCommit": "5e5c8c21bdee027ae43dcdb937169c20bc106b25",
+    "identityVerified": true,
+    "compiledCommit": "5e5c8c21bdee027ae43dcdb937169c20bc106b25",
+    "runtimeIdentityProbe": true,
+    "identityHttpStatus": 200
+  },
+  "scope": "Read-only smoke checks of a fresh browser against the built application or explicitly supplied origin. Expected/observed commit headers identify the claimed build; they do not independently attest provider settings or source integrity. A GitHub PR source checkout can be a synthetic merge commit. Fragment targets use default public page DOMs; query-dependent states and external sources need separate tests. No claim about provider dashboards, legal review or every clinical statement."
+}

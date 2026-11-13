@@ -1,0 +1,23 @@
+[
+  {
+    "digest": "sha256:77375b82c6fe3d3c90be27c90e5c8d54a6a48b9922ce50fa22772b498e2a9965",
+    "expired": false,
+    "head_sha": "db6ea62f239e4c241ac807e02cce7d99e7f35c44",
+    "id": 13988656746,
+    "name": "protected-preview-release-readiness"
+  },
+  {
+    "digest": "sha256:8f4c0dc073d3273dd7a5e76c218a53c336bc1a2f5355a52239713f711502c0cb",
+    "expired": false,
+    "head_sha": "9d5dbca88426152c3dad56c41d2db05a68acf7b9",
+    "id": 13976106220,
+    "name": "release-readiness"
+  },
+  {
+    "digest": "sha256:8238f1c2d6a5fdd1215bc44727e653592c0a8fbcb5881ce168053b9ada9ce433",
+    "expired": false,
+    "head_sha": "076a85369c1826f98b6b92ac5bad515cc9d6546e",
+    "id": 13961133426,
+    "name": "production-release-readiness"
+  }
+]

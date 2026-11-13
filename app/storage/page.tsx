@@ -19,12 +19,11 @@ export default function Page() {
         <h1>Browser storage</h1>
         <section aria-labelledby="draft-storage-title">
           <h2 id="draft-storage-title">Your habit drafts</h2>
-          <p>The next-step planner keeps your edits in the current page. Choosing <strong>Save on this device</strong> stores all four pillar drafts, reflection notes and current seven-day plans, including their dates, daily check-ins and weekly reviews in this browser using local storage. The planner does not send those drafts to Healthcrest or sync them between devices.</p>
-          <p>Each pillar keeps one current week. Clearing a week changes the current page; saving again replaces its saved copy. Download a week first if you want a separate record.</p>
-          <p>Prepare another week lets you edit a proposed action and date while the current week stays in place. Before confirming replacement, download a backup if you want to keep the old record. Only saving again updates the browser copy; the planner keeps one current week per pillar.</p>
-          <p>Saving and restoring are manual. Either restore control asks before replacing unsaved drafts, notes and check-ins for all four habits. Choose Keep my edits to cancel without reading the saved copy. A saved copy remains until you remove it or clear the browser’s site data. Other people using this browser profile may be able to restore it. A shared or public device may not be a suitable place to save personal notes.</p>
+          <p>New drafts, notes and check-ins exist only in page memory. Export requests an unencrypted file managed by you; it does not store a new browser copy. Refreshing, closing or a crash can lose edits before export.</p>
+          <p>Older saved plans remain unchanged. Restore reads that older copy only when requested. If page edits exist, confirmation protects them; Keep my edits cancels without reading the saved copy.</p>
+          <p>Preparing or clearing a week changes page memory only. Export before replacing a week if you want a separate record. Check that your browser saved the file; starting a download is not proof of durable storage.</p>
           <p>Choose <strong>Remove saved plan</strong>, then confirm with <strong>Remove saved copy</strong>, to delete the saved copy for all four habits while keeping your current page edits. Choose <strong>Keep saved plan</strong> to cancel. Downloaded files and printed copies are not deleted; you manage those separately.</p>
-          <p><Link href="/next-step#saved-draft-controls" prefetch={false} className="hc-text-link">Open the save, restore and remove controls</Link>.</p>
+          <p><Link href="/next-step#saved-draft-controls" prefetch={false} className="hc-text-link">Open export, legacy restore and remove controls</Link>.</p>
         </section>
         <section aria-labelledby="calendar-storage-title">
           <h2 id="calendar-storage-title">Calendar check-in files</h2>
@@ -34,7 +33,7 @@ export default function Page() {
         <section aria-labelledby="backup-storage-title">
           <h2 id="backup-storage-title">Backups and moving between devices</h2>
           <p>Choose <strong>Download all-pillar backup</strong> in the planner to keep a JSON file of your current page drafts, notes and current weeks for all four pillars, including unsaved edits. This does not save or change the browser copy.</p>
-          <p>On another device, choose that file in the planner, review its summary and explicitly replace the page drafts. The file is read locally in the browser and is not uploaded to Healthcrest. Importing does not save automatically: choose <strong>Save on this device</strong> if you want to keep the imported plan in that browser.</p>
+          <p>On another device, choose that file in the planner, review its summary and explicitly replace the page drafts. The file is read locally in the browser and is not uploaded to Healthcrest. Importing changes page memory only. Export a backup if you want a separate user-managed file.</p>
           <p>A backup contains your notes and is not encrypted by Healthcrest. Manage it as a personal file, including any copies you make when transferring it. Removing a browser draft does not remove a backup, downloaded text file or PDF. Deleting a backup does not remove a saved browser draft. Plans do not sync automatically.</p>
           <p><Link href="/next-step#plan-backup-controls" prefetch={false} className="hc-text-link">Open the plan backup controls</Link>.</p>
         </section>

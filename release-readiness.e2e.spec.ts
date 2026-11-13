@@ -26,7 +26,7 @@ for (const width of [320, 1350]) {
   });
 }
 
-test('blocked saved-plan removal preserves the copy and explicit save cancels removal', async ({ page }, testInfo) => {
+test('blocked legacy removal preserves its copy and export does not authorise deletion', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 320, height: 568 });
   await checkSavedPlanRemoval(page, testInfo, true, true);
 });

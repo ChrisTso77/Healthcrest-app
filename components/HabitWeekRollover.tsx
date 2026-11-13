@@ -71,7 +71,7 @@ export function HabitWeekRollover({ week, draft, onStart, onDownloadBackup }: {
           <input id={id + '-cue'} type="text" maxLength={180} value={proposal.cue} onChange={event => setProposal({ ...proposal, cue: event.target.value })} />
           <label htmlFor={id + '-support'}>What could help with the new action? <span>(optional)</span></label>
           <textarea id={id + '-support'} rows={2} maxLength={180} value={proposal.support} onChange={event => setProposal({ ...proposal, support: event.target.value })} />
-          <p>Your current plan stays in place until you confirm replacement. Saving or downloading now keeps that current plan, without these preparation fields. Each pillar keeps one current week.</p>
+          <p>Your current plan stays in place until you confirm replacement. Exporting now requests a separate file of that current plan, without these preparation fields. Each pillar keeps one current week.</p>
           <button type="submit">Review new week</button>
           {error && <p role="alert">{error}</p>}
         </form> : <div className="hc-week-confirm" role="group" aria-labelledby={id + '-confirm-title'}>
@@ -81,7 +81,7 @@ export function HabitWeekRollover({ week, draft, onStart, onDownloadBackup }: {
           {ready.cue.trim() && <p>When: {ready.cue}</p>}
           {ready.support.trim() && <p>What could help: {ready.support}</p>}
           <p>This replaces this pillar’s current week, daily check-ins and weekly review on this page with a new week and seven blank check-ins. The draft action, cue and support become the new choices. Extra reflection notes and the other pillars stay as they are.</p>
-          <p>Your saved browser copy changes only when you save again. Keep this week in a downloaded backup first if you want a separate record.</p>
+          <p>Your older saved browser copy remains unchanged. Keep this week in a downloaded backup first if you want a separate record.</p>
           <button type="button" onClick={() => { setReady(null); requestAnimationFrame(() => actionField.current?.focus()); }}>Keep editing new week</button>
           <button type="button" onClick={replace}>Replace with this new week</button>
         </div>}

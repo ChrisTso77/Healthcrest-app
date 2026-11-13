@@ -94,7 +94,7 @@ export function HabitPlanBackup({ drafts, onDownload, onImport, onStatus }: {
         <h4 id={id + '-preview-title'} tabIndex={-1} ref={previewHeading}>Review this backup</h4>
         <p className="hc-backup-filename">File: {candidate.name}</p>
         <p>Contains four pillar drafts and {Object.values(candidate.saved.drafts).filter(draft => draft.week !== null).length} current seven-day plans. Opens with {names[candidate.saved.selected]} selected.</p>
-        <p>Using this backup replaces all four drafts, notes and current weeks on this page. Your saved browser copy stays as it is until you choose Save on this device. Download a backup of your current page first if you want to keep it.</p>
+        <p>Using this backup replaces all four drafts, notes and current weeks on this page. Your older saved browser copy stays unchanged, including after export. Download a backup of your current page first if you want to keep it.</p>
         <p className="hc-backup-change-count">{comparison.filter(item => item.changes.length > 0).length} of 4 pillar drafts differ from this page.</p>
         <details key={candidate.revision} className="hc-backup-compare">
           <summary>Compare the backup with this page</summary>

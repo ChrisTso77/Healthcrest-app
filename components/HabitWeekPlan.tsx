@@ -118,14 +118,14 @@ export function HabitWeekPlan({ week, draft, onChange, onUseNextAction, onSave, 
           <HabitWeekRollover week={week} draft={draft} onDownloadBackup={onDownloadBackup}
             onStart={next => { setConfirmClear(false); setStartDate(''); setError(''); onStartNextWeek(next); requestAnimationFrame(() => heading.current?.focus()); }} />
           <div className="hc-week-quick-save">
-            <p>{hasUnsavedChanges ? 'Your latest changes are on this page. Save to keep them on this device.' : 'Save again whenever you change a check-in or review.'}</p>
-            <button type="button" onClick={onSave}>Save week and all drafts</button>
-            <p className="hc-plan-storage">This saves the drafts and current weeks for all four pillars in this browser.</p>
+            <p>{hasUnsavedChanges ? 'Your latest changes exist only on this page. Export to keep a separate file.' : 'Export again after changing a check-in or review.'}</p>
+            <button type="button" onClick={onSave}>Export week and all drafts</button>
+            <p className="hc-plan-storage">This requests an unencrypted backup file for all four pillars; verify the download.</p>
           </div>
-          <p className="hc-plan-storage">Choose Save on this device below to keep this week with your drafts. Save again after editing. This page keeps one current week per pillar.</p>
+          <p className="hc-plan-storage">Export a backup to keep this week. New edits are not saved in browser storage. This page keeps one current week per pillar.</p>
           {!confirmClear ? <button type="button" ref={clearButton} onClick={() => setConfirmClear(true)}>Clear this week to start another</button> : (
             <div className="hc-week-confirm" role="group" aria-label="Clear this week confirmation">
-              <p>Clear this pillar’s current week and its check-ins from this page? Download your next step below first if you want a separate copy. Your saved copy changes only when you save again. Your draft action and extra reflection notes will stay.</p>
+              <p>Clear this pillar’s current week and its check-ins from this page? Download your next step below first if you want a separate copy. Your older saved copy is unchanged. Your draft action and extra reflection notes will stay.</p>
               <button type="button" onClick={() => { setConfirmClear(false); requestAnimationFrame(() => clearButton.current?.focus()); }}>Keep this week</button>
               <button type="button" onClick={clear}>Clear current week</button>
             </div>

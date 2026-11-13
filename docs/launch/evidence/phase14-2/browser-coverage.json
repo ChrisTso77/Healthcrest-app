@@ -1,0 +1,4950 @@
+[
+  {
+    "file": "backup-review.e2e.spec.ts",
+    "title": "comparison follows page edits and restore while a candidate stays open without stealing focus",
+    "suite": [
+      "backup-review.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "backup-review.e2e.spec.ts",
+    "title": "equal-count note changes are identified and applied only on explicit replacement and save",
+    "suite": [
+      "backup-review.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "backup-review.e2e.spec.ts",
+    "title": "comparison distinguishes added and removed weeks and refreshes for legacy or invalid files",
+    "suite": [
+      "backup-review.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "backup-review.e2e.spec.ts",
+    "title": "backup comparison renders actions literally and sends no private data while reviewing",
+    "suite": [
+      "backup-review.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "backup-review.e2e.spec.ts",
+    "title": "comparison can be reviewed and applied by keyboard at 320px",
+    "suite": [
+      "backup-review.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "backup-review.e2e.spec.ts",
+    "title": "comparison can be reviewed and applied by keyboard at 1440px",
+    "suite": [
+      "backup-review.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "browser-policy.e2e.spec.ts",
+    "title": "containment headers cover pages, API and icon without replacing existing headers",
+    "suite": [
+      "browser-policy.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "browser-policy.e2e.spec.ts",
+    "title": "a different-origin page cannot frame the planner",
+    "suite": [
+      "browser-policy.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "browser-policy.e2e.spec.ts",
+    "title": "same-origin framing keeps the planner interactive without saving automatically",
+    "suite": [
+      "browser-policy.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "browser-policy.e2e.spec.ts",
+    "title": "a foreign base URL cannot redirect relative links",
+    "suite": [
+      "browser-policy.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "browser-policy.e2e.spec.ts",
+    "title": "embedded objects are blocked while ordinary images and page content work",
+    "suite": [
+      "browser-policy.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "browser-policy.e2e.spec.ts",
+    "title": "cross-origin form submission is blocked without leaving the current page",
+    "suite": [
+      "browser-policy.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "draft-overview.e2e.spec.ts",
+    "title": "opening the overview shows page starters without automatically reading saved plans",
+    "suite": [
+      "draft-overview.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "draft-overview.e2e.spec.ts",
+    "title": "overview follows page edits and notes-only counts without saving or sending personal text",
+    "suite": [
+      "draft-overview.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "draft-overview.e2e.spec.ts",
+    "title": "overview refreshes after import, another week, clearing and restore without stale records",
+    "suite": [
+      "draft-overview.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "draft-overview.e2e.spec.ts",
+    "title": "overview selection works by keyboard without overflow at 320px",
+    "suite": [
+      "draft-overview.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "draft-overview.e2e.spec.ts",
+    "title": "overview selection works by keyboard without overflow at 1440px",
+    "suite": [
+      "draft-overview.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "draft-overview.e2e.spec.ts",
+    "title": "overview editing shortcuts work when browser storage is blocked",
+    "suite": [
+      "draft-overview.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "draft-overview.e2e.spec.ts",
+    "title": "without JavaScript the overview is hidden and the starter guidance remains readable",
+    "suite": [
+      "draft-overview.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "guide-starter.e2e.spec.ts",
+    "title": "Fitness guide carries the chosen idea into an editable planner action",
+    "suite": [
+      "guide-starter.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "guide-starter.e2e.spec.ts",
+    "title": "Nutrition guide carries the chosen idea into an editable planner action",
+    "suite": [
+      "guide-starter.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "guide-starter.e2e.spec.ts",
+    "title": "Sleep guide carries the chosen idea into an editable planner action",
+    "suite": [
+      "guide-starter.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "guide-starter.e2e.spec.ts",
+    "title": "Stress guide carries the chosen idea into an editable planner action",
+    "suite": [
+      "guide-starter.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "guide-starter.e2e.spec.ts",
+    "title": "unknown, repeated, wrong-pillar and raw-text starters use the existing safe fallback",
+    "suite": [
+      "guide-starter.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "guide-starter.e2e.spec.ts",
+    "title": "a chosen starter preserves saved records until explicit restore and save and sends no private text",
+    "suite": [
+      "guide-starter.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "guide-starter.e2e.spec.ts",
+    "title": "guide idea links work by keyboard without horizontal overflow at 320px",
+    "suite": [
+      "guide-starter.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "guide-starter.e2e.spec.ts",
+    "title": "guide idea links work by keyboard without horizontal overflow at 1440px",
+    "suite": [
+      "guide-starter.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "guide-starter.e2e.spec.ts",
+    "title": "idea-to-planner links remain server rendered without JavaScript",
+    "suite": [
+      "guide-starter.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-calendar.e2e.spec.ts",
+    "title": "calendar download is explicit, finite and generic without saving or sending plan text",
+    "suite": [
+      "habit-calendar.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "habit-calendar.e2e.spec.ts",
+    "title": "time and feedback reset across pillars, restore, import, date replacement and clearing",
+    "suite": [
+      "habit-calendar.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-calendar.e2e.spec.ts",
+    "title": "download failure keeps the week and chosen time while calendars work with blocked storage",
+    "suite": [
+      "habit-calendar.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-calendar.e2e.spec.ts",
+    "title": "keyboard calendar export preserves local dates at 320px in a different time zone",
+    "suite": [
+      "habit-calendar.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-calendar.e2e.spec.ts",
+    "title": "keyboard calendar export preserves local dates at 1440px in a different time zone",
+    "suite": [
+      "habit-calendar.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-calendar.e2e.spec.ts",
+    "title": "public privacy and storage guidance explain the optional calendar transfer",
+    "suite": [
+      "habit-calendar.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "a dated week keeps its original action and all seven calendar labels",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "starting, checking in and reviewing never saves or sends planner data automatically",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "explicit saving restores check-ins and review across pillars and removes only the saved copy",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "version 2 drafts keep their reflection notes and upgrade only on explicit save",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "review adjustments are explicit and clearing a week requires confirmation",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "download keeps the weekly snapshot and selected pillar even with an empty current draft",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "a damaged stored week never replaces current edits",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "a week can be edited and downloaded when browser saving is blocked",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "weekly controls support keyboard use at 320px",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "weekly controls support keyboard use at 390px",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "weekly controls support keyboard use at 768px",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "weekly controls support keyboard use at 1440px",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "habit-week.e2e.spec.ts",
+    "title": "the planning explanation remains readable without JavaScript",
+    "suite": [
+      "habit-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "pillar goals lead to contextual habit guidance without resetting the Habit Explorer",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-final-cases-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "guide explains experimental evidence and follows manual changes on a phone",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "2D overview exposes current values and preset status without invented scores",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "2D overview stays reachable with dock and CMS notices at 320px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "2D overview stays reachable with dock and CMS notices at 390px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "2D overview stays reachable with dock and CMS notices at 1280px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "respects reduce on load and live motion preference changes",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "respects no-preference on load and live motion preference changes",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "About this Explorer manages modal focus and dismissal at 1280px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "Guide: understand this view manages modal focus and dismissal at 1280px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "Important information manages modal focus and dismissal at 1280px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "About this Explorer manages modal focus and dismissal at 320px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "Guide: understand this view manages modal focus and dismissal at 320px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "Important information manages modal focus and dismissal at 320px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "compact layout keeps engine controls usable at 320px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "compact layout keeps engine controls usable at 390px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "compact layout keeps engine controls usable at 768px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "compact layout keeps engine controls usable at 1024px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "keeps mobile CMS recovery and parameter controls reachable",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "renders the WebGL health engine",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "plain topic names preserve legacy links, keyboard selection and settings at 320px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "plain topic names preserve legacy links, keyboard selection and settings at 768px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "plain topic names preserve legacy links, keyboard selection and settings at 1350px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "pillar controls remain interactive",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "health parameter sliders remain interactive",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "exposes named sliders with guidance and supports keyboard parameter changes",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "exposes control selections and dock state during keyboard navigation",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "switches between WebGL and 2D fallback",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "automatically uses 2D when WebGL is unavailable and preserves controls on retry",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "uses the interactive 2D engine when its 3D module cannot load",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "render mode controls stay synchronized with the rendered viewport",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "active pillar control stays synchronized with canonical state",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "active preset presentation follows canonical reducer state",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "manual pillar selection does not leave a stale preset selected",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "alcohol units stay synchronized with canonical preset state",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "parameter controls stay synchronized with canonical preset state",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "manual parameter change clears the active preset",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "manual changes clear stale preset status in 2D fallback",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "camera controls stay synchronized with canonical camera state",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "camera viewing angles and reset remain usable",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "reapplies the active camera shot after manual orbit",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "preset selection keeps WebGL alive",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "presets API responds successfully",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "unexpected",
+    "results": [
+      {
+        "status": "timedOut",
+        "error": "\u001b[31mTest timeout of 12000ms exceeded.\u001b[39m"
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "Sanity preset synchronizes clinical state and camera",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "HUD consumes presets returned by the API",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "keeps fallback presets interactive after failed CMS request",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "keeps fallback presets interactive after malformed CMS JSON",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "keeps fallback presets interactive after invalid CMS response",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "keeps fallback presets interactive after empty CMS preset list",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "times out a stalled CMS request while fallback controls remain usable",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "retries CMS loading without losing manual parameters or render mode",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "allows another retry when the CMS is still unavailable",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "warning preset synchronizes reducer state into 2D fallback",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "Lite 3D reduces actual graphics work and restores High detail",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression",
+      "render quality at 1x pixel density"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "Lite 3D reduces actual graphics work and restores High detail",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Healthcrest production regression",
+      "render quality at 2x pixel density"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "explaining each setting preserves the scenario and updates with manual values",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Inline setting explanations"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "international-sources.e2e.spec.ts",
+    "title": "movement-and-strength explains and cites its international perspective",
+    "suite": [
+      "international-sources.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "international-sources.e2e.spec.ts",
+    "title": "balanced-meals explains and cites its international perspective",
+    "suite": [
+      "international-sources.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "international-sources.e2e.spec.ts",
+    "title": "sleep-routines explains and cites its international perspective",
+    "suite": [
+      "international-sources.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "international-sources.e2e.spec.ts",
+    "title": "stress-and-support explains and cites its international perspective",
+    "suite": [
+      "international-sources.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "international-sources.e2e.spec.ts",
+    "title": "Harvard is discoverable in search with its educational scope visible",
+    "suite": [
+      "international-sources.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "international-sources.e2e.spec.ts",
+    "title": "CDC age bands remain distinct from the general NHS adult range",
+    "suite": [
+      "international-sources.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "international-sources.e2e.spec.ts",
+    "title": "global stress context retains local urgent routes and works without JavaScript",
+    "suite": [
+      "international-sources.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "hummingbird loads, pauses, resumes and respects changed motion preferences",
+    "suite": [
+      "landing.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "hummingbird uses a matching video still when video fails",
+    "suite": [
+      "landing.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "branding and static hero remain available without JavaScript",
+    "suite": [
+      "landing.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "public navigation explains authorship and offers a working contact route",
+    "suite": [
+      "landing.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "start-here questions reach the relevant guidance and saved-plan controls remain manual",
+    "suite": [
+      "landing.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "stress guidance exposes local urgent-help routes and keyboard preview selection works",
+    "suite": [
+      "landing.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "supplied logo is delivered responsively in a modern image format",
+    "suite": [
+      "landing.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "canonical and sharing metadata use the confirmed domain and publish working discovery files",
+    "suite": [
+      "landing.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "discovery files list the public pages on the confirmed domain",
+    "suite": [
+      "landing.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "social sharing image renders as a complete PNG",
+    "suite": [
+      "landing.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "landing page introduces Healthcrest and stays usable at 320px",
+    "suite": [
+      "landing.e2e.spec.ts",
+      "Healthcrest introduction"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "landing page introduces Healthcrest and stays usable at 390px",
+    "suite": [
+      "landing.e2e.spec.ts",
+      "Healthcrest introduction"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "landing page introduces Healthcrest and stays usable at 768px",
+    "suite": [
+      "landing.e2e.spec.ts",
+      "Healthcrest introduction"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "landing page introduces Healthcrest and stays usable at 1440px",
+    "suite": [
+      "landing.e2e.spec.ts",
+      "Healthcrest introduction"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "preview opens the selected pillar and the Habit Explorer links home",
+    "suite": [
+      "landing.e2e.spec.ts",
+      "Healthcrest introduction"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "landing.e2e.spec.ts",
+    "title": "landing works with keyboard and reduced motion; unknown pillar links are safe",
+    "suite": [
+      "landing.e2e.spec.ts",
+      "Healthcrest introduction"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learn.e2e.spec.ts",
+    "title": "learning search finds acronyms and evidence labels, handles empty results and clears with keyboard",
+    "suite": [
+      "learn.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learn.e2e.spec.ts",
+    "title": "topic guidance leads to the matching planner and engine view",
+    "suite": [
+      "learn.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learn.e2e.spec.ts",
+    "title": "landing navigation and engine guide expose the learning library",
+    "suite": [
+      "learn.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learn.e2e.spec.ts",
+    "title": "learning library is usable at 320px without loading the Habit Explorer",
+    "suite": [
+      "learn.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learn.e2e.spec.ts",
+    "title": "learning library is usable at 390px without loading the Habit Explorer",
+    "suite": [
+      "learn.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learn.e2e.spec.ts",
+    "title": "learning library is usable at 768px without loading the Habit Explorer",
+    "suite": [
+      "learn.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learn.e2e.spec.ts",
+    "title": "learning library is usable at 1440px without loading the Habit Explorer",
+    "suite": [
+      "learn.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learn.e2e.spec.ts",
+    "title": "learning topics and definitions are readable without JavaScript",
+    "suite": [
+      "learn.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "movement-and-strength renders its guidance, working references and article metadata",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "movement-and-strength can be read and followed to a planner without JavaScript",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "balanced-meals renders its guidance, working references and article metadata",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "balanced-meals can be read and followed to a planner without JavaScript",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "sleep-routines renders its guidance, working references and article metadata",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "sleep-routines can be read and followed to a planner without JavaScript",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "stress-and-support renders its guidance, working references and article metadata",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "stress-and-support can be read and followed to a planner without JavaScript",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "library search finds article content and carries the guided preference through to an editable plan",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "stress guide places geographically qualified urgent help near its introduction",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "new guide routes stay outside optional measurement even with a stored opt-in",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "unknown guide slugs return 404 and repeated preferences fall back safely",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "guide navigation and source links work by keyboard at 320px",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "guide navigation and source links work by keyboard at 390px",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "guide navigation and source links work by keyboard at 768px",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "guide navigation and source links work by keyboard at 1440px",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-guides.e2e.spec.ts",
+    "title": "sitemap exposes the four canonical article routes",
+    "suite": [
+      "learning-guides.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-search.e2e.spec.ts",
+    "title": "Food multiword search opens the matching international context",
+    "suite": [
+      "learning-search.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-search.e2e.spec.ts",
+    "title": "Movement multiword search opens the matching international context",
+    "suite": [
+      "learning-search.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-search.e2e.spec.ts",
+    "title": "Sleep multiword search opens the matching international context",
+    "suite": [
+      "learning-search.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-search.e2e.spec.ts",
+    "title": "Stress & support multiword search opens the matching international context",
+    "suite": [
+      "learning-search.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-search.e2e.spec.ts",
+    "title": "searching source type opens its scoped reference rather than an unrelated paragraph",
+    "suite": [
+      "learning-search.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-search.e2e.spec.ts",
+    "title": "search normalisation and empty-result recovery work by keyboard at 320px",
+    "suite": [
+      "learning-search.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-search.e2e.spec.ts",
+    "title": "search normalisation and empty-result recovery work by keyboard at 1440px",
+    "suite": [
+      "learning-search.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "learning-search.e2e.spec.ts",
+    "title": "search queries stay out of URLs, saved plans and requests and literal markup is harmless",
+    "suite": [
+      "learning-search.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "movement-options.e2e.spec.ts",
+    "title": "access journey reaches seated guidance and preserves the editable starter without saving",
+    "suite": [
+      "movement-options.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "movement-options.e2e.spec.ts",
+    "title": "older adult guidance keeps the vigorous-activity qualification and links to its source",
+    "suite": [
+      "movement-options.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "movement-options.e2e.spec.ts",
+    "title": "search discovers seated guidance without introducing an age or disability profile",
+    "suite": [
+      "movement-options.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "movement-options.e2e.spec.ts",
+    "title": "movement options support keyboard navigation at 320px",
+    "suite": [
+      "movement-options.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "movement-options.e2e.spec.ts",
+    "title": "movement options support keyboard navigation at 390px",
+    "suite": [
+      "movement-options.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "movement-options.e2e.spec.ts",
+    "title": "movement options support keyboard navigation at 768px",
+    "suite": [
+      "movement-options.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "movement-options.e2e.spec.ts",
+    "title": "movement options support keyboard navigation at 1440px",
+    "suite": [
+      "movement-options.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "movement-options.e2e.spec.ts",
+    "title": "access options and section navigation work without JavaScript",
+    "suite": [
+      "movement-options.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "landing preview opens a matching plan and preserves drafts when switching pillars",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "download contains the chosen habit, routine, support and relevant source",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "plan is usable with keyboard at 320px",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "plan is usable with keyboard at 390px",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "plan is usable with keyboard at 768px",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "plan is usable with keyboard at 1440px",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "engine guide links to its pillar plan and plan links back to that engine view",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "unknown plan pillar is safe and server guidance remains available without JavaScript",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "legacy fixture from export restores all pillar drafts and the saved selection after reloading",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "editing alone never persists a plan",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "removing saved drafts keeps current edits and unrelated browser storage",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "damaged saved data never replaces current edits",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "blocked browser storage leaves editing and download available",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "reflection notes follow each pillar and appear in the downloaded plan",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "saved reflection notes survive reload and restore alongside other pillar drafts",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-step.e2e.spec.ts",
+    "title": "earlier saved plans restore with empty reflection notes and upgrade only on explicit save",
+    "suite": [
+      "next-step.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-week.e2e.spec.ts",
+    "title": "a backed-up week can be recovered after explicit replacement and saving a new week",
+    "suite": [
+      "next-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-week.e2e.spec.ts",
+    "title": "cancelling either stage and returning to editing preserves current plans and saved data",
+    "suite": [
+      "next-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-week.e2e.spec.ts",
+    "title": "invalid action cannot replace the current week and leap-day dates remain seven calendar days",
+    "suite": [
+      "next-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-week.e2e.spec.ts",
+    "title": "blank new-week date uses the device calendar across a year boundary",
+    "suite": [
+      "next-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-week.e2e.spec.ts",
+    "title": "failed backup and blocked storage keep the old week editable and send no planner data",
+    "suite": [
+      "next-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-focused-results.json"
+  },
+  {
+    "file": "next-week.e2e.spec.ts",
+    "title": "restoring, importing or changing pillars removes stale replacement preparations",
+    "suite": [
+      "next-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "next-week.e2e.spec.ts",
+    "title": "new-week review supports keyboard focus at 320px",
+    "suite": [
+      "next-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "next-week.e2e.spec.ts",
+    "title": "new-week review supports keyboard focus at 1440px",
+    "suite": [
+      "next-week.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "plan-backup.e2e.spec.ts",
+    "title": "backup round-trips unsaved drafts and weeks into a separate browser profile with explicit saving",
+    "suite": [
+      "plan-backup.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "plan-backup.e2e.spec.ts",
+    "title": "checking then cancelling a backup preserves current edits and the saved browser copy",
+    "suite": [
+      "plan-backup.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-backup.e2e.spec.ts",
+    "title": "damaged, oversized, future and invalid-week files never replace page edits or saved drafts",
+    "suite": [
+      "plan-backup.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-backup.e2e.spec.ts",
+    "title": "older draft backups migrate in page memory and export in the current format",
+    "suite": [
+      "plan-backup.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-backup.e2e.spec.ts",
+    "title": "unreadable files leave edits intact and transfer still works when browser storage is blocked",
+    "suite": [
+      "plan-backup.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-backup.e2e.spec.ts",
+    "title": "cancelled and superseded file reads cannot reopen or replace the chosen backup",
+    "suite": [
+      "plan-backup.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-backup.e2e.spec.ts",
+    "title": "backup notes remain literal text and transfer sends no planner or measurement requests",
+    "suite": [
+      "plan-backup.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-backup.e2e.spec.ts",
+    "title": "backup preview and replacement work by keyboard at 320px",
+    "suite": [
+      "plan-backup.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "plan-backup.e2e.spec.ts",
+    "title": "backup preview and replacement work by keyboard at 1440px",
+    "suite": [
+      "plan-backup.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "plan-evidence.e2e.spec.ts",
+    "title": "Movement planner connects local guidance to a scoped international reference",
+    "suite": [
+      "plan-evidence.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-evidence.e2e.spec.ts",
+    "title": "Food planner connects local guidance to a scoped international reference",
+    "suite": [
+      "plan-evidence.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-evidence.e2e.spec.ts",
+    "title": "Sleep planner connects local guidance to a scoped international reference",
+    "suite": [
+      "plan-evidence.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-evidence.e2e.spec.ts",
+    "title": "Stress & support planner connects local guidance to a scoped international reference",
+    "suite": [
+      "plan-evidence.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-evidence.e2e.spec.ts",
+    "title": "evidence jumps and native disclosure work by keyboard at 320px",
+    "suite": [
+      "plan-evidence.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-evidence.e2e.spec.ts",
+    "title": "evidence jumps and native disclosure work by keyboard at 1440px",
+    "suite": [
+      "plan-evidence.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "plan-evidence.e2e.spec.ts",
+    "title": "reference browsing preserves saved and page drafts without sending personal text",
+    "suite": [
+      "plan-evidence.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "plan-evidence.e2e.spec.ts",
+    "title": "initial evidence and the native disclosure remain readable without JavaScript",
+    "suite": [
+      "plan-evidence.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "planner-hydration.e2e.spec.ts",
+    "title": "planner protects edits until hydration and keeps the chosen calendar dates",
+    "suite": [
+      "planner-hydration.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "print-guide.e2e.spec.ts",
+    "title": "movement-and-strength prints complete guidance and readable scoped sources in a real PDF",
+    "suite": [
+      "print-guide.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "print-guide.e2e.spec.ts",
+    "title": "balanced-meals prints complete guidance and readable scoped sources in a real PDF",
+    "suite": [
+      "print-guide.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "print-guide.e2e.spec.ts",
+    "title": "sleep-routines prints complete guidance and readable scoped sources in a real PDF",
+    "suite": [
+      "print-guide.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "print-guide.e2e.spec.ts",
+    "title": "stress-and-support prints complete guidance and readable scoped sources in a real PDF",
+    "suite": [
+      "print-guide.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "print-guide.e2e.spec.ts",
+    "title": "printing is explicit and keyboard accessible at 320px without sending or saving notes",
+    "suite": [
+      "print-guide.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "print-guide.e2e.spec.ts",
+    "title": "printing is explicit and keyboard accessible at 1440px without sending or saving notes",
+    "suite": [
+      "print-guide.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "print-guide.e2e.spec.ts",
+    "title": "a print failure leaves the guide and source navigation available",
+    "suite": [
+      "print-guide.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "print-guide.e2e.spec.ts",
+    "title": "browser printing without JavaScript retains the full article and urgent-help details",
+    "suite": [
+      "print-guide.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "print-guide.e2e.spec.ts",
+    "title": "guide print styles do not change the planner worksheet after client navigation",
+    "suite": [
+      "print-guide.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-playwright.json"
+  },
+  {
+    "file": "print-plan.e2e.spec.ts",
+    "title": "keyboard printing uses current selected page edits without saving or sending them",
+    "suite": [
+      "print-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "live visual key explains changes and pause stops automatic drawing without resetting the scene",
+    "suite": [
+      "health-engine.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "visual key remains reachable above the dock at 320px",
+    "suite": [
+      "health-engine.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "visual key remains reachable above the dock at 390px",
+    "suite": [
+      "health-engine.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "visual key remains reachable above the dock at 768px",
+    "suite": [
+      "health-engine.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "visual key remains reachable above the dock at 1440px",
+    "suite": [
+      "health-engine.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "view explanations distinguish unused 3D inputs, active scenes and 2D",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Inline setting explanations"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "inline guidance is keyboard accessible and scrollable at 320px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Inline setting explanations"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "inline guidance is keyboard accessible and scrollable at 390px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Inline setting explanations"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "inline guidance is keyboard accessible and scrollable at 768px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Inline setting explanations"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "inline guidance is keyboard accessible and scrollable at 1440px",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Inline setting explanations"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "a setting explanation opens its own habit plan even from another pillar",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Inline setting explanations"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-final-cases-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "stale CMS copy is replaced while sources, scope and parameters remain available",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Reviewed scenario evidence"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "research is a separate group with primary studies and explicit limitations",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Reviewed scenario evidence"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "health-engine.e2e.spec.ts",
+    "title": "unknown CMS claims are withheld and clearly labelled awaiting review",
+    "suite": [
+      "health-engine.e2e.spec.ts",
+      "Reviewed scenario evidence"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "print-plan.e2e.spec.ts",
+    "title": "print media provides seven paper check-ins and hides screen controls",
+    "suite": [
+      "print-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "print-plan.e2e.spec.ts",
+    "title": "print copy includes closed check-ins, weekly review and the original week action",
+    "suite": [
+      "print-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "print-plan.e2e.spec.ts",
+    "title": "maximum-length notes wrap and generate a multipage PDF",
+    "suite": [
+      "print-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "print-plan.e2e.spec.ts",
+    "title": "print failure offers the download fallback without losing edits",
+    "suite": [
+      "print-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "print-plan.e2e.spec.ts",
+    "title": "empty actions disable printing unless there is a current week to keep",
+    "suite": [
+      "print-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "print-plan.e2e.spec.ts",
+    "title": "browser printing without JavaScript retains a readable starter worksheet",
+    "suite": [
+      "print-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "both restore controls protect unsaved drafts and notes at 320px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-restore-final-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "both restore controls protect unsaved drafts and notes at 1350px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-restore-final-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "both restore controls preserve edits with invalid saved data",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "both restore controls preserve edits with blocked saved data",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "saved-plan removal requires confirmation and preserves page edits at 320px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "saved-plan removal requires confirmation and preserves page edits at 1350px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "blocked legacy removal preserves its copy and export does not authorise deletion",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-focused-fixed-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "plain Explorer information controls preserve the current session at 320px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "plain Explorer information controls preserve the current session at 1350px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "scenario selection and manual attribution survive forced light colours at 320px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "scenario selection and manual attribution survive forced dark colours at 320px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "scenario selection and manual attribution survive forced light colours at 1350px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "scenario selection and manual attribution survive forced dark colours at 1350px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "3D scenario markers preserve camera, canvas and manual attribution",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "habit selection stays visible in forced light colours at 320px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "habit selection stays visible in forced dark colours at 320px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-final-cases-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "habit selection stays visible in forced light colours at 1350px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "habit selection stays visible in forced dark colours at 1350px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "habit selection and labels fit the narrow public journey in normal colours",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "public keyboard focus remains clear on light and dark surfaces at 390px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "public keyboard focus remains clear on light and dark surfaces at 1350px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "missing page recovery at /a-missing-healthcrest-page and 320px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "missing page recovery at /a-missing-healthcrest-page and 1440px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "missing page recovery at /learn/a-missing-healthcrest-guide and 320px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "missing page recovery at /learn/a-missing-healthcrest-guide and 1440px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "recovery to the planner keeps saved drafts manual and intact",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "missing page recovery remains readable without JavaScript",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "short Explorer viewport separates controls at 320px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "short Explorer viewport separates controls at 640px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "release-readiness.e2e.spec.ts",
+    "title": "short Explorer viewport separates controls at 1350px",
+    "suite": [
+      "release-readiness.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "return-plan.e2e.spec.ts",
+    "title": "homepage return link requires an explicit restore and opens the saved week",
+    "suite": [
+      "return-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "return-plan.e2e.spec.ts",
+    "title": "new return action protects unsaved edits and cancellation returns focus",
+    "suite": [
+      "return-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "return-plan.e2e.spec.ts",
+    "title": "legacy/export fixture compatibility: exported check-ins recover while page edits remain unsaved",
+    "suite": [
+      "return-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-final-cases-results.json"
+  },
+  {
+    "file": "return-plan.e2e.spec.ts",
+    "title": "unavailable or damaged storage leaves current edits intact",
+    "suite": [
+      "return-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "return-plan.e2e.spec.ts",
+    "title": "return navigation works by keyboard at 320px",
+    "suite": [
+      "return-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "return-plan.e2e.spec.ts",
+    "title": "return navigation works by keyboard at 390px",
+    "suite": [
+      "return-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "return-plan.e2e.spec.ts",
+    "title": "return navigation works by keyboard at 768px",
+    "suite": [
+      "return-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "return-plan.e2e.spec.ts",
+    "title": "return navigation works by keyboard at 1440px",
+    "suite": [
+      "return-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "return-plan.e2e.spec.ts",
+    "title": "an older saved draft opens its action without rewriting storage",
+    "suite": [
+      "return-plan.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "comparison values lead the reading order at 320px",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "comparison values lead the reading order at 390px",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "comparison values lead the reading order at 1350px",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "restore starting settings works by keyboard without touching saved plans at 320px",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "restore starting settings works by keyboard without touching saved plans at 768px",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "restore starting settings works by keyboard without touching saved plans at 1350px",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "restoring a chosen reference keeps the 3D topic, camera, canvas and comparison reference",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "an unchanged example is not cleared, while restoring edited values remains a manual scenario",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "2D shows starting circles, current diamonds and exact changes without loading WebGL",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "the starting point survives scene, mode and camera changes until explicitly replaced",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "loading an example starts a fresh comparison and includes additional model inputs later changed by examples",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "3D comparisons distinguish numerical changes from real scene changes",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "a combined scene explains why changed food values leave its appearance unchanged",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "guidance links preserve the guided preference and never turn slider values into a plan",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "comparisons do not read or overwrite saved habit plans and reload starts a new comparison",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "comparison controls remain reachable by keyboard at 320px",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "comparison controls remain reachable by keyboard at 390px",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "comparison controls remain reachable by keyboard at 768px",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "comparison controls remain reachable by keyboard at 1440px",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "setting-comparison.e2e.spec.ts",
+    "title": "a graphics failure and reduced motion still leave comparison available",
+    "suite": [
+      "setting-comparison.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "start.e2e.spec.ts",
+    "title": "guided choice links learning, a labelled view and an editable plan without saving",
+    "suite": [
+      "start.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "start.e2e.spec.ts",
+    "title": "a guided starter never automatically overwrites or restores a saved plan",
+    "suite": [
+      "start.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "start.e2e.spec.ts",
+    "title": "guided start stays usable at 320px without loading the Explorer",
+    "suite": [
+      "start.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "start.e2e.spec.ts",
+    "title": "guided start stays usable at 390px without loading the Explorer",
+    "suite": [
+      "start.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "start.e2e.spec.ts",
+    "title": "guided start stays usable at 768px without loading the Explorer",
+    "suite": [
+      "start.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "start.e2e.spec.ts",
+    "title": "guided start stays usable at 1440px without loading the Explorer",
+    "suite": [
+      "start.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "start.e2e.spec.ts",
+    "title": "guided start and result work without JavaScript",
+    "suite": [
+      "start.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "start.e2e.spec.ts",
+    "title": "unknown or repeated journey choices fall back without reflecting raw input",
+    "suite": [
+      "start.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "no optional script or beacon is sent before permission, after decline or on private pages",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "independent opt-in runs the installed SDKs and sends only filtered URL metadata",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "a later withdrawal blocks queued SDK calls and does not touch a saved habit draft",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "entering the planner blocks already-loaded SDK callbacks on client navigation",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "measurement fails closed for expired",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "measurement fails closed for malformed",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "measurement fails closed for privacy-signal",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "measurement fails closed for blocked-storage",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "privacy controls are readable and keyboard accessible at 320px",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "privacy controls are readable and keyboard accessible at 390px",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "privacy controls are readable and keyboard accessible at 768px",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "privacy controls are readable and keyboard accessible at 1440px",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "JavaScript-disabled privacy page explains that optional measurement is off",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "a failed choice write stays off and preserves unrelated draft storage",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "telemetry.e2e.spec.ts",
+    "title": "sensitive incoming referrers block collection and responses suppress outgoing referrers",
+    "suite": [
+      "telemetry.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-telemetry-results.json"
+  },
+  {
+    "file": "week-summary.e2e.spec.ts",
+    "title": "mixed records have matching live, downloaded and printed counts without automatic saving or requests",
+    "suite": [
+      "week-summary.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "week-summary.e2e.spec.ts",
+    "title": "summary stays current across pillar changes, week replacement, restore and file import",
+    "suite": [
+      "week-summary.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "week-summary.e2e.spec.ts",
+    "title": "summary controls and day navigation work by keyboard at 320px",
+    "suite": [
+      "week-summary.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  },
+  {
+    "file": "week-summary.e2e.spec.ts",
+    "title": "summary controls and day navigation work by keyboard at 1440px",
+    "suite": [
+      "week-summary.e2e.spec.ts"
+    ],
+    "status": "expected",
+    "results": [
+      {
+        "status": "passed",
+        "error": ""
+      }
+    ],
+    "evidence": "/tmp/phase142-pending-results.json"
+  }
+]

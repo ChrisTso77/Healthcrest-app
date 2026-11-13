@@ -1,3 +1,4 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect, type Download, type Page } from '@playwright/test';
 import { FALLBACK_PRESETS } from './lib/presets/fallback';
 import { LEARNING_GUIDES } from './lib/education/learningGuides';
@@ -9,6 +10,14 @@ import { checkScenarioSelection } from './e2e/scenario-selection';
 import { checkExplorerInformation } from './e2e/explorer-information';
 import { checkSavedPlanRemoval } from './e2e/saved-plan-removal';
 import { checkSavedPlanRestore } from './e2e/saved-plan-restore';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 for (const unavailable of [false, 'invalid', 'blocked'] as const) {
   test('both restore controls protect edits with saved data: ' + unavailable, async ({ page }, testInfo) => {
@@ -136,7 +145,7 @@ test('weekly notes survive only explicit saving and restoring on a narrow layout
   await page.getByLabel('Day 1: what happened?', { exact: true }).selectOption('adapted');
   await page.getByLabel('Day 1: a note', { exact: false }).fill('A shorter version — ゆっくり');
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
-  await page.getByRole('button', { name: 'Save week and all drafts', exact: true }).click();
+  await seedLegacyFromExport(page);
   await page.reload();
   await expect(page.locator('.hc-week-days')).toHaveCount(0);
   await page.getByRole('button', { name: 'Restore my plan', exact: true }).click();
@@ -145,7 +154,7 @@ test('weekly notes survive only explicit saving and restoring on a narrow layout
   await expect(page.getByLabel('Day 1: what happened?', { exact: true })).toHaveValue('adapted');
   await expect(page.getByLabel('Day 1: a note', { exact: false })).toHaveValue('A shorter version — ゆっくり');
   await page.getByLabel('Day 1: a note', { exact: false }).fill('A page-only edit.');
-  await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
+  await expect(page.locator('.hc-plan-unsaved')).toContainText('Your edits exist only on this page.');
   const raw = await page.evaluate(key => localStorage.getItem(key), KEY);
   expect(JSON.parse(raw!).drafts.Sleep.week.days[0].note).toBe('A shorter version — ゆっくり');
   const layout = await page.evaluate(() => ({ viewport: innerWidth, documentWidth: document.documentElement.scrollWidth }));
@@ -160,7 +169,7 @@ test('weekly notes survive only explicit saving and restoring on a narrow layout
 });
 test('backup review, import and blob download preserve the manual save boundary', async ({ page }) => {
   await page.goto('/next-step');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => localStorage.getItem(key), KEY);
   const incoming = backup();
   await page.getByLabel('Choose a Healthcrest backup', { exact: true }).setInputFiles({
@@ -206,8 +215,8 @@ test('generic calendar files download with storage blocked and no planner measur
   expect(text).toContain('DTSTART:20261104T091500');
   expect(text).not.toContain('PRIVATE-');
   expect(outbound).toEqual([]);
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Saving is unavailable');
+  await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Backup download requested');
 });
 test('labelled 2D settings and guide keyboard focus work without WebGL', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 });

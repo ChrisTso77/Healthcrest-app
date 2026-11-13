@@ -1,0 +1,12 @@
+
+ RUN  v5.0.5 /workspace/healthcrest-planner-confidentiality
+
+
+ Test Files  10 passed (10)
+      Tests  130 passed (130)
+   Start at  14:25:04
+   Duration  1.43s (transform 42%, import 26%, tests 24%, worker 8%)
+
+    Isolate  10 workers spawned · ~89ms startup each (spawn + environment, per file)
+             at least ~797ms faster with isolate: false — reuses workers across files instead of one per file
+

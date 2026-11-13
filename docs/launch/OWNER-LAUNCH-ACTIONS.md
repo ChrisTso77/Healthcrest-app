@@ -1,5 +1,29 @@
 # Owner launch actions
 
+## Current outstanding checklist — Phase 13, 13 November 2026
+
+This is the current consolidated checklist; older sections below are historical
+and do not reopen supplied answers or accepted functional checks. Handoff:
+[assessor engagement](ASSESSOR-HANDOFF-PHASE12.md#phase-13-engagement-terms--13-november-2026).
+Matrix remains11PASS/1FAIL/2BLOCKED/20NOT VERIFIED=34.
+
+| Outstanding requirement | Minimum owner/assessor evidence still needed |
+| --- | --- |
+| Independent security assessment | Select a named qualified independent assessor; approve invitation/scope first,then separately any access,active-test rules and expenditure. Obtain exact-SHA report/provider review and retests. No appointment inferred. |
+| Manual accessibility and actual devices | Only remaining route/status/error,forced-colour/zoom/focus/motion and iPhone Safari/VoiceOver touch/orientation/native file/calendar/print outcomes; missing device/OS/browser/AT versions and scoped results. Preserve accepted desktop/NVDA/Explorer zoom and three functional journeys. |
+| Privacy,retention and company disclosures | Concrete email/log retention/deletion/rights process,processor regions/transfers/safeguards and approved public company wording. Existing Hobby/office choice/credential/product confirmations are retained; supply supporting records rather than reconfirm them. No home address or private correspondence here. |
+| Private backup and recovery | Current freshness/checksum/asset completeness,off-device custody/retention and approved safe private restore target with comparison/timing evidence. Existing4h website/1working-day CMS/24h loss targets stand. No production/public restore or paid workaround authorised. |
+| Monitoring/provider configuration | Named responder/cadence,alert/log settings and read-only IAM/environment/recovery-settings evidence. Preserve earlier flag-absent/no-pending-change confirmations at their recorded scope; no telemetry activation or credential disclosure. |
+| External SEO/field performance | Four-guide rich-result reports,existing Search Console ownership/sitemap/indexing and available field LCP/INP/CLS window/device data or honest insufficient data; remaining3D/device evidence. No new submissions without D06 approval. |
+| Development advisory disposition | Independent review of GHSA-g3hv-75wg-m249 and existing mitigations; supported remediation or permitted explicit owner risk decision with scope/date/review trigger. FAIL remains until justified disposition; no automatic waiver. |
+
+Editorial renewal for S4–S8/C1 due13November also remains unverified; record an
+actual review result rather than renewing dates automatically. G1–G4/S1–S3 due19November.
+No prior supplied factual confirmation or completed test is requested again.
+
+## Historical owner records
+
+
 Prepared 29 October 2026 for one consolidated launch-readiness handoff. This worksheet collects remaining owner/operator facts; it requests no credentials and certifies no legal, clinical, security or accessibility compliance. Existing answers are retained below. Engineering continues independently while these items are resolved.
 
 Owner update during batch review: a professional registered-office arrangement is **not yet in place**. Actual-device access is confirmed for **iPhone/Safari, Android/Chrome, Windows and Mac**. These are available test platforms, not completed tests. Screen-reader access remains unconfirmed; do not mark the manual matrix complete.
@@ -12,7 +36,7 @@ Owner recovery follow-up, 30 October 2026: confirms visibility of deployment `a0
 
 Later owner results, recorded 2 November 2026: Windows export setup, archive/checksum/freshness checks and a successful automatic 18:00 task run confirmed. Local structural checks reported 13 documents and 4 archive entries. Private test datasets are unavailable on the current plan, so restore rehearsal remains pending. The runbook preserves the supplied results and their limits; no production restore, public test dataset or paid upgrade occurred. Continue daily monitoring and retention review.
 
-## Current consolidated owner handoff — 12 November 2026
+## Historical consolidated owner handoff — 12 November 2026
 
 Do not repeat completed editorial or preview questions. All 13 original content
 decisions are recorded; G1–G4/S1–S3 were renewed on 12 November (next due 19

@@ -1,0 +1,138 @@
+[
+  {
+    "page": "home",
+    "passed": true,
+    "failures": [],
+    "metrics": {
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 919.2588000000001,
+      "cls": 0.0007147309648763568,
+      "totalBlockingMs": 63
+    },
+    "analyticsRequests": []
+  },
+  {
+    "page": "start",
+    "passed": true,
+    "failures": [],
+    "metrics": {
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 910.2837999999999,
+      "cls": 0,
+      "totalBlockingMs": 65.5
+    },
+    "analyticsRequests": []
+  },
+  {
+    "page": "guide-mobile",
+    "passed": true,
+    "failures": [],
+    "metrics": {
+      "scores": {
+        "performance": 0.97,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 2385.186,
+      "cls": 0,
+      "totalBlockingMs": 141.99999999999977
+    },
+    "analyticsRequests": []
+  },
+  {
+    "page": "planner-mobile",
+    "passed": true,
+    "failures": [],
+    "metrics": {
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 912.2635,
+      "cls": 0,
+      "totalBlockingMs": 67
+    },
+    "analyticsRequests": []
+  },
+  {
+    "page": "explorer-2d-mobile",
+    "passed": true,
+    "failures": [],
+    "metrics": {
+      "scores": {
+        "performance": 0.99,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 758.5265999999999,
+      "cls": 0,
+      "totalBlockingMs": 135
+    },
+    "analyticsRequests": []
+  },
+  {
+    "page": "guide-desktop",
+    "passed": true,
+    "failures": [],
+    "metrics": {
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 254.4975,
+      "cls": 0,
+      "totalBlockingMs": 1
+    },
+    "analyticsRequests": []
+  },
+  {
+    "page": "planner-desktop",
+    "passed": true,
+    "failures": [],
+    "metrics": {
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 248.9588,
+      "cls": 0,
+      "totalBlockingMs": 0
+    },
+    "analyticsRequests": []
+  },
+  {
+    "page": "explorer-2d-desktop",
+    "passed": true,
+    "failures": [],
+    "metrics": {
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 209.3816,
+      "cls": 0,
+      "totalBlockingMs": 3
+    },
+    "analyticsRequests": []
+  }
+]

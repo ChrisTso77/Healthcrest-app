@@ -1,6 +1,6 @@
 import { MeasurementNotice } from '@/components/MeasurementChoices';
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from '@/components/PlannerSafeLink';
 import logo from '@/public/media/healthcrest-logo.png';
 
 export function SiteBrand({ footer = false }: { footer?: boolean }) {

@@ -1,0 +1,148 @@
+
+Running 4 tests using 2 workers
+
+(node:30974) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30973) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [chromium] › next-week.e2e.spec.ts:151:5 › failed backup and blocked storage keep the old week editable and send no planner data (4.9s)
+  ✘  1 [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 320px (13.2s)
+(node:31571) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 1350px (13.4s)
+(node:31864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 [chromium] › release-readiness.e2e.spec.ts:29:5 › blocked legacy removal preserves its copy and export does not authorise deletion (14.0s)
+
+
+  1) [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 320px 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('group', { name: 'Restore confirmation', exact: true })
+    Expected: 1
+    Received: 0
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('group', { name: 'Restore confirmation', exact: true }) with timeout 10000ms
+      - waiting for getByRole('group', { name: 'Restore confirmation', exact: true })
+        23 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+       at e2e/saved-plan-restore.ts:62
+
+      60 |       await opener.click();
+      61 |       reads++;
+    > 62 |       await expect(confirmation).toHaveCount(1);
+         |                                  ^
+      63 |     await keep.click();
+      64 |       await expect(action).toHaveValue('Stored Sleep action.');
+      65 |       await expectCopy();
+        at checkSavedPlanRestore (/workspace/healthcrest-planner-confidentiality/e2e/saved-plan-restore.ts:62:34)
+        at /workspace/healthcrest-planner-confidentiality/release-readiness.e2e.spec.ts:12:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 1350px 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('group', { name: 'Restore confirmation', exact: true })
+    Expected: 1
+    Received: 0
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('group', { name: 'Restore confirmation', exact: true }) with timeout 10000ms
+      - waiting for getByRole('group', { name: 'Restore confirmation', exact: true })
+        23 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+       at e2e/saved-plan-restore.ts:62
+
+      60 |       await opener.click();
+      61 |       reads++;
+    > 62 |       await expect(confirmation).toHaveCount(1);
+         |                                  ^
+      63 |     await keep.click();
+      64 |       await expect(action).toHaveValue('Stored Sleep action.');
+      65 |       await expectCopy();
+        at checkSavedPlanRestore (/workspace/healthcrest-planner-confidentiality/e2e/saved-plan-restore.ts:62:34)
+        at /workspace/healthcrest-planner-confidentiality/release-readiness.e2e.spec.ts:12:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › release-readiness.e2e.spec.ts:29:5 › blocked legacy removal preserves its copy and export does not authorise deletion 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('status')
+    Expected substring: "Backup download requested"
+    Received string:    "Removal cancelled."
+    Timeout: 10000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('status') with timeout 10000ms
+      - waiting for getByRole('status')
+        23 × locator resolved to <p role="status" class="hc-plan-status">Removal cancelled.</p>
+           - unexpected value "Removal cancelled."
+
+
+       at e2e/saved-plan-removal.ts:92
+
+      90 |     expect(result.removals).toBe(1);
+      91 |     expect(result.saved).toBe(raw);
+    > 92 |     await expect(page.getByRole('status')).toContainText('Backup download requested');
+         |                                            ^
+      93 |   } else {
+      94 |     await expect(group).toHaveCount(0);
+      95 |     await expect(opener).toBeFocused();
+        at checkSavedPlanRemoval (/workspace/healthcrest-planner-confidentiality/e2e/saved-plan-removal.ts:92:44)
+        at /workspace/healthcrest-planner-confidentiality/release-readiness.e2e.spec.ts:31:3
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-bloc-929b0-does-not-authorise-deletion-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-readiness.e2e-bloc-929b0-does-not-authorise-deletion-chromium/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-bloc-929b0-does-not-authorise-deletion-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-readiness.e2e-bloc-929b0-does-not-authorise-deletion-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 320px 
+    [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 1350px 
+    [chromium] › release-readiness.e2e.spec.ts:29:5 › blocked legacy removal preserves its copy and export does not authorise deletion 
+  1 passed (49.7s)

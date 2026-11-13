@@ -1,4 +1,13 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 const KEY = 'healthcrest.habit-draft.v1';
 const cases = [
@@ -86,14 +95,14 @@ test('reference browsing preserves saved and page drafts without sending persona
   const action = page.getByLabel('One manageable action', { exact: true });
   await action.fill('PRIVATE-FOOD-ACTION');
   await page.getByLabel('What did I learn?', { exact: false }).fill('PRIVATE-REFLECTION');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => localStorage.getItem(key), KEY);
   await action.fill('PRIVATE-UNSAVED-EDIT');
   const evidence = page.locator('#habit-plan-evidence');
   await evidence.locator('summary').click();
   await evidence.locator('summary').click();
   await expect(action).toHaveValue('PRIVATE-UNSAVED-EDIT');
-  await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
+  await expect(page.locator('.hc-plan-unsaved')).toContainText('Your edits exist only on this page.');
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(saved);
   for (const href of await evidence.locator('a').evaluateAll(links => links.map(link => link.getAttribute('href')))) {
     expect(href).not.toMatch(/PRIVATE|\?idea=|\?pillar=/);

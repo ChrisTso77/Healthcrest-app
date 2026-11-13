@@ -1,6 +1,15 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect, type Page } from '@playwright/test';
 import { createHabitWeek } from './lib/education/habitWeek';
 import type { SavedHabitDraft } from './lib/education/habitDraft';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 const KEY = 'healthcrest.habit-draft.v1';
 function fixture(): SavedHabitDraft {
@@ -80,7 +89,7 @@ test('overview follows page edits and notes-only counts without saving or sendin
   await page.getByLabel('Day 2: a note', { exact: false }).fill('PRIVATE-NOTE');
   await page.locator('#seven-day-plan summary').nth(2).click();
   await page.getByLabel('Day 3: a note', { exact: false }).fill('   ');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => localStorage.getItem(key), KEY);
   await action.fill('PRIVATE-DRAFT-FOR-LATER');
   await expand(page);
@@ -96,7 +105,7 @@ test('overview follows page edits and notes-only counts without saving or sendin
   await expand(page);
   await expect(card(page, 'Movement')).toContainText('PRIVATE-DRAFT-FOR-LATER');
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(saved);
-  await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
+  await expect(page.locator('.hc-plan-unsaved')).toContainText('Your edits exist only on this page.');
   expect(urls.join('\n')).not.toContain('PRIVATE-');
   expect(outbound).toEqual([]);
 });
@@ -171,8 +180,8 @@ test('overview editing shortcuts work when browser storage is blocked', async ({
   await card(page, 'Sleep').getByRole('button').click();
   await page.getByLabel('One manageable action', { exact: true }).fill('A shorter page-only routine.');
   await expect(card(page, 'Sleep')).toContainText('A shorter page-only routine.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Saving is unavailable');
+  await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Backup download requested');
   await expect(card(page, 'Sleep')).toContainText('A shorter page-only routine.');
 });
 test('without JavaScript the overview is hidden and the starter guidance remains readable', async ({ browser, baseURL }) => {

@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/PlannerSafeLink';
 import { useState, type FormEvent } from 'react';
 import { useMeasurementEnabled } from '@/components/MeasurementProvider';
 import { parseMeasurementChoice } from '@/lib/privacy/measurement';
