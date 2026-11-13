@@ -2,7 +2,7 @@
 
 import { HabitSelectionMark } from '@/components/HabitSelectionMark';
 
-import { useId, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { HabitDraftOverview } from '@/components/HabitDraftOverview';
 import { HabitPlanEvidence } from '@/components/HabitPlanEvidence';
@@ -13,7 +13,8 @@ import { downloadHabitBackup } from '@/lib/education/downloadHabitBackup';
 import { weekDownloadLines, type HabitWeek } from '@/lib/education/habitWeek';
 import { UrgentSupport } from '@/components/UrgentSupport';
 import { Download, Printer, ArrowUpRight } from 'lucide-react';
-import { HABIT_DRAFT_KEY, parseSavedHabitDraft, type HabitPillar, type HabitDraft as Draft, type SavedHabitDraft } from '@/lib/education/habitDraft';
+import { HABIT_DRAFT_KEY, type HabitPillar, type HabitDraft as Draft, type SavedHabitDraft } from '@/lib/education/habitDraft';
+import { recoverLegacyHabit } from '@/lib/education/legacyHabitRecovery';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
 // Prevent edits before React can retain them. Server-rendered guidance stays readable.
@@ -72,19 +73,26 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
     setUnsavedChanges(true);
   }
 
-  function saveDraft() {
-    setRestoreRequest(null);
-    setConfirmRemove(false);
-    try {
-      const raw = JSON.stringify({ version: 3, selected, drafts });
-      if (!parseSavedHabitDraft(raw)) throw new Error('Invalid draft');
-      window.localStorage.setItem(HABIT_DRAFT_KEY, raw);
-      setUnsavedChanges(false);
-      setStatus('Saved draft on this device. Save again after making changes.');
-    } catch {
-      setStatus('Saving is unavailable in this browser. You can download your plan instead.');
-    }
-  }
+  // Export does not prove the browser kept a durable file. Keep the dirty state.
+  function saveDraft() { downloadBackup(); }
+
+  useEffect(() => {
+    if (!unsavedChanges) return;
+    const leave = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ''; };
+    const navigate = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const anchor = event.target instanceof Element ? event.target.closest('a[href]') : null;
+      if (!(anchor instanceof HTMLAnchorElement) || anchor.download || anchor.target === '_blank') return;
+      const destination = new URL(anchor.href, window.location.href);
+      if (destination.origin === window.location.origin && destination.pathname === window.location.pathname && destination.search === window.location.search) return;
+      if (!window.confirm('Your edits are only on this page. Export a backup before leaving if you want to keep them. Leave this page?')) {
+        event.preventDefault(); event.stopPropagation();
+      }
+    };
+    window.addEventListener('beforeunload', leave);
+    document.addEventListener('click', navigate, true);
+    return () => { window.removeEventListener('beforeunload', leave); document.removeEventListener('click', navigate, true); };
+  }, [unsavedChanges]);
 
   function focusRestore(origin: RestoreOrigin, showError = false) {
     requestAnimationFrame(() => {
@@ -106,7 +114,8 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
     setConfirmRemove(false);
     setRestoreRequest(null);
     try {
-      const saved = parseSavedHabitDraft(window.localStorage.getItem(HABIT_DRAFT_KEY));
+      const recovered = recoverLegacyHabit(window.localStorage);
+      const saved = recovered.status === 'available' ? recovered.saved : null;
       if (!saved) {
         const message = 'No compatible saved draft was found. Your current edits are unchanged.';
         setStatus(message);
@@ -117,7 +126,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
       setPlanRevision(current => current + 1);
       setDrafts(saved.drafts);
       setSelected(saved.selected);
-      setUnsavedChanges(false);
+      setUnsavedChanges(true);
       if (origin === 'return') requestAnimationFrame(() => {
         const target = saved.drafts[saved.selected].week
           ? document.getElementById('seven-day-plan')
@@ -139,7 +148,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
     if (restoreRequest?.origin !== origin) return null;
     if (restoreRequest.stage === 'error') return <p id={id + '-restore-' + origin + '-error'} className="hc-plan-restore-error">{restoreRequest.message}</p>;
     return <div id={id + '-restore-' + origin} role="group" aria-label="Restore confirmation" className="hc-plan-restore-confirmation">
-      <p id={id + '-restore-' + origin + '-scope'}>Restoring replaces the drafts, notes and seven-day check-ins currently on this page for all four habits with the saved copy. Save or download a backup first if you want to keep these page edits.</p>
+      <p id={id + '-restore-' + origin + '-scope'}>Restoring replaces the drafts, notes and seven-day check-ins currently on this page for all four habits with the saved copy. Export a backup first if you want to keep these page edits.</p>
       <div className="hc-plan-save-actions">
         <button type="button" ref={keepEditsButton} onClick={() => {
           setRestoreRequest(null);
@@ -158,7 +167,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
     setSelected(saved.selected);
     setUnsavedChanges(true);
     setRestoreRequest(null);
-    setStatus('Backup imported into this page. Choose Save on this device to keep it in this browser.');
+    setStatus('Backup imported into page memory only. Export a backup to keep a separate copy; the old saved copy is unchanged.');
     requestAnimationFrame(() => {
       const target = saved.drafts[saved.selected].week
         ? document.getElementById('seven-day-plan')
@@ -171,7 +180,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
   function downloadBackup() {
     try {
       downloadHabitBackup({ version: 3, selected, drafts });
-      setStatus('Backup download started for all four pillars. This does not save your browser draft.');
+      setStatus('Backup download requested for all four pillars. Check that your browser saved the file. It may contain unencrypted sensitive notes; your page edits and old saved copy are unchanged.');
     } catch {
       setStatus('Backup download is unavailable in this browser. Your page edits are unchanged; you can try the text download or printing.');
     }
@@ -182,7 +191,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
     setDrafts(current => ({ ...current, [selected]: { ...current[selected], action: week.action, cue: week.cue, support: week.support, week } }));
     setUnsavedChanges(true);
     setRestoreRequest(null);
-    setStatus('New week started on this page. Choose Save on this device to keep it in this browser.');
+    setStatus('New week started in page memory. Export a backup to keep it.');
   }
 
   function removeSavedDraft() {
@@ -247,7 +256,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
       <noscript><style>{'.hc-week-start, .hc-plan-return-actions, .hc-week-quick-save, .hc-plan-print-button, .hc-plan-backup, .hc-week-next, .hc-draft-overview { display: none; }'}</style><p className="hc-model-note">Enable JavaScript to switch pillars and download a plan. Seven-day check-ins and saving also need JavaScript. You can still read the starter idea and guidance below.</p></noscript>
       <section id="return-to-plan" tabIndex={-1} aria-labelledby={id + '-return-title'} className="hc-plan-return">
         <h2 id={id + '-return-title'}>Return to your plan</h2>
-        <p>Choose Restore my plan to read the saved copy on this device and open its selected week. Restoring replaces the drafts currently on this page. Plans stay in this browser and do not sync between devices.</p>
+        <p>Restore my plan reads an older saved copy only when you ask. It does not change that copy. New edits remain in page memory and do not sync. Exported files are user-managed and unencrypted.</p>
         <div className="hc-plan-return-actions">
           <button type="button" ref={returnButton} onClick={() => requestRestore('return')}
             aria-expanded={restoreRequest?.origin === 'return' && restoreRequest.stage === 'confirm'}
@@ -256,7 +265,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
           {restorePrompt('return')}
           <a href="#seven-day-plan">Go to the current week on this page</a>
         </div>
-        <p className="hc-plan-unsaved" aria-live="polite">{unsavedChanges ? 'You have page changes to save. Choose Save on this device to keep them.' : 'Saving is manual. Save again after editing your plan or check-ins.'}</p>
+        <p className="hc-plan-unsaved" aria-live="polite">{unsavedChanges ? 'Your edits exist only on this page. Export a backup to keep them.' : 'New edits are not saved on this device. Export before leaving; closing, refreshing or a crash may lose page edits.'}</p>
       </section>
       <div role="group" aria-label="Choose a habit pillar" className="hc-plan-choices">
         {options.map(item => (
@@ -323,10 +332,10 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
             onUseNextAction={action => { update('action', action); document.getElementById(id + '-action')?.focus(); }} />
           <section id="saved-draft-controls" tabIndex={-1} aria-label="Keep your draft" className="hc-plan-keep">
             <h3>Keep your draft</h3>
-            <p className="hc-plan-storage">Choose Save on this device to keep all four pillar drafts, reflection notes and seven-day check-ins in this browser. They do not sync to other devices. Saving is manual: save again after editing.</p>
+            <p className="hc-plan-storage">Export requests a separate unencrypted JSON file of all four drafts, notes and weeks. New edits are not saved in browser storage. Verify your download and manage any sensitive file copies yourself.</p>
             <p className="hc-plan-storage">Restoring asks before replacing unsaved drafts, notes and check-ins for all four habits. Removing a saved plan needs confirmation and clears only the saved copy, keeping your current page edits.</p>
             <div className="hc-plan-save-actions">
-              <button type="button" onClick={saveDraft}>Save on this device</button>
+              <button type="button" onClick={saveDraft}>Export all drafts as JSON</button>
               <button type="button" ref={restoreButton} onClick={() => requestRestore('saved')}
                 aria-expanded={restoreRequest?.origin === 'saved' && restoreRequest.stage === 'confirm'}
                 aria-controls={restoreRequest?.origin === 'saved' && restoreRequest.stage === 'confirm' ? id + '-restore-saved' : undefined}
