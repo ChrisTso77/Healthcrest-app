@@ -1,0 +1,29 @@
+HTTP/1.1 200 OK
+date: Fri, 13 Nov 2026 12:22:45 GMT
+server: envoy
+
+HTTP/2 200 
+accept-ranges: bytes
+access-control-allow-origin: *
+age: 72760
+cache-control: public, max-age=0, must-revalidate
+content-disposition: inline
+content-security-policy: base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'
+content-type: text/html; charset=utf-8
+date: Fri, 13 Nov 2026 12:22:45 GMT
+etag: "d5485e7e63265d221106f8fa208160c1"
+referrer-policy: no-referrer
+server: envoy
+strict-transport-security: max-age=63072000
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-healthcrest-commit: 076a85369c1826f98b6b92ac5bad515cc9d6546e
+x-matched-path: /
+x-nextjs-prerender: 1
+x-nextjs-stale-time: 300
+x-vercel-cache: HIT
+x-vercel-id: cle1::kv8hb-1794572565717-4f99f6f078a1
+content-length: 68419
+x-envoy-upstream-service-time: 185
+
