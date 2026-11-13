@@ -41,7 +41,7 @@ test('API token is confined to fixed origin; redirects disabled and Range preser
   assert.equal(calls[0][1].maxRedirects, 0);
   assert.equal(calls[0][1].headers.Range, 'bytes=0-31');
   assert.equal(calls[0][1].headers['x-vercel-trusted-oidc-idp-token'], credential);
-  for (const url of ['https://www.healthcrest.uk', PREVIEW_ORIGIN + '.evil.test', 'http://healthcrest-9ivz4lh3f-tsotsoft.vercel.app', PREVIEW_ORIGIN.replace('https://', 'https://user:password@')]) {
+  for (const url of ['https://www.healthcrest.uk', PREVIEW_ORIGIN + '.evil.test', 'http://healthcrest-m6bpoi064-tsotsoft.vercel.app', PREVIEW_ORIGIN.replace('https://', 'https://user:password@')]) {
     assert.equal(isProtectedPreviewRequest(url, auth()), false);
     assert.throws(() => protectedPreviewGet(request, url, {}, auth()));
   }
@@ -96,4 +96,19 @@ test('missing auth fails closed in actual harness with no network/browser launch
     assert.deepEqual(report.checks, []); assert.match(report.error, /credential is unavailable/);
     assert(!text.includes(credential));
   } finally { await rm(cwd, { recursive: true, force: true }); }
+});
+
+test('Planner harness missing auth fails closed before any browser, storage or network operation', async () => {
+  const cwd=await mkdtemp(join(tmpdir(),'healthcrest-planner-preview-'));
+  try {
+    const script=fileURLToPath(new URL('./check-planner-preview.mjs',import.meta.url));
+    const env={...process.env,...environment(),HEALTHCREST_RELEASE_ORIGIN:PREVIEW_ORIGIN,HEALTHCREST_EXPECTED_COMMIT:PREVIEW_COMMIT};
+    delete env.HEALTHCREST_PREVIEW_OIDC_TOKEN;
+    const result=spawnSync(process.execPath,[script],{cwd,env,encoding:'utf8'});
+    assert.equal(result.status,1);
+    const text=await readFile(join(cwd,'artifacts/release-readiness/planner-preview.json'),'utf8');
+    const report=JSON.parse(text);assert.equal(report.passed,false);assert.equal(report.identity,null);
+    assert.deepEqual(report.scenarios,[]);assert.equal(report.protection,null);
+    assert.match(report.error,/credential is unavailable/);assert(!text.includes(credential));
+  } finally {await rm(cwd,{recursive:true,force:true});}
 });

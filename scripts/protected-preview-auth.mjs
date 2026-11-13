@@ -1,7 +1,7 @@
 import { assertReleaseCommit, RELEASE_HEADER } from './release-identity.mjs';
 
-export const PREVIEW_ORIGIN = 'https://healthcrest-9ivz4lh3f-tsotsoft.vercel.app';
-export const PREVIEW_COMMIT = '9d5dbca88426152c3dad56c41d2db05a68acf7b9';
+export const PREVIEW_ORIGIN = 'https://healthcrest-m6bpoi064-tsotsoft.vercel.app';
+export const PREVIEW_COMMIT = 'f0d39a4fb5b19b5a3b836303a11352342579a2e0';
 export const TRUSTED_REF = 'refs/heads/codex/healthcrest-preview-auth';
 export const TRUSTED_WORKFLOW = 'Healthcrest protected Preview verification';
 const header = 'x-vercel-trusted-oidc-idp-token';

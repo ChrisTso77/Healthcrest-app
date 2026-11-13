@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       expected_commit:
-        description: Frozen PR139 target SHA; does not deploy
+        description: Approved PR140 Planner target SHA; does not deploy
         required: true
         type: string
 
@@ -20,10 +20,10 @@ jobs:
       deployments: read
       id-token: write
     env:
-      HEALTHCREST_RELEASE_ORIGIN: https://healthcrest-9ivz4lh3f-tsotsoft.vercel.app
-      HEALTHCREST_EXPECTED_COMMIT: 9d5dbca88426152c3dad56c41d2db05a68acf7b9
+      HEALTHCREST_RELEASE_ORIGIN: https://healthcrest-m6bpoi064-tsotsoft.vercel.app
+      HEALTHCREST_EXPECTED_COMMIT: f0d39a4fb5b19b5a3b836303a11352342579a2e0
     steps:
-      - name: Require approved manual trusted branch and frozen target
+      - name: Require approved manual trusted branch and exact Planner target
         env:
           REQUESTED_COMMIT: ${{ inputs.expected_commit }}
         run: |
@@ -34,7 +34,7 @@ jobs:
               'GITHUB_REPOSITORY': 'ChrisTso77/Healthcrest-app',
               'GITHUB_REF': 'refs/heads/codex/healthcrest-preview-auth',
               'GITHUB_WORKFLOW': 'Healthcrest protected Preview verification',
-              'REQUESTED_COMMIT': '9d5dbca88426152c3dad56c41d2db05a68acf7b9',
+              'REQUESTED_COMMIT': 'f0d39a4fb5b19b5a3b836303a11352342579a2e0',
           }
           assert all(os.environ.get(k) == v for k, v in expected.items()), 'Unapproved verification context'
           PY
@@ -68,20 +68,20 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const sha = '9d5dbca88426152c3dad56c41d2db05a68acf7b9';
-            const origin = 'https://healthcrest-9ivz4lh3f-tsotsoft.vercel.app';
+            const sha = 'f0d39a4fb5b19b5a3b836303a11352342579a2e0';
+            const origin = 'https://healthcrest-m6bpoi064-tsotsoft.vercel.app';
             if (context.eventName !== 'workflow_dispatch' || process.env.GITHUB_REF !== 'refs/heads/codex/healthcrest-preview-auth' ||
                 context.repo.owner !== 'ChrisTso77' || context.repo.repo !== 'Healthcrest-app') throw new Error('Unapproved identity request');
-            const args = { ...context.repo, deployment_id: 7747066599 };
+            const args = { ...context.repo, deployment_id: 7769237792 };
             const deployment = (await github.rest.repos.getDeployment(args)).data;
             const statuses = (await github.rest.repos.listDeploymentStatuses(args)).data;
-            if (deployment.sha !== sha || deployment.environment !== 'Preview' ||
+            if (deployment.sha !== sha || deployment.environment !== 'Preview' || deployment.production_environment === true ||
                 statuses[0]?.state !== 'success' || statuses[0]?.environment_url !== origin) throw new Error('Preview provenance changed');
             const token = await core.getIDToken('https://github.com/ChrisTso77');
             core.setSecret(token);
             core.setOutput('token', token);
-      - name: Verify authenticated frozen Preview identity and public journeys
-        run: node scripts/check-release.mjs
+      - name: Verify authenticated Planner Preview confidentiality
+        run: node scripts/check-planner-preview.mjs
         env:
           HEALTHCREST_PREVIEW_OIDC_TOKEN: ${{ steps.oidc.outputs.token }}
           ACTIONS_ID_TOKEN_REQUEST_TOKEN: ''
