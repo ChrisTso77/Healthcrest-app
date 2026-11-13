@@ -1,6 +1,15 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect, type Page } from '@playwright/test';
 import { createHabitWeek } from './lib/education/habitWeek';
 import type { SavedHabitDraft } from './lib/education/habitDraft';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 const KEY = 'healthcrest.habit-draft.v1';
 function fixture(): SavedHabitDraft {
@@ -73,7 +82,7 @@ test('equal-count note changes are identified and applied only on explicit repla
   await page.locator('#seven-day-plan summary').first().click();
   await expect(page.getByLabel('Day 1: a note', { exact: false })).toHaveValue('PRIVATE-BACKUP-NOTE');
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(raw);
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), KEY);
   expect(saved.version).toBe(3);
   expect(saved.drafts.Sleep.week.days[0].note).toBe('PRIVATE-BACKUP-NOTE');

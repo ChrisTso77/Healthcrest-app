@@ -1,5 +1,21 @@
 # Current engineering state
 
+## Current isolated Planner checkpoint — 13 November 2026 (Phase 14.2)
+
+`codex/healthcrest-planner-confidentiality` completes the approved memory/export
+redesign. See [verification](../launch/PLANNER-CONFIDENTIALITY-VERIFICATION.md) and
+[local PR draft](../launch/PLANNER-CONFIDENTIALITY-PR-DRAFT.md). 130 unit tests PASS;
+324 distinct browser cases PASS across recorded attempts/retests; the fixture-CMS
+API-success test timed out and remains NOT VERIFIED. Production build, types and
+changed-file ESLint PASS; 6 confidentiality groups and 6 axe scans per local
+measurement profile PASS. Actual screen-reader/physical-device evidence remains
+missing. ASVS14.3.3 remains FAIL for legacy plaintext records; matrix totals remain
+11 PASS / 1 FAIL / 2 BLOCKED / 20 NOT VERIFIED. No new durable Planner writes,
+automatic migration or deletion. Frozen PR139/9d5dbca and production076a853 unchanged.
+Do not push/create a remote PR without separate Preview publication authorisation.
+Older entries below are historical and do not describe current Planner persistence.
+
+
 Updated 12 November 2026. Production remains approved #138 / 076a853. Local accelerated-programme candidate is not deployed.
 
 ## Repository and current release

@@ -1,5 +1,14 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect } from '@playwright/test';
 import { createHabitWeek } from './lib/education/habitWeek';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 const KEY = 'healthcrest.habit-draft.v1';
 function savedPlan() {
@@ -36,17 +45,17 @@ test('new return action protects unsaved edits and cancellation returns focus', 
   await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(action).toHaveValue('Saved Sleep action.');
 });
-test('weekly save persists the check-in only on explicit action and updates the unsaved reminder', async ({ page }) => {
+test('legacy/export fixture compatibility: exported check-ins recover while page edits remain unsaved', async ({ page }) => {
   await page.goto('/next-step?pillar=sleep');
   await page.evaluate(({ key, raw }) => localStorage.setItem(key, raw), { key: KEY, raw: JSON.stringify(savedPlan()) });
   await page.getByRole('button', { name: 'Restore my plan', exact: true }).click();
   const before = await page.evaluate(key => localStorage.getItem(key), KEY);
   await page.locator('#seven-day-plan summary').first().click();
   await page.getByLabel('Day 1: a note', { exact: false }).fill('A quiet break helped.');
-  await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
+  await expect(page.locator('.hc-plan-unsaved')).toContainText('Your edits exist only on this page.');
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(before);
-  await page.getByRole('button', { name: 'Save week and all drafts', exact: true }).click();
-  await expect(page.locator('.hc-plan-unsaved')).toContainText('Saving is manual.');
+  await seedLegacyFromExport(page);
+  await expect(page.locator('.hc-plan-unsaved')).toContainText('Your edits exist only on this page.');
   await page.reload();
   await page.getByRole('button', { name: 'Restore my plan', exact: true }).click();
   await page.locator('#seven-day-plan summary').first().click();

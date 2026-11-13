@@ -1,4 +1,13 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect, type Page } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 const KEY = 'healthcrest.habit-draft.v1';
 const printCopy = (page: Page) => page.locator('.hc-plan-print');
@@ -24,7 +33,7 @@ test('keyboard printing uses current selected page edits without saving or sendi
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto('/next-step');
   await page.getByLabel('One manageable action', { exact: true }).fill('MOVEMENT-ONLY-PRIVATE');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => localStorage.getItem(key), KEY);
   await page.getByRole('group', { name: 'Choose a habit pillar', exact: true }).getByRole('button', { name: 'Sleep', exact: true }).click();
   await page.getByLabel('One manageable action', { exact: true }).fill('SLEEP-PAGE-EDIT');
@@ -37,7 +46,7 @@ test('keyboard printing uses current selected page edits without saving or sendi
   await expect(printCopy(page)).not.toContainText('MOVEMENT-ONLY-PRIVATE');
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(saved);
   expect(outbound).toEqual([]);
-  await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
+  await expect(page.locator('.hc-plan-unsaved')).toContainText('Your edits exist only on this page.');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 

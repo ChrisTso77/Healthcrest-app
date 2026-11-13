@@ -1,0 +1,38 @@
+[
+  {
+    "width": 320,
+    "version": 1,
+    "passed": true,
+    "scope": "legacy restore/cancel,export/download request/failure,no storage writes,legacy preservation,beforeunload handler,reflow,Tab focus"
+  },
+  {
+    "width": 320,
+    "version": 2,
+    "passed": true,
+    "scope": "legacy restore/cancel,export/download request/failure,no storage writes,legacy preservation,beforeunload handler,reflow,Tab focus"
+  },
+  {
+    "width": 320,
+    "version": 3,
+    "passed": true,
+    "scope": "legacy restore/cancel,export/download request/failure,no storage writes,legacy preservation,beforeunload handler,reflow,Tab focus"
+  },
+  {
+    "width": 1280,
+    "version": 1,
+    "passed": true,
+    "scope": "legacy restore/cancel,export/download request/failure,no storage writes,legacy preservation,beforeunload handler,reflow,Tab focus"
+  },
+  {
+    "width": 1280,
+    "version": 2,
+    "passed": true,
+    "scope": "legacy restore/cancel,export/download request/failure,no storage writes,legacy preservation,beforeunload handler,reflow,Tab focus"
+  },
+  {
+    "width": 1280,
+    "version": 3,
+    "passed": true,
+    "scope": "legacy restore/cancel,export/download request/failure,no storage writes,legacy preservation,beforeunload handler,reflow,Tab focus"
+  }
+]

@@ -1,4 +1,13 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 test('guided choice links learning, a labelled view and an editable plan without saving', async ({ page }) => {
   await page.goto('/');
@@ -36,12 +45,13 @@ test('a guided starter never automatically overwrites or restores a saved plan',
   await page.goto('/next-step?pillar=sleep');
   const action = page.getByRole('textbox', { name: 'One manageable action', exact: true });
   await action.fill('My existing saved sleep idea');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(() => localStorage.getItem('healthcrest.habit-draft.v1'));
   await page.goto('/next-step?pillar=sleep&idea=time');
   await expect(action).toHaveValue('Choose one part of my wind-down routine to make room for before my main sleep.');
   expect(await page.evaluate(() => localStorage.getItem('healthcrest.habit-draft.v1'))).toBe(saved);
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  if (await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).isVisible()) await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(action).toHaveValue('My existing saved sleep idea');
 });
 

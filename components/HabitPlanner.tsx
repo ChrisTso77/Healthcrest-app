@@ -3,7 +3,7 @@
 import { HabitSelectionMark } from '@/components/HabitSelectionMark';
 
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
-import Link from 'next/link';
+import Link from '@/components/PlannerSafeLink';
 import { HabitDraftOverview } from '@/components/HabitDraftOverview';
 import { HabitPlanEvidence } from '@/components/HabitPlanEvidence';
 import { HabitPlanBackup } from '@/components/HabitPlanBackup';
@@ -14,6 +14,7 @@ import { weekDownloadLines, type HabitWeek } from '@/lib/education/habitWeek';
 import { UrgentSupport } from '@/components/UrgentSupport';
 import { Download, Printer, ArrowUpRight } from 'lucide-react';
 import { HABIT_DRAFT_KEY, type HabitPillar, type HabitDraft as Draft, type SavedHabitDraft } from '@/lib/education/habitDraft';
+import { registerPlannerGuard } from '@/components/PlannerSafeLink';
 import { recoverLegacyHabit } from '@/lib/education/legacyHabitRecovery';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 
@@ -79,19 +80,9 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
   useEffect(() => {
     if (!unsavedChanges) return;
     const leave = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ''; };
-    const navigate = (event: MouseEvent) => {
-      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const anchor = event.target instanceof Element ? event.target.closest('a[href]') : null;
-      if (!(anchor instanceof HTMLAnchorElement) || anchor.download || anchor.target === '_blank') return;
-      const destination = new URL(anchor.href, window.location.href);
-      if (destination.origin === window.location.origin && destination.pathname === window.location.pathname && destination.search === window.location.search) return;
-      if (!window.confirm('Your edits are only on this page. Export a backup before leaving if you want to keep them. Leave this page?')) {
-        event.preventDefault(); event.stopPropagation();
-      }
-    };
+    const unregister = registerPlannerGuard(() => window.confirm('Your edits are only on this page. Export a backup before leaving if you want to keep them. Leave this page?'));
     window.addEventListener('beforeunload', leave);
-    document.addEventListener('click', navigate, true);
-    return () => { window.removeEventListener('beforeunload', leave); document.removeEventListener('click', navigate, true); };
+    return () => { window.removeEventListener('beforeunload', leave); unregister(); };
   }, [unsavedChanges]);
 
   function focusRestore(origin: RestoreOrigin, showError = false) {
@@ -115,6 +106,7 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
     setRestoreRequest(null);
     try {
       const recovered = recoverLegacyHabit(window.localStorage);
+      if (recovered.status === 'unavailable') throw new Error('Legacy storage unavailable');
       const saved = recovered.status === 'available' ? recovered.saved : null;
       if (!saved) {
         const message = 'No compatible saved draft was found. Your current edits are unchanged.';
@@ -265,7 +257,8 @@ export function HabitPlanner({ initialPillar, initialAction, initialGuideSource 
           {restorePrompt('return')}
           <a href="#seven-day-plan">Go to the current week on this page</a>
         </div>
-        <p className="hc-plan-unsaved" aria-live="polite">{unsavedChanges ? 'Your edits exist only on this page. Export a backup to keep them.' : 'New edits are not saved on this device. Export before leaving; closing, refreshing or a crash may lose page edits.'}</p>
+        <p>Export before browser Back/Forward or programmatic navigation. Some navigation cannot be cancelled; browser closure, refresh or a crash may lose page edits. Warnings are best effort.</p>
+        <p className="hc-plan-unsaved" aria-live="polite">{unsavedChanges ? 'Your edits exist only on this page. Export a backup to keep them.' : 'New edits are not saved on this device. Export before leaving; closing, refreshing or a crash may lose page edits. Browser Back/Forward and some navigation may not allow a warning; export before using them.'}</p>
       </section>
       <div role="group" aria-label="Choose a habit pillar" className="hc-plan-choices">
         {options.map(item => (

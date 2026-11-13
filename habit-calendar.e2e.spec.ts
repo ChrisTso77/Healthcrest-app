@@ -1,5 +1,14 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect, type Page } from '@playwright/test';
 import { createHabitWeek } from './lib/education/habitWeek';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 const KEY = 'healthcrest.habit-draft.v1';
 const calendar = (page: Page) => page.locator('.hc-week-calendar');
@@ -32,7 +41,8 @@ test('calendar download is explicit, finite and generic without saving or sendin
   await expect(calendar(page)).toHaveCount(0);
   await page.getByLabel('One manageable action', { exact: true }).fill('PRIVATE-WEEK-ACTION');
   await start(page);
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
+  downloads = 0; // Ignore the explicit export used to create the legacy fixture.
   const saved = await page.evaluate(key => localStorage.getItem(key), KEY);
   await page.getByLabel('One manageable action', { exact: true }).fill('PRIVATE-FUTURE-DRAFT');
   await page.locator('#seven-day-plan summary').first().click();
@@ -54,7 +64,7 @@ test('calendar download is explicit, finite and generic without saving or sendin
   await expect(calendar(page)).toContainText('your calendar provider may store or sync');
   await expect(calendar(page)).toContainText('importing again may create duplicates');
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(saved);
-  await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
+  await expect(page.locator('.hc-plan-unsaved')).toContainText('Your edits exist only on this page.');
   expect(outbound).toEqual([]);
   await page.emulateMedia({ media: 'print' });
   await expect(calendar(page)).toBeHidden();
@@ -63,7 +73,7 @@ test('calendar download is explicit, finite and generic without saving or sendin
 test('time and feedback reset across pillars, restore, import, date replacement and clearing', async ({ page }) => {
   await page.goto('/next-step?pillar=sleep');
   await start(page);
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => localStorage.getItem(key), KEY);
   await calendar(page).getByLabel('Check-in time', { exact: true }).fill('18:30');
   await download(page);
@@ -123,8 +133,8 @@ test('download failure keeps the week and chosen time while calendars work with 
   await expect(page.getByLabel('Action for this week', { exact: true })).toContainText('wind-down routine');
   await page.evaluate(() => (window as Window & { restoreCalendarDownload?: () => void }).restoreCalendarDownload?.());
   expect(await download(page)).toContain('DTSTART:20261028T101500');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Saving is unavailable');
+  await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Backup download requested');
 });
 for (const width of [320, 1440]) {
   test('keyboard calendar export preserves local dates at ' + width + 'px in a different time zone', async ({ browser, baseURL }) => {

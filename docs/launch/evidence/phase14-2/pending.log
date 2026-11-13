@@ -1,0 +1,546 @@
+
+Running 128 tests using 2 workers
+
+(node:26299) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26298) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    1 [chromium] › habit-calendar.e2e.spec.ts:30:5 › calendar download is explicit, finite and generic without saving or sending plan text (5.7s)
+  ✓    2 [chromium] › draft-overview.e2e.spec.ts:70:5 › overview follows page edits and notes-only counts without saving or sending personal text (6.7s)
+  ✓    4 [chromium] › landing.e2e.spec.ts:193:5 › start-here questions reach the relevant guidance and saved-plan controls remain manual (6.9s)
+  ✘    5 [chromium] › next-week.e2e.spec.ts:151:5 › failed backup and blocked storage keep the old week editable and send no planner data (15.8s)
+(node:27230) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    6 [chromium] › next-week.e2e.spec.ts:208:7 › new-week review supports keyboard focus at 320px (5.7s)
+  ✘    3 [chromium] › health-engine.e2e.spec.ts:12:7 › Healthcrest production regression › pillar goals lead to contextual habit guidance without resetting the Habit Explorer (33.6s)
+(node:27466) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    7 [chromium] › next-week.e2e.spec.ts:208:7 › new-week review supports keyboard focus at 1440px (4.5s)
+  ✓    9 [chromium] › plan-backup.e2e.spec.ts:43:5 › backup round-trips unsaved drafts and weeks into a separate browser profile with explicit saving (11.0s)
+  ✓   10 [chromium] › plan-backup.e2e.spec.ts:212:7 › backup preview and replacement work by keyboard at 320px (1.7s)
+  ✓   11 [chromium] › plan-backup.e2e.spec.ts:212:7 › backup preview and replacement work by keyboard at 1440px (2.0s)
+  ✓   12 [chromium] › plan-evidence.e2e.spec.ts:84:5 › reference browsing preserves saved and page drafts without sending personal text (1.9s)
+  ✓   13 [chromium] › print-plan.e2e.spec.ts:25:5 › keyboard printing uses current selected page edits without saving or sending them (1.2s)
+  ✓    8 [chromium] › health-engine.e2e.spec.ts:238:9 › Healthcrest production regression › respects no-preference on load and live motion preference changes (16.3s)
+  ✓   14 [chromium] › print-plan.e2e.spec.ts:53:5 › print media provides seven paper check-ins and hides screen controls (2.4s)
+  ✓   16 [chromium] › print-plan.e2e.spec.ts:75:5 › print copy includes closed check-ins, weekly review and the original week action (3.5s)
+  ✓   15 [chromium] › health-engine.e2e.spec.ts:332:11 › Healthcrest production regression › render quality at 1x pixel density › Lite 3D reduces actual graphics work and restores High detail (10.9s)
+  ✓   17 [chromium] › print-plan.e2e.spec.ts:101:5 › maximum-length notes wrap and generate a multipage PDF (6.2s)
+  ✓   19 [chromium] › print-plan.e2e.spec.ts:125:5 › print failure offers the download fallback without losing edits (2.7s)
+  ✓   20 [chromium] › print-plan.e2e.spec.ts:140:5 › empty actions disable printing unless there is a current week to keep (2.5s)
+  ✓   21 [chromium] › print-plan.e2e.spec.ts:153:5 › browser printing without JavaScript retains a readable starter worksheet (1.8s)
+  ✓   18 [chromium] › health-engine.e2e.spec.ts:332:11 › Healthcrest production regression › render quality at 2x pixel density › Lite 3D reduces actual graphics work and restores High detail (17.2s)
+  ✘   22 [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 320px (14.7s)
+(node:28772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   23 [chromium] › health-engine.e2e.spec.ts:462:9 › Healthcrest production regression › compact layout keeps engine controls usable at 320px (13.1s)
+  ✓   25 [chromium] › health-engine.e2e.spec.ts:462:9 › Healthcrest production regression › compact layout keeps engine controls usable at 390px (9.0s)
+  ✘   24 [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 1350px (16.0s)
+(node:29082) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   27 [chromium] › release-readiness.e2e.spec.ts:16:7 › both restore controls preserve edits with invalid saved data (4.5s)
+  ✓   28 [chromium] › release-readiness.e2e.spec.ts:16:7 › both restore controls preserve edits with blocked saved data (5.0s)
+  ✓   29 [chromium] › release-readiness.e2e.spec.ts:23:7 › saved-plan removal requires confirmation and preserves page edits at 320px (2.6s)
+  ✓   26 [chromium] › health-engine.e2e.spec.ts:462:9 › Healthcrest production regression › compact layout keeps engine controls usable at 768px (18.6s)
+  ✓   30 [chromium] › release-readiness.e2e.spec.ts:23:7 › saved-plan removal requires confirmation and preserves page edits at 1350px (3.7s)
+  ✓   31 [chromium] › health-engine.e2e.spec.ts:462:9 › Healthcrest production regression › compact layout keeps engine controls usable at 1024px (10.5s)
+  ✘   32 [chromium] › release-readiness.e2e.spec.ts:29:5 › blocked saved-plan removal preserves the copy and explicit save cancels removal (30.5s)
+(node:29949) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   34 [chromium] › release-readiness.e2e.spec.ts:35:7 › plain Explorer information controls preserve the current session at 320px (5.2s)
+  ✘   33 [chromium] › health-engine.e2e.spec.ts:1077:7 › Healthcrest production regression › presets API responds successfully (32.0s)
+(node:30193) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   35 [chromium] › release-readiness.e2e.spec.ts:35:7 › plain Explorer information controls preserve the current session at 1350px (11.4s)
+  ✓   37 [chromium] › release-readiness.e2e.spec.ts:44:9 › scenario selection and manual attribution survive forced light colours at 320px (5.6s)
+  ✓   36 [chromium] › health-engine.e2e.spec.ts:1192:7 › Healthcrest production regression › times out a stalled CMS request while fallback controls remain usable (15.4s)
+  ✓   38 [chromium] › release-readiness.e2e.spec.ts:44:9 › scenario selection and manual attribution survive forced dark colours at 320px (6.0s)
+  ✓   40 [chromium] › release-readiness.e2e.spec.ts:44:9 › scenario selection and manual attribution survive forced light colours at 1350px (7.6s)
+  ✓   41 [chromium] › release-readiness.e2e.spec.ts:44:9 › scenario selection and manual attribution survive forced dark colours at 1350px (6.2s)
+  ✓   39 [chromium] › health-engine.e2e.spec.ts:1351:7 › Inline setting explanations › explaining each setting preserves the scenario and updates with manual values (14.2s)
+  ✓   43 [chromium] › health-engine.e2e.spec.ts:1389:7 › Inline setting explanations › view explanations distinguish unused 3D inputs, active scenes and 2D (5.2s)
+  ✓   42 [chromium] › release-readiness.e2e.spec.ts:53:5 › 3D scenario markers preserve camera, canvas and manual attribution (9.1s)
+  ✓   44 [chromium] › health-engine.e2e.spec.ts:1412:9 › Inline setting explanations › inline guidance is keyboard accessible and scrollable at 320px (6.0s)
+  ✓   46 [chromium] › health-engine.e2e.spec.ts:1412:9 › Inline setting explanations › inline guidance is keyboard accessible and scrollable at 390px (5.6s)
+  ✓   45 [chromium] › release-readiness.e2e.spec.ts:61:9 › habit selection stays visible in forced light colours at 320px (13.6s)
+  ✓   47 [chromium] › health-engine.e2e.spec.ts:1412:9 › Inline setting explanations › inline guidance is keyboard accessible and scrollable at 768px (6.4s)
+  ✓   49 [chromium] › health-engine.e2e.spec.ts:1412:9 › Inline setting explanations › inline guidance is keyboard accessible and scrollable at 1440px (5.6s)
+  ✘   50 [chromium] › health-engine.e2e.spec.ts:1440:7 › Inline setting explanations › a setting explanation opens its own habit plan even from another pillar (6.0s)
+(node:31189) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   48 [chromium] › release-readiness.e2e.spec.ts:61:9 › habit selection stays visible in forced dark colours at 320px (14.8s)
+(node:31251) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   51 [chromium] › health-engine.e2e.spec.ts:1453:7 › Reviewed scenario evidence › stale CMS copy is replaced while sources, scope and parameters remain available (5.7s)
+  ✓   53 [chromium] › health-engine.e2e.spec.ts:1473:7 › Reviewed scenario evidence › research is a separate group with primary studies and explicit limitations (3.8s)
+  ✓   54 [chromium] › health-engine.e2e.spec.ts:1492:7 › Reviewed scenario evidence › unknown CMS claims are withheld and clearly labelled awaiting review (5.8s)
+  ✓   52 [chromium] › release-readiness.e2e.spec.ts:61:9 › habit selection stays visible in forced light colours at 1350px (17.8s)
+  ✓   55 [chromium] › health-engine.e2e.spec.ts:1509:5 › live visual key explains changes and pause stops automatic drawing without resetting the scene (7.3s)
+  ✓   57 [chromium] › health-engine.e2e.spec.ts:1562:7 › visual key remains reachable above the dock at 320px (2.1s)
+  ✓   58 [chromium] › health-engine.e2e.spec.ts:1562:7 › visual key remains reachable above the dock at 390px (3.5s)
+  ✓   59 [chromium] › health-engine.e2e.spec.ts:1562:7 › visual key remains reachable above the dock at 768px (3.4s)
+  ✓   56 [chromium] › release-readiness.e2e.spec.ts:61:9 › habit selection stays visible in forced dark colours at 1350px (14.8s)
+  ✓   60 [chromium] › health-engine.e2e.spec.ts:1562:7 › visual key remains reachable above the dock at 1440px (2.6s)
+  ✘   62 [chromium] › return-plan.e2e.spec.ts:48:5 › weekly save persists the check-in only on explicit action and updates the unsaved reminder (0ms)
+(node:32106) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   63 [chromium] › return-plan.e2e.spec.ts:21:5 › homepage return link requires an explicit restore and opens the saved week (2.0s)
+  ✓   64 [chromium] › return-plan.e2e.spec.ts:33:5 › new return action protects unsaved edits and cancellation returns focus (1.7s)
+  ✓   65 [chromium] › return-plan.e2e.spec.ts:64:5 › unavailable or damaged storage leaves current edits intact (1.6s)
+  ✓   66 [chromium] › return-plan.e2e.spec.ts:80:7 › return navigation works by keyboard at 320px (1.1s)
+  ✓   67 [chromium] › return-plan.e2e.spec.ts:80:7 › return navigation works by keyboard at 390px (1.6s)
+  ✓   68 [chromium] › return-plan.e2e.spec.ts:80:7 › return navigation works by keyboard at 768px (1.5s)
+  ✓   69 [chromium] › return-plan.e2e.spec.ts:80:7 › return navigation works by keyboard at 1440px (1.1s)
+  ✓   61 [chromium] › release-readiness.e2e.spec.ts:70:5 › habit selection and labels fit the narrow public journey in normal colours (12.8s)
+  ✓   70 [chromium] › return-plan.e2e.spec.ts:91:5 › an older saved draft opens its action without rewriting storage (1.9s)
+  ✓   72 [chromium] › setting-comparison.e2e.spec.ts:21:7 › comparison values lead the reading order at 320px (2.6s)
+  ✓   71 [chromium] › release-readiness.e2e.spec.ts:76:7 › public keyboard focus remains clear on light and dark surfaces at 390px (4.8s)
+  ✓   73 [chromium] › setting-comparison.e2e.spec.ts:21:7 › comparison values lead the reading order at 390px (4.2s)
+  ✓   74 [chromium] › release-readiness.e2e.spec.ts:76:7 › public keyboard focus remains clear on light and dark surfaces at 1350px (8.0s)
+  ✓   75 [chromium] › setting-comparison.e2e.spec.ts:21:7 › comparison values lead the reading order at 1350px (5.6s)
+  ✓   76 [chromium] › release-readiness.e2e.spec.ts:84:9 › missing page recovery at /a-missing-healthcrest-page and 320px (1.6s)
+  ✓   78 [chromium] › release-readiness.e2e.spec.ts:84:9 › missing page recovery at /a-missing-healthcrest-page and 1440px (1.8s)
+  ✓   77 [chromium] › setting-comparison.e2e.spec.ts:66:7 › restore starting settings works by keyboard without touching saved plans at 320px (3.2s)
+  ✓   79 [chromium] › release-readiness.e2e.spec.ts:84:9 › missing page recovery at /learn/a-missing-healthcrest-guide and 320px (1.4s)
+  ✓   81 [chromium] › release-readiness.e2e.spec.ts:84:9 › missing page recovery at /learn/a-missing-healthcrest-guide and 1440px (2.0s)
+  ✓   80 [chromium] › setting-comparison.e2e.spec.ts:66:7 › restore starting settings works by keyboard without touching saved plans at 768px (3.3s)
+  ✓   82 [chromium] › release-readiness.e2e.spec.ts:103:5 › recovery to the planner keeps saved drafts manual and intact (2.3s)
+  ✓   84 [chromium] › release-readiness.e2e.spec.ts:123:5 › missing page recovery remains readable without JavaScript (1.2s)
+  ✓   83 [chromium] › setting-comparison.e2e.spec.ts:66:7 › restore starting settings works by keyboard without touching saved plans at 1350px (3.7s)
+  ✓   85 [chromium] › release-readiness.e2e.spec.ts:136:5 › short Explorer viewport separates controls at 320px (2.3s)
+  ✓   87 [chromium] › release-readiness.e2e.spec.ts:136:5 › short Explorer viewport separates controls at 640px (5.0s)
+  ✓   88 [chromium] › release-readiness.e2e.spec.ts:136:5 › short Explorer viewport separates controls at 1350px (3.9s)
+  ✓   86 [chromium] › setting-comparison.e2e.spec.ts:108:5 › restoring a chosen reference keeps the 3D topic, camera, canvas and comparison reference (13.5s)
+  ✓   90 [chromium] › setting-comparison.e2e.spec.ts:146:5 › an unchanged example is not cleared, while restoring edited values remains a manual scenario (5.3s)
+  ✓   89 [chromium] › start.e2e.spec.ts:12:5 › guided choice links learning, a labelled view and an editable plan without saving (8.7s)
+  ✓   92 [chromium] › start.e2e.spec.ts:44:5 › a guided starter never automatically overwrites or restores a saved plan (3.1s)
+  ✓   91 [chromium] › setting-comparison.e2e.spec.ts:169:5 › 2D shows starting circles, current diamonds and exact changes without loading WebGL (3.3s)
+  ✓   93 [chromium] › start.e2e.spec.ts:59:7 › guided start stays usable at 320px without loading the Explorer (2.9s)
+  ✓   95 [chromium] › start.e2e.spec.ts:59:7 › guided start stays usable at 390px without loading the Explorer (3.2s)
+  ✓   96 [chromium] › start.e2e.spec.ts:59:7 › guided start stays usable at 768px without loading the Explorer (3.2s)
+  ✓   97 [chromium] › start.e2e.spec.ts:59:7 › guided start stays usable at 1440px without loading the Explorer (2.5s)
+  ✓   94 [chromium] › setting-comparison.e2e.spec.ts:193:5 › the starting point survives scene, mode and camera changes until explicitly replaced (11.9s)
+  ✓   98 [chromium] › start.e2e.spec.ts:76:5 › guided start and result work without JavaScript (2.5s)
+  ✓   99 [chromium] › setting-comparison.e2e.spec.ts:214:5 › loading an example starts a fresh comparison and includes additional model inputs later changed by examples (3.6s)
+  ✓  100 [chromium] › start.e2e.spec.ts:90:5 › unknown or repeated journey choices fall back without reflecting raw input (5.5s)
+  ✓  102 [chromium] › telemetry.e2e.spec.ts:37:5 › no optional script or beacon is sent before permission, after decline or on private pages (5.6s)
+  ✓  101 [chromium] › setting-comparison.e2e.spec.ts:229:5 › 3D comparisons distinguish numerical changes from real scene changes (11.5s)
+  ✓  104 [chromium] › setting-comparison.e2e.spec.ts:248:5 › a combined scene explains why changed food values leave its appearance unchanged (4.0s)
+  ✓  105 [chromium] › setting-comparison.e2e.spec.ts:258:5 › guidance links preserve the guided preference and never turn slider values into a plan (2.8s)
+  ✓  106 [chromium] › setting-comparison.e2e.spec.ts:272:5 › comparisons do not read or overwrite saved habit plans and reload starts a new comparison (4.4s)
+  ✘  103 [chromium] › telemetry.e2e.spec.ts:57:5 › independent opt-in runs the installed SDKs and sends only filtered URL metadata (12.6s)
+(node:34856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  107 [chromium] › setting-comparison.e2e.spec.ts:288:7 › comparison controls remain reachable by keyboard at 320px (3.9s)
+  ✓  109 [chromium] › setting-comparison.e2e.spec.ts:288:7 › comparison controls remain reachable by keyboard at 390px (2.6s)
+  ✓  110 [chromium] › setting-comparison.e2e.spec.ts:288:7 › comparison controls remain reachable by keyboard at 768px (1.9s)
+  ✓  111 [chromium] › setting-comparison.e2e.spec.ts:288:7 › comparison controls remain reachable by keyboard at 1440px (1.8s)
+  ✓  112 [chromium] › setting-comparison.e2e.spec.ts:319:5 › a graphics failure and reduced motion still leave comparison available (1.3s)
+  ✘  108 [chromium] › telemetry.e2e.spec.ts:87:5 › a later withdrawal blocks queued SDK calls and does not touch a saved habit draft (10.8s)
+(node:35233) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  113 [chromium] › week-summary.e2e.spec.ts:38:5 › mixed records have matching live, downloaded and printed counts without automatic saving or requests (4.4s)
+  ✓  115 [chromium] › week-summary.e2e.spec.ts:87:5 › summary stays current across pillar changes, week replacement, restore and file import (5.3s)
+  ✓  116 [chromium] › week-summary.e2e.spec.ts:124:7 › summary controls and day navigation work by keyboard at 320px (2.4s)
+  ✘  114 [chromium] › telemetry.e2e.spec.ts:106:5 › entering the planner blocks already-loaded SDK callbacks on client navigation (10.9s)
+  ✓  117 [chromium] › week-summary.e2e.spec.ts:124:7 › summary controls and day navigation work by keyboard at 1440px (2.7s)
+(node:35767) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  118 [chromium] › telemetry.e2e.spec.ts:123:7 › measurement fails closed for expired (1.2s)
+  ✓  119 [chromium] › telemetry.e2e.spec.ts:123:7 › measurement fails closed for malformed (1.9s)
+  ✓  120 [chromium] › telemetry.e2e.spec.ts:123:7 › measurement fails closed for privacy-signal (1.9s)
+  ✓  121 [chromium] › telemetry.e2e.spec.ts:123:7 › measurement fails closed for blocked-storage (1.8s)
+  ✓  122 [chromium] › telemetry.e2e.spec.ts:140:7 › privacy controls are readable and keyboard accessible at 320px (1.6s)
+  ✓  123 [chromium] › telemetry.e2e.spec.ts:140:7 › privacy controls are readable and keyboard accessible at 390px (1.8s)
+  ✓  124 [chromium] › telemetry.e2e.spec.ts:140:7 › privacy controls are readable and keyboard accessible at 768px (2.3s)
+  ✓  125 [chromium] › telemetry.e2e.spec.ts:140:7 › privacy controls are readable and keyboard accessible at 1440px (1.9s)
+  ✓  126 [chromium] › telemetry.e2e.spec.ts:157:5 › JavaScript-disabled privacy page explains that optional measurement is off (1.3s)
+  ✓  127 [chromium] › telemetry.e2e.spec.ts:168:5 › a failed choice write stays off and preserves unrelated draft storage (2.1s)
+  ✓  128 [chromium] › telemetry.e2e.spec.ts:187:5 › sensitive incoming referrers block collection and responses suppress outgoing referrers (1.4s)
+
+
+  1) [chromium] › health-engine.e2e.spec.ts:12:7 › Healthcrest production regression › pillar goals lead to contextual habit guidance without resetting the Habit Explorer 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: 'Understand this view', exact: true }).getByRole('heading', { name: 'Stress & support: Make room for coping and recovery', exact: true })
+    Expected: visible
+    Error: Test timeout of 30000ms exceeded.
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: 'Understand this view', exact: true }).getByRole('heading', { name: 'Stress & support: Make room for coping and recovery', exact: true }) with timeout 10000ms
+      - waiting for getByRole('dialog', { name: 'Understand this view', exact: true }).getByRole('heading', { name: 'Stress & support: Make room for coping and recovery', exact: true })
+      - Test timeout of 30000ms exceeded.
+
+
+      38 |       await why.click();
+      39 |       const dialog = page.getByRole('dialog', { name: 'Understand this view', exact: true });
+    > 40 |       await expect(dialog.getByRole('heading', { name: `${label}: ${goal}`, exact: true })).toBeVisible();
+         |                                                                                             ^
+      41 |       await expect(dialog.getByRole('link', { name: /^NHS:/ })).toHaveAttribute('href', source);
+      42 |       if (pillar === 'Stress') {
+      43 |         const urgent = dialog.getByRole('complementary', { name: 'Urgent mental health support' });
+        at /workspace/healthcrest-planner-confidentiality/health-engine.e2e.spec.ts:40:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/health-engine.e2e-Healthcr-32739-esetting-the-Habit-Explorer-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/health-engine.e2e-Healthcr-32739-esetting-the-Habit-Explorer-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/health-engine.e2e-Healthcr-32739-esetting-the-Habit-Explorer-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/health-engine.e2e-Healthcr-32739-esetting-the-Habit-Explorer-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › health-engine.e2e.spec.ts:1077:7 › Healthcrest production regression › presets API responds successfully 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: apiRequestContext.get: Request context disposed.
+    Call log:
+      - → GET http://localhost:3023/api/presets
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+
+
+      1076 |
+      1077 |   test('presets API responds successfully', async ({ request }) => {
+    > 1078 |     const response = await request.get('/api/presets');
+           |                                    ^
+      1079 |
+      1080 |     expect(response.ok()).toBeTruthy();
+      1081 |
+        at /workspace/healthcrest-planner-confidentiality/health-engine.e2e.spec.ts:1078:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/health-engine.e2e-Healthcr-d0bff-s-API-responds-successfully-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/health-engine.e2e-Healthcr-d0bff-s-API-responds-successfully-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/health-engine.e2e-Healthcr-d0bff-s-API-responds-successfully-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/health-engine.e2e-Healthcr-d0bff-s-API-responds-successfully-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › health-engine.e2e.spec.ts:1440:7 › Inline setting explanations › a setting explanation opens its own habit plan even from another pillar 
+
+    Error: browserContext.close: ENOENT: no such file or directory, open '/workspace/healthcrest-planner-confidentiality/test-results/.playwright-artifacts-7/traces/391e7d5540471b52dac2-ffe0c05149f73b951a27-recording14.trace'
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/health-engine.e2e-Inline-s-37b74-an-even-from-another-pillar-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/health-engine.e2e-Inline-s-37b74-an-even-from-another-pillar-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/health-engine.e2e-Inline-s-37b74-an-even-from-another-pillar-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/health-engine.e2e-Inline-s-37b74-an-even-from-another-pillar-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › next-week.e2e.spec.ts:151:5 › failed backup and blocked storage keep the old week editable and send no planner data 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('status')
+    Expected substring: "Backup download requested"
+    Received string:    "Backup download is unavailable in this browser. Your page edits are unchanged; you can try the text download or printing."
+    Timeout: 10000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('status') with timeout 10000ms
+      - waiting for getByRole('status')
+        23 × locator resolved to <p role="status" class="hc-plan-status">Backup download is unavailable in this browser. Y…</p>
+           - unexpected value "Backup download is unavailable in this browser. Your page edits are unchanged; you can try the text download or printing."
+
+
+      173 |   await page.getByRole('button', { name: 'Cancel new week preparation', exact: true }).click();
+      174 |   await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+    > 175 |   await expect(page.getByRole('status')).toContainText('Backup download requested');
+          |                                          ^
+      176 |   await expect(action(page)).toHaveValue('Keep the current chosen action.');
+      177 |   expect(outbound).toEqual([]);
+      178 |   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+        at /workspace/healthcrest-planner-confidentiality/next-week.e2e.spec.ts:175:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/next-week.e2e-failed-backu-f5816-le-and-send-no-planner-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/next-week.e2e-failed-backu-f5816-le-and-send-no-planner-data-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/next-week.e2e-failed-backu-f5816-le-and-send-no-planner-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/next-week.e2e-failed-backu-f5816-le-and-send-no-planner-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 320px 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('group', { name: 'Restore confirmation', exact: true })
+    Expected: 0
+    Received: 1
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('group', { name: 'Restore confirmation', exact: true }) with timeout 10000ms
+      - waiting for getByRole('group', { name: 'Restore confirmation', exact: true })
+        23 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+       at e2e/saved-plan-restore.ts:62
+
+      60 |       await opener.click();
+      61 |       reads++;
+    > 62 |       await expect(confirmation).toHaveCount(0);
+         |                                  ^
+      63 |       await expect(action).toHaveValue('Stored Sleep action.');
+      64 |       await expectCopy();
+      65 |     }
+        at checkSavedPlanRestore (/workspace/healthcrest-planner-confidentiality/e2e/saved-plan-restore.ts:62:34)
+        at /workspace/healthcrest-planner-confidentiality/release-readiness.e2e.spec.ts:12:5
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 1350px 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('group', { name: 'Restore confirmation', exact: true })
+    Expected: 0
+    Received: 1
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('group', { name: 'Restore confirmation', exact: true }) with timeout 10000ms
+      - waiting for getByRole('group', { name: 'Restore confirmation', exact: true })
+        23 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+       at e2e/saved-plan-restore.ts:62
+
+      60 |       await opener.click();
+      61 |       reads++;
+    > 62 |       await expect(confirmation).toHaveCount(0);
+         |                                  ^
+      63 |       await expect(action).toHaveValue('Stored Sleep action.');
+      64 |       await expectCopy();
+      65 |     }
+        at checkSavedPlanRestore (/workspace/healthcrest-planner-confidentiality/e2e/saved-plan-restore.ts:62:34)
+        at /workspace/healthcrest-planner-confidentiality/release-readiness.e2e.spec.ts:12:5
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › release-readiness.e2e.spec.ts:29:5 › blocked saved-plan removal preserves the copy and explicit save cancels removal 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Save on this device', exact: true })
+
+
+       at e2e/saved-plan-removal.ts:85
+
+      83 |     }
+      84 |     // Export does not authorise removal or replace the historical copy.
+    > 85 |     await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+         |                                                                                  ^
+      86 |     await expect(group).toHaveCount(1);
+      87 |     await keep.click();
+      88 |     const result = await probe();
+        at checkSavedPlanRemoval (/workspace/healthcrest-planner-confidentiality/e2e/saved-plan-removal.ts:85:82)
+        at /workspace/healthcrest-planner-confidentiality/release-readiness.e2e.spec.ts:31:3
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-bloc-60c73-plicit-save-cancels-removal-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-readiness.e2e-bloc-60c73-plicit-save-cancels-removal-chromium/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-bloc-60c73-plicit-save-cancels-removal-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-readiness.e2e-bloc-60c73-plicit-save-cancels-removal-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › release-readiness.e2e.spec.ts:61:9 › habit selection stays visible in forced dark colours at 320px 
+
+    Error: browserContext.close: ENOENT: no such file or directory, open '/workspace/healthcrest-planner-confidentiality/test-results/.playwright-artifacts-6/traces/780040ed6da1485eb6fc-19c11a5316399a145ea1-recording16.trace'
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-habi-a3d35-orced-dark-colours-at-320px-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/release-readiness.e2e-habi-a3d35-orced-dark-colours-at-320px-chromium/error-context.md
+
+    attachment #6: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-readiness.e2e-habi-a3d35-orced-dark-colours-at-320px-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-readiness.e2e-habi-a3d35-orced-dark-colours-at-320px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [chromium] › return-plan.e2e.spec.ts:48:5 › weekly save persists the check-in only on explicit action and updates the unsaved reminder 
+
+    Test not found in the worker process. Make sure test title does not change.
+
+  10) [chromium] › telemetry.e2e.spec.ts:57:5 › independent opt-in runs the installed SDKs and sends only filtered URL metadata 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      62 |   await expect(page.getByRole('status')).toContainText('usage statistics off; performance measurement allowed');
+      63 |   await page.goto('/learn?pillar=stress&idea=access#PRIVATE-NOTE');
+    > 64 |   await expect.poll(() => network.sent.length).toBeGreaterThan(0);
+         |                                                ^
+      65 |   expect(network.scripts).toEqual(['/_vercel/speed-insights/script.js']);
+      66 |   expect(network.sent[0].body).toMatchObject({ type: 'vital', route: '/learn' });
+      67 |   expect(network.sent[0].body.url).toBe(new URL('/learn', page.url()).toString());
+        at /workspace/healthcrest-planner-confidentiality/telemetry.e2e.spec.ts:64:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/telemetry.e2e-independent--e54fe--only-filtered-URL-metadata-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/telemetry.e2e-independent--e54fe--only-filtered-URL-metadata-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/telemetry.e2e-independent--e54fe--only-filtered-URL-metadata-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/telemetry.e2e-independent--e54fe--only-filtered-URL-metadata-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [chromium] › telemetry.e2e.spec.ts:87:5 › a later withdrawal blocks queued SDK calls and does not touch a saved habit draft 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1
+    Received:   0
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      89 |   await seedChoice(page, true, true);
+      90 |   await page.goto('/learn?pillar=sleep');
+    > 91 |   await expect.poll(() => network.sent.length).toBeGreaterThan(1);
+         |                                                ^
+      92 |   const kept = 'MY-PRIVATE-SAVED-PLAN';
+      93 |   await page.evaluate(value => localStorage.setItem('healthcrest.habit-draft.v1', value), kept);
+      94 |   network.sent.length = 0;
+        at /workspace/healthcrest-planner-confidentiality/telemetry.e2e.spec.ts:91:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/telemetry.e2e-a-later-with-c1abe-t-touch-a-saved-habit-draft-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/telemetry.e2e-a-later-with-c1abe-t-touch-a-saved-habit-draft-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/telemetry.e2e-a-later-with-c1abe-t-touch-a-saved-habit-draft-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/telemetry.e2e-a-later-with-c1abe-t-touch-a-saved-habit-draft-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [chromium] › telemetry.e2e.spec.ts:106:5 › entering the planner blocks already-loaded SDK callbacks on client navigation 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1
+    Received:   0
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      108 |   await seedChoice(page, true, true);
+      109 |   await page.goto('/learn?pillar=sleep&idea=time');
+    > 110 |   await expect.poll(() => network.sent.length).toBeGreaterThan(1);
+          |                                                ^
+      111 |   await page.getByRole('article', { name: 'Sleep', exact: true }).getByRole('link', { name: 'Make a next step', exact: true }).click();
+      112 |   await expect(page).toHaveURL(/\/next-step\?pillar=sleep&idea=time$/);
+      113 |   network.sent.length = 0;
+        at /workspace/healthcrest-planner-confidentiality/telemetry.e2e.spec.ts:110:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/telemetry.e2e-entering-the-e795f-lbacks-on-client-navigation-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/telemetry.e2e-entering-the-e795f-lbacks-on-client-navigation-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/telemetry.e2e-entering-the-e795f-lbacks-on-client-navigation-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/telemetry.e2e-entering-the-e795f-lbacks-on-client-navigation-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12 failed
+    [chromium] › health-engine.e2e.spec.ts:12:7 › Healthcrest production regression › pillar goals lead to contextual habit guidance without resetting the Habit Explorer 
+    [chromium] › health-engine.e2e.spec.ts:1077:7 › Healthcrest production regression › presets API responds successfully 
+    [chromium] › health-engine.e2e.spec.ts:1440:7 › Inline setting explanations › a setting explanation opens its own habit plan even from another pillar 
+    [chromium] › next-week.e2e.spec.ts:151:5 › failed backup and blocked storage keep the old week editable and send no planner data 
+    [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 320px 
+    [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 1350px 
+    [chromium] › release-readiness.e2e.spec.ts:29:5 › blocked saved-plan removal preserves the copy and explicit save cancels removal 
+    [chromium] › release-readiness.e2e.spec.ts:61:9 › habit selection stays visible in forced dark colours at 320px 
+    [chromium] › return-plan.e2e.spec.ts:48:5 › weekly save persists the check-in only on explicit action and updates the unsaved reminder 
+    [chromium] › telemetry.e2e.spec.ts:57:5 › independent opt-in runs the installed SDKs and sends only filtered URL metadata 
+    [chromium] › telemetry.e2e.spec.ts:87:5 › a later withdrawal blocks queued SDK calls and does not touch a saved habit draft 
+    [chromium] › telemetry.e2e.spec.ts:106:5 › entering the planner blocks already-loaded SDK callbacks on client navigation 
+  116 passed (7.1m)

@@ -1,4 +1,13 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 test('landing preview opens a matching plan and preserves drafts when switching pillars', async ({ page }) => {
   await page.goto('/');
@@ -101,15 +110,15 @@ test('unknown plan pillar is safe and server guidance remains available without 
 });
 
 
-test('device saving restores all pillar drafts and the saved selection after reloading', async ({ page }) => {
+test('legacy fixture from export restores all pillar drafts and the saved selection after reloading', async ({ page }) => {
   await page.goto('/next-step?pillar=nutrition');
   const action = page.getByLabel('One manageable action', { exact: true });
   await action.fill('Add beans to lunch.');
   await page.getByRole('group', { name: 'Choose a habit pillar' }).getByRole('button', { name: 'Sleep', exact: true }).click();
   await action.fill('Read quietly before bed.');
   await page.getByLabel('When will I try it?', { exact: false }).fill('After brushing my teeth.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Saved draft on this device.');
+  await seedLegacyFromExport(page);
+  await expect(page.getByRole('status')).toContainText('Backup download requested');
   await page.reload();
   // Loading the page never silently overwrites its initial pillar with stored data.
   await expect(action).toHaveValue(/Add vegetables/);
@@ -132,6 +141,7 @@ test('editing alone never persists a plan', async ({ page }) => {
   await page.reload();
   await expect(action).not.toHaveValue('This draft was not saved.');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  if (await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).isVisible()) await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('No compatible saved draft was found.');
 });
 
@@ -140,7 +150,7 @@ test('removing saved drafts keeps current edits and unrelated browser storage', 
   await page.evaluate(() => localStorage.setItem('unrelated-preference', 'keep'));
   const action = page.getByLabel('One manageable action', { exact: true });
   await action.fill('My current habit.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   await page.getByRole('button', { name: 'Remove saved plan', exact: true }).click();
   await page.getByRole('button', { name: 'Remove saved copy', exact: true }).click();
   await expect(action).toHaveValue('My current habit.');
@@ -176,8 +186,8 @@ test('blocked browser storage leaves editing and download available', async ({ p
   await page.goto('/next-step?pillar=sleep');
   const action = page.getByLabel('One manageable action', { exact: true });
   await action.fill('Read quietly before bed.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Saving is unavailable');
+  await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Backup download requested');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
   await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('Saved drafts are unavailable');
@@ -216,15 +226,16 @@ test('saved reflection notes survive reload and restore alongside other pillar d
   await page.goto('/next-step?pillar=sleep');
   const reflection = page.getByLabel('What did I learn?', { exact: false });
   await reflection.fill('A shorter routine fitted better.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   await page.reload();
   await expect(reflection).toHaveValue('');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  if (await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).isVisible()) await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(reflection).toHaveValue('A shorter routine fitted better.');
   await expect(page.getByLabel('One manageable action', { exact: true })).toHaveValue(/wind-down routine/);
 });
 
-test('earlier saved plans restore with empty reflection notes and upgrade only on explicit save', async ({ page }) => {
+test('legacy/export fixture compatibility: earlier plans restore with empty reflection notes and export current format', async ({ page }) => {
   await page.goto('/next-step');
   await page.evaluate(() => {
     const drafts = Object.fromEntries(['Fitness', 'Nutrition', 'Sleep', 'Stress'].map(pillar =>
@@ -232,15 +243,17 @@ test('earlier saved plans restore with empty reflection notes and upgrade only o
     localStorage.setItem('healthcrest.habit-draft.v1', JSON.stringify({ version: 1, selected: 'Sleep', drafts }));
   });
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  if (await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).isVisible()) await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.getByLabel('One manageable action', { exact: true })).toHaveValue('My earlier Sleep action.');
   await expect(page.getByLabel('When will I try it?', { exact: false })).toHaveValue('After lunch.');
   await expect(page.getByLabel('What did I learn?', { exact: false })).toHaveValue('');
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('healthcrest.habit-draft.v1')!).version)).toBe(1);
   await page.getByLabel('What did I learn?', { exact: false }).fill('A useful first attempt.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('healthcrest.habit-draft.v1')!).version)).toBe(3);
   await page.reload();
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  if (await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).isVisible()) await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.getByLabel('What did I learn?', { exact: false })).toHaveValue('A useful first attempt.');
   await expect(page.getByLabel('One manageable action', { exact: true })).toHaveValue('My earlier Sleep action.');
 });

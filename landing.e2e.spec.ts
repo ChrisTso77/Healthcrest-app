@@ -197,8 +197,8 @@ test('start-here questions reach the relevant guidance and saved-plan controls r
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Movement and strength: a manageable starting point');
   await expect(page.locator('#guide-sources').getByRole('link', { name: /NHS: physical activity for adults aged 19–64/ })).toBeVisible();
   await page.getByRole('navigation', { name: 'Footer navigation' }).getByRole('link', { name: 'Browser storage', exact: true }).click();
-  await expect(page.locator('main')).toContainText('Saving and restoring are manual.');
-  await page.getByRole('link', { name: 'Open the save, restore and remove controls', exact: true }).click();
+  await expect(page.locator('main')).toContainText('New drafts, notes and check-ins exist only in page memory.');
+  await page.getByRole('link', { name: 'Open export, legacy restore and remove controls', exact: true }).click();
   await expect(page).toHaveURL(/\/next-step#saved-draft-controls$/);
   await expect(page.getByRole('region', { name: 'Keep your draft' })).toBeInViewport();
   expect(await page.evaluate(() => localStorage.getItem('healthcrest.habit-draft.v1'))).toBeNull();

@@ -1,0 +1,102 @@
+
+Running 3 tests using 1 worker
+
+(node:32714) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 320px (15.3s)
+(node:33333) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 1350px (20.6s)
+(node:33829) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 [chromium] › release-readiness.e2e.spec.ts:29:5 › blocked legacy removal preserves its copy and export does not authorise deletion (5.7s)
+
+
+  1) [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 320px 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('group', { name: 'Restore confirmation', exact: true })
+    Expected: 0
+    Received: 1
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('group', { name: 'Restore confirmation', exact: true }) with timeout 10000ms
+      - waiting for getByRole('group', { name: 'Restore confirmation', exact: true })
+        23 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+       at e2e/saved-plan-restore.ts:62
+
+      60 |       await opener.click();
+      61 |       reads++;
+    > 62 |       await expect(confirmation).toHaveCount(0);
+         |                                  ^
+      63 |       await expect(action).toHaveValue('Stored Sleep action.');
+      64 |       await expectCopy();
+      65 |     }
+        at checkSavedPlanRestore (/workspace/healthcrest-planner-confidentiality/e2e/saved-plan-restore.ts:62:34)
+        at /workspace/healthcrest-planner-confidentiality/release-readiness.e2e.spec.ts:12:5
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../tmp/phase142-focused-output/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../tmp/phase142-focused-output/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../tmp/phase142-focused-output/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../tmp/phase142-focused-output/release-readiness.e2e-both-cada7-d-drafts-and-notes-at-320px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 1350px 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('group', { name: 'Restore confirmation', exact: true })
+    Expected: 0
+    Received: 1
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('group', { name: 'Restore confirmation', exact: true }) with timeout 10000ms
+      - waiting for getByRole('group', { name: 'Restore confirmation', exact: true })
+        23 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+       at e2e/saved-plan-restore.ts:62
+
+      60 |       await opener.click();
+      61 |       reads++;
+    > 62 |       await expect(confirmation).toHaveCount(0);
+         |                                  ^
+      63 |       await expect(action).toHaveValue('Stored Sleep action.');
+      64 |       await expectCopy();
+      65 |     }
+        at checkSavedPlanRestore (/workspace/healthcrest-planner-confidentiality/e2e/saved-plan-restore.ts:62:34)
+        at /workspace/healthcrest-planner-confidentiality/release-readiness.e2e.spec.ts:12:5
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../tmp/phase142-focused-output/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../tmp/phase142-focused-output/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../tmp/phase142-focused-output/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../tmp/phase142-focused-output/release-readiness.e2e-both-a1736--drafts-and-notes-at-1350px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 320px 
+    [chromium] › release-readiness.e2e.spec.ts:10:7 › both restore controls protect unsaved drafts and notes at 1350px 
+  1 passed (51.8s)

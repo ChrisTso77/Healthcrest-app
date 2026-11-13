@@ -1,5 +1,14 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect, type Page } from '@playwright/test';
 import { createHabitWeek } from './lib/education/habitWeek';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 const KEY = 'healthcrest.habit-draft.v1';
 const summary = (page: Page) => page.getByRole('region', { name: 'Your week at a glance', exact: true });
@@ -36,7 +45,7 @@ test('mixed records have matching live, downloaded and printed counts without au
   })));
   await page.goto('/next-step?pillar=sleep');
   await start(page);
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => localStorage.getItem(key), KEY);
   for (const [index, choice] of ['tried', 'adapted', 'rest', 'not-tried'].entries()) {
     await open(page, index);
@@ -82,7 +91,7 @@ test('summary stays current across pillar changes, week replacement, restore and
   await page.getByLabel('Day 1: what happened?', { exact: true }).selectOption('tried');
   await open(page, 1);
   await page.getByLabel('Day 2: a note', { exact: false }).fill('Keep this note.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => localStorage.getItem(key), KEY);
   const pillars = page.getByRole('group', { name: 'Choose a habit pillar', exact: true });
   await pillars.getByRole('button', { name: 'Food', exact: true }).click();

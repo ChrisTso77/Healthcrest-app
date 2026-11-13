@@ -1,56 +1,53 @@
-# Draft PR: keep Planner edits in page memory and preserve legacy recovery
+# Draft PR: Planner page-memory editing, explicit exports and legacy recovery
 
-Owner approved architecture; isolated branchcodex/healthcrest-planner-confidentiality.
-FrozenPR139/9d5dbca and production076a853 unchanged. Draft prepared locally only:
-remote publication could trigger Vercel Preview deployment; no deployment authorised.
+## Problem and resulting behaviour
 
-## Behaviour
+Potentially sensitive Planner notes were written to plaintext browser storage.
+The approved redesign keeps new edits, imports and restored working copies in page
+memory. Save controls request explicit JSON exports. Existing versions 1–3 remain
+available through read-only recovery; only separately confirmed removal deletes
+the historical saved key. Export does not grant removal permission or prove that a
+file was retained. Exports are unencrypted, sensitive, user-managed files.
 
-All previous Planner/week saves request explicit JSON export; no new localStorage
-writer remains in HabitPlanner. Edits/import/restoration remain page memory.
-Legacy versions1–3 are parsed through explicit read-only recovery; original saved
-bytes unchanged until explicit existing removal confirmation. Export is never
-permission to delete. Old records remain sensitive; ASVS14.3.3 staysFAIL pending
-legacy treatment and independent browser/security verification.
+Branch: `codex/healthcrest-planner-confidentiality`, based on `49e780a`; previous
+implementation checkpoint `f06f95e`. Frozen PR #139/candidate `9d5dbca` and production
+`076a853` are unchanged. This draft is prepared locally: pushing this branch or
+opening a PR may trigger Vercel, so neither is performed without separate Preview
+publication authorisation.
 
-Exports remain unencrypted,user-managed files. Requests do not prove durable save;
-page changes remain marked unsaved after export. Failed exports retain memory edits.
-Beforeunload handler requests browser warning,link capture permits cancellation
-before leaving current page. Browser-supported warnings are best effort; crashes,
-OS termination,SPA history/programmatic navigation and session restoration require
-further browser-specific review. No guarantee of loss prevention. No new backend,
-sensitive URL payload,sessionStorage or IndexedDB persistence introduced.
+## Navigation and recovery
 
-Storage/privacy/backup/week wording updated together. Restore/remove confirmation
-focus behaviour retained; status regions announce export failures and operations.
-No browser storage encryption or automatic legacy migration/deletion implemented.
+Supported Next.js `Link.onNavigate` guards replace document-wide click interception.
+Planner links, shared chrome and the measurement notice use the same guard. Dirty
+edits survive cancelled internal links, native reload and full-document programmatic
+navigation in local Chromium. Beforeunload warnings depend on browser support and
+user activation. Back/Forward and SPA programmatic routing cannot universally be
+cancelled: a persistent export-first warning explains this. No synthetic history,
+router monkey patch, Navigation API dependency or global DOM interception is added.
+Pillar switching preserves drafts; imports, restoration and week replacement retain
+explicit review/cancellation controls.
 
-## Actual verification13November2026
+Browser tests deliberately importing an exported JSON file into legacy localStorage
+are labelled compatibility fixtures; those test setup writes are not application
+persistence. Separate spies verify zero application Storage writes across editing,
+recovery, import, successful export and failed export before explicit removal.
 
-- Education unit suite:130tests/10files PASS,including legacy helper/parser coverage.
-- Targeted ESLint:PASS with no remaining warnings; TypeScript noEmit PASS.
-- Local systemChromium/Next development build:6scenario groups PASS,versions1–3
-  at320px/1280px. Actual JSON downloaded/parsed,reimported,week exported; failure
-  retains text; legacy bytes unchanged and Storage write spies empty before explicit
-  confirmed removal; remove cancellation and successful explicit removal checked.
-  Link cancellation,synthetic beforeunload cancellation flag,one Tab focus check,
-  restore Keep edits and no horizontal overflow verified.
-- Initial127.0.0.1development hydration blocked by Next's dev-origin restriction;
-  switched test URL tolocalhost without altering security configuration. Failure
-  retained. Final6groups pass; not an assertion production/browser suites passed.
+## Verification and limitations
 
-Evidence under evidence/phase14-1. Test runner scripts/planner-confidentiality-check.mjs
-uses synthetic data only and a local dev server atlocalhost3019. Existing production
-bundles untouched. Full optimized build,physicalSafari/Android,native refresh dialog,
-complete keyboard traversal,screen-reader announcements and axe contrast scans
-NOT VERIFIED. Existing browser specs tied to persistent saving need their expectations
-updated before the hosted affected-suite check; those suites were not falsely rerun
-or declared green. This is a reviewable implementation draft,not release-ready.
+See [Phase 14.2 verification](PLANNER-CONFIDENTIALITY-VERIFICATION.md) and the checked-in
+synthetic evidence directory. All execution is local; no hosted, production or
+physical-device results are implied. Automated axe and keyboard/focus assertions
+support accessibility but do not replace actual screen-reader or device evidence.
 
-## Review / remaining gates
+ASVS 5.0.0 V14.3.3 remains **FAIL** overall. The redesign removes new durable Planner
+writes; existing plaintext records remain readable to same-origin code until their
+owner explicitly removes them. Active-page XSS can access memory and exports;
+no encryption, XSS immunity or automatic migration/deletion is claimed. Qualified
+independent human review, legacy disposition and browser-specific validation remain.
+The frozen-candidate matrix stays 11 PASS / 1 FAIL / 2 BLOCKED / 20 NOT VERIFIED.
 
-Review loss-warning coverage for SPA history/programmatic navigation and legacy
-record exposure; revalidate provider-independent ASVS scope. All manual/privacy/
-provider/recovery/SEO/advisory gates remain; matrix11PASS/1FAIL/2BLOCKED/20NOT VERIFIED
-unchanged. No gate waiver or professional independent sign-off. Resolve affected
-browser-suite expectations and remaining accessibility checks before publication.
+## Owner publication action
+
+After reviewing the local checkpoint and evidence, explicitly authorise publishing
+this isolated branch/draft PR and its separate protected Vercel Preview. Do not
+modify or merge PR #139. Production deployment requires a separate release decision.

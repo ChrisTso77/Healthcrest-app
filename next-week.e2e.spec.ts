@@ -1,4 +1,13 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect, type Page } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 
 const KEY = 'healthcrest.habit-draft.v1';
 const action = (page: Page) => page.getByLabel('One manageable action', { exact: true });
@@ -38,7 +47,7 @@ test('a backed-up week can be recovered after explicit replacement and saving a 
   await page.getByLabel('Day 1: a note', { exact: false }).fill('One paragraph fitted — ゆっくり');
   await page.getByLabel('What did this week teach me?', { exact: false }).fill('A shorter action fitted.');
   await page.getByLabel('An action I might try next', { exact: false }).fill('Try one paragraph.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const oldSaved = await page.evaluate(key => localStorage.getItem(key), KEY);
   await prepare(page).click();
   await expect(newAction(page)).toBeFocused();
@@ -70,7 +79,7 @@ test('a backed-up week can be recovered after explicit replacement and saving a 
   expect(changed.drafts.Sleep.week.startDate).toBe('2026-11-04');
   expect(changed.drafts.Sleep.week.days).toEqual(Array.from({ length: 7 }, () => ({ choice: '', note: '' })));
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(oldSaved);
-  await page.getByRole('button', { name: 'Save week and all drafts', exact: true }).click();
+  await seedLegacyFromExport(page);
   const newSaved = await page.evaluate(key => localStorage.getItem(key), KEY);
   await page.reload();
   await page.getByRole('button', { name: 'Restore my plan', exact: true }).click();
@@ -87,7 +96,7 @@ test('cancelling either stage and returning to editing preserves current plans a
   await page.goto('/next-step?pillar=sleep');
   await action(page).fill('Keep the original action.');
   await start(page);
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => localStorage.getItem(key), KEY);
   await prepare(page).click();
   await newAction(page).fill('A pending change.');
@@ -162,8 +171,8 @@ test('failed backup and blocked storage keep the old week editable and send no p
   await expect(page.getByLabel('Day 1: a note', { exact: false })).toHaveValue('PRIVATE-OLD-WEEK-NOTE');
   await review(page);
   await page.getByRole('button', { name: 'Cancel new week preparation', exact: true }).click();
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Saving is unavailable');
+  await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Backup download is unavailable');
   await expect(action(page)).toHaveValue('Keep the current chosen action.');
   expect(outbound).toEqual([]);
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
@@ -172,11 +181,12 @@ test('failed backup and blocked storage keep the old week editable and send no p
 test('restoring, importing or changing pillars removes stale replacement preparations', async ({ page }) => {
   await page.goto('/next-step?pillar=sleep');
   await start(page);
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const bytes = await backup(page, 'Download all-pillar backup');
   await prepare(page).click();
   await review(page, 'Stale restore proposal.');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  if (await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).isVisible()) await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(newAction(page)).toHaveCount(0);
   await expect(confirmation(page)).toHaveCount(0);
   await expect(prepare(page)).toBeVisible();
@@ -213,6 +223,6 @@ for (const width of [320, 1440]) {
     await page.keyboard.press('Enter');
     await expect(page.getByRole('heading', { name: 'Your seven-day habit plan', exact: true })).toBeFocused();
     await expect(page.getByRole('button', { name: 'Clear current week', exact: true })).toHaveCount(0);
-    await expect(page.locator('.hc-plan-unsaved')).toContainText('You have page changes to save.');
+    await expect(page.locator('.hc-plan-unsaved')).toContainText('Your edits exist only on this page.');
   });
 }

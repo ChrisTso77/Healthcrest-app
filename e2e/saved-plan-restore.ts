@@ -56,8 +56,12 @@ export async function checkSavedPlanRestore(page: Page, testInfo: TestInfo, unav
   for (const [origin, name] of [['return', 'Restore my plan'], ['saved', 'Restore saved draft']] as const) {
     const opener = page.getByRole('button', { name, exact: true });
     if (!unavailable) {
-      // A clean page still restores only after one explicit activation.
+      // Initial recovery is explicit; later recovered page memory remains dirty.
       await opener.click();
+      if (origin === 'saved') {
+        await expect(keep).toBeFocused();
+        await replace.click();
+      }
       reads++;
       await expect(confirmation).toHaveCount(0);
       await expect(action).toHaveValue('Stored Sleep action.');
@@ -109,14 +113,15 @@ export async function checkSavedPlanRestore(page: Page, testInfo: TestInfo, unav
     }
   }
   if (!unavailable) {
-    await action.fill('Explicitly saved page action.');
+    await action.fill('Explicitly exported page action.');
     await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
     await expect(keep).toBeFocused();
-    await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-    await expect(confirmation).toHaveCount(0);
+    await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+    await expect(confirmation).toHaveCount(1);
+    await keep.click();
     const current = await probe();
-    expect(current).toMatchObject({ reads, writes: 1, removals: 0 });
-    expect(JSON.parse(current.saved!).drafts.Sleep.action).toBe('Explicitly saved page action.');
+    expect(current).toMatchObject({ reads, writes: 0, removals: 0 });
+    expect(current.saved).toBe(raw);
     await expect(replace).toHaveCount(0);
   }
   expect(await page.evaluate(() => localStorage.getItem('unrelated-preference'))).toBe('keep');

@@ -81,14 +81,15 @@ export async function checkSavedPlanRemoval(page: Page, testInfo: TestInfo, bloc
       await group.scrollIntoViewIfNeeded();
       await testInfo.attach('saved-plan-removal-blocked-' + page.viewportSize()!.width, { body: await page.screenshot(), contentType: 'image/png' });
     }
-    // An explicit save invalidates a pending removal before replacing the copy.
-    await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-    await expect(group).toHaveCount(0);
+    // Export does not authorise removal or replace the historical copy.
+    await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+    await expect(group).toHaveCount(1);
+    await expect(page.getByRole('status')).toContainText('Backup download requested');
+    await keep.click();
     const result = await probe();
     expect(result.reads).toBe(0);
     expect(result.removals).toBe(1);
-    expect(JSON.parse(result.saved!).drafts.Sleep.action).toBe('Current page edits to keep.');
-    await expect(page.getByRole('status')).toContainText('Saved draft on this device');
+    expect(result.saved).toBe(raw);
   } else {
     await expect(group).toHaveCount(0);
     await expect(opener).toBeFocused();

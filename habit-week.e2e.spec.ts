@@ -1,4 +1,13 @@
+import { seedLegacyFromExport } from './e2e/helpers/legacyExportFixture';
 import { test, expect, type Page } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  page.on('dialog', dialog => {
+    if (dialog.type() === 'beforeunload' || dialog.message().startsWith('Your edits are only on this page.')) void dialog.accept();
+    else void dialog.dismiss();
+  });
+});
+
 const KEY = 'healthcrest.habit-draft.v1';
 
 async function startWeek(page: Page, date = '2026-10-28') {
@@ -85,10 +94,11 @@ test('explicit saving restores check-ins and review across pillars and removes o
   await openDay(page, 7);
   await page.getByLabel('Day 7: what happened?', { exact: true }).selectOption('not-tried');
   await page.getByLabel('Day 7: a note', { exact: false }).fill('A different day suited me.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   await page.reload();
   await expect(page.getByRole('button', { name: 'Start seven-day plan', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  if (await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).isVisible()) await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(pillars.getByRole('button', { name: 'Food', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await openDay(page, 7);
   await expect(page.getByLabel('Day 7: a note', { exact: false })).toHaveValue('A different day suited me.');
@@ -103,21 +113,23 @@ test('explicit saving restores check-ins and review across pillars and removes o
   expect(await page.evaluate(() => localStorage.getItem('unrelated-preference'))).toBe('keep');
 });
 
-test('version 2 drafts keep their reflection notes and upgrade only on explicit save', async ({ page }) => {
+test('legacy/export fixture compatibility: version 2 reflection notes survive explicit export and recovery', async ({ page }) => {
   await page.goto('/next-step');
   const legacy = { version: 2, selected: 'Sleep', drafts: Object.fromEntries(['Fitness', 'Nutrition', 'Sleep', 'Stress'].map(pillar =>
     [pillar, { action: 'Earlier ' + pillar + ' action.', cue: 'After lunch.', support: 'Keep it small.', reflection: 'Earlier ' + pillar + ' reflection.' }])) };
   const raw = JSON.stringify(legacy);
   await page.evaluate(({ key, raw }) => localStorage.setItem(key, raw), { key: KEY, raw });
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  if (await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).isVisible()) await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.getByLabel('One manageable action', { exact: true })).toHaveValue('Earlier Sleep action.');
   await expect(page.getByLabel('What did I learn?', { exact: false })).toHaveValue('Earlier Sleep reflection.');
   await startWeek(page);
   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(raw);
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)!).version, KEY)).toBe(3);
   await page.reload();
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+  if (await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).isVisible()) await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
   await expect(page.locator('#seven-day-plan details')).toHaveCount(7);
   await expect(page.getByLabel('What did I learn?', { exact: false })).toHaveValue('Earlier Sleep reflection.');
 });
@@ -128,7 +140,7 @@ test('review adjustments are explicit and clearing a week requires confirmation'
   await page.getByLabel('What did I learn?', { exact: false }).fill('Keep these extra notes.');
   await startWeek(page);
   await page.getByLabel('An action I might try next', { exact: false }).fill('A smaller action for next week.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const saved = await page.evaluate(key => localStorage.getItem(key), KEY);
   await page.getByRole('button', { name: 'Use this action in my draft', exact: true }).click();
   await expect(page.getByLabel('One manageable action', { exact: true })).toBeFocused();
@@ -178,7 +190,7 @@ test('a damaged stored week never replaces current edits', async ({ page }) => {
   await page.goto('/next-step?pillar=sleep');
   await page.getByLabel('One manageable action', { exact: true }).fill('Keep this current action.');
   await startWeek(page);
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
+  await seedLegacyFromExport(page);
   const raw = await page.evaluate(key => localStorage.getItem(key)!, KEY);
   for (const corruption of ['date', 'choice', 'days', 'note']) {
     const data = JSON.parse(raw);
@@ -188,6 +200,7 @@ test('a damaged stored week never replaces current edits', async ({ page }) => {
     if (corruption === 'note') data.drafts.Sleep.week.days[0].note = 'x'.repeat(181);
     await page.evaluate(({ key, raw }) => localStorage.setItem(key, raw), { key: KEY, raw: JSON.stringify(data) });
     await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
+    await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();
     await expect(page.getByRole('status')).toContainText('No compatible saved draft was found.');
     await expect(page.getByLabel('One manageable action', { exact: true })).toHaveValue('Keep this current action.');
     await expect(page.locator('#seven-day-plan details')).toHaveCount(7);
@@ -204,8 +217,8 @@ test('a week can be edited and downloaded when browser saving is blocked', async
   await startWeek(page);
   await openDay(page, 1);
   await page.getByLabel('Day 1: a note', { exact: false }).fill('Keep this note in the download.');
-  await page.getByRole('button', { name: 'Save on this device', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Saving is unavailable');
+  await page.getByRole('button', { name: 'Export all drafts as JSON', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Backup download requested');
   expect(await textDownload(page)).toContain('Keep this note in the download.');
 });
 
