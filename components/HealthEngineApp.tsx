@@ -144,7 +144,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, initi
         onExplain={() => setIsGuideOpen(true)}
         onWebGLError={() => dispatch({ type: 'SET_RENDER_MODE', payload: '2d-canvas' })}
       />}
-      <div className="absolute right-3 top-3 z-30 flex gap-1 rounded-lg border border-slate-600 bg-slate-950/95 p-1 text-xs sm:right-6">
+      <div className="absolute right-3 top-40 z-[5] flex gap-1 rounded-lg border border-slate-600 bg-slate-950/95 p-1 text-xs sm:right-6 xl:right-[18rem] xl:top-20">
         <button type="button" aria-pressed={explorerView === 'scan'} onClick={() => setExplorerView('scan')} className="min-h-10 rounded px-3 aria-pressed:bg-emerald-500/30 focus-visible:outline-2 focus-visible:outline-emerald-300">Body scan</button>
         <button type="button" aria-pressed={explorerView === 'original'} onClick={() => setExplorerView('original')} className="min-h-10 rounded px-3 aria-pressed:bg-emerald-500/30 focus-visible:outline-2 focus-visible:outline-emerald-300">Original view</button>
       </div>
