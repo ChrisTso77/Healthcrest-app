@@ -27,6 +27,7 @@ import type { JourneyConstraint } from '@/lib/education/startJourney';
 import { PILLAR_GUIDES } from '@/lib/education/healthGuide';
 import { HealthEngineHUD } from '@/components/HealthEngineHUD';
 import { HealthEngineViewport } from '@/components/HealthEngineViewport';
+import { BodyScanExplorer } from '@/components/BodyScanExplorer';
 import { ModalDialog } from '@/components/ModalDialog';
 import { HealthEngineGuide } from '@/components/HealthEngineGuide';
 import type { SceneId } from '@/state/PillarsStateTypes';
@@ -67,6 +68,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
 
   // UI Control States
   const [motionPaused, setMotionPaused] = useState(false);
+  const [explorerView, setExplorerView] = useState<'scan' | 'original'>(initialRenderMode === '2d-canvas' ? 'original' : 'scan');
   const [isDockOpen, setIsDockOpen] = useState(true);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
@@ -132,7 +134,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
       {/* ------------------------------------------------------------------ */}
       {/* 1. VISUAL VIEWPORT LAYER */}
       {/* ------------------------------------------------------------------ */}
-      <HealthEngineViewport
+      {explorerView === 'scan' ? <BodyScanExplorer activePillar={state.activePillar} parameters={state.parameters} dispatch={dispatch} /> : <HealthEngineViewport
         state={state}
         startingPoint={comparisonStart}
         onCompare={() => setIsComparisonOpen(true)}
@@ -141,12 +143,16 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
         onToggleMotion={() => setMotionPaused(paused => !paused)}
         onExplain={() => setIsGuideOpen(true)}
         onWebGLError={() => dispatch({ type: 'SET_RENDER_MODE', payload: '2d-canvas' })}
-      />
+      />}
+      <div className="absolute right-3 top-3 z-30 flex gap-1 rounded-lg border border-slate-600 bg-slate-950/95 p-1 text-xs sm:right-6">
+        <button type="button" aria-pressed={explorerView === 'scan'} onClick={() => setExplorerView('scan')} className="min-h-10 rounded px-3 aria-pressed:bg-emerald-500/30 focus-visible:outline-2 focus-visible:outline-emerald-300">Body scan</button>
+        <button type="button" aria-pressed={explorerView === 'original'} onClick={() => setExplorerView('original')} className="min-h-10 rounded px-3 aria-pressed:bg-emerald-500/30 focus-visible:outline-2 focus-visible:outline-emerald-300">Original view</button>
+      </div>
 
       {/* ------------------------------------------------------------------ */}
       {/* 2. OVERLAY HUD INTERFACE */}
       {/* ------------------------------------------------------------------ */}
-      <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
+      {explorerView === 'original' && <div className="relative z-10 w-full h-full pointer-events-none [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto">
         <HealthEngineHUD
         onGuideOpen={() => setIsGuideOpen(true)}
         onCompareOpen={() => setIsComparisonOpen(true)}
@@ -212,7 +218,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
           dispatch(action);
         }}
       />
-      </div>
+      </div>}
 
       {/* ------------------------------------------------------------------ */}
       {/* 3. FOOTER & NARRATIVE / MEDICO-LEGAL ACTION BAR */}
