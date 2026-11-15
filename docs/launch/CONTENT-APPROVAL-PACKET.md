@@ -120,3 +120,11 @@ This follow-up supersedes the 9 November due dates for these seven items without
 rewriting their original approvals. S4–S8 and C1 retain the 13 November dates.
 The new brand tagline is separately authorised by the development directive;
 this follow-up does not expand the seven-item scope to shared copy or other content.
+
+## Body scan advice — 15 November 2026
+
+| Item | Decision | Reviewer / actual date | Exact scope and evidence | Next review due |
+| --- | --- | --- | --- | --- |
+| B1 | Owner approved | Chris / 15 November 2026 | User explicitly stated “I approve the new health advice” following the Body scan claim-by-region review and PR #142 handoff. Scope: the four-habit captions, shared dose caveats, female-context wording and narration built from those strings at PR #142 head `51885194b0d15b5176d036459a6bbc489f1b7869`; tree `a6ca66b04d50de82ccd8c708eea1791cfb161663`; `components/BodyScanExplorer.tsx` blob `d6a6c5c1b10d31e2e0b935f1866d0a7daffcf093`. [Review record](BODY-SCAN-REVIEW-2026-11-15.md). No corrections requested. This is an owner decision, not proof of a line-by-line or independent clinical review, voice quality, accessibility, credentials, merge or launch acceptance. | 22 November 2026; earlier for material changes or safety concerns |
+
+This B1 record does not renew or expand the older G1–G4/S1–S8/C1 approvals. Device, AT, security, privacy and recovery gates remain separate.

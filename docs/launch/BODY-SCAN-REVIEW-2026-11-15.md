@@ -1,6 +1,10 @@
 # Body scan release review — 15 November 2026
 
-Scope: the illustrated four-habit Body scan introduced by PR #141. This is a focused engineering/source check, **not** clinical sign-off, accessibility conformance or launch acceptance.
+Scope: the illustrated four-habit Body scan introduced by PR #141 and revised in draft PR #142. This is a focused engineering/source check and owner content decision, **not** independent clinical sign-off, accessibility conformance or launch acceptance.
+
+## Owner content decision — 15 November 2026
+
+Chris explicitly stated in this conversation: “I approve the new health advice.” Record this as **owner approval of the Body scan advice** described in the claim-by-region handoff below, at PR #142 head `51885194b0d15b5176d036459a6bbc489f1b7869` (tree `a6ca66b04d50de82ccd8c708eea1791cfb161663`; `components/BodyScanExplorer.tsx` blob `d6a6c5c1b10d31e2e0b935f1866d0a7daffcf093`). The reviewed scope includes all four habits' captions, shared dose caveats and female-context wording; narration uses those same strings. No corrections were requested with the approval. This records the owner's decision, not a separately observed line-by-line review, independent professional assessment, credential verification, approval of future changes, merge permission or launch acceptance. Next content review due **22 November 2026**, or earlier after material wording/source changes or a safety concern.
 
 ## Observed live behavior
 
@@ -17,7 +21,7 @@ Scope: the illustrated four-habit Body scan introduced by PR #141. This is a foc
 | Sleep | NHS insomnia guidance; NIH/NHLBI sleep and health | Supports typical adult duration and general brain, cardiovascular, metabolic and immune mechanisms. Hours alone do not diagnose sleep deficiency or predict disease. |
 | Stress | NHS stress symptoms and breathing exercise guidance | Supports coping strategies and common symptoms. Calming-practice minutes are an illustrative setting with no established therapeutic dose. |
 
-The source list is linked beside the live explanations in the candidate. A broken ASRM PCOS link was replaced with the stable 2023 guideline record at PubMed. Sources were checked on 15 November 2026; this is not a claim that a clinician approved the wording.
+The source list is linked beside the candidate explanations. A broken ASRM PCOS link was replaced with the stable 2023 guideline record at PubMed. Sources were checked on 15 November 2026. The owner approval above does not establish independent clinical validation.
 
 ### Claim-by-region editorial handoff
 
@@ -32,7 +36,7 @@ The scanner's four-stop order is an editorial teaching choice. The selected minu
 
 ## Remaining checks before acceptance
 
-- Clinical/editorial reviewer: verify every caption and spoken explanation, including PCOS, menopause, premenstrual symptoms and high-volume exercise; record reviewer, revisions and date.
+- Independent clinical review, if required for launch, remains separate from the recorded owner approval. Any material edits to the approved advice require renewed owner review.
 - Actual screen reader and voice engine: check region announcements, manual keyboard narration and speech completion/error handling. An automated speech-error regression checks that captions become live again; it does not verify audible output or AT behavior.
 - Real devices: touch dragging, narrow portrait/landscape, browser back/forward and audio permissions. Inspect footer overlap and scrolling at 320 and 390 CSS px.
 - Deployment: record served commit identity and source-bound smoke after any follow-up merge. Existing security, privacy and recovery gates remain open.
