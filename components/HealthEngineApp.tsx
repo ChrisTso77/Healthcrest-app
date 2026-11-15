@@ -134,7 +134,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, initi
       {/* ------------------------------------------------------------------ */}
       {/* 1. VISUAL VIEWPORT LAYER */}
       {/* ------------------------------------------------------------------ */}
-      {explorerView === 'scan' ? <BodyScanExplorer activePillar={state.activePillar} parameters={state.parameters} dispatch={dispatch} /> : <HealthEngineViewport
+      {explorerView === 'scan' ? <BodyScanExplorer activePillar={state.activePillar} parameters={state.parameters} dispatch={dispatch} onOriginalView={() => setExplorerView('original')} /> : <HealthEngineViewport
         state={state}
         startingPoint={comparisonStart}
         onCompare={() => setIsComparisonOpen(true)}
@@ -144,10 +144,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, initi
         onExplain={() => setIsGuideOpen(true)}
         onWebGLError={() => dispatch({ type: 'SET_RENDER_MODE', payload: '2d-canvas' })}
       />}
-      <div className="absolute right-3 top-40 z-[5] flex gap-1 rounded-lg border border-slate-600 bg-slate-950/95 p-1 text-xs sm:right-6 xl:right-[18rem] xl:top-20">
-        <button type="button" aria-pressed={explorerView === 'scan'} onClick={() => setExplorerView('scan')} className="min-h-10 rounded px-3 aria-pressed:bg-emerald-500/30 focus-visible:outline-2 focus-visible:outline-emerald-300">Body scan</button>
-        <button type="button" aria-pressed={explorerView === 'original'} onClick={() => setExplorerView('original')} className="min-h-10 rounded px-3 aria-pressed:bg-emerald-500/30 focus-visible:outline-2 focus-visible:outline-emerald-300">Original view</button>
-      </div>
+      {explorerView === 'original' && <button type="button" onClick={() => setExplorerView('scan')} className="absolute right-3 top-40 z-[5] min-h-11 rounded-lg border border-emerald-500/60 bg-slate-950/95 px-3 text-sm text-emerald-200 focus-visible:outline-2 focus-visible:outline-emerald-300 sm:right-6 xl:right-[18rem] xl:top-20">Open Body scan</button>}
 
       {/* ------------------------------------------------------------------ */}
       {/* 2. OVERLAY HUD INTERFACE */}
