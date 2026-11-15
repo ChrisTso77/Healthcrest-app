@@ -19,9 +19,20 @@ Scope: the illustrated four-habit Body scan introduced by PR #141. This is a foc
 
 The source list is linked beside the live explanations in the candidate. A broken ASRM PCOS link was replaced with the stable 2023 guideline record at PubMed. Sources were checked on 15 November 2026; this is not a claim that a clinician approved the wording.
 
+### Claim-by-region editorial handoff
+
+| Habit | Head | Chest | Abdomen | Legs |
+| --- | --- | --- | --- | --- |
+| Movement | Short-term anxiety/sleep and longer-term wellbeing: WHO general activity guidance. Premenstrual wording: ACOG. | Fitness, blood pressure and cardiovascular association: WHO; menopause context remains general, not estrogen restoration. | Muscle glucose use and diabetes association: WHO; PCOS lifestyle advice: 2023 guideline. | Endurance, resistance, bone and falls: WHO/NIAMS; inadequate energy and menstrual disruption: ACOG. |
+| Food | Energy and nutrients, without a cognition claim: NHS Eatwell. | Overall pattern, salt, saturated fat and cardiovascular risk: NHS Eatwell and balanced diet guidance. | Fibre and bowel regularity: NHS fibre guidance. | Protein and calcium sources alongside activity: NHS Eatwell. |
+| Sleep | Attention and mood: NIH/NHLBI sleep deficiency guidance. | Cardiovascular association: NIH/NHLBI; no personal estimate. | Appetite/insulin response: NIH/NHLBI; no diabetes prevention prediction. | Recovery and immune support: NIH/NHLBI. |
+| Stress | Coping and attention: WHO stress skills guidance; no treatment claim. | Faster heartbeat and calming breathing: NHS stress/breathing. | Appetite and digestive symptoms: NHS stress; no disease-prevention claim. | Muscle tension and rest: NHS stress; persistent symptoms need appropriate support. |
+
+The scanner's four-stop order is an editorial teaching choice. The selected minute or portion value does not scale any claimed effect. The activity slider represents **example moderate minutes** for guideline comparisons; the app does not convert vigorous activity. A prospective high-volume activity cohort and AHA scientific statement are linked for the additional-benefit and risk caveats; neither establishes a universal harmful minute threshold. This mapping is a source check for reviewer use, not an endorsement of every sentence or voice delivery.
+
 ## Remaining checks before acceptance
 
 - Clinical/editorial reviewer: verify every caption and spoken explanation, including PCOS, menopause, premenstrual symptoms and high-volume exercise; record reviewer, revisions and date.
-- Actual screen reader and voice engine: check region announcements, manual keyboard narration and speech completion/error handling. Automated semantics are only partial evidence.
+- Actual screen reader and voice engine: check region announcements, manual keyboard narration and speech completion/error handling. An automated speech-error regression checks that captions become live again; it does not verify audible output or AT behavior.
 - Real devices: touch dragging, narrow portrait/landscape, browser back/forward and audio permissions. Inspect footer overlap and scrolling at 320 and 390 CSS px.
 - Deployment: record served commit identity and source-bound smoke after any follow-up merge. Existing security, privacy and recovery gates remain open.

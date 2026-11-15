@@ -44,3 +44,24 @@ test('mobile body scan keeps view switch in the controls and announces keyboard 
   await expect(scan.getByRole('status').last()).toContainText('Metabolic regulation');
   await expect(scan.getByRole('link', { name: 'NIH sleep and health' })).toHaveAttribute('href', 'https://www.nhlbi.nih.gov/health/sleep-deprivation/health-effects');
 });
+
+test('speech failure returns to announced captions', async ({ page }) => {
+  await page.addInitScript(() => {
+    class MockUtterance {
+      lang = '';
+      rate = 1;
+      onerror: (() => void) | null = null;
+      constructor(public text: string) {}
+    }
+    Object.defineProperty(window, 'SpeechSynthesisUtterance', { value: MockUtterance });
+    Object.defineProperty(window, 'speechSynthesis', {
+      value: { cancel() {}, speak(utterance: MockUtterance) { setTimeout(() => utterance.onerror?.(), 0); } },
+    });
+  });
+  await page.goto('/engine?view=scan');
+  await page.getByRole('button', { name: 'Voice off' }).click();
+  await page.getByRole('button', { name: 'Start scan' }).click();
+  await expect(page.getByRole('status').last()).toContainText('continuing with captions');
+  await expect(page.getByRole('button', { name: 'Voice off' })).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('.hc-body-scan [aria-live="polite"]')).toBeVisible();
+});
