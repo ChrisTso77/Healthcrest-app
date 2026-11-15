@@ -95,7 +95,21 @@ export function BodyScanExplorer({ activePillar, parameters, dispatch, onOrigina
   useEffect(() => { if (!running) return; const id = ++runId.current; const current = entries[index] ?? entries[0]; const next = () => { if (id !== runId.current) return; if (index >= entries.length - 1) { setRunning(false); setStatus('Scan complete. Choose a region or start again.'); return; } setIndex(index + 1); setPosition(null); };
     if (voice && 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window) {
       const utterance = new SpeechSynthesisUtterance(current.title + '. ' + current.detail + ' ' + note(habit, value) + ' ' + context(habit, model, current.region));
-      utterance.lang = 'en-GB'; utterance.rate = .95; utterance.onend = () => { if (id === runId.current) timer.current = setTimeout(next, 800); }; utterance.onerror = () => { if (id === runId.current) { setVoice(false); setStatus('Voice stopped; continuing with captions.'); } }; speech.current = utterance; timer.current = setTimeout(() => { if (id === runId.current) { setRunning(false); setVoice(false); setStatus('Voice completion was not reported. Captions are available; start the scan to try again.'); } }, Math.max(45000, utterance.text.split(/\s+/).length * 1100)); window.speechSynthesis.speak(utterance);
+      utterance.lang = 'en-GB'; utterance.rate = .95;
+      const started = Date.now();
+      const minimumMs = Math.max(16000, utterance.text.trim().split(/\s+/).length * 380);
+      utterance.onend = () => {
+        if (id !== runId.current) return;
+        const elapsed = Date.now() - started;
+        if (elapsed < Math.min(5000, minimumMs / 4)) {
+          setVoice(false);
+          setStatus('Voice ended before the explanation could be spoken; continuing with captions.');
+          return;
+        }
+        if (timer.current) clearTimeout(timer.current);
+        timer.current = setTimeout(next, Math.max(800, minimumMs - elapsed));
+      };
+      utterance.onerror = () => { if (id === runId.current) { setVoice(false); setStatus('Voice stopped; continuing with captions.'); } }; speech.current = utterance; timer.current = setTimeout(() => { if (id === runId.current) { setRunning(false); setVoice(false); setStatus('Voice completion was not reported. Captions are available; start the scan to try again.'); } }, Math.max(45000, utterance.text.split(/\s+/).length * 1100)); window.speechSynthesis.speak(utterance);
     } else timer.current = setTimeout(next, Math.max(16000, current.detail.split(/\s+/).length * 280));
     const token = runId; const timeout = timer; return () => { token.current++; if (timeout.current) clearTimeout(timeout.current); if ('speechSynthesis' in window) window.speechSynthesis.cancel(); };
   }, [running, index, voice, habit, value, model, entries]);

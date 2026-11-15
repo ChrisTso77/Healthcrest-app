@@ -65,3 +65,26 @@ test('speech failure returns to announced captions', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Voice off' })).toHaveAttribute('aria-pressed', 'false');
   await expect(page.locator('.hc-body-scan [aria-live="polite"]')).toBeVisible();
 });
+
+test('premature voice completion falls back to captions without skipping regions', async ({ page }) => {
+  await page.addInitScript(() => {
+    class MockUtterance {
+      lang = '';
+      rate = 1;
+      onend: (() => void) | null = null;
+      constructor(public text: string) {}
+    }
+    Object.defineProperty(window, 'SpeechSynthesisUtterance', { value: MockUtterance });
+    Object.defineProperty(window, 'speechSynthesis', {
+      value: { cancel() {}, speak(utterance: MockUtterance) { setTimeout(() => utterance.onend?.(), 0); } },
+    });
+  });
+  await page.goto('/engine?view=scan');
+  const scan = page.getByRole('region', { name: 'Habit body scan' });
+  const first = await scan.getByRole('heading', { level: 2 }).first().textContent();
+  await scan.getByRole('button', { name: 'Voice off' }).click();
+  await scan.getByRole('button', { name: 'Start scan' }).click();
+  await expect(scan.getByRole('status').last()).toContainText('continuing with captions');
+  await expect(scan.getByRole('button', { name: 'Voice off' })).toHaveAttribute('aria-pressed', 'false');
+  await expect(scan.getByRole('heading', { level: 2 }).first()).toHaveText(first!);
+});

@@ -36,6 +36,12 @@ The scanner's four-stop order is an editorial teaching choice. The selected minu
 
 ## Remaining checks before acceptance
 
+### Accessibility and device check in progress
+
+- Connected Chrome preview exposed semantic labels, live captions, keyboard region controls and the four guided stops. This is a DOM and interaction check, not a screen-reader listening result.
+- With browser speech enabled, the preview completed all four stops in under 20 seconds. That is implausibly short for the full explanations; audible output is **unverified**. The follow-up candidate treats premature speech completion as a voice failure, restores live captions, and enforces a minimum dwell time for plausible completion. Automated regression covers an immediately firing `onend` event. The approved advice strings and source links were not edited.
+- No actual screen-reader program, audible output monitor or physical touch device was available in this environment. The remaining manual pass requires a person to listen and drag on a real device; desktop viewport emulation is insufficient.
+
 - Independent clinical review, if required for launch, remains separate from the recorded owner approval. Any material edits to the approved advice require renewed owner review.
 - Actual screen reader and voice engine: check region announcements, manual keyboard narration and speech completion/error handling. An automated speech-error regression checks that captions become live again; it does not verify audible output or AT behavior.
 - Real devices: touch dragging, narrow portrait/landscape, browser back/forward and audio permissions. Inspect footer overlap and scrolling at 320 and 390 CSS px.
