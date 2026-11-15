@@ -41,9 +41,9 @@ import {
   initialPillarsState
 } from '@/state/PillarsStateMachine';
 
-type HealthEngineAppProps = { initialScene?: SceneId; initialRenderMode?: RenderMode; journeyConstraint?: JourneyConstraint };
+type HealthEngineAppProps = { initialScene?: SceneId; initialRenderMode?: RenderMode; initialExplorerView?: 'scan' | 'original'; journeyConstraint?: JourneyConstraint };
 
-export default function HealthEngineApp({ initialScene, initialRenderMode, journeyConstraint }: HealthEngineAppProps) {
+export default function HealthEngineApp({ initialScene, initialRenderMode, initialExplorerView = 'original', journeyConstraint }: HealthEngineAppProps) {
   // Master State Machine Driven by Reducer
   const [state, dispatch] = useReducer(
     pillarsReducer,
@@ -68,7 +68,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, journ
 
   // UI Control States
   const [motionPaused, setMotionPaused] = useState(false);
-  const [explorerView, setExplorerView] = useState<'scan' | 'original'>(initialRenderMode === '2d-canvas' ? 'original' : 'scan');
+  const [explorerView, setExplorerView] = useState<'scan' | 'original'>(initialExplorerView);
   const [isDockOpen, setIsDockOpen] = useState(true);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);

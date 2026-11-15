@@ -24,5 +24,5 @@ export default async function EnginePage({
     case 'systems': initialScene = 'system'; break;
   }
 
-  return <HealthEngineApp initialScene={initialScene} initialRenderMode={view === '2d' ? '2d-canvas' : undefined} journeyConstraint={parseJourneyConstraint(idea)} />;
+  return <HealthEngineApp initialScene={initialScene} initialRenderMode={view === '2d' ? '2d-canvas' : undefined} initialExplorerView={view === 'scan' ? 'scan' : 'original'} journeyConstraint={parseJourneyConstraint(idea)} />;
 }
