@@ -2,7 +2,18 @@
 
 Updated 16 November 2026. Current local work is separate from deployed production.
 
-## Current initiative — Explorer loading follow-up (16 November)
+## Current initiative — Explorer keyboard accessibility (16 November)
+
+- #146 merged with owner approval as 00f74a2. Canonical identity and live smoke
+  43932961527 PASS; all six post-merge CI jobs in 43932757233 now PASS.
+- User asks for the next upgrade. On branch codex/healthcrest-explorer-accessibility,
+  preserve approved design and scanner; fix lesson step focus loss and associate
+  slider guidance with stable accessible names. No persistence/privacy changes.
+- [Scoped accessibility review](../explorer-v2/accessibility/REVIEW.md) records
+  acceptance, local checks and remaining manual evidence. Local candidate only;
+  new push/deployment/merge is not authorised by the prior #146 merge approval.
+
+## Previous initiative — Explorer loading follow-up (16 November)
 
 - #145 merged with explicit owner approval as 6771f48; canonical serves that SHA,
   and live commit-bound smoke 43891385536 passed. Scanner source/assets unchanged.
