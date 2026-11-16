@@ -1,0 +1,240 @@
+{
+  "scope": "Local isolated production-build lab run; system Chromium 154.0.8037.57 / Lighthouse 13.6.0. Not field, physical-device, INP or GPU evidence.",
+  "budget": {
+    "score": 0.9,
+    "lcpMs": 2500,
+    "cls": 0.1,
+    "totalBlockingMs": 200
+  },
+  "expectedProfiles": 8,
+  "completedProfiles": 8,
+  "passed": true,
+  "summaries": [
+    {
+      "page": "home",
+      "path": "/",
+      "expectedFormFactor": "mobile",
+      "lighthouseVersion": "13.6.0",
+      "formFactor": "mobile",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "throttlingMethod": "simulate",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 927.4906000000001,
+      "cls": 0.0007147309648763568,
+      "totalBlockingMs": 106.5,
+      "analyticsRequests": [],
+      "passed": true,
+      "failures": []
+    },
+    {
+      "page": "start",
+      "path": "/start",
+      "expectedFormFactor": "mobile",
+      "lighthouseVersion": "13.6.0",
+      "formFactor": "mobile",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "throttlingMethod": "simulate",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 916.0555999999999,
+      "cls": 0,
+      "totalBlockingMs": 37,
+      "analyticsRequests": [],
+      "passed": true,
+      "failures": []
+    },
+    {
+      "page": "guide-mobile",
+      "path": "/learn/balanced-meals",
+      "expectedFormFactor": "mobile",
+      "lighthouseVersion": "13.6.0",
+      "formFactor": "mobile",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "throttlingMethod": "simulate",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 912.7260000000001,
+      "cls": 0,
+      "totalBlockingMs": 104,
+      "analyticsRequests": [],
+      "passed": true,
+      "failures": []
+    },
+    {
+      "page": "planner-mobile",
+      "path": "/next-step?pillar=sleep",
+      "expectedFormFactor": "mobile",
+      "lighthouseVersion": "13.6.0",
+      "formFactor": "mobile",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "throttlingMethod": "simulate",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 915.2031999999999,
+      "cls": 0,
+      "totalBlockingMs": 54.5,
+      "analyticsRequests": [],
+      "passed": true,
+      "failures": []
+    },
+    {
+      "page": "explorer-2d-mobile",
+      "path": "/engine?pillar=sleep&view=2d",
+      "expectedFormFactor": "mobile",
+      "lighthouseVersion": "13.6.0",
+      "formFactor": "mobile",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "throttlingMethod": "simulate",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 915.3974000000001,
+      "cls": 0,
+      "totalBlockingMs": 70.5,
+      "analyticsRequests": [],
+      "passed": true,
+      "failures": []
+    },
+    {
+      "page": "guide-desktop",
+      "path": "/learn/balanced-meals",
+      "expectedFormFactor": "desktop",
+      "lighthouseVersion": "13.6.0",
+      "formFactor": "desktop",
+      "screenEmulation": {
+        "mobile": false,
+        "width": 1350,
+        "height": 940,
+        "deviceScaleFactor": 1,
+        "disabled": false
+      },
+      "throttlingMethod": "simulate",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 250.31889999999999,
+      "cls": 0,
+      "totalBlockingMs": 0,
+      "analyticsRequests": [],
+      "passed": true,
+      "failures": []
+    },
+    {
+      "page": "planner-desktop",
+      "path": "/next-step?pillar=sleep",
+      "expectedFormFactor": "desktop",
+      "lighthouseVersion": "13.6.0",
+      "formFactor": "desktop",
+      "screenEmulation": {
+        "mobile": false,
+        "width": 1350,
+        "height": 940,
+        "deviceScaleFactor": 1,
+        "disabled": false
+      },
+      "throttlingMethod": "simulate",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 257.068,
+      "cls": 0,
+      "totalBlockingMs": 0,
+      "analyticsRequests": [],
+      "passed": true,
+      "failures": []
+    },
+    {
+      "page": "explorer-2d-desktop",
+      "path": "/engine?pillar=sleep&view=2d",
+      "expectedFormFactor": "desktop",
+      "lighthouseVersion": "13.6.0",
+      "formFactor": "desktop",
+      "screenEmulation": {
+        "mobile": false,
+        "width": 1350,
+        "height": 940,
+        "deviceScaleFactor": 1,
+        "disabled": false
+      },
+      "throttlingMethod": "simulate",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 557.17095,
+      "cls": 0.007036745177013104,
+      "totalBlockingMs": 0,
+      "analyticsRequests": [],
+      "passed": true,
+      "failures": []
+    }
+  ],
+  "sourceCodeCommit": "4a4489a4a837ecadf7b622a71b4691331fec0436",
+  "failedMainBaseline": {
+    "run": 43891071015,
+    "job": 133382860068,
+    "sha": "6771f485e32901561b09fc33232cb71bba73c2f2",
+    "profile": "explorer-2d-mobile",
+    "lcpMs": 2581.936,
+    "tbtMs": 113,
+    "passed": false
+  }
+}

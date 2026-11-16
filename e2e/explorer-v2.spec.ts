@@ -6,11 +6,21 @@ test("onboarding start, skip, return and reopen without durable storage", async 
 }) => {
   await page.goto(route);
   await expect(page.getByRole("dialog")).toBeVisible();
+  await expect
+    .poll(() =>
+      page.getByRole("dialog").evaluate((node) => node.matches(":modal")),
+    )
+    .toBe(true);
   await page
     .getByRole("button", { name: "Skip introduction", exact: true })
     .click();
   await expect(page).toHaveURL(/#explore$/);
   await page.reload();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  // Moving to the skip-link fragment must not restart returning-user onboarding.
+  await page.getByRole("link", { name: "Skip to lesson", exact: true }).focus();
+  await page.keyboard.press("Enter");
+  await page.getByRole("button", { name: "3 Experiment", exact: true }).click();
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await page.getByRole("button", { name: "Introduction", exact: true }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
@@ -209,7 +219,10 @@ test("production and unflagged routes are inaccessible; local route is noindex",
   page,
   request,
 }) => {
-  test.skip(publicExperience, 'Public-route production contract is checked by the integration suite.');
+  test.skip(
+    publicExperience,
+    "Public-route production contract is checked by the integration suite.",
+  );
   for (const port of [3211, 3212])
     expect(
       (await request.get(`http://127.0.0.1:${port}${route}`)).status(),
@@ -293,7 +306,10 @@ test("approved hosted preview opens the redesigned UI while draft clinical conte
   page,
   request,
 }) => {
-  test.skip(publicExperience, 'Prototype-only hosted gate; public integration has its own production profile.');
+  test.skip(
+    publicExperience,
+    "Prototype-only hosted gate; public integration has its own production profile.",
+  );
   const preview = "http://127.0.0.1:3213";
   const response = await page.goto(preview + route);
   expect(response?.status()).toBe(200);

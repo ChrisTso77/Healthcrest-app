@@ -7,15 +7,18 @@ type ModalDialogProps = {
   labelledBy: string;
   onClose: () => void;
   className?: string;
+  initiallyOpen?: boolean;
+  ready?: boolean;
 };
 
-export function ModalDialog({ children, labelledBy, onClose, className = '' }: ModalDialogProps) {
+export function ModalDialog({ children, labelledBy, onClose, className = '', initiallyOpen = false, ready = true }: ModalDialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     const dialog = ref.current;
-    if (!dialog) return;
+    if (!dialog || !ready) return;
     const trigger = document.activeElement;
+    if (dialog.open) dialog.close();
     dialog.showModal();
 
     return () => {
@@ -24,13 +27,14 @@ export function ModalDialog({ children, labelledBy, onClose, className = '' }: M
         trigger.focus({ preventScroll: true });
       }
     };
-  }, []);
+  }, [ready]);
 
   return (
     <dialog
       ref={ref}
       aria-labelledby={labelledBy}
-      aria-modal="true"
+      open={initiallyOpen || undefined}
+      aria-modal={initiallyOpen ? undefined : true}
       onCancel={(event) => {
         event.preventDefault();
         onClose();

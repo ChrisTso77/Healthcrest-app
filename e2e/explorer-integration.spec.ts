@@ -193,3 +193,48 @@ for (const width of [320, 640, 1350])
       await expect(page.getByRole("dialog")).toHaveCount(0);
     },
   );
+
+test("onboarding content is server-rendered and a no-JavaScript visit retains readable navigation", async ({
+  browser,
+  baseURL,
+  request,
+}) => {
+  const response = await request.get("/engine");
+  const html = await response.text();
+  expect(html).toMatch(/<dialog[^>]*open=""/);
+  expect(html).toContain("Four habits. Room to explore.");
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    baseURL,
+  });
+  try {
+    const page = await context.newPage();
+    await page.goto("/engine?pillar=sleep");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "Small habits. A bigger picture.",
+    );
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await page
+      .getByRole("link", { name: "Healthcrest home", exact: true })
+      .click();
+    await expect(page).toHaveURL(/\/$/);
+  } finally {
+    await context.close();
+  }
+});
+
+test("first paint exposes the introduction and returning hash skips it before client scripts load", async ({
+  page,
+}) => {
+  await page.route("**/_next/static/**/*.js", (route) => route.abort());
+  await page.goto("/engine");
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Start exploring", exact: true }),
+  ).toBeDisabled();
+  await page.goto("/engine#explore");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Small habits. A bigger picture.",
+  );
+});
