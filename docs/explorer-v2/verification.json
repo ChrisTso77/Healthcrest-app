@@ -1,34 +1,37 @@
 {
-  "recordedAt": "2026-11-16T11:23:46.261Z",
+  "recordedAt": "2026-11-16T11:43:44.232Z",
   "kind": "single local mobile lab navigation; default 2D; no field or device data",
   "url": "http://localhost:3200/prototype/explorer-v2#explore",
   "tool": "13.6.0",
   "categories": {
-    "performance": 1,
+    "performance": 0.99,
     "accessibility": 1,
     "best-practices": 1,
     "seo": 0.66,
     "agentic-browsing": 1
   },
   "metrics": {
-    "first-contentful-paint": 918.5545,
-    "largest-contentful-paint": 918.5545,
-    "total-blocking-time": 78.99999999999977,
+    "first-contentful-paint": 922.6683,
+    "largest-contentful-paint": 922.6683,
+    "total-blocking-time": 103,
     "cumulative-layout-shift": 0,
-    "total-byte-weight": 210150
+    "total-byte-weight": 213560
   },
   "browserTests": {
     "result": "PASS",
-    "count": 10,
+    "count": 11,
     "browser": "system Chromium 154.0.8037.57",
-    "axeScopes": "main prototype and settings dialog at 320,390,768,1440 CSS px"
+    "axeScopes": "main prototype and settings dialog at 320,390,768,1440 CSS px",
+    "note": "Ten existing cases rerun plus one new contextual-action/radial-value case run separately."
   },
   "unitTests": {
     "result": "PASS",
-    "count": 328
+    "count": 328,
+    "note": "Prior prototype baseline; not rerun for presentation-only revision. Model unchanged."
   },
   "manualAssistiveTechnology": "NOT VERIFIED",
   "realBrowser400PercentZoom": "NOT VERIFIED; 320px CSS layout and 320x256 dialog reflow tested",
   "realUserStudy": "NOT VERIFIED",
-  "crossBrowser": "NOT VERIFIED; Chromium only"
+  "crossBrowser": "NOT VERIFIED; Chromium only",
+  "revision": "UI rebuilt after supplied original-Explorer screenshot"
 }

@@ -11,7 +11,11 @@ Updated 16 November 2026. Current local work is separate from deployed productio
 - Three concepts evaluated; selected labelled 2D with optional existing Lite 3D.
   Local-gated `/prototype/explorer-v2`; original Explorer, Body Scan, Planner,
   reviewed clinical content and data boundaries unchanged.
-- Build/lint, 328 units and 10 targeted Chromium browser cases PASS. Axe at four
+- Supplied screenshot reviewed; prototype UI rebuilt with compact habit cards,
+  radial input visual and contextual lesson workspace. Review path remains
+  `/prototype/explorer-v2`; screenshot route `/engine` remains the original.
+- Revised UI build/lint and 11 targeted Chromium cases PASS; prior unit baseline
+  is 328 tests (unchanged model). Axe at four
   widths; forced WebGL failure, keyboard dialog and reduced motion checked.
   Manual assistive technology / real users / other browsers NOT VERIFIED.
 - [Review package, screenshots, tradeoffs and migration proposal](../explorer-v2/REVIEW.md).

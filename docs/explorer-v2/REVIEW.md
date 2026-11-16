@@ -2,7 +2,7 @@
 
 ## Baseline and decision (16 November 2026)
 Branch: `codex/healthcrest-explorer-v2-prototype`. Base: `db93754a333ceb6255ef632e9218180ad1a7f89e` (#143 merge).
-Next App Router / React / TypeScript; existing R3F/Three renderer retained. Production `/engine`, Body Scan, Planner, CMS and privacy controls remain unchanged. No screenshot was attached to the brief; comparisons use the actual baseline.
+Next App Router / React / TypeScript; existing R3F/Three renderer retained. Production `/engine`, Body Scan, Planner, CMS and privacy controls remain unchanged. The screenshot supplied in follow-up confirms the existing `/engine` overlay layout. Before images use the actual same implementation at the recorded viewports.
 
 `HealthEngineApp` uses a fixed-height, overflow-hidden shell. `HealthEngineHUD` has independently scrolling clinical, camera, dock and scenario areas; the footer is another scrollable overlay. Layout, rather than Three itself, causes competing reading/navigation contexts. Abstract core/lattice shapes lack an obvious interpretation without the existing visual key. Orbit controls require spatial interaction; thresholds/colours are illustrative, not physiological measures. Existing Lite mode and demand rendering already reduce graphics cost.
 
@@ -21,6 +21,14 @@ See [concept sketches](concepts.svg). These are expert design assessments, not u
 
 **Select C.** A does not remove the initial graphics/comprehension cost. B has no demonstrated educational advantage or licensed anatomy asset to justify replacement. Build only C. Default scale compares inputs, not predicted outcomes. Existing 3D remains an explicitly labelled metaphor and is paused initially.
 
+## Revised UI review
+
+The follow-up screenshot shows the existing `/engine`, which deliberately remains unchanged under the prototype-first scope. The earlier local-only prototype was not available at that production route. Review **`/prototype/explorer-v2`** using the command below; a deployment's `/engine` still shows the old interface. No redirect or automatic fallback sends prototype visitors into the old Explorer.
+
+The UI has also been rebuilt: compact colour-coded habit cards, a larger dark-green visual workspace, a responsive radial input diagram with explicit raw value and limits, a single contextual lesson card, clear next-step actions, lighter typography and spacing, and secondary evidence disclosures below. The desktop lesson sits beside the visual; mobile stacks them in one page flow. Other settings remain in the modal drawer. The original-Explorer link is now an explicit comparison disclosure to avoid accidentally leaving the redesigned experience.
+
+The radial diagram uses the existing `markerPosition` normalisation and only changes its geometry. Diamond/current and outlined-circle/opening markers are shape-coded; habit colours identify the chapter, not health status. The numeric value, units, opening/current comparison and disclaimer remain textual. No physiological calculation is introduced. The ring is an input scale, not progress towards a goal or a health score.
+
 ## Local access and boundaries
 Run `HEALTHCREST_EDITORIAL_PREVIEW=1 npm run dev -- --port 3200`, open `http://localhost:3200/prototype/explorer-v2`. The route returns 404 without the flag and whenever CI/Vercel is detected. No production navigation link or sitemap entry; noindex/nofollow metadata. No hosted preview or deployment performed.
 
@@ -31,7 +39,8 @@ Original Explorer controls are used (not Body Scan's distinct ranges): aerobic 0
 ## Progress ledger
 - Baseline inspected; three sketches evaluated; C selected before implementation.
 - Guided hybrid implemented; canonical ranges and production isolation preserved.
-- Build/lint, 328 units and 10 targeted Chromium cases PASS; screenshots and local lab performance recorded.
+- Supplied screenshot reviewed; UI rebuilt with a prominent radial comparison, compact navigation and contextual lesson workspace; all six after images refreshed.
+- Build/lint, 328 units and 11 targeted Chromium cases PASS; screenshots and local lab performance recorded.
 - Ready for prototype review only; no integration, merge or deployment performed.
 
 ## Migration recommendation — proposal only
@@ -41,7 +50,7 @@ After prototype approval, commission real task-based usability testing and manua
 
 | Desktop 1440×1000 / mobile 390×844 | Existing Explorer | Prototype opening lesson |
 |---|---|---|
-| Visible button elements (rendered, including below fold) | 30 / 26 | 14 / 14 |
+| Visible button elements (rendered, including below fold) | 30 / 26 | 15 / 15 |
 | Mounted sliders | 4 / 4 | 0 / 0; one in Experiment |
 | Overflowing nested scroll regions | 3 / 2 | 0 / 0; one drawer scroll only when open |
 | Choose a habit | 1 activation | 1 activation, scroll/focus to lesson |
@@ -49,7 +58,7 @@ After prototype approval, commission real task-based usability testing and manua
 | View guidance from active habit | Guide / Why this matters: 1 activation | Learn more or evidence disclosure: 1 activation |
 | Open a named scenario | 1 activation plus dock/list scrolling | Settings + Advanced + scenario: 3 activations |
 
-Counts are DOM observations of the captured initial states, not a claim that all buttons fit in the viewport. Counts exclude links and summaries; task counts exclude scrolling and first-time onboarding (one Start/Skip activation). Scenarios intentionally take more actions to reduce initial clutter. The longer mobile page is a tradeoff: habit selection moves to the lesson and all content uses the page scroll. Source supports the navigation comparison; these are not observed user completion times or comprehension results.
+Counts are DOM observations of the captured initial states, not a claim that all buttons fit in the viewport. Counts exclude links and summaries; task counts exclude scrolling and first-time onboarding (one Start/Skip activation). Scenarios intentionally take more actions to reduce initial clutter. The mobile page remains a tradeoff: habit selection moves to the lesson and all content uses the page scroll. Source supports the navigation comparison; these are not observed user completion times or comprehension results.
 
 | State | Desktop | Mobile |
 |---|---|---|
@@ -60,21 +69,21 @@ Counts are DOM observations of the captured initial states, not a claim that all
 
 ## Verification and reproducibility
 
-PASS on local Node 24 / system Chromium 154.0.8037.57, 16 November 2026:
+PASS on local Node 24 / system Chromium 154.0.8037.57, 16 November 2026 (UI revision checks below):
 
-- `npm run test:unit`: 328 tests / 33 files, including two prototype input-contract/reducer checks. Baseline had 326 tests.
+- Previous prototype unit baseline: `npm run test:unit`, 328 tests / 33 files, including two input-contract/reducer checks. Not repeated for this UI-only revision; canonical model/reducer and those tests are unchanged. Original application baseline had 326 tests.
 - `npm run lint`; `npm run build` (includes TypeScript); standalone `npx tsc --noEmit --incremental false` also passed during implementation.
-- `HEALTHCREST_CHROMIUM_PATH=/usr/bin/chromium npx playwright test --config=playwright.explorer-v2.config.ts`: 10 tests. Omit the environment override with installed pinned Playwright browsers. Build first; config starts local positive/hosted-negative/unflagged-negative servers on 3210–3212.
+- `HEALTHCREST_CHROMIUM_PATH=/usr/bin/chromium npx playwright test --config=playwright.explorer-v2.config.ts`: 11 tests. Omit the environment override with installed pinned Playwright browsers. Build first; config starts local positive/hosted-negative/unflagged-negative servers on 3210–3212.
 - All four habits/five steps, End-key slider updates, comparison scenarios, full preset replacement, reset, focus wrapping/restore, Escape, onboarding/reopen/return, no new preference storage, optional 3D creation/removal, reduced-motion demand flag and forced WebGL failure.
 - Axe: zero reported violations in prototype main and drawer at 320, 390, 768 and 1440 CSS px. Keyboard checks automate native Chromium interaction; they do not substitute for manual screen-reader testing.
 - 320px layout and 320×256 dialog reflow represent a 1280px window at 400% zoom; landscape 844×390 also checked. Real browser UI zoom and manual text-scaling/device checks: NOT VERIFIED.
-- Local default-2D Lighthouse 13.6.0 mobile navigation: performance 100, accessibility 100, best practices 100; LCP/FCP 0.92s, TBT 79ms, CLS 0, transferred 205KiB. SEO 66 is expected for intentional noindex and prototype metadata, not a release target. Single synthetic run, not field performance, an old/new performance comparison, or optional-3D frame-rate evidence. No other test/build work ran during measurement.
+- Local default-2D Lighthouse 13.6.0 mobile navigation: performance 99, accessibility 100, best practices 100; LCP/FCP 0.92s, TBT 103ms, CLS 0, transferred 209KiB. SEO 66 is expected for intentional noindex and prototype metadata, not a release target. Single synthetic run, not field performance, an old/new performance comparison, or optional-3D frame-rate evidence. No other test/build work ran during measurement.
 
 Lighthouse command: `CHROME_PATH=/usr/bin/chromium node <lighthouse-install>/cli/index.js 'http://localhost:3200/prototype/explorer-v2#explore' --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --form-factor=mobile --no-enable-error-reporting --output=json --output-path=work/lighthouse.json --quiet`. Keep server running with the local review flag. Compact results: [verification.json](verification.json).
 
 ## Technical impact and limits
 
-New files only under the prototype route/components, targeted tests/config and review documents (plus engineering state update). Shared production runtime, dependencies and lockfile unchanged. CSS is scoped to `.ev2` / `.ev2-modal`. Three is dynamically requested only when the optional view is mounted, uses the existing Lite scene, and unmounts on Hide. 2D and text remain available on WebGL failure; pause is initially enabled. Reduced-motion preference overrides Play. No new rendering formulas or anatomical assets.
+New files only under the prototype route/components, targeted tests/config and review documents (plus engineering state update). Shared production runtime, dependencies and lockfile unchanged. CSS is scoped to `.ev2` / `.ev2-modal`. Three is dynamically requested only when the optional view is mounted, uses the existing Lite scene, and unmounts on Hide. 2D and text remain available on WebGL failure; pause is initially enabled. Reduced-motion preference overrides Play. `HabitIllustration` is a new SVG presentation of the existing bounded input scale. No physiological formulas or anatomical assets were added.
 
 Full preset buttons reuse repository-reviewed fallback records and show source scope/limits. Seven other canonical inputs have no verified original HUD bounds: no invented sliders were added. Full presets may carry these inputs as before; the prototype does not present all as individually editable. Body Scan's distinct control ranges and connected-habits/camera-shot workflows are outside this four-habit prototype; they remain available in the existing Explorer. They require an explicit parity decision before replacement.
 

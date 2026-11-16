@@ -246,3 +246,43 @@ test("supported optional 3D pauses, honours reduced motion and can be removed", 
     ),
   ).toBe(true);
 });
+
+test("contextual lesson actions advance the journey and update the new input illustration", async ({
+  page,
+}) => {
+  await page.goto(route + "#explore");
+  await page
+    .getByRole("button", { name: "Explore the illustration", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Explore", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Try an example", exact: true })
+    .click();
+  await page.getByRole("button", { name: "Example B", exact: false }).click();
+  await expect(
+    page.getByRole("img", {
+      name: /Weekly aerobic activity: opening 180, current 300/,
+    }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Find a practical idea", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Apply", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Go a little deeper", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Learn more", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("navigation", { name: "Lesson steps" })
+    .getByRole("button", { name: "1 Understand" })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Understand", exact: true }),
+  ).toBeVisible();
+});

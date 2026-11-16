@@ -1,7 +1,13 @@
 "use client";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Activity, Leaf, Moon, HeartHandshake } from "lucide-react";
+import {
+  Activity,
+  Leaf,
+  Moon,
+  HeartHandshake,
+  ArrowUpRight,
+} from "lucide-react";
 import { useEffect, useReducer, useState } from "react";
 import { ModalDialog } from "@/components/ModalDialog";
 import {
@@ -11,11 +17,9 @@ import {
 import { PILLAR_GUIDES } from "@/lib/education/healthGuide";
 import { learningGuideHref } from "@/lib/education/learningGuides";
 import { FALLBACK_PRESETS } from "@/lib/presets/fallback";
-import {
-  markerPosition,
-  settingDelta,
-} from "@/lib/education/settingComparison";
+import { settingDelta } from "@/lib/education/settingComparison";
 import { HABITS, STEPS, validSetting } from "./model";
+import { HabitIllustration } from "./HabitIllustration";
 const OptionalScene = dynamic(() => import("./OptionalScene"), { ssr: false });
 
 export function ExplorerPrototype() {
@@ -106,7 +110,7 @@ export function ExplorerPrototype() {
     setNotice("All example values reset to the opening scenario.");
   }
   return (
-    <div className="ev2">
+    <div className="ev2" data-habit={habit}>
       <a className="ev2-skip" href="#ev2-lesson">
         Skip to lesson
       </a>
@@ -115,21 +119,17 @@ export function ExplorerPrototype() {
           healthcrest<span>Small habits. A clearer picture.</span>
         </Link>
         <div>
-          <span className="ev2-tag">V2 · local prototype</span>
+          <span className="ev2-tag">Explorer / Design preview</span>
           <button onClick={() => setIntro(true)}>Introduction</button>
         </div>
       </header>
       <main className="ev2-main">
         <div className="ev2-heading">
           <p className="ev2-eyebrow">THE HABIT EXPLORER</p>
-          <h1>
-            Understand a little.
-            <br />
-            Try something manageable.
-          </h1>
+          <h1>Small habits. A bigger picture.</h1>
           <p>
-            Four habits, one at a time. Explore example settings and discover
-            practical ideas for everyday life.
+            A little understanding can go a long way. Choose a habit and make it
+            your own learning journey.
           </p>
         </div>
         <nav aria-label="Choose a habit" className="ev2-habits">
@@ -158,7 +158,10 @@ export function ExplorerPrototype() {
               </span>
               <strong>{item.name}</strong>
               <span>{item.description}</span>
-              <span className="ev2-explore">Explore habit →</span>
+              <span className="ev2-explore">
+                {habit === index ? "Exploring now" : "Explore habit"}{" "}
+                <ArrowUpRight aria-hidden="true" size={14} />
+              </span>
             </button>
           ))}
         </nav>
@@ -190,193 +193,197 @@ export function ExplorerPrototype() {
               </button>
             ))}
           </nav>
-          <div className="ev2-stage">
-            <div className="ev2-section-head">
-              <div>
-                <p className="ev2-eyebrow">ILLUSTRATIVE INPUT COMPARISON</p>
-                <h3>{h.label}</h3>
+          <div className="ev2-workspace">
+            <div className="ev2-stage">
+              <div className="ev2-section-head">
+                <div>
+                  <p className="ev2-eyebrow">ILLUSTRATIVE INPUT COMPARISON</p>
+                  <h3>{h.label}</h3>
+                </div>
+                <button aria-pressed={three} onClick={() => setThree(!three)}>
+                  {three ? "Hide optional 3D" : "Explore optional 3D"}
+                </button>
               </div>
-              <button aria-pressed={three} onClick={() => setThree(!three)}>
-                {three ? "Hide optional 3D" : "Explore optional 3D"}
-              </button>
+              {three && (
+                <>
+                  <OptionalScene state={state} paused={paused} />
+                  <button
+                    aria-pressed={!paused}
+                    onClick={() => setPaused(!paused)}
+                  >
+                    {paused
+                      ? "Play illustration motion"
+                      : "Pause illustration motion"}
+                  </button>
+                  <p>{guide.visual}</p>
+                </>
+              )}
+              <HabitIllustration
+                habit={habit}
+                value={value}
+                beginning={beginning}
+              />
+              <div className="ev2-values">
+                <p>
+                  ○ Opening example{" "}
+                  <strong>
+                    {beginning} {h.unit}
+                  </strong>
+                </p>
+                <p>
+                  ◆ Current example{" "}
+                  <strong>
+                    {value} {h.unit}
+                  </strong>
+                </p>
+              </div>
+              <p className="ev2-delta" role="status">
+                {settingDelta(beginning, value, h.changeUnit)} from opening
+                example.
+              </p>
+              <p className="ev2-limit">
+                These are selected inputs, not measured changes in health. Scale
+                ends are slider limits, not targets. Higher is not always
+                better. The optional 3D shapes are abstract metaphors, not
+                anatomy or predictions.
+              </p>
             </div>
-            {three && (
-              <>
-                <OptionalScene state={state} paused={paused} />
+            <div className="ev2-copy" aria-live="polite">
+              <div className="ev2-lesson-icon" aria-hidden="true">
+                {(() => {
+                  const Icon = icons[habit];
+                  return <Icon size={26} />;
+                })()}
+              </div>
+              <p className="ev2-eyebrow">STEP {step + 1} OF 5</p>
+              <h3>{STEPS[step]}</h3>
+              {step === 0 && (
+                <>
+                  <p className="ev2-lead">{guide.goal}</p>
+                  <p>
+                    Select any lesson step, or choose another habit at any time.
+                    Your example settings stay in place until you reset or
+                    reload.
+                  </p>
+                </>
+              )}
+              {step === 1 && (
+                <>
+                  <p>
+                    The outlined circle marks the opening example. The diamond
+                    shows your current setting on the curved input scale. Change
+                    the setting in Experiment or open Settings & scenarios to
+                    compare examples.
+                  </p>
+                  <p>
+                    Evidence describes general guidance; this diagram only
+                    displays the numbers you choose. It does not estimate
+                    benefits, risk or a combined health score.
+                  </p>
+                </>
+              )}
+              {step === 2 && (
+                <>
+                  {control(habit, "lesson-")}
+                  <p>
+                    Try another example and observe the marker. These example
+                    values are not treatment goals.
+                  </p>
+                  <button
+                    onClick={() => {
+                      change(habit, h.examples[0]);
+                      setNotice("Example A loaded for this habit only.");
+                    }}
+                  >
+                    Example A · {h.examples[0]} {h.unit}
+                  </button>
+                  <button
+                    onClick={() => {
+                      change(habit, h.examples[1]);
+                      setNotice("Example B loaded for this habit only.");
+                    }}
+                  >
+                    Example B · {h.examples[1]} {h.unit}
+                  </button>
+                </>
+              )}
+              {step === 3 && (
+                <>
+                  <p className="ev2-lead">{guide.firstStep}</p>
+                  {habit === 3 && (
+                    <label className="ev2-support">
+                      Choose a support example (does not change the numeric
+                      model)
+                      <select
+                        value={support}
+                        onChange={(e) => setSupport(e.target.value)}
+                      >
+                        <option>Talk with someone you trust</option>
+                        <option>
+                          Try a short, comfortable breathing practice
+                        </option>
+                        <option>Choose one manageable priority</option>
+                      </select>
+                      <span>
+                        Example to consider: {support}. Choose what fits your
+                        circumstances.
+                      </span>
+                    </label>
+                  )}
+                  <p>
+                    Consider what would make this manageable in your day. This
+                    is an educational example, not a personalised prescription.
+                  </p>
+                </>
+              )}
+              {step === 4 && (
+                <>
+                  <p>{guide.guidance}</p>
+                  <p>
+                    <a href={learningGuideHref(h.pillar)}>
+                      Read the {h.name.toLowerCase()} guide →
+                    </a>
+                  </p>
+                  <p>
+                    <a href={guide.sourceUrl}>{guide.sourceLabel}</a>
+                  </p>
+                  <p>
+                    General adult guidance checked 28 October 2026. The source
+                    supports the guidance, not our slider values or illustrative
+                    rules.
+                  </p>
+                </>
+              )}
+              {step < 4 && (
                 <button
-                  aria-pressed={!paused}
-                  onClick={() => setPaused(!paused)}
+                  className="ev2-primary"
+                  onClick={() => setStep(step + 1)}
                 >
-                  {paused
-                    ? "Play illustration motion"
-                    : "Pause illustration motion"}
+                  {
+                    [
+                      "Explore the illustration",
+                      "Try an example",
+                      "Find a practical idea",
+                      "Go a little deeper",
+                    ][step]
+                  }{" "}
+                  <span aria-hidden="true">→</span>
                 </button>
-                <p>{guide.visual}</p>
-              </>
-            )}
-            <svg
-              className="ev2-scale"
-              viewBox="0 0 300 70"
-              role="img"
-              aria-label={`${h.label}: opening ${beginning}, current ${value} ${h.unit}. Scale ${h.min} to ${h.max}; slider limits, not targets.`}
-            >
-              <line
-                x1="12"
-                x2="288"
-                y1="30"
-                y2="30"
-                stroke="#9db9af"
-                strokeWidth="6"
-                strokeLinecap="round"
-              />
-              <circle
-                cx={markerPosition(beginning, h.min, h.max)}
-                cy="30"
-                r="9"
-                fill="white"
-                stroke="#385b53"
-                strokeWidth="2"
-              />
-              <path
-                d="M0 -11 L9 0 L0 11 L-9 0 Z"
-                transform={`translate(${markerPosition(value, h.min, h.max)},30)`}
-                fill="#146d5b"
-              />
-              <text x="12" y="62" fontSize="11" fill="#244d43">
-                {h.min}
-              </text>
-              <text
-                x="288"
-                y="62"
-                textAnchor="end"
-                fontSize="11"
-                fill="#244d43"
-              >
-                {h.max}
-              </text>
-            </svg>
-            <div className="ev2-values">
-              <p>
-                ○ Opening example{" "}
-                <strong>
-                  {beginning} {h.unit}
-                </strong>
-              </p>
-              <p>
-                ◆ Current example{" "}
-                <strong>
-                  {value} {h.unit}
-                </strong>
-              </p>
+              )}
+              <div className="ev2-pagination">
+                <button disabled={step === 0} onClick={() => setStep(step - 1)}>
+                  ← Previous
+                </button>
+                <span>{step + 1} / 5</span>
+                <button disabled={step === 4} onClick={() => setStep(step + 1)}>
+                  Next →
+                </button>
+              </div>
             </div>
-            <p className="ev2-delta" role="status">
-              {settingDelta(beginning, value, h.changeUnit)} from opening
-              example.
-            </p>
-            <p className="ev2-limit">
-              These are selected inputs, not measured changes in health. Scale
-              ends are slider limits, not targets. Higher is not always better.
-              The optional 3D shapes are abstract metaphors, not anatomy or
-              predictions.
-            </p>
           </div>
-          <div className="ev2-copy" aria-live="polite">
-            <p className="ev2-eyebrow">STEP {step + 1} OF 5</p>
-            <h3>{STEPS[step]}</h3>
-            {step === 0 && (
-              <>
-                <p className="ev2-lead">{guide.goal}</p>
-                <p>
-                  Select any lesson step, or choose another habit at any time.
-                  Your example settings stay in place until you reset or reload.
-                </p>
-              </>
-            )}
-            {step === 1 && (
-              <>
-                <p>
-                  The circle marks the opening example. The diamond shows your
-                  current setting. Change the setting in Experiment or open
-                  Settings & scenarios to compare examples.
-                </p>
-                <p>
-                  Evidence describes general guidance; this diagram only
-                  displays the numbers you choose. It does not estimate
-                  benefits, risk or a combined health score.
-                </p>
-              </>
-            )}
-            {step === 2 && (
-              <>
-                {control(habit, "lesson-")}
-                <p>
-                  Try another example and observe the marker. These example
-                  values are not treatment goals.
-                </p>
-                <button
-                  onClick={() => {
-                    change(habit, h.examples[0]);
-                    setNotice("Example A loaded for this habit only.");
-                  }}
-                >
-                  Example A · {h.examples[0]} {h.unit}
-                </button>
-                <button
-                  onClick={() => {
-                    change(habit, h.examples[1]);
-                    setNotice("Example B loaded for this habit only.");
-                  }}
-                >
-                  Example B · {h.examples[1]} {h.unit}
-                </button>
-              </>
-            )}
-            {step === 3 && (
-              <>
-                <p className="ev2-lead">{guide.firstStep}</p>
-                {habit === 3 && (
-                  <label className="ev2-support">
-                    Choose a support example (does not change the numeric model)
-                    <select
-                      value={support}
-                      onChange={(e) => setSupport(e.target.value)}
-                    >
-                      <option>Talk with someone you trust</option>
-                      <option>
-                        Try a short, comfortable breathing practice
-                      </option>
-                      <option>Choose one manageable priority</option>
-                    </select>
-                    <span>
-                      Example to consider: {support}. Choose what fits your
-                      circumstances.
-                    </span>
-                  </label>
-                )}
-                <p>
-                  Consider what would make this manageable in your day. This is
-                  an educational example, not a personalised prescription.
-                </p>
-              </>
-            )}
-            {step === 4 && (
-              <>
-                <p>{guide.guidance}</p>
-                <p>
-                  <a href={learningGuideHref(h.pillar)}>
-                    Read the {h.name.toLowerCase()} guide →
-                  </a>
-                </p>
-                <p>
-                  <a href={guide.sourceUrl}>{guide.sourceLabel}</a>
-                </p>
-                <p>
-                  General adult guidance checked 28 October 2026. The source
-                  supports the guidance, not our slider values or illustrative
-                  rules.
-                </p>
-              </>
-            )}
+          <div className="ev2-deeper-heading">
+            <h3>A little more context</h3>
+            <p>Open what interests you. Leave the rest for later.</p>
           </div>
           <div className="ev2-accordion">
             <details>
@@ -405,15 +412,6 @@ export function ExplorerPrototype() {
               </p>
             </details>
           </div>
-          <div className="ev2-pagination">
-            <button disabled={step === 0} onClick={() => setStep(step - 1)}>
-              ← Previous
-            </button>
-            <span>{step + 1} / 5</span>
-            <button disabled={step === 4} onClick={() => setStep(step + 1)}>
-              Next →
-            </button>
-          </div>
         </section>
         <p role="status" className="ev2-notice">
           {notice}
@@ -421,7 +419,14 @@ export function ExplorerPrototype() {
         <footer className="ev2-footer">
           Educational prototype · no account required · example settings stay in
           page memory only. Reload resets them. Not a medical assessment.{" "}
-          <a href="/engine">Open the existing Explorer</a>
+          <details className="ev2-original-link">
+            <summary>Compare with the original Explorer</summary>
+            <p>
+              This redesigned prototype is at{" "}
+              <code>/prototype/explorer-v2</code>. The separate{" "}
+              <a href="/engine">original Explorer</a> retains its previous UI.
+            </p>
+          </details>
         </footer>
       </main>
       {intro && (
