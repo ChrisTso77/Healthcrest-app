@@ -12,7 +12,13 @@ Updated 16 November 2026. Current local work is separate from deployed productio
   compatibility and recovery. Existing pillar/idea and Planner/guide context is
   preserved. No scanner, storage, measurement or clinical-library gate changes.
 - [Integration baseline, evidence and release decision](../explorer-v2/integration/RELEASE.md).
-  Verification underway; earlier prototype records below remain historical.
+  Local integration PASS: build/lint/types, 330 units, 109 safeguards, 329 app
+  cases (three compatibility URL corrections retested), 24 public V2 cases,
+  ten post-split legacy/scanner/graphics cases and 24 commit-bound release checks.
+  All eight unchanged performance budgets pass after splitting legacy loading.
+  Final exact-head CI/preview are recorded in PR #145; production remains BLOCKED
+  by carried-forward launch restrictions and explicit-target approval. Earlier
+  prototype records below remain historical.
 
 ## Previous initiative — Habit Explorer V2 prototype (16 November)
 
