@@ -160,3 +160,36 @@ test("unknown and repeated entry parameters fall back without reflecting untrust
     }),
   ).toHaveAttribute("href", "/next-step?pillar=fitness");
 });
+
+for (const width of [320, 640, 1350])
+  test(
+    "public V2 remains reachable in a short " + width + "px viewport",
+    async ({ page }) => {
+      await page.setViewportSize({ width, height: 200 });
+      await page.goto("/engine#explore");
+      const settings = page.getByRole("button", {
+        name: "Settings & scenarios",
+        exact: true,
+      });
+      await settings.click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+      await page
+        .getByRole("dialog")
+        .getByRole("button", { name: "Close settings", exact: true })
+        .click();
+      await expect(settings).toBeFocused();
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBe(true);
+      await page
+        .getByRole("button", { name: "Introduction", exact: true })
+        .click();
+      await page
+        .getByRole("dialog")
+        .getByRole("button", { name: "Start exploring", exact: true })
+        .click();
+      await expect(page.getByRole("dialog")).toHaveCount(0);
+    },
+  );

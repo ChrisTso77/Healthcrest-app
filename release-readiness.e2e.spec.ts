@@ -135,7 +135,7 @@ test('missing page recovery remains readable without JavaScript', async ({ brows
 for (const width of [320, 640, 1350]) {
 test('short Explorer viewport separates controls at ' + width + 'px', async ({ page }) => {
   await page.setViewportSize({ width, height: 200 });
-  await page.goto('/engine?view=2d');
+  await page.goto('/engine?experience=original&view=2d');
   const guide = page.getByRole('button', { name: 'Guide: understand this view', exact: true });
   const about = page.getByRole('button', { name: 'About this Explorer', exact: true });
   const guideBox = await guide.boundingBox();
