@@ -1,6 +1,6 @@
 import { pageMetadata } from "@/lib/siteMetadata";
 import { parseJourneyConstraint } from "@/lib/education/startJourney";
-import HealthEngineApp from "@/components/HealthEngineApp";
+import { OriginalExplorer } from "@/components/explorer-v2/OriginalExplorer";
 import type { SceneId } from "@/state/PillarsStateTypes";
 import { editorialPreviewEnabled } from "@/lib/education/library/visibility";
 import { ExplorerPrototype } from "@/components/explorer-v2/ExplorerPrototype";
@@ -59,7 +59,7 @@ export default async function EnginePage({
     );
 
   return (
-    <HealthEngineApp
+    <OriginalExplorer
       educationPreview={editorialPreviewEnabled()}
       initialScene={initialScene}
       initialRenderMode={view === "2d" ? "2d-canvas" : undefined}
