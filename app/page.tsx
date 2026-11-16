@@ -8,6 +8,7 @@ import { HummingbirdAnimation } from '@/components/HummingbirdAnimation';
 import { SiteHeader, SiteFooter } from '@/components/SiteChrome';
 import { UrgentSupport } from '@/components/UrgentSupport';
 import './landing.css';
+import { EditorialLearningLink } from '@/components/EditorialLearningLink';
 
 export const metadata = pageMetadata(
   "Healthcrest | OPTIMISING HEALTH",
@@ -29,6 +30,7 @@ export default function HealthcrestHomePage() {
       <SiteHeader />
 
       <main id="main-content" tabIndex={-1}>
+        <EditorialLearningLink />
         <section className="hc-hero hc-section" aria-labelledby="hero-title">
           <div className="hc-hero-copy">
             <span className="hc-eyebrow">OPTIMISING HEALTH</span>

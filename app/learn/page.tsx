@@ -5,6 +5,7 @@ import { SiteHeader, SiteFooter } from '@/components/SiteChrome';
 import { LearningLibrary } from '@/components/LearningLibrary';
 import '../landing.css';
 import './learn.css';
+import { EditorialLearningLink } from '@/components/EditorialLearningLink';
 
 export const metadata = pageMetadata(
   "Learn the basics | Healthcrest",
@@ -31,6 +32,7 @@ export default async function LearnPage({ searchParams }: {
           <p>Your {topic.label.toLowerCase()} journey continues here. <Link href={journeyExplorerHref(topic.key, constraint)} prefetch={false} className="hc-text-link">Open the labelled diagram</Link> or <Link href={journeyPlannerHref(topic.key, constraint)} prefetch={false} className="hc-text-link">adapt your starter idea</Link>.</p>
         </aside>}
         <LearningLibrary journeyConstraint={constraint} />
+        <EditorialLearningLink />
       </main>
       <SiteFooter />
     </div>

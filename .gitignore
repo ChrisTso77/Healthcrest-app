@@ -5,6 +5,7 @@ node_modules/
 
 # Playwright generated artifacts
 test-results/
+test-results-education/
 playwright-report/
 blob-report/
 

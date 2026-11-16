@@ -1,6 +1,27 @@
 # Current engineering state
 
-Updated 12 November 2026. Current local work is separate from deployed production.
+Updated 16 November 2026. Current local work is separate from deployed production.
+
+## Current initiative — evidence library (16 November)
+
+- User authorises research, development branch and reviewable draft PR; no production
+  deployment, unreviewed clinical publication, CMS write or gate bypass.
+- Upstream main verified/fetched at a08e1ca (#142); branch
+  codex/healthcrest-evidence-library. Preserve newer reviewed Body scan and leave
+  open #139/#140 work separate. The 12 November baseline below is historical.
+- Four draft lessons, four learning levels, claim register, regional/audience
+  pathways, SVG diagrams, quizzes and generated video source/caption packages.
+- New routes require explicit local-only editorial flag; hosted contexts fail
+  closed. Existing reviewed guidance, Planner data controls, visual rules, privacy
+  and response policy remain intact. New independent clinical review is pending.
+- Research, concise progress ledger and actual verification are maintained once in
+  [the education review record](../education/RESEARCH-AND-RELEASE.md).
+- 326 unit tests, types/lint/build, 109 safeguard tests and dependency audit passed.
+  201 browser cases/five axe page scans and 23 local release checks passed with
+  system Chromium; eight public lab performance profiles passed. Pinned browser
+  download blocked. Candidate is for independent review, not publication.
+
+## Historical context — 12 November 2026
 
 ## Repository and released baseline
 - Root: `/workspace/Healthcrest-app`; branch: `codex/healthcrest-browser-policy`.

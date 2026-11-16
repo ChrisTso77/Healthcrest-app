@@ -1,0 +1,254 @@
+{
+  "status": "Draft source package; no produced video or audio exists",
+  "title": "Sleep: understand timing, opportunity and support",
+  "objective": "Explain two sleep-regulation processes without prescribing treatment.",
+  "durationSeconds": 48,
+  "review": "Independent clinical review of narration, labels, captions and final visuals required before publication. No reviewer or approval recorded.",
+  "visualRequirements": "Use static labelled diagrams; no flashing, forced motion, body measurements or outcome predictions. Supply meaningful audio description through narration and a text alternative. Keep captions readable at mobile sizes. Do not use third-party embeds or tracking.",
+  "scenes": [
+    {
+      "seconds": 12,
+      "visual": "Two labelled inputs; no anatomical claims or brain-clearance animation.",
+      "narration": "Sleep pressure builds with time awake. Body-clock timing also helps organise sleepiness and wakefulness. The processes interact.",
+      "claimIds": [
+        "SLEEP-003"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "Different work and caring routines with equal visual weight.",
+      "narration": "People differ in their timing and opportunities to sleep. Choose a practical routine around your actual rest period.",
+      "claimIds": [
+        "SLEEP-003",
+        "SLEEP-005"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "Duration, daytime function and comfort shown as distinct labelled cards.",
+      "narration": "Hours are part of the picture. How you function during the day also matters. A selected duration does not measure sleep quality.",
+      "claimIds": [
+        "SLEEP-001",
+        "MODEL-001"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "Assessment/support text and original source credits; no treatment demonstration.",
+      "narration": "Persistent difficulties deserve assessment. General sleep tips are not the same as structured treatment for insomnia. Do not drive when sleepy.",
+      "claimIds": [
+        "SLEEP-004",
+        "SLEEP-006"
+      ]
+    }
+  ],
+  "transcript": "Sleep pressure builds with time awake. Body-clock timing also helps organise sleepiness and wakefulness. The processes interact.\n\nPeople differ in their timing and opportunities to sleep. Choose a practical routine around your actual rest period.\n\nHours are part of the picture. How you function during the day also matters. A selected duration does not measure sleep quality.\n\nPersistent difficulties deserve assessment. General sleep tips are not the same as structured treatment for insomnia. Do not drive when sleepy.",
+  "captions": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nSleep pressure builds with time awake.\nBody-clock timing also helps organise\n\n2\n00:00:06.000 --> 00:00:12.000\nsleepiness and wakefulness. The processes\ninteract.\n\n3\n00:00:12.000 --> 00:00:18.000\nPeople differ in their timing and\nopportunities to sleep. Choose a practical\n\n4\n00:00:18.000 --> 00:00:24.000\nroutine around your actual rest period.\n\n5\n00:00:24.000 --> 00:00:30.000\nHours are part of the picture. How you\nfunction during the day also matters. A\n\n6\n00:00:30.000 --> 00:00:36.000\nselected duration does not measure sleep\nquality.\n\n7\n00:00:36.000 --> 00:00:42.000\nPersistent difficulties deserve\nassessment. General sleep tips are not the\n\n8\n00:00:42.000 --> 00:00:48.000\nsame as structured treatment for insomnia.\nDo not drive when sleepy.\n",
+  "claims": [
+    "SLEEP-003",
+    "SLEEP-005",
+    "SLEEP-001",
+    "MODEL-001",
+    "SLEEP-004",
+    "SLEEP-006"
+  ],
+  "references": [
+    {
+      "id": "nhlbi-sleep",
+      "title": "How Sleep Works: Your Sleep/Wake Cycle",
+      "authors": [
+        "NHLBI"
+      ],
+      "url": "https://www.nhlbi.nih.gov/health/sleep/sleep-wake-cycle",
+      "kind": "Physiology education",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "hse-shifts",
+      "title": "Hints and tips for shift-workers",
+      "authors": [
+        "Health and Safety Executive"
+      ],
+      "url": "https://www.hse.gov.uk/humanfactors/topics/shift-workers.htm",
+      "kind": "Workplace guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Practical workplace advice, not proof that one routine suits every shift worker; date not captured."
+    },
+    {
+      "id": "nhs-insomnia",
+      "title": "Insomnia",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/conditions/insomnia/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": "2024-03-19",
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Last reviewed 19 March 2024. General information, not diagnosis or an individual treatment plan."
+    },
+    {
+      "id": "nhs-sleep",
+      "title": "Sleep problems",
+      "authors": [
+        "NHS Every Mind Matters"
+      ],
+      "url": "https://www.nhs.uk/every-mind-matters/mental-health-issues/sleep/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "who-activity",
+      "title": "Physical activity",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2026-11-04",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Global overview; not an individual activity prescription."
+    },
+    {
+      "id": "who-diet",
+      "title": "Healthy diet",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2026-01-26",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Global principles; local food guidance and individual requirements differ."
+    },
+    {
+      "id": "cdc-sleep",
+      "title": "About Sleep",
+      "authors": [
+        "Centers for Disease Control and Prevention"
+      ],
+      "url": "https://www.cdc.gov/sleep/about/index.html",
+      "kind": "US public-health guidance",
+      "publicationDate": "2024-05-15",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Named US age bands differ from the general NHS adult range. Duration does not diagnose sleep quality."
+    },
+    {
+      "id": "who-stress",
+      "title": "Stress: questions and answers",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/questions-and-answers/item/stress",
+      "kind": "Public-health information",
+      "publicationDate": "2026-03-30",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "trauer-2015",
+      "title": "Cognitive Behavioral Therapy for Chronic Insomnia: A Systematic Review and Meta-analysis",
+      "authors": [
+        "James M Trauer",
+        "Mary Y Qian",
+        "Joseph S Doyle",
+        "Shantha M W Rajaratnam",
+        "David Cunnington"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26054060/",
+      "kind": "Systematic review of randomised trials",
+      "publicationDate": "2015",
+      "updatedOn": null,
+      "doi": "10.7326/M14-2841",
+      "pmid": "26054060",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read. Inactive comparators; excluded comorbid insomnia. Not evidence for a general habit planner."
+    },
+    {
+      "id": "furukawa-2024",
+      "title": "Components and Delivery Formats of Cognitive Behavioral Therapy for Chronic Insomnia in Adults: A Systematic Review and Component Network Meta-Analysis",
+      "authors": [
+        "Yuki Furukawa",
+        "Masatsugu Sakata",
+        "Ryuichiro Yamamoto",
+        "et al."
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38231522/",
+      "kind": "Component network meta-analysis",
+      "publicationDate": "2024",
+      "updatedOn": null,
+      "doi": "10.1001/jamapsychiatry.2023.5060",
+      "pmid": "38231522",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; component estimates depend on modelling assumptions and undetected interactions. Do not prescribe individual treatment components."
+    },
+    {
+      "id": "scott-2025",
+      "title": "Cognitive Behavioral Therapy for Insomnia in People With Chronic Disease: A Systematic Review and Meta-Analysis",
+      "authors": [
+        "Amelia J Scott",
+        "Ashleigh B Correa",
+        "Madelyne A Bisby",
+        "et al."
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40982264/",
+      "kind": "Systematic review of randomised trials",
+      "publicationDate": "2025",
+      "updatedOn": null,
+      "doi": "10.1001/jamainternmed.2025.4610",
+      "pmid": "40982264",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; searches through June 2025. Conditions and interventions differ; full-text appraisal outstanding."
+    }
+  ]
+}

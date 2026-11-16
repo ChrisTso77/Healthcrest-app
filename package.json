@@ -11,7 +11,9 @@
     "test:release": "node scripts/check-release.mjs",
     "test:compatibility": "playwright test --config=playwright.compatibility.config.ts",
     "test:performance-budget": "node scripts/performance-budget.test.mjs",
-    "test:seo": "node scripts/structured-data-contract.test.mjs"
+    "test:seo": "node scripts/structured-data-contract.test.mjs",
+    "test:education": "playwright test --config=playwright.education.config.ts",
+    "prepare:education-media": "node scripts/prepare-education-media.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

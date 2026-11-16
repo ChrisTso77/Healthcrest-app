@@ -1,0 +1,139 @@
+{
+  "status": "Draft source package; no produced video or audio exists",
+  "title": "Food: build a pattern that works for you",
+  "objective": "Explain food-pattern balance without a diet score.",
+  "durationSeconds": 48,
+  "review": "Independent clinical review of narration, labels, captions and final visuals required before publication. No reviewer or approval recorded.",
+  "visualRequirements": "Use static labelled diagrams; no flashing, forced motion, body measurements or outcome predictions. Supply meaningful audio description through narration and a text alternative. Keep captions readable at mobile sizes. Do not use third-party embeds or tracking.",
+  "scenes": [
+    {
+      "seconds": 12,
+      "visual": "Several culturally varied meals shown equally; no good/bad labels.",
+      "narration": "Balanced eating concerns a pattern across meals. Start with food you enjoy, can obtain and can prepare.",
+      "claimIds": [
+        "FOOD-001"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "Static food-function diagram with labels and a plain-text alternative.",
+      "narration": "Foods provide overlapping combinations of energy and nutrients. A food-group diagram is a teaching tool, not a test of one meal.",
+      "claimIds": [
+        "FOOD-002",
+        "FOOD-001"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "A familiar dish, an affordable vegetable option and optional pulses.",
+      "narration": "Choose a practical change that fits your needs. Frozen or tinned options can contribute; a specialist product is not required by this example.",
+      "claimIds": [
+        "FOOD-006"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "Text about dietary requirements, source credits and draft status.",
+      "narration": "General guidance may need adapting for individual requirements. The Explorer percentage does not assess nutrient intake or replace appropriate dietary advice.",
+      "claimIds": [
+        "FOOD-001",
+        "MODEL-001"
+      ]
+    }
+  ],
+  "transcript": "Balanced eating concerns a pattern across meals. Start with food you enjoy, can obtain and can prepare.\n\nFoods provide overlapping combinations of energy and nutrients. A food-group diagram is a teaching tool, not a test of one meal.\n\nChoose a practical change that fits your needs. Frozen or tinned options can contribute; a specialist product is not required by this example.\n\nGeneral guidance may need adapting for individual requirements. The Explorer percentage does not assess nutrient intake or replace appropriate dietary advice.",
+  "captions": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nBalanced eating concerns a pattern across\nmeals. Start with food you enjoy, can\n\n2\n00:00:06.000 --> 00:00:12.000\nobtain and can prepare.\n\n3\n00:00:12.000 --> 00:00:18.000\nFoods provide overlapping combinations of\nenergy and nutrients. A food-group diagram\n\n4\n00:00:18.000 --> 00:00:24.000\nis a teaching tool, not a test of one\nmeal.\n\n5\n00:00:24.000 --> 00:00:30.000\nChoose a practical change that fits your\nneeds. Frozen or tinned options can\n\n6\n00:00:30.000 --> 00:00:36.000\ncontribute; a specialist product is not\nrequired by this example.\n\n7\n00:00:36.000 --> 00:00:42.000\nGeneral guidance may need adapting for\nindividual requirements. The Explorer\n\n8\n00:00:42.000 --> 00:00:48.000\npercentage does not assess nutrient intake\nor replace appropriate dietary advice.\n",
+  "claims": [
+    "FOOD-001",
+    "FOOD-002",
+    "FOOD-006",
+    "MODEL-001"
+  ],
+  "references": [
+    {
+      "id": "nhs-eatwell",
+      "title": "The Eatwell Guide",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "who-diet",
+      "title": "Healthy diet",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2026-01-26",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Global principles; local food guidance and individual requirements differ."
+    },
+    {
+      "id": "who-activity",
+      "title": "Physical activity",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2026-11-04",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Global overview; not an individual activity prescription."
+    },
+    {
+      "id": "cdc-sleep",
+      "title": "About Sleep",
+      "authors": [
+        "Centers for Disease Control and Prevention"
+      ],
+      "url": "https://www.cdc.gov/sleep/about/index.html",
+      "kind": "US public-health guidance",
+      "publicationDate": "2024-05-15",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Named US age bands differ from the general NHS adult range. Duration does not diagnose sleep quality."
+    },
+    {
+      "id": "who-stress",
+      "title": "Stress: questions and answers",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/questions-and-answers/item/stress",
+      "kind": "Public-health information",
+      "publicationDate": "2026-03-30",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    }
+  ]
+}

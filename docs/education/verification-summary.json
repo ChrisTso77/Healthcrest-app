@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-16",
+  "baseCommit": "a08e1ca682f4c2e9c306c53481e5b7e924392e33",
+  "branch": "codex/healthcrest-evidence-library",
+  "recommendation": "Independent review only; no merge, production deployment or unreviewed clinical publication",
+  "clinicalReviewer": null,
+  "publicationApproved": false,
+  "hostedCI": "NOT VERIFIED at local candidate freeze",
+  "content": {
+    "habits": 4,
+    "learningLevelsPerHabit": 4,
+    "claims": 31,
+    "sources": 33,
+    "verifiedSources": 32,
+    "blockedSources": 1,
+    "audienceContexts": 7,
+    "guidanceContexts": 4,
+    "svgDiagrams": 4,
+    "quizzes": 4,
+    "videoSourcePackages": 4,
+    "producedVideos": 0
+  },
+  "checks": [
+    {
+      "name": "Unit tests",
+      "status": "PASS",
+      "count": 326,
+      "command": "npm run test:unit"
+    },
+    {
+      "name": "Existing backup/release identity/structured data/performance boundaries",
+      "status": "PASS",
+      "count": 109
+    },
+    {
+      "name": "TypeScript",
+      "status": "PASS",
+      "command": "tsc --noEmit --incremental false"
+    },
+    {
+      "name": "ESLint",
+      "status": "PASS",
+      "command": "npm run lint"
+    },
+    {
+      "name": "Production build",
+      "status": "PASS",
+      "command": "npm run build"
+    },
+    {
+      "name": "Production dependency audit",
+      "status": "PASS",
+      "vulnerabilities": 0,
+      "command": "npm audit --omit=dev --audit-level=high"
+    },
+    {
+      "name": "Existing journey browser regression",
+      "status": "PASS",
+      "count": 185
+    },
+    {
+      "name": "Body scan regression",
+      "status": "PASS",
+      "count": 4
+    },
+    {
+      "name": "Gated library browser suite",
+      "status": "PASS",
+      "count": 12,
+      "command": "HEALTHCREST_CHROMIUM_PATH=/usr/bin/chromium npm run test:education"
+    },
+    {
+      "name": "Expanded-content WCAG 2.2 AA-tagged axe scans",
+      "status": "PASS",
+      "pages": 5,
+      "conformanceClaim": false
+    },
+    {
+      "name": "Existing local release smoke",
+      "status": "PASS",
+      "checks": 23,
+      "identity": "NOT VERIFIED; no compiled commit supplied"
+    },
+    {
+      "name": "CI YAML syntax",
+      "status": "PASS",
+      "jobs": 6
+    }
+  ],
+  "browserScope": "Local system Chromium 154.0.8037.57; local existing-journey video recording disabled due missing ffmpeg, assertions and screenshots/traces preserved. Pinned Chromium 156 download blocked by CDN 403.",
+  "publicPerformance": {
+    "status": "PASS",
+    "profiles": 8,
+    "execution": "Local system Chromium, not a GitHub runner despite generic raw script label",
+    "lighthouse": "13.6.0",
+    "maxLcpMs": 937.9096999999999,
+    "maxTbtMs": 83,
+    "maxCls": 0.001701124377941012,
+    "fieldMetrics": "NOT VERIFIED"
+  },
+  "representativeDraftPerformance": {
+    "path": "/learn/library/movement",
+    "scope": "Isolated local mobile navigation lab; before final draft-only byline/navigation clarifications",
+    "lcpMs": 1065.5036,
+    "tbtMs": 65.5,
+    "cls": 0,
+    "performanceScore": 1,
+    "accessibilityScore": 1,
+    "seoScore": 0.69,
+    "seoNote": "noindex is required for unpublished drafts; never remove the safeguard for a score",
+    "priorConfoundedSampleTbtMs": 262.5
+  },
+  "notVerified": [
+    "Independent clinical/editorial approval of new material",
+    "Full-text appraisal for original-abstract records",
+    "NICE PH49 and ICO original guidance access",
+    "Physical devices and actual assistive technology for new content",
+    "Local Firefox/WebKit; variants added to existing CI compatibility job",
+    "Hosted checks and deployment identity for this candidate",
+    "Field Core Web Vitals, INP and 3D/GPU performance",
+    "Complete legal/regulatory assessment and pre-existing launch gates"
+  ],
+  "runtimeFileSha256": {
+    "app/engine/page.tsx": "1652405eac1ce16619c825f3ea0299ad743405a54df73fa4db78c0f6104a39ce",
+    "app/learn/library/[habit]/page.tsx": "bd83aac5221320669aa0bd8e25442fbddeb6d029e81a2af00bbfbcaeef4efe79",
+    "app/learn/library/[habit]/video/route.ts": "39f1f9fa8d14136d36b76df618877679e41760c9fda82f4c5081b1df35d25e91",
+    "app/learn/library/layout.tsx": "2fb72ae17464fc88f6ef1d82cfe92dacad240f3e30c348f3c846aa25bc4a9528",
+    "app/learn/library/library.css": "a5da227436c9662e35bf72f608919a1da2a3c561c9f79fcaec2533f7b931242d",
+    "app/learn/library/page.tsx": "47db4916133db2f3588c7a689703ba61b65efe5ce4a48e0b98deb36937d47613",
+    "app/learn/page.tsx": "65af26020aed6b8e24b4f8780f64ff825f0af11b13ce76fab262f339f28d9b97",
+    "app/next-step/page.tsx": "511f163a7c9425e342c809625b4b6e4b2260f1f5882f6940896aa0f412009a97",
+    "app/page.tsx": "39745b98525e2412db28ba0f2083c33a1fa0f1a9af027a44ce71e83cce664df7",
+    "components/EditorialLearningLink.tsx": "75bf99420909b1ca6dffddf6c461b521b93cfba88c1d01d2186405442bcc7c0f",
+    "components/EducationDiagram.tsx": "0fd1d25d2e98ad5cebf9eb16b7793644d31bbd38d1421017a2e62796d1b3a2af",
+    "components/EducationEvidence.tsx": "a2244758d287b084bc17a97cd8516c867f63869a0326225d9e5ed2ad524eb6f1",
+    "components/EducationPathways.tsx": "3556a83aea998fc758e8a26f046ddfca685088fd84632de0afa2c10edc4902e0",
+    "components/EducationQuiz.tsx": "d659fec054dba37e6116d0ae9f23ce191da62cfb14b82c78334c058e576db20b",
+    "components/HealthEngineApp.tsx": "6caedb4559892dab1692d1992b9324f0eb529aa2b1bba4a7cc2b5e1b49a92792",
+    "components/HealthEngineGuide.tsx": "3cac21da571beece7539c94c08c16099673c59248aa04483230f0b1e6ee77f8b",
+    "lib/education/library/captions.ts": "a1ccea8fab1348c09f9c5ff2823480b546536af3db9b302eb59b36519335ed7c",
+    "lib/education/library/catalogue.ts": "b8e7c7e64ec1cb2af69d389fed6bb1f077cb5e04ed2bd4002bd4974c99a9b476",
+    "lib/education/library/evidence-register.json": "1a6c3d11fcc1ea6089e1683f9691f334b3bd434dcc85f7698887425d6b5afcf3",
+    "lib/education/library/lessons.ts": "cbb87354914f755e5db101772d3a70105a33cf5fe4013297ecc1e36160c9d59a",
+    "lib/education/library/pathways.ts": "8cfc37bf2061ac898a91cd54654fdba2f84a910059629717c01d39371dd7aab8",
+    "lib/education/library/types.ts": "fabe6217e863ad9b5449705a757f92f06a294ca06933006979788ab62128b4f1",
+    "lib/education/library/video.ts": "a516e33a030cbecbfa9103ea7183885be09a51a67a59e04a112b1353b8b3028d",
+    "lib/education/library/visibility.ts": "13aa7098931f3053349220cb5f5b74a81213eb56badc0e81ffb9b02af8626a7b"
+  }
+}

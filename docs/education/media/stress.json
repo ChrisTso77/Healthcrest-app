@@ -1,0 +1,197 @@
+{
+  "status": "Draft source package; no produced video or audio exists",
+  "title": "Stress and support: understand pressures and options",
+  "objective": "Offer coping choices without promising a physiological reset.",
+  "durationSeconds": 48,
+  "review": "Independent clinical review of narration, labels, captions and final visuals required before publication. No reviewer or approval recorded.",
+  "visualRequirements": "Use static labelled diagrams; no flashing, forced motion, body measurements or outcome predictions. Supply meaningful audio description through narration and a text alternative. Keep captions readable at mobile sizes. Do not use third-party embeds or tracking.",
+  "scenes": [
+    {
+      "seconds": 12,
+      "visual": "Everyday pressures named without blaming the person.",
+      "narration": "Stress is a response to demands or difficult circumstances. People respond differently, and circumstances affect what is possible.",
+      "claimIds": [
+        "STRESS-001",
+        "STRESS-005"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "Three equal static support routes matching the diagram.",
+      "narration": "A next step might be practical help, connection or a coping activity. You do not have to choose the same option as someone else.",
+      "claimIds": [
+        "STRESS-005"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "Comfortable posture; link to full NHS instructions; no breath-hold countdown.",
+      "narration": "Gentle breathing is optional. Follow comfortable, unforced instructions if you try it. Research does not establish a guaranteed nervous-system reset.",
+      "claimIds": [
+        "STRESS-002",
+        "STRESS-003"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "Local professional and trusted-adult support text plus source credits.",
+      "narration": "Persistent difficulties deserve appropriate support. These illustrations do not measure hormones, diagnose symptoms or replace professional care.",
+      "claimIds": [
+        "STRESS-005",
+        "MODEL-001"
+      ]
+    }
+  ],
+  "transcript": "Stress is a response to demands or difficult circumstances. People respond differently, and circumstances affect what is possible.\n\nA next step might be practical help, connection or a coping activity. You do not have to choose the same option as someone else.\n\nGentle breathing is optional. Follow comfortable, unforced instructions if you try it. Research does not establish a guaranteed nervous-system reset.\n\nPersistent difficulties deserve appropriate support. These illustrations do not measure hormones, diagnose symptoms or replace professional care.",
+  "captions": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nStress is a response to demands or\ndifficult circumstances. People respond\n\n2\n00:00:06.000 --> 00:00:12.000\ndifferently, and circumstances affect what\nis possible.\n\n3\n00:00:12.000 --> 00:00:18.000\nA next step might be practical help,\nconnection or a coping activity. You do\n\n4\n00:00:18.000 --> 00:00:24.000\nnot have to choose the same option as\nsomeone else.\n\n5\n00:00:24.000 --> 00:00:30.000\nGentle breathing is optional. Follow\ncomfortable, unforced instructions if you\n\n6\n00:00:30.000 --> 00:00:36.000\ntry it. Research does not establish a\nguaranteed nervous-system reset.\n\n7\n00:00:36.000 --> 00:00:42.000\nPersistent difficulties deserve\nappropriate support. These illustrations\n\n8\n00:00:42.000 --> 00:00:48.000\ndo not measure hormones, diagnose symptoms\nor replace professional care.\n",
+  "claims": [
+    "STRESS-001",
+    "STRESS-005",
+    "STRESS-002",
+    "STRESS-003",
+    "MODEL-001"
+  ],
+  "references": [
+    {
+      "id": "nhs-stress",
+      "title": "Dealing with stress",
+      "authors": [
+        "NHS Every Mind Matters"
+      ],
+      "url": "https://www.nhs.uk/every-mind-matters/mental-health-issues/stress/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "who-stress",
+      "title": "Stress: questions and answers",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/questions-and-answers/item/stress",
+      "kind": "Public-health information",
+      "publicationDate": "2026-03-30",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "nhs-breathing",
+      "title": "Breathing exercises for stress",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/breathing-exercises-for-stress/",
+      "kind": "Public-health instructions",
+      "publicationDate": null,
+      "updatedOn": "2026-06-12",
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Last reviewed 12 June 2026. Gentle unforced exercise; does not validate every breathwork technique."
+    },
+    {
+      "id": "fincham-review",
+      "title": "Effect of breathwork on stress and mental health: A meta-analysis of randomised-controlled trials",
+      "authors": [
+        "Guy William Fincham",
+        "Clara Strauss",
+        "Jesus Montero-Marin",
+        "Kate Cavanagh"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36624160/",
+      "kind": "Meta-analysis of randomised trials",
+      "publicationDate": "2023",
+      "updatedOn": null,
+      "doi": "10.1038/s41598-022-27247-y",
+      "pmid": "36624160",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; small studies, moderate bias concerns, heterogeneous methods and self-report. Searches through February 2022."
+    },
+    {
+      "id": "fincham-trial",
+      "title": "Effect of coherent breathing on mental health and wellbeing: a randomised placebo-controlled trial",
+      "authors": [
+        "Guy W Fincham",
+        "Clara Strauss",
+        "Kate Cavanagh"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38092805/",
+      "kind": "Randomised active-comparator trial",
+      "publicationDate": "2023",
+      "updatedOn": null,
+      "doi": "10.1038/s41598-023-49279-8",
+      "pmid": "38092805",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read. One tested breathing protocol, online adult sample and short follow-up; no detectable superiority does not prove all breathing methods ineffective."
+    },
+    {
+      "id": "who-activity",
+      "title": "Physical activity",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2026-11-04",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Global overview; not an individual activity prescription."
+    },
+    {
+      "id": "who-diet",
+      "title": "Healthy diet",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2026-01-26",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Global principles; local food guidance and individual requirements differ."
+    },
+    {
+      "id": "cdc-sleep",
+      "title": "About Sleep",
+      "authors": [
+        "Centers for Disease Control and Prevention"
+      ],
+      "url": "https://www.cdc.gov/sleep/about/index.html",
+      "kind": "US public-health guidance",
+      "publicationDate": "2024-05-15",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Named US age bands differ from the general NHS adult range. Duration does not diagnose sleep quality."
+    }
+  ]
+}

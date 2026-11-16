@@ -2,6 +2,7 @@ import { pageMetadata } from '@/lib/siteMetadata';
 import { parseJourneyConstraint } from '@/lib/education/startJourney';
 import HealthEngineApp from '@/components/HealthEngineApp';
 import type { SceneId } from '@/state/PillarsStateTypes';
+import { editorialPreviewEnabled } from '@/lib/education/library/visibility';
 
 export const metadata = pageMetadata(
   "Habit Explorer | Healthcrest",
@@ -24,5 +25,5 @@ export default async function EnginePage({
     case 'systems': initialScene = 'system'; break;
   }
 
-  return <HealthEngineApp initialScene={initialScene} initialRenderMode={view === '2d' ? '2d-canvas' : undefined} initialExplorerView={view === 'scan' ? 'scan' : 'original'} journeyConstraint={parseJourneyConstraint(idea)} />;
+  return <HealthEngineApp educationPreview={editorialPreviewEnabled()} initialScene={initialScene} initialRenderMode={view === '2d' ? '2d-canvas' : undefined} initialExplorerView={view === 'scan' ? 'scan' : 'original'} journeyConstraint={parseJourneyConstraint(idea)} />;
 }

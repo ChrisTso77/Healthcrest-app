@@ -41,9 +41,9 @@ import {
   initialPillarsState
 } from '@/state/PillarsStateMachine';
 
-type HealthEngineAppProps = { initialScene?: SceneId; initialRenderMode?: RenderMode; initialExplorerView?: 'scan' | 'original'; journeyConstraint?: JourneyConstraint };
+type HealthEngineAppProps = { educationPreview?: boolean; initialScene?: SceneId; initialRenderMode?: RenderMode; initialExplorerView?: 'scan' | 'original'; journeyConstraint?: JourneyConstraint };
 
-export default function HealthEngineApp({ initialScene, initialRenderMode, initialExplorerView = 'original', journeyConstraint }: HealthEngineAppProps) {
+export default function HealthEngineApp({ educationPreview = false, initialScene, initialRenderMode, initialExplorerView = 'original', journeyConstraint }: HealthEngineAppProps) {
   // Master State Machine Driven by Reducer
   const [state, dispatch] = useReducer(
     pillarsReducer,
@@ -273,6 +273,7 @@ export default function HealthEngineApp({ initialScene, initialRenderMode, initi
       )}
       {isGuideOpen && (
         <HealthEngineGuide
+          educationPreview={educationPreview}
           state={state}
           motionPaused={motionPaused}
           onToggleMotion={() => setMotionPaused(paused => !paused)}
