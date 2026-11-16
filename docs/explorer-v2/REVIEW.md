@@ -23,14 +23,14 @@ See [concept sketches](concepts.svg). These are expert design assessments, not u
 
 ## Revised UI review
 
-The follow-up screenshot shows the existing `/engine`, which deliberately remains unchanged under the prototype-first scope. The earlier local-only prototype was not available at that production route. Review **`/prototype/explorer-v2`** using the command below; a deployment's `/engine` still shows the old interface. No redirect or automatic fallback sends prototype visitors into the old Explorer.
+The follow-up screenshot shows the existing `/engine`, which deliberately remains unchanged under the prototype-first scope. The earlier local-only prototype was not available at that production route. The owner subsequently approved a preview deployment. Review **`/prototype/explorer-v2`** on this branch’s Vercel Preview deployment (or use the local command below); `/engine` still shows the old interface. No redirect or automatic fallback sends prototype visitors into the old Explorer.
 
 The UI has also been rebuilt: compact colour-coded habit cards, a larger dark-green visual workspace, a responsive radial input diagram with explicit raw value and limits, a single contextual lesson card, clear next-step actions, lighter typography and spacing, and secondary evidence disclosures below. The desktop lesson sits beside the visual; mobile stacks them in one page flow. Other settings remain in the modal drawer. The original-Explorer link is now an explicit comparison disclosure to avoid accidentally leaving the redesigned experience.
 
 The radial diagram uses the existing `markerPosition` normalisation and only changes its geometry. Diamond/current and outlined-circle/opening markers are shape-coded; habit colours identify the chapter, not health status. The numeric value, units, opening/current comparison and disclaimer remain textual. No physiological calculation is introduced. The ring is an input scale, not progress towards a goal or a health score.
 
 ## Local access and boundaries
-Run `HEALTHCREST_EDITORIAL_PREVIEW=1 npm run dev -- --port 3200`, open `http://localhost:3200/prototype/explorer-v2`. The route returns 404 without the flag and whenever CI/Vercel is detected. No production navigation link or sitemap entry; noindex/nofollow metadata. No hosted preview or deployment performed.
+Run `HEALTHCREST_EDITORIAL_PREVIEW=1 npm run dev -- --port 3200`, open `http://localhost:3200/prototype/explorer-v2`. The local route requires the flag. Owner approval on 16 November 2026 additionally permits the exact `codex/healthcrest-explorer-v2-prototype` branch when provider variables identify Vercel Preview (`VERCEL=1`, `VERCEL_ENV=preview`, exact `VERCEL_GIT_COMMIT_REF`). Production, other branches and unflagged local environments return 404. This UI-specific selector is separate from the unchanged clinical-library gate, which stays closed on every hosted deployment. Existing provider access protection is unchanged; this selector is not an authentication mechanism. No production navigation link or sitemap entry; noindex/nofollow metadata. No production deployment or merge is authorised. Deployed identity and URL are recorded separately in [DEPLOYMENT.md](DEPLOYMENT.md).
 
 Start/Skip sets only the URL fragment `#explore`; returning to that URL bypasses onboarding. No cookies, storage, account, analytics events or health values are added to URLs. A fresh unmarked URL shows the introduction again. Prototype values exist only in component memory and disappear on reload. Reopen introduction remains available.
 
@@ -41,7 +41,7 @@ Original Explorer controls are used (not Body Scan's distinct ranges): aerobic 0
 - Guided hybrid implemented; canonical ranges and production isolation preserved.
 - Supplied screenshot reviewed; UI rebuilt with a prominent radial comparison, compact navigation and contextual lesson workspace; all six after images refreshed.
 - Build/lint, 328 units and 11 targeted Chromium cases PASS; screenshots and local lab performance recorded.
-- Ready for prototype review only; no integration, merge or deployment performed.
+- Owner approved preview deployment; branch-specific Vercel Preview access added and tested. No production integration or merge performed.
 
 ## Migration recommendation — proposal only
 After prototype approval, commission real task-based usability testing and manual screen-reader/device checks; independently review clinical wording, presets and the hash-based onboarding tradeoff. Decide whether existing original/Body Scan entry points and all existing camera/scenario workflows need parity. Introduce any replacement behind the established release controls with reversible routing and retain the old experience through acceptance. Do not migrate Planner state or change storage/measurement boundaries. No migration is implemented here.
@@ -71,9 +71,9 @@ Counts are DOM observations of the captured initial states, not a claim that all
 
 PASS on local Node 24 / system Chromium 154.0.8037.57, 16 November 2026 (UI revision checks below):
 
-- Previous prototype unit baseline: `npm run test:unit`, 328 tests / 33 files, including two input-contract/reducer checks. Not repeated for this UI-only revision; canonical model/reducer and those tests are unchanged. Original application baseline had 326 tests.
+- `npm run test:unit`: 330 tests / 34 files PASS after adding preview boundary tests; canonical model/reducer unchanged. Original application baseline had 326 tests.
 - `npm run lint`; `npm run build` (includes TypeScript); standalone `npx tsc --noEmit --incremental false` also passed during implementation.
-- `HEALTHCREST_CHROMIUM_PATH=/usr/bin/chromium npx playwright test --config=playwright.explorer-v2.config.ts`: 11 tests. Omit the environment override with installed pinned Playwright browsers. Build first; config starts local positive/hosted-negative/unflagged-negative servers on 3210–3212.
+- `HEALTHCREST_CHROMIUM_PATH=/usr/bin/chromium npx playwright test --config=playwright.explorer-v2.config.ts`: 12 tests. Omit the environment override with installed pinned Playwright browsers. Build first; config starts local local-positive/production-negative/unflagged-negative and approved-preview-positive servers on 3210–3213.
 - All four habits/five steps, End-key slider updates, comparison scenarios, full preset replacement, reset, focus wrapping/restore, Escape, onboarding/reopen/return, no new preference storage, optional 3D creation/removal, reduced-motion demand flag and forced WebGL failure.
 - Axe: zero reported violations in prototype main and drawer at 320, 390, 768 and 1440 CSS px. Keyboard checks automate native Chromium interaction; they do not substitute for manual screen-reader testing.
 - 320px layout and 320×256 dialog reflow represent a 1280px window at 400% zoom; landscape 844×390 also checked. Real browser UI zoom and manual text-scaling/device checks: NOT VERIFIED.
@@ -83,8 +83,8 @@ Lighthouse command: `CHROME_PATH=/usr/bin/chromium node <lighthouse-install>/cli
 
 ## Technical impact and limits
 
-New files only under the prototype route/components, targeted tests/config and review documents (plus engineering state update). Shared production runtime, dependencies and lockfile unchanged. CSS is scoped to `.ev2` / `.ev2-modal`. Three is dynamically requested only when the optional view is mounted, uses the existing Lite scene, and unmounts on Hide. 2D and text remain available on WebGL failure; pause is initially enabled. Reduced-motion preference overrides Play. `HabitIllustration` is a new SVG presentation of the existing bounded input scale. No physiological formulas or anatomical assets were added.
+Prototype changes are limited to the route/components, UI-specific preview selector, targeted tests/config and review documents (plus engineering state update). Shared production runtime, dependencies and lockfile unchanged. CSS is scoped to `.ev2` / `.ev2-modal`. Three is dynamically requested only when the optional view is mounted, uses the existing Lite scene, and unmounts on Hide. 2D and text remain available on WebGL failure; pause is initially enabled. Reduced-motion preference overrides Play. `HabitIllustration` is a new SVG presentation of the existing bounded input scale. No physiological formulas or anatomical assets were added.
 
 Full preset buttons reuse repository-reviewed fallback records and show source scope/limits. Seven other canonical inputs have no verified original HUD bounds: no invented sliders were added. Full presets may carry these inputs as before; the prototype does not present all as individually editable. Body Scan's distinct control ranges and connected-habits/camera-shot workflows are outside this four-habit prototype; they remain available in the existing Explorer. They require an explicit parity decision before replacement.
 
-NOT VERIFIED: real user testing, manual assistive technology, Safari/Firefox, actual 400% browser UI zoom, low-end physical-device GPU/battery behavior, independent clinical review, hosted preview and deployment. This is not a claim of WCAG conformance or production readiness. Existing launch gates remain open. Review the design and practical tradeoffs before authorising any integration.
+NOT VERIFIED: real user testing, manual assistive technology, Safari/Firefox, actual 400% browser UI zoom, low-end physical-device GPU/battery behavior, independent clinical review and live browser access from this workspace (proxy blocks the preview hostname). Provider deployment status is recorded separately. This is not a claim of WCAG conformance or production readiness. Existing launch gates remain open. Review the design and practical tradeoffs before authorising any integration.

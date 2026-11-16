@@ -19,19 +19,20 @@
   },
   "browserTests": {
     "result": "PASS",
-    "count": 11,
+    "count": 12,
     "browser": "system Chromium 154.0.8037.57",
     "axeScopes": "main prototype and settings dialog at 320,390,768,1440 CSS px",
-    "note": "Ten existing cases rerun plus one new contextual-action/radial-value case run separately."
+    "note": "Complete 12-case suite rerun after branch-specific preview approval, including synthetic Vercel Preview positive/production negative/library isolation."
   },
   "unitTests": {
     "result": "PASS",
-    "count": 328,
-    "note": "Prior prototype baseline; not rerun for presentation-only revision. Model unchanged."
+    "count": 330,
+    "note": "Includes new preview selector boundary and clinical isolation tests."
   },
   "manualAssistiveTechnology": "NOT VERIFIED",
   "realBrowser400PercentZoom": "NOT VERIFIED; 320px CSS layout and 320x256 dialog reflow tested",
   "realUserStudy": "NOT VERIFIED",
   "crossBrowser": "NOT VERIFIED; Chromium only",
-  "revision": "UI rebuilt after supplied original-Explorer screenshot"
+  "revision": "UI rebuilt after supplied original-Explorer screenshot",
+  "previewDeployment": "See DEPLOYMENT.md for provider state; live browser access from workspace is proxy-blocked."
 }

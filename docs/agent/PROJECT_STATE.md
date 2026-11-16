@@ -7,19 +7,22 @@ Updated 16 November 2026. Current local work is separate from deployed productio
 - #143 evidence library merged with owner approval at db93754; no deployment implied.
 - Dedicated `codex/healthcrest-explorer-v2-prototype` starts at that merge. User
   authorises isolated prototype/review preparation; production integration,
-  merge and deployment require new explicit approval.
+  merge and production deployment require new explicit approval. Owner has now
+  approved a separate preview deployment (16 November).
 - Three concepts evaluated; selected labelled 2D with optional existing Lite 3D.
-  Local-gated `/prototype/explorer-v2`; original Explorer, Body Scan, Planner,
+  `/prototype/explorer-v2` permits local review and the exact approved branch in
+  Vercel Preview; production stays blocked. Original Explorer, Body Scan, Planner,
   reviewed clinical content and data boundaries unchanged.
 - Supplied screenshot reviewed; prototype UI rebuilt with compact habit cards,
   radial input visual and contextual lesson workspace. Review path remains
   `/prototype/explorer-v2`; screenshot route `/engine` remains the original.
-- Revised UI build/lint and 11 targeted Chromium cases PASS; prior unit baseline
-  is 328 tests (unchanged model). Axe at four
+- Build/lint, 330 units and 12 targeted Chromium cases PASS, including approved
+  preview positive, production negative and draft-library isolation. Axe at four
   widths; forced WebGL failure, keyboard dialog and reduced motion checked.
   Manual assistive technology / real users / other browsers NOT VERIFIED.
 - [Review package, screenshots, tradeoffs and migration proposal](../explorer-v2/REVIEW.md).
-  No integration or deployment performed. Keep #139/#140 work separate.
+  [Preview deployment record](../explorer-v2/DEPLOYMENT.md). No production integration
+  or merge performed. Keep #139/#140 work separate.
 
 ## Previous initiative — evidence library (16 November, historical pre-merge record)
 

@@ -26,6 +26,17 @@ export default defineConfig({
   webServer: [
     {
       command:
+        "node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3213",
+      url: "http://127.0.0.1:3213",
+      env: {
+        HEALTHCREST_EDITORIAL_PREVIEW: "",
+        VERCEL: "1",
+        VERCEL_ENV: "preview",
+        VERCEL_GIT_COMMIT_REF: "codex/healthcrest-explorer-v2-prototype",
+      },
+    },
+    {
+      command:
         "node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3210",
       url: "http://127.0.0.1:3210",
       env: {
@@ -39,7 +50,12 @@ export default defineConfig({
       command:
         "node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3211",
       url: "http://127.0.0.1:3211",
-      env: { HEALTHCREST_EDITORIAL_PREVIEW: "1", VERCEL_ENV: "production" },
+      env: {
+        HEALTHCREST_EDITORIAL_PREVIEW: "1",
+        VERCEL: "1",
+        VERCEL_ENV: "production",
+        VERCEL_GIT_COMMIT_REF: "codex/healthcrest-explorer-v2-prototype",
+      },
     },
     {
       command:

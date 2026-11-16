@@ -204,7 +204,7 @@ test("WebGL unavailable retains accessible comparison and reduced-motion operati
   await page.keyboard.press("End");
   await expect(page.locator("#lesson-aerobicVolume")).toHaveValue("400");
 });
-test("hosted and unflagged routes are inaccessible; local route is noindex", async ({
+test("production and unflagged routes are inaccessible; local route is noindex", async ({
   page,
   request,
 }) => {
@@ -285,4 +285,34 @@ test("contextual lesson actions advance the journey and update the new input ill
   await expect(
     page.getByRole("heading", { name: "Understand", exact: true }),
   ).toBeVisible();
+});
+
+test("approved hosted preview opens the redesigned UI while draft clinical content stays blocked", async ({
+  page,
+  request,
+}) => {
+  const preview = "http://127.0.0.1:3213";
+  const response = await page.goto(preview + route);
+  expect(response?.status()).toBe(200);
+  await page
+    .getByRole("button", { name: "Start exploring", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", {
+      name: "Small habits. A bigger picture.",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(page.locator("meta[name=robots]")).toHaveAttribute(
+    "content",
+    /noindex/,
+  );
+  await page.getByRole("button", { name: "3 Experiment" }).click();
+  await page.getByRole("button", { name: "Example B", exact: false }).click();
+  await expect(page.getByRole("img", { name: /current 300/ })).toBeVisible();
+  await page.getByRole("button", { name: "Settings & scenarios" }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.keyboard.press("Escape");
+  expect((await request.get(preview + "/learn/library")).status()).toBe(404);
+  expect((await request.get(preview + "/engine")).status()).toBe(200);
 });
