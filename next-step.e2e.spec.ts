@@ -7,7 +7,7 @@ test('landing preview opens a matching plan and preserves drafts when switching 
   await expect(page).toHaveURL(/\/next-step\?pillar=sleep$/);
   await expect(page).toHaveTitle('My next step | Healthcrest');
   const pillars = page.getByRole('group', { name: 'Choose a habit pillar' });
-  await expect(pillars.getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(pillars.getByRole('button', { name: /^Sleep/ })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('complementary', { name: 'Why this habit matters' })).toContainText('Sleep duration, routines and how you feel during the day all matter.');
   const action = page.getByLabel('One manageable action', { exact: true });
   const cue = page.getByLabel('When will I try it?', { exact: false });
@@ -80,14 +80,15 @@ for (const width of [320, 390, 768, 1440]) {
 
 test('engine guide links to its pillar plan and plan links back to that engine view', async ({ page }) => {
   await page.goto('/engine?pillar=sleep');
-  await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
-  await page.getByRole('dialog', { name: 'Understand this view' })
-    .getByRole('link', { name: 'Make a manageable next step', exact: true }).click();
+  await page.getByRole('button', {name:'Skip introduction',exact:true}).click();
+  await page.getByRole('button', {name:'4 Apply',exact:true}).click();
+  await page.getByRole('link', {name:'Make a manageable next step',exact:true}).click();
   await expect(page).toHaveURL(/\/next-step\?pillar=sleep$/);
   await page.getByRole('link', { name: 'Explore sleep in the Habit Explorer', exact: true }).click();
   await expect(page).toHaveURL(/\/engine\?pillar=sleep$/);
-  await expect(page.getByRole('navigation', { name: 'Habit topics' })
-    .getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', {name:'Skip introduction',exact:true}).click();
+  await expect(page.getByRole('navigation', { name: 'Choose a habit' })
+    .getByRole('button', { name: /^Sleep/ })).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('unknown plan pillar is safe and server guidance remains available without JavaScript', async ({ browser, baseURL }) => {
@@ -116,7 +117,7 @@ test('device saving restores all pillar drafts and the saved selection after rel
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
   await expect(action).toHaveValue('Read quietly before bed.');
   await expect(page.getByLabel('When will I try it?', { exact: false })).toHaveValue('After brushing my teeth.');
-  await expect(page.getByRole('group', { name: 'Choose a habit pillar' }).getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('group', { name: 'Choose a habit pillar' }).getByRole('button', { name: /^Sleep/ })).toHaveAttribute('aria-pressed', 'true');
   await action.fill('An unsaved change.');
   await page.getByRole('button', { name: 'Restore saved draft', exact: true }).click();
   await page.getByRole('button', { name: 'Replace edits and restore', exact: true }).click();

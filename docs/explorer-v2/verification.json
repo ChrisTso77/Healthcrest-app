@@ -1,0 +1,38 @@
+{
+  "recordedAt": "2026-11-16T11:43:44.232Z",
+  "kind": "single local mobile lab navigation; default 2D; no field or device data",
+  "url": "http://localhost:3200/prototype/explorer-v2#explore",
+  "tool": "13.6.0",
+  "categories": {
+    "performance": 0.99,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.66,
+    "agentic-browsing": 1
+  },
+  "metrics": {
+    "first-contentful-paint": 922.6683,
+    "largest-contentful-paint": 922.6683,
+    "total-blocking-time": 103,
+    "cumulative-layout-shift": 0,
+    "total-byte-weight": 213560
+  },
+  "browserTests": {
+    "result": "PASS",
+    "count": 12,
+    "browser": "system Chromium 154.0.8037.57",
+    "axeScopes": "main prototype and settings dialog at 320,390,768,1440 CSS px",
+    "note": "Complete 12-case suite rerun after branch-specific preview approval, including synthetic Vercel Preview positive/production negative/library isolation."
+  },
+  "unitTests": {
+    "result": "PASS",
+    "count": 330,
+    "note": "Includes new preview selector boundary and clinical isolation tests."
+  },
+  "manualAssistiveTechnology": "NOT VERIFIED",
+  "realBrowser400PercentZoom": "NOT VERIFIED; 320px CSS layout and 320x256 dialog reflow tested",
+  "realUserStudy": "NOT VERIFIED",
+  "crossBrowser": "NOT VERIFIED; Chromium only",
+  "revision": "UI rebuilt after supplied original-Explorer screenshot",
+  "previewDeployment": "See DEPLOYMENT.md for provider state; live browser access from workspace is proxy-blocked."
+}

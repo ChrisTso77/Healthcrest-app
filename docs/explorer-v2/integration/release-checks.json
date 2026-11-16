@@ -1,0 +1,158 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "build-bound release identity",
+      "passed": true,
+      "expectedCommit": "010c3bd712694a66ed2ca0e299e4748960568249",
+      "observedCommit": "010c3bd712694a66ed2ca0e299e4748960568249",
+      "mode": "local-build",
+      "compiledCommit": "010c3bd712694a66ed2ca0e299e4748960568249",
+      "runtimeIdentityProbe": true
+    },
+    {
+      "name": "canonical sitemap and robots",
+      "passed": true,
+      "pages": 13
+    },
+    {
+      "name": "public page /",
+      "passed": true,
+      "path": "/",
+      "status": 200
+    },
+    {
+      "name": "public page /start",
+      "passed": true,
+      "path": "/start",
+      "status": 200
+    },
+    {
+      "name": "public page /learn",
+      "passed": true,
+      "path": "/learn",
+      "status": 200
+    },
+    {
+      "name": "public page /engine",
+      "passed": true,
+      "path": "/engine",
+      "status": 200
+    },
+    {
+      "name": "public page /next-step",
+      "passed": true,
+      "path": "/next-step",
+      "status": 200
+    },
+    {
+      "name": "public page /about",
+      "passed": true,
+      "path": "/about",
+      "status": 200
+    },
+    {
+      "name": "public page /contact",
+      "passed": true,
+      "path": "/contact",
+      "status": 200
+    },
+    {
+      "name": "public page /storage",
+      "passed": true,
+      "path": "/storage",
+      "status": 200
+    },
+    {
+      "name": "public page /privacy",
+      "passed": true,
+      "path": "/privacy",
+      "status": 200
+    },
+    {
+      "name": "public page /learn/movement-and-strength",
+      "passed": true,
+      "path": "/learn/movement-and-strength",
+      "status": 200
+    },
+    {
+      "name": "public page /learn/balanced-meals",
+      "passed": true,
+      "path": "/learn/balanced-meals",
+      "status": 200
+    },
+    {
+      "name": "public page /learn/sleep-routines",
+      "passed": true,
+      "path": "/learn/sleep-routines",
+      "status": 200
+    },
+    {
+      "name": "public page /learn/stress-and-support",
+      "passed": true,
+      "path": "/learn/stress-and-support",
+      "status": 200
+    },
+    {
+      "name": "structured data and visible guide references",
+      "passed": true,
+      "pages": 13,
+      "guides": 4,
+      "citations": 18
+    },
+    {
+      "name": "guide discovery metadata with public preferences",
+      "passed": true,
+      "guides": 4
+    },
+    {
+      "name": "unique public metadata",
+      "passed": true,
+      "pages": 13
+    },
+    {
+      "name": "internal fragment destinations",
+      "passed": true,
+      "fragments": 67
+    },
+    {
+      "name": "internal link destinations",
+      "passed": true,
+      "destinations": 13
+    },
+    {
+      "name": "social image and hummingbird media",
+      "passed": true,
+      "assets": 3
+    },
+    {
+      "name": "browser-tab icon metadata and fallback",
+      "passed": true,
+      "pages": 13,
+      "metadataIcons": 1,
+      "fallbackRedirects": 0,
+      "maximumBytes": 16384
+    },
+    {
+      "name": "missing page recovery and indexing",
+      "passed": true,
+      "pages": 2
+    },
+    {
+      "name": "fresh-visitor assets and measurement",
+      "passed": true,
+      "failedAssets": 0,
+      "telemetryRequests": 0,
+      "typedAssets": 24,
+      "invalidAssetTypes": 0
+    }
+  ],
+  "release": {
+    "mode": "local-build",
+    "expectedCommit": "010c3bd712694a66ed2ca0e299e4748960568249",
+    "observedCommit": "010c3bd712694a66ed2ca0e299e4748960568249",
+    "identityVerified": true,
+    "compiledCommit": "010c3bd712694a66ed2ca0e299e4748960568249",
+    "runtimeIdentityProbe": true
+  }
+}

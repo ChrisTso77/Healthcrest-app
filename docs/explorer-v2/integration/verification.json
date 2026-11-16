@@ -1,0 +1,55 @@
+{
+  "approvedPrototype": "59a8d4f584f6356ff9df23447b0b6bb2240edc0d",
+  "targetMain": "db93754a333ceb6255ef632e9218180ad1a7f89e",
+  "testedRuntimeCodeCommit": "010c3bd712694a66ed2ca0e299e4748960568249",
+  "integrationBranch": "codex/healthcrest-explorer-v2-integration",
+  "localIntegrationStatus": "PASS",
+  "productionDeploymentReadiness": "BLOCKED; see authoritative launch gates and exact-target approval",
+  "unitTests": {
+    "passed": 330
+  },
+  "safeguards": {
+    "passed": 109
+  },
+  "applicationRegression": {
+    "cases": 329,
+    "initialPassed": 326,
+    "initialFailures": 3,
+    "failureCause": "old overlay reflow tests used new default URL",
+    "retestPassed": 3,
+    "fix": "explicit original-view URL; no assertion removed"
+  },
+  "finalPublicV2": {
+    "passed": 24,
+    "prototypeOnlySkipped": 2
+  },
+  "postSplitLegacyScannerGraphics": {
+    "passed": 10
+  },
+  "releaseChecks": {
+    "passed": 24,
+    "buildIdentityVerified": true,
+    "runtimeMarkerRelabelRejected": true
+  },
+  "performanceProfiles": {
+    "passed": 8,
+    "budgetChanged": false
+  },
+  "productionDependencyAudit": {
+    "vulnerabilities": 0
+  },
+  "fullDependencyAudit": {
+    "moderateDevelopment": 8,
+    "high": 0,
+    "critical": 0
+  },
+  "finalCi": "Exact final-head evidence recorded in PR #145 after completion; CI builds/verifies its own merge checkout SHA.",
+  "manualNotVerified": [
+    "new manual screen-reader/device matrix",
+    "real 400% browser UI zoom",
+    "physical Safari/iPhone",
+    "low-end GPU/battery / field INP",
+    "actual provider recovery/promotion exercise",
+    "live preview access from workspace"
+  ]
+}

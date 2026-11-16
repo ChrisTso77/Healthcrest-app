@@ -2,7 +2,56 @@
 
 Updated 16 November 2026. Current local work is separate from deployed production.
 
-## Current initiative — evidence library (16 November)
+## Current initiative — approved Explorer V2 integration (16 November)
+
+- Approved source: `59a8d4f584f6356ff9df23447b0b6bb2240edc0d`, including
+  restored unchanged scanner. Main fetched at db93754. New branch:
+  `codex/healthcrest-explorer-v2-integration`. User authorises integration/PR and
+  release preparation; production merge/deployment remain unapproved.
+- `/engine` uses approved V2 by default; original/scan/systems links remain for
+  compatibility and recovery. Existing pillar/idea and Planner/guide context is
+  preserved. No scanner, storage, measurement or clinical-library gate changes.
+- [Integration baseline, evidence and release decision](../explorer-v2/integration/RELEASE.md).
+  Local integration PASS: build/lint/types, 330 units, 109 safeguards, 329 app
+  cases (three compatibility URL corrections retested), 24 public V2 cases,
+  ten post-split legacy/scanner/graphics cases and 24 commit-bound release checks.
+  All eight unchanged performance budgets pass after splitting legacy loading.
+  Final exact-head CI/preview are recorded in PR #145; production remains BLOCKED
+  by carried-forward launch restrictions and explicit-target approval. Earlier
+  prototype records below remain historical.
+
+## Previous initiative — Habit Explorer V2 prototype (16 November)
+
+- Latest: restored **Open Body Scanner** by lazily reusing the unchanged original
+  component/assets. V2 settings/lesson stay in memory; original scanner controls
+  use their own state and return restores focus/scroll. No production edits.
+- Build/lint/types, 15 V2 cases and four original scanner cases PASS. Hashes match
+  merged baseline; four actual static screenshot comparisons pass with only
+  negligible native-control edge differences. No scanner source/style edits.
+- [Restoration evidence and exact file list](../explorer-v2/SCANNER-RESTORATION.md).
+  Existing preview approval applies; no production merge/deployment authorised.
+
+- #143 evidence library merged with owner approval at db93754; no deployment implied.
+- Dedicated `codex/healthcrest-explorer-v2-prototype` starts at that merge. User
+  authorises isolated prototype/review preparation; production integration,
+  merge and production deployment require new explicit approval. Owner has now
+  approved a separate preview deployment (16 November).
+- Three concepts evaluated; selected labelled 2D with optional existing Lite 3D.
+  `/prototype/explorer-v2` permits local review and the exact approved branch in
+  Vercel Preview; production stays blocked. Original Explorer, Body Scan, Planner,
+  reviewed clinical content and data boundaries unchanged.
+- Supplied screenshot reviewed; prototype UI rebuilt with compact habit cards,
+  radial input visual and contextual lesson workspace. Review path remains
+  `/prototype/explorer-v2`; screenshot route `/engine` remains the original.
+- Build/lint, 330 units and 12 targeted Chromium cases PASS, including approved
+  preview positive, production negative and draft-library isolation. Axe at four
+  widths; forced WebGL failure, keyboard dialog and reduced motion checked.
+  Manual assistive technology / real users / other browsers NOT VERIFIED.
+- [Review package, screenshots, tradeoffs and migration proposal](../explorer-v2/REVIEW.md).
+  [Preview deployment record](../explorer-v2/DEPLOYMENT.md). No production integration
+  or merge performed. Keep #139/#140 work separate.
+
+## Previous initiative — evidence library (16 November, historical pre-merge record)
 
 - User authorises research, development branch and reviewable draft PR; no production
   deployment, unreviewed clinical publication, CMS write or gate bypass.

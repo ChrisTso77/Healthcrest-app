@@ -14,7 +14,7 @@ export async function checkExplorerInformation(page: Page, testInfo: TestInfo, m
   await page.route('**/api/presets', route => route.fulfill({
     status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
   }));
-  await page.goto('/engine?pillar=sleep' + (mode === '2d' ? '&view=2d' : ''));
+  await page.goto('/engine?experience=original&pillar=sleep' + (mode === '2d' ? '&view=2d' : ''));
   if (mode === '3d') await expect(page.locator('canvas')).toBeVisible();
   else await expect(page.locator('canvas')).toHaveCount(0);
   const canvas = mode === '3d' ? await page.locator('canvas').elementHandle() : null;

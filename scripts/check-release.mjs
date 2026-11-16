@@ -177,6 +177,10 @@ try {
       ensure(final.origin === origin && final.pathname === path, 'Public page redirected away from its expected deployment path: ' + path);
       ensure(response.headers()['referrer-policy'] === 'no-referrer', 'Missing no-referrer header: ' + path);
       ensure(response.headers()['x-content-type-options'] === 'nosniff', 'Missing nosniff header: ' + path);
+      if (path === '/engine') {
+        await page.getByRole('button', {name:'Skip introduction',exact:true}).click();
+        ensure(await page.getByRole('heading', {level:1}).textContent() === 'Small habits. A bigger picture.', 'Default Explorer is not the approved V2.');
+      }
       const title = await page.title();
       ensure(title.includes('Healthcrest'), 'Missing Healthcrest title: ' + path);
       const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');

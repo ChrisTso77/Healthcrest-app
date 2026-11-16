@@ -133,6 +133,10 @@ jobs:
         env:
           CI: true
 
+      - name: Verify approved public Explorer V2 and scanner integration
+        run: npx playwright test --config=playwright.explorer-integration.config.ts
+        timeout-minutes: 5
+
       - name: Verify gated education, traceability and accessibility
         # Local-only editorial servers; hosted draft publication stays disabled.
         run: npm run test:education
@@ -158,6 +162,7 @@ jobs:
           path: |
             playwright-report/
             test-results-education/
+            test-results/explorer-integration/
           retention-days: 14
 
   measurement-preview-off:
@@ -240,4 +245,5 @@ jobs:
           path: |
             playwright-compatibility-report/
             test-results-education/
+            test-results/explorer-integration/
           retention-days: 14
