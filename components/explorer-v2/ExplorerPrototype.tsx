@@ -87,6 +87,19 @@ export function ExplorerPrototype({
   const returningFromScanner = useRef(false);
   const [habit, setHabit] = useState(openingHabit);
   const [step, setStep] = useState(0);
+  const stepHeading = useRef<HTMLHeadingElement>(null);
+  const focusStep = useRef(false);
+  useEffect(() => {
+    if (focusStep.current) {
+      focusStep.current = false;
+      stepHeading.current?.focus();
+    }
+  }, [step]);
+  function navigateStep(next: number) {
+    if (next === step) return;
+    focusStep.current = true;
+    setStep(next);
+  }
   const [entryIntroduction] = useState<"show" | "skip">(() =>
     typeof window !== "undefined" && location.hash === "#explore"
       ? "skip"
@@ -169,10 +182,12 @@ export function ExplorerPrototype({
           max={setting.max}
           step={setting.step}
           value={state.parameters[setting.key]}
+          aria-label={setting.label}
+          aria-describedby={prefix + setting.key + "-help"}
           aria-valuetext={`${state.parameters[setting.key]} ${setting.unit}`}
           onChange={(e) => change(index, Number(e.target.value))}
         />
-        <p>
+        <p id={prefix + setting.key + "-help"}>
           {setting.min}–{setting.max} {setting.unit}.{" "}
           {index === 3
             ? "Subjective rating, not a diagnosis."
@@ -317,7 +332,7 @@ export function ExplorerPrototype({
               <button
                 key={name}
                 aria-current={index === step ? "step" : undefined}
-                onClick={() => setStep(index)}
+                onClick={() => navigateStep(index)}
               >
                 <span>{index + 1}</span> {name}
               </button>
@@ -386,7 +401,9 @@ export function ExplorerPrototype({
                 })()}
               </div>
               <p className="ev2-eyebrow">STEP {step + 1} OF 5</p>
-              <h3>{STEPS[step]}</h3>
+              <h3 ref={stepHeading} tabIndex={-1}>
+                {STEPS[step]}
+              </h3>
               {step === 0 && (
                 <>
                   <p className="ev2-lead">{guide.goal}</p>
@@ -508,7 +525,7 @@ export function ExplorerPrototype({
               {step < 4 && (
                 <button
                   className="ev2-primary"
-                  onClick={() => setStep(step + 1)}
+                  onClick={() => navigateStep(step + 1)}
                 >
                   {
                     [
@@ -522,11 +539,11 @@ export function ExplorerPrototype({
                 </button>
               )}
               <div className="ev2-pagination">
-                <button disabled={step === 0} onClick={() => setStep(step - 1)}>
+                <button disabled={step === 0} onClick={() => navigateStep(step - 1)}>
                   ← Previous
                 </button>
                 <span>{step + 1} / 5</span>
-                <button disabled={step === 4} onClick={() => setStep(step + 1)}>
+                <button disabled={step === 4} onClick={() => navigateStep(step + 1)}>
                   Next →
                 </button>
               </div>

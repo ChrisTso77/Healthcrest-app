@@ -549,3 +549,49 @@ test("scanner remains usable at narrow width and cleans up narration when return
     page.getByRole("button", { name: "Open Body Scanner", exact: true }),
   ).toBeFocused();
 });
+
+for (const width of [390, 1440])
+ test(`keyboard lesson navigation retains focus and describes sliders at ${width}px`, async ({ page }) => {
+  await page.setViewportSize({ width, height: 900 });
+  await page.goto(route + "#explore");
+  const next = page.getByRole("button", { name: "Next →", exact: true });
+  const previous = page.getByRole("button", { name: "← Previous", exact: true });
+  for (const name of ["Explore", "Experiment", "Apply", "Learn more"]) {
+    await next.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("heading", { name, exact: true })).toBeFocused();
+  }
+  await expect(next).toBeDisabled();
+  await previous.focus();
+  await page.keyboard.press("Enter");
+  const deeper = page.getByRole("button", { name: "Go a little deeper", exact: true });
+  await deeper.focus();
+  await page.keyboard.press("Enter");
+  await expect(deeper).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Learn more", exact: true })).toBeFocused();
+  for (const name of ["Apply", "Experiment", "Explore", "Understand"]) {
+    await previous.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("heading", { name, exact: true })).toBeFocused();
+  }
+  await expect(previous).toBeDisabled();
+  const experiment = page.getByRole("button", { name: "3 Experiment", exact: true });
+  await experiment.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("heading", { name: "Experiment", exact: true })).toBeFocused();
+  const slider = page.getByRole("slider", { name: "Weekly aerobic activity", exact: true });
+  await expect(slider).toHaveAccessibleDescription("0–400 minutes/week. Scenario input, not a personal recommendation.");
+  await slider.focus();
+  const before = Number(await slider.inputValue());
+  await page.keyboard.press("ArrowRight");
+  await expect(slider).toHaveValue(String(before + 10));
+  await expect(slider).toHaveAccessibleName("Weekly aerobic activity");
+  await page.getByRole("button", { name: "Settings & scenarios", exact: true }).click();
+  await expect(page.getByRole("dialog").getByRole("slider", { name: "Weekly aerobic activity", exact: true }))
+    .toHaveAccessibleDescription("0–400 minutes/week. Scenario input, not a personal recommendation.");
+  await page.getByText("Advanced · other inputs and full scenarios", { exact: true }).click();
+  await expect(page.getByRole("slider", { name: "Whole-food setting", exact: true }))
+    .toHaveAccessibleDescription("0–100 %. Illustrative setting, not a validated diet target.");
+  await page.getByRole("button", { name: "Close settings", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Settings & scenarios", exact: true })).toBeFocused();
+});
