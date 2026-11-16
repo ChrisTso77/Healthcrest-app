@@ -16,12 +16,11 @@ test('guided choice links learning, a labelled view and an editable plan without
   await result.getByRole('link', { name: 'Read the sleep topic', exact: true }).click();
   await expect(page.getByRole('complementary', { name: 'Your guided starting point', exact: true })).toBeVisible();
   await page.getByRole('article', { name: 'Sleep', exact: true }).getByRole('link', { name: 'Explore in the Habit Explorer', exact: true }).click();
-  await expect(page.getByRole('button', { name: /2d diagram/i })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', {name:'Skip introduction',exact:true}).click();
   await expect(page.locator('canvas')).toHaveCount(0);
-  await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
-  const guide = page.getByRole('dialog', { name: 'Understand this view', exact: true });
-  await expect(guide.getByRole('region', { name: 'Read the illustration', exact: true })).toContainText('Scale ends are the controls’ limits');
-  await guide.getByRole('link', { name: 'Make a manageable next step', exact: true }).click();
+  await expect(page.getByRole('img',{name:/Sleep duration/})).toBeVisible();
+  await page.getByRole('button',{name:'4 Apply',exact:true}).click();
+  await page.getByRole('link',{name:'Make a manageable next step',exact:true}).click();
   await expect(page).toHaveURL(/\/next-step\?pillar=sleep&idea=routine$/);
   const action = page.getByRole('textbox', { name: 'One manageable action', exact: true });
   await expect(action).toHaveValue('Choose a wind-down cue around my main sleep period, adapting it to my work or caring routine.');
@@ -84,7 +83,8 @@ test('unknown or repeated journey choices fall back without reflecting raw input
   await page.goto('/start?pillar=sleep&pillar=stress&idea=time');
   await expect(page.locator('#your-starting-point')).toHaveCount(0);
   await page.goto('/engine?pillar=sleep&view=2d&view=wrong&idea=constructor');
-  await expect(page.locator('canvas')).toBeVisible();
-  await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
-  await expect(page.getByRole('dialog').getByRole('link', { name: 'Make a manageable next step', exact: true })).toHaveAttribute('href', '/next-step?pillar=sleep');
+  await page.getByRole('button',{name:'Skip introduction',exact:true}).click();
+  await expect(page.locator('canvas')).toHaveCount(0);
+  await page.getByRole('button',{name:'4 Apply',exact:true}).click();
+  await expect(page.getByRole('link',{name:'Make a manageable next step',exact:true})).toHaveAttribute('href','/next-step?pillar=sleep');
 });

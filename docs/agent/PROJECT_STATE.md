@@ -2,7 +2,19 @@
 
 Updated 16 November 2026. Current local work is separate from deployed production.
 
-## Current initiative — Habit Explorer V2 prototype (16 November)
+## Current initiative — approved Explorer V2 integration (16 November)
+
+- Approved source: `59a8d4f584f6356ff9df23447b0b6bb2240edc0d`, including
+  restored unchanged scanner. Main fetched at db93754. New branch:
+  `codex/healthcrest-explorer-v2-integration`. User authorises integration/PR and
+  release preparation; production merge/deployment remain unapproved.
+- `/engine` uses approved V2 by default; original/scan/systems links remain for
+  compatibility and recovery. Existing pillar/idea and Planner/guide context is
+  preserved. No scanner, storage, measurement or clinical-library gate changes.
+- [Integration baseline, evidence and release decision](../explorer-v2/integration/RELEASE.md).
+  Verification underway; earlier prototype records below remain historical.
+
+## Previous initiative — Habit Explorer V2 prototype (16 November)
 
 - Latest: restored **Open Body Scanner** by lazily reusing the unchanged original
   component/assets. V2 settings/lesson stay in memory; original scanner controls

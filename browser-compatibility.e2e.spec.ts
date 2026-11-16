@@ -1,3 +1,4 @@
+// Original-renderer regression coverage uses the explicit compatibility view.
 import { test, expect, type Download, type Page } from '@playwright/test';
 import { FALLBACK_PRESETS } from './lib/presets/fallback';
 import { LEARNING_GUIDES } from './lib/education/learningGuides';
@@ -214,7 +215,7 @@ test('labelled 2D settings and guide keyboard focus work without WebGL', async (
   await page.route('**/api/presets', route => route.fulfill({
     status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
   }));
-  await page.goto('/engine?pillar=sleep&view=2d');
+  await page.goto('/engine?pillar=sleep&view=2d&experience=original');
   const overview = page.getByRole('region', { name: '2D health overview', exact: true });
   await expect(overview).toBeVisible();
   await expect(page.locator('canvas')).toHaveCount(0);
@@ -288,4 +289,21 @@ test('guide-to-plan navigation and missing-page recovery are server rendered wit
     expect(response?.status()).toBe(404);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
   } finally { await context.close(); }
+});
+
+
+for (const width of [320, 1440]) test('public Explorer V2 and unchanged scanner work at '+width+'px', async ({page})=>{
+  await page.setViewportSize({width,height:900});
+  await page.goto('/engine?pillar=sleep#explore');
+  await expect(page.getByRole('heading',{level:1})).toHaveText('Small habits. A bigger picture.');
+  await page.getByRole('button',{name:'3 Experiment',exact:true}).click();
+  await page.locator('#lesson-sleepDuration').fill('7.5');
+  await page.getByRole('button',{name:'Settings & scenarios',exact:true}).click();
+  await expect(page.getByRole('dialog')).toBeVisible();await page.keyboard.press('Escape');
+  await expect(page.getByRole('button',{name:'Settings & scenarios',exact:true})).toBeFocused();
+  await page.getByRole('button',{name:'Open Body Scanner',exact:true}).click();
+  await expect(page.getByRole('region',{name:'Habit body scan'})).toBeVisible();
+  await page.getByRole('button',{name:/Back to Habit Explorer/}).click();
+  await expect(page.locator('#lesson-sleepDuration')).toHaveValue('7.5');
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });

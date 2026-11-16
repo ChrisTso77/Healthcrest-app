@@ -5,7 +5,7 @@ const trigger = (page: Page) => page.getByRole('button', { name: 'Compare starti
 const dialog = (page: Page) => page.getByRole('dialog', { name: 'Starting and current settings', exact: true });
 async function boot(page: Page, query = 'pillar=sleep&view=2d') {
   await page.route('**/api/presets', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }) }));
-  await page.goto('/engine?' + query);
+  await page.goto('/engine?experience=original&' + query);
   await expect(page.getByRole('heading', { name: 'HABIT EXPLORER', exact: true })).toBeVisible();
 }
 

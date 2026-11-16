@@ -32,7 +32,7 @@ export async function checkScenarioSelection(page: Page, testInfo: TestInfo, mod
   await page.route('**/api/presets', route => route.fulfill({
     status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
   }));
-  await page.goto('/engine' + (mode === '2d' ? '?view=2d' : ''));
+  await page.goto('/engine?experience=original' + (mode === '2d' ? '&view=2d' : ''));
   const canvas = mode === '3d' ? await page.locator('canvas').elementHandle() : null;
   if (mode === '3d') await expect(page.locator('canvas')).toBeVisible();
   else await expect(page.locator('canvas')).toHaveCount(0);

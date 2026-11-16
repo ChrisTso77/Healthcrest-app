@@ -37,8 +37,9 @@ test('topic guidance leads to the matching planner and engine view', async ({ pa
   await page.getByRole('article', { name: 'Food', exact: true })
     .getByRole('link', { name: 'Explore in the Habit Explorer', exact: true }).click();
   await expect(page).toHaveURL(/\/engine\?pillar=nutrition$/);
-  await expect(page.getByRole('navigation', { name: 'Habit topics' })
-    .getByRole('button', { name: 'Food', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', {name:'Skip introduction',exact:true}).click();
+  await expect(page.getByRole('navigation', { name: 'Choose a habit' })
+    .getByRole('button', { name: /^Food/ })).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('landing navigation and engine guide expose the learning library', async ({ page }) => {
@@ -46,9 +47,9 @@ test('landing navigation and engine guide expose the learning library', async ({
   await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Learn', exact: true }).click();
   await expect(page).toHaveURL(/\/learn$/);
   await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Habit Explorer', exact: true }).click();
-  await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
-  await page.getByRole('dialog', { name: 'Understand this view' })
-    .getByRole('link', { name: 'Browse health topics and terms', exact: true }).click();
+  await page.getByRole('button', {name:'Skip introduction',exact:true}).click();
+  await page.getByRole('button', {name:'5 Learn more',exact:true}).click();
+  await page.getByRole('link', {name:'Browse health topics and terms',exact:true}).click();
   await expect(page).toHaveURL(/\/learn$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Learn the basics.');
 });

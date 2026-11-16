@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
-const route = "/prototype/explorer-v2";
+const publicExperience = process.env.HEALTHCREST_EXPLORER_PUBLIC === "1";
+const route = publicExperience ? "/engine" : "/prototype/explorer-v2";
 test("onboarding start, skip, return and reopen without durable storage", async ({
   page,
 }) => {
@@ -208,6 +209,7 @@ test("production and unflagged routes are inaccessible; local route is noindex",
   page,
   request,
 }) => {
+  test.skip(publicExperience, 'Public-route production contract is checked by the integration suite.');
   for (const port of [3211, 3212])
     expect(
       (await request.get(`http://127.0.0.1:${port}${route}`)).status(),
@@ -291,6 +293,7 @@ test("approved hosted preview opens the redesigned UI while draft clinical conte
   page,
   request,
 }) => {
+  test.skip(publicExperience, 'Prototype-only hosted gate; public integration has its own production profile.');
   const preview = "http://127.0.0.1:3213";
   const response = await page.goto(preview + route);
   expect(response?.status()).toBe(200);

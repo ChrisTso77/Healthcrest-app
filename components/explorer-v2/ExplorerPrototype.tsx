@@ -9,6 +9,12 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { useEffect, useReducer, useRef, useState } from "react";
+import type { SceneId } from "@/state/PillarsStateTypes";
+import {
+  journeyAction,
+  journeyPlannerHref,
+  type JourneyConstraint,
+} from "@/lib/education/startJourney";
 import { ModalDialog } from "@/components/ModalDialog";
 import {
   pillarsReducer,
@@ -36,12 +42,24 @@ const OriginalBodyScanner = dynamic(
   },
 );
 
-export function ExplorerPrototype() {
+export function ExplorerPrototype({
+  reviewMode = true,
+  initialScene,
+  journeyConstraint,
+}: {
+  reviewMode?: boolean;
+  initialScene?: SceneId;
+  journeyConstraint?: JourneyConstraint;
+}) {
+  const openingHabit = Math.max(
+    0,
+    HABITS.findIndex((habit) => habit.scene === initialScene),
+  );
   const [state, dispatch] = useReducer(pillarsReducer, {
     ...initialPillarsState,
     renderMode: "2d-canvas",
-    activeScene: "fitness",
-    activePillar: "Fitness",
+    activeScene: HABITS[openingHabit].scene,
+    activePillar: HABITS[openingHabit].pillar,
   });
   // Scanner ranges differ from V2. Seed a separate state so original scanner
   // controls remain intact without replacing unsaved V2 values or lesson state.
@@ -54,7 +72,7 @@ export function ExplorerPrototype() {
   const scannerTrigger = useRef<HTMLButtonElement>(null);
   const explorerScroll = useRef(0);
   const returningFromScanner = useRef(false);
-  const [habit, setHabit] = useState(0);
+  const [habit, setHabit] = useState(openingHabit);
   const [step, setStep] = useState(0);
   const [intro, setIntro] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -187,11 +205,20 @@ export function ExplorerPrototype() {
         Skip to lesson
       </a>
       <header className="ev2-header">
-        <Link href="/" prefetch={false} className="ev2-brand">
+        <Link
+          href="/"
+          prefetch={false}
+          className="ev2-brand"
+          aria-label="Healthcrest home"
+        >
           healthcrest<span>Small habits. A clearer picture.</span>
         </Link>
         <div>
-          <span className="ev2-tag">Explorer / Design preview</span>
+          <span className="ev2-tag">
+            {reviewMode
+              ? "Explorer / Design preview"
+              : "Explorer / Four habits"}
+          </span>
           <button onClick={() => setIntro(true)}>Introduction</button>
         </div>
       </header>
@@ -386,7 +413,21 @@ export function ExplorerPrototype() {
               )}
               {step === 3 && (
                 <>
-                  <p className="ev2-lead">{guide.firstStep}</p>
+                  <p className="ev2-lead">
+                    {journeyConstraint
+                      ? journeyAction(h.pillar, journeyConstraint)
+                      : guide.firstStep}
+                  </p>
+                  {!reviewMode && (
+                    <p>
+                      <Link
+                        href={journeyPlannerHref(h.pillar, journeyConstraint)}
+                        prefetch={false}
+                      >
+                        Make a manageable next step
+                      </Link>
+                    </p>
+                  )}
                   {habit === 3 && (
                     <label className="ev2-support">
                       Choose a support example (does not change the numeric
@@ -417,13 +458,20 @@ export function ExplorerPrototype() {
                 <>
                   <p>{guide.guidance}</p>
                   <p>
-                    <a href={learningGuideHref(h.pillar)}>
+                    <a href={learningGuideHref(h.pillar, journeyConstraint)}>
                       Read the {h.name.toLowerCase()} guide →
                     </a>
                   </p>
                   <p>
                     <a href={guide.sourceUrl}>{guide.sourceLabel}</a>
                   </p>
+                  {!reviewMode && (
+                    <p>
+                      <Link href="/learn" prefetch={false}>
+                        Browse health topics and terms
+                      </Link>
+                    </p>
+                  )}
                   <p>
                     General adult guidance checked 28 October 2026. The source
                     supports the guidance, not our slider values or illustrative
@@ -494,14 +542,15 @@ export function ExplorerPrototype() {
           {notice}
         </p>
         <footer className="ev2-footer">
-          Educational prototype · no account required · example settings stay in
-          page memory only. Reload resets them. Not a medical assessment.{" "}
+          {reviewMode ? "Educational prototype" : "Educational Explorer"} · no
+          account required · example settings stay in page memory only. Reload
+          resets them. Not a medical assessment.{" "}
           <details className="ev2-original-link">
             <summary>Compare with the original Explorer</summary>
             <p>
-              This redesigned prototype is at{" "}
-              <code>/prototype/explorer-v2</code>. The separate{" "}
-              <a href="/engine">original Explorer</a> retains its previous UI.
+              The <a href="/engine?view=original">original Explorer</a> retains
+              the connected-habits view, full scenario catalogue and camera
+              presets.
             </p>
           </details>
         </footer>

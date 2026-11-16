@@ -1,3 +1,4 @@
+// Original-renderer regression coverage uses the explicit compatibility view.
 import { test, expect, type Request, type Route } from '@playwright/test';
 import { FALLBACK_PRESETS } from './lib/presets/fallback';
 
@@ -5,7 +6,7 @@ type DrawCounts = { points: number; triangles: number; lines: number };
 
 test.describe('Healthcrest production regression', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/engine');
+    await page.goto('/engine?experience=original');
     await expect(page.getByRole('heading', { level: 1, name: 'HABIT EXPLORER', exact: true })).toBeVisible();
   });
 
@@ -15,7 +16,7 @@ test.describe('Healthcrest production regression', () => {
       contentType: 'application/json',
       body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
     }));
-    await page.goto('/engine?pillar-health-guide-test=1');
+    await page.goto('/engine?pillar-health-guide-test=1&experience=original');
     const canvas = page.locator('canvas');
     await expect(canvas).toBeVisible();
     const originalCanvas = await canvas.elementHandle();
@@ -63,7 +64,7 @@ test.describe('Healthcrest production regression', () => {
   test('guide explains experimental evidence and follows manual changes on a phone', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 568 });
     await page.route('**/api/presets', (route) => route.fulfill({ status: 503, body: 'unavailable' }));
-    await page.goto('/engine?guide-evidence-test=1');
+    await page.goto('/engine?guide-evidence-test=1&experience=original');
     const experimental = page.getByRole('button', { name: /Research example: timed sound/i });
     await experimental.click();
     const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
@@ -102,7 +103,7 @@ test.describe('Healthcrest production regression', () => {
       contentType: 'application/json',
       body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
     }));
-    await page.goto('/engine?accessible-2d-overview-test=1');
+    await page.goto('/engine?accessible-2d-overview-test=1&experience=original');
     await page.getByRole('button', { name: /Short sleep and higher stress example/i }).click();
     await page.getByRole('button', { name: /2d diagram/i }).click();
 
@@ -173,7 +174,7 @@ test.describe('Healthcrest production regression', () => {
           });
         });
       }
-      await page.goto('/engine?2d-layout-test=1');
+      await page.goto('/engine?2d-layout-test=1&experience=original');
       await expect(page.getByRole('status')).toBeVisible();
       if (viewport.width !== 320) {
         await page.getByRole('button', { name: /2d diagram/i }).click();
@@ -250,7 +251,7 @@ test.describe('Healthcrest production regression', () => {
           });
         }
       });
-      await page.goto('/engine?motion-preference-test=1');
+      await page.goto('/engine?motion-preference-test=1&experience=original');
       const canvas = page.locator('canvas');
       const renderer = page.locator('[data-reduced-motion]');
       const drawCount = () => page.evaluate(() =>
@@ -349,7 +350,7 @@ test.describe('Healthcrest production regression', () => {
             }
           }
         });
-        await page.goto('/engine?render-quality-test=1');
+        await page.goto('/engine?render-quality-test=1&experience=original');
         const canvas = page.locator('canvas');
         await expect(canvas).toBeVisible();
         const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
@@ -461,7 +462,7 @@ test.describe('Healthcrest production regression', () => {
   ]) {
     test(`compact layout keeps engine controls usable at ${viewport.width}px`, async ({ page }, testInfo) => {
       await page.setViewportSize(viewport);
-      await page.goto('/engine?compact-layout-test=1');
+      await page.goto('/engine?compact-layout-test=1&experience=original');
       const navigation = page.getByRole('navigation', { name: 'Habit topics' });
       await expect(navigation).toBeVisible();
       for (const pillar of ['Movement', 'Food', 'Sleep', 'Stress & support', 'Connected habits']) {
@@ -531,7 +532,7 @@ test.describe('Healthcrest production regression', () => {
           : { success: true, data: [FALLBACK_PRESETS[0]] }),
       });
     });
-    await page.goto('/engine?mobile-cms-recovery-test=1');
+    await page.goto('/engine?mobile-cms-recovery-test=1&experience=original');
     await expect(page.getByRole('status')).toBeVisible();
     const sleep = page.getByRole('slider', { name: 'Sleep Duration', exact: true });
     await sleep.scrollIntoViewIfNeeded();
@@ -572,7 +573,7 @@ test.describe('Healthcrest production regression', () => {
         ['systems', 'Connected habits', 'Connect the habits'],
       ];
       for (const [slug, label] of topics) {
-        await page.goto('/engine?pillar=' + slug + '&view=2d');
+        await page.goto('/engine?experience=original&pillar=' + slug + '&view=2d');
         const navigation = page.getByRole('navigation', { name: 'Habit topics', exact: true });
         await expect(navigation.getByRole('button', { name: label, exact: true })).toHaveAttribute('aria-pressed', 'true');
         const overview = page.getByRole('region', { name: '2D health overview', exact: true });
@@ -727,7 +728,7 @@ test.describe('Healthcrest production regression', () => {
         },
       });
     });
-    await page.goto('/engine?webgl-unavailable-test=1');
+    await page.goto('/engine?webgl-unavailable-test=1&experience=original');
 
     const mode2d = page.getByRole('button', { name: /2d diagram/i });
     await expect(page.getByText('Habit Explorer · 2D view')).toBeVisible();
@@ -753,7 +754,7 @@ test.describe('Healthcrest production regression', () => {
         await route.fulfill({ response });
       }
     });
-    await page.goto('/engine?webgl-module-failure-test=1');
+    await page.goto('/engine?webgl-module-failure-test=1&experience=original');
 
     await expect.poll(() => blocked3dModule).toBe(true);
     await expect(page.getByText('Habit Explorer · 2D view')).toBeVisible();
@@ -1142,7 +1143,7 @@ test.describe('Healthcrest production regression', () => {
     });
 
     // Force a fresh navigation after the mock has been installed.
-    await page.goto('/engine?cms-test=1', { waitUntil: 'networkidle' });
+    await page.goto('/engine?cms-test=1&experience=original', { waitUntil: 'networkidle' });
 
     expect(intercepted).toBeTruthy();
 
@@ -1174,7 +1175,7 @@ test.describe('Healthcrest production regression', () => {
         body: scenario.body,
       }));
 
-      await page.goto('/engine?cms-failure-test=1');
+      await page.goto('/engine?cms-failure-test=1&experience=original');
       await expect(page.getByRole('status')).toHaveText(
         'CMS presets unavailable — using local evidence presets.'
       );
@@ -1200,7 +1201,7 @@ test.describe('Healthcrest production regression', () => {
       stalledRequest = route.request();
     });
 
-    await page.goto('/engine?cms-timeout-test=1');
+    await page.goto('/engine?cms-timeout-test=1&experience=original');
     await expect.poll(() => stalledRequest !== undefined).toBe(true);
     await page.getByRole('button', { name: /Short sleep and higher stress example/i }).click();
     await expect(page.locator('input[type="range"]').nth(1)).toHaveValue('4.5');
@@ -1229,7 +1230,7 @@ test.describe('Healthcrest production regression', () => {
       pendingRetry = route;
     });
 
-    await page.goto('/engine?cms-recovery-test=1');
+    await page.goto('/engine?cms-recovery-test=1&experience=original');
     await expect(page.getByRole('status')).toBeVisible();
     const sleepSlider = page.locator('input[type="range"]').nth(1);
     await sleepSlider.fill('7.5');
@@ -1259,7 +1260,7 @@ test.describe('Healthcrest production regression', () => {
       return route.fulfill({ status: 503, body: 'unavailable' });
     });
 
-    await page.goto('/engine?cms-retry-failure-test=1');
+    await page.goto('/engine?cms-retry-failure-test=1&experience=original');
     const retry = page.getByRole('button', { name: 'Retry presets', exact: true });
     await expect(retry).toBeEnabled();
     for (const expectedAttempts of [2, 3]) {
@@ -1305,7 +1306,7 @@ test.describe('Healthcrest production regression', () => {
       });
     });
 
-    await page.goto('/engine?warning-state-test=1', {
+    await page.goto('/engine?warning-state-test=1&experience=original', {
       waitUntil: 'networkidle'
     });
 
@@ -1354,7 +1355,7 @@ test.describe('Inline setting explanations', () => {
       status: 200, contentType: 'application/json',
       body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
     }));
-    await page.goto('/engine');
+    await page.goto('/engine?experience=original');
     const preset = page.getByRole('button', { name: /Connected habits example/i });
     await preset.click();
     const canvas = await page.locator('canvas').elementHandle();
@@ -1387,7 +1388,7 @@ test.describe('Inline setting explanations', () => {
   });
 
   test('view explanations distinguish unused 3D inputs, active scenes and 2D', async ({ page }) => {
-    await page.goto('/engine');
+    await page.goto('/engine?experience=original');
     const explanation = page.getByRole('region', { name: 'Whole Food Ratio explained', exact: true });
     await page.getByLabel('Explain this setting: Whole Food Ratio', { exact: true }).click();
     await expect(explanation).toContainText('This setting does not change the Connected habits 3D scene.');
@@ -1411,7 +1412,7 @@ test.describe('Inline setting explanations', () => {
   ]) {
     test('inline guidance is keyboard accessible and scrollable at ' + viewport.width + 'px', async ({ page }) => {
       await page.setViewportSize(viewport);
-      await page.goto('/engine?pillar=sleep');
+      await page.goto('/engine?pillar=sleep&experience=original');
       const dock = page.getByRole('region', { name: 'Habit settings and scenarios', exact: true });
       const summary = page.getByLabel('Explain this setting: Sleep Duration', { exact: true });
       await summary.scrollIntoViewIfNeeded();
@@ -1438,7 +1439,7 @@ test.describe('Inline setting explanations', () => {
   }
 
   test('a setting explanation opens its own habit plan even from another pillar', async ({ page }) => {
-    await page.goto('/engine?pillar=fitness');
+    await page.goto('/engine?pillar=fitness&experience=original');
     await page.getByLabel('Explain this setting: Sleep Duration', { exact: true }).click();
     await page.getByRole('region', { name: 'Sleep Duration explained', exact: true })
       .getByRole('link', { name: 'Plan a manageable next step', exact: true }).click();
@@ -1458,7 +1459,7 @@ test.describe('Reviewed scenario evidence', () => {
         outcomes: ['-35% CVD Mortality Risk'], education: undefined,
       }] }),
     }));
-    await page.goto('/engine');
+    await page.goto('/engine?experience=original');
     await page.getByRole('button', { name: /Movement example: weekly activity/i }).click();
     await expect(page.getByRole('slider', { name: 'Weekly aerobic activity', exact: true })).toHaveValue('180');
     await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
@@ -1474,7 +1475,7 @@ test.describe('Reviewed scenario evidence', () => {
     await page.route('**/api/presets', route => route.fulfill({
       status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }),
     }));
-    await page.goto('/engine');
+    await page.goto('/engine?experience=original');
     const research = page.getByRole('group', { name: 'Research examples — not routine advice', exact: true });
     const example = research.getByRole('button', { name: /Research example: timed sound during sleep/ });
     await example.click();
@@ -1496,7 +1497,7 @@ test.describe('Reviewed scenario evidence', () => {
         headline: 'Guaranteed recovery', outcomes: ['Stop prescribed treatment'],
       }] }),
     }));
-    await page.goto('/engine');
+    await page.goto('/engine?experience=original');
     await page.getByRole('group', { name: 'Awaiting content review', exact: true })
       .getByRole('button', { name: /Unreviewed Systems example/ }).click();
     await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
@@ -1522,7 +1523,7 @@ test('live visual key explains changes and pause stops automatic drawing without
     }
   });
   await page.route('**/api/presets', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, data: FALLBACK_PRESETS }) }));
-  await page.goto('/engine?pillar=sleep');
+  await page.goto('/engine?pillar=sleep&experience=original');
   const canvas = page.locator('canvas');
   await expect(canvas).toBeVisible();
   const originalCanvas = await canvas.elementHandle();
@@ -1563,7 +1564,7 @@ for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: width === 320 ? 568 : 900 });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.route('**/api/presets', route => route.fulfill({ status: 503, body: 'unavailable' }));
-    await page.goto('/engine?pillar=sleep');
+    await page.goto('/engine?pillar=sleep&experience=original');
     const key = page.getByRole('complementary', { name: 'Live visual key', exact: true });
     await expect(key).toBeVisible();
     await expect(page.getByRole('status')).toContainText('CMS presets unavailable');

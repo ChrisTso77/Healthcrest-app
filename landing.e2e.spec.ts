@@ -67,13 +67,11 @@ test.describe('Healthcrest introduction', () => {
       .getByRole('button', { name: 'Sleep', exact: true }).click();
     await page.getByRole('link', { name: 'Explore sleep in the Habit Explorer', exact: true }).click();
     await expect(page).toHaveURL(/\/engine\?pillar=sleep$/);
-    await expect(page.getByRole('navigation', { name: 'Habit topics' })
-      .getByRole('button', { name: 'Sleep', exact: true })).toHaveAttribute('aria-pressed', 'true');
-    await expect(page.locator('canvas')).toBeVisible();
-    await page.getByRole('button', { name: 'Guide: understand this view', exact: true }).click();
-    const dialog = page.getByRole('dialog', { name: 'Understand this view' });
-    await expect(dialog.getByRole('heading', { name: 'Sleep: Support sleep and recovery', exact: true })).toBeVisible();
-    await page.keyboard.press('Escape');
+    await page.getByRole('button', {name:'Skip introduction',exact:true}).click();
+    await expect(page.getByRole('navigation', {name:'Choose a habit'}).getByRole('button', {name:/^Sleep/})).toHaveAttribute('aria-pressed','true');
+    await expect(page.locator('canvas')).toHaveCount(0);
+    await page.getByRole('button', {name:'5 Learn more',exact:true}).click();
+    await expect(page.getByRole('heading', {name:'Learn more',exact:true})).toBeVisible();
     await page.getByRole('link', { name: 'Healthcrest home', exact: true }).click();
     await expect(page).toHaveURL(/\/$/);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Small habits.');
@@ -96,8 +94,9 @@ test.describe('Healthcrest introduction', () => {
     expect(await page.evaluate(() => document.getAnimations().filter((animation) => animation.playState === 'running').length)).toBe(0);
 
     await page.goto('/engine?pillar=__proto__');
-    await expect(page.getByRole('button', { name: 'Connected habits', exact: true })).toHaveAttribute('aria-pressed', 'true');
-    await expect(page.getByRole('slider', { name: 'Sleep Duration', exact: true })).toHaveValue('8');
+    await page.getByRole('button', {name:'Skip introduction',exact:true}).click();
+    await expect(page.getByRole('navigation', {name:'Choose a habit'}).getByRole('button',{name:/^Movement/})).toHaveAttribute('aria-pressed','true');
+    await expect(page.locator('canvas')).toHaveCount(0);
   });
 });
 
