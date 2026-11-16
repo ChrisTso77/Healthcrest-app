@@ -841,3 +841,22 @@
     padding: 9px 10px;
   }
 }
+
+/* Paint first-visit onboarding before hydration, then let showModal own its
+   backdrop and focus. The URL-only skip marker also works before JavaScript. */
+.ev2-intro-dialog[open]:not(:modal) {
+  z-index: 100;
+  background: rgb(2 6 23 / 0.8);
+  backdrop-filter: blur(12px);
+}
+.ev2[data-intro-ready="false"]:has(#explore:target) .ev2-intro-dialog,
+.ev2[data-intro-ready="false"]:has(#explore:target)
+  .ev2-intro-dialog::backdrop {
+  display: none;
+}
+@media (forced-colors: active) {
+  .ev2-intro-dialog[open]:not(:modal) {
+    background: Canvas;
+    backdrop-filter: none;
+  }
+}

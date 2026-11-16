@@ -2,7 +2,22 @@
 
 Updated 16 November 2026. Current local work is separate from deployed production.
 
-## Current initiative — approved Explorer V2 integration (16 November)
+## Current initiative — Explorer loading follow-up (16 November)
+
+- #145 merged with explicit owner approval as 6771f48; canonical serves that SHA,
+  and live commit-bound smoke 43891385536 passed. Scanner source/assets unchanged.
+- Post-merge CI 43891071015 passed functional/browser checks but failed only the
+  mobile Explorer lab LCP (2581.936ms against unchanged 2500ms budget).
+- New `codex/healthcrest-explorer-loading` starts at that exact main. User asks
+  to proceed with next upgrades; prioritise this observed regression before new
+  features. Server-resolved guide links reduce client data; onboarding hydration
+  now paints the unchanged introduction before hydration, promoting its native
+  modal/focus when ready. Default dialogs retain prior behavior. No scanner,
+  clinical, persistence or measurement changes.
+- [Loading review record](../explorer-v2/loading/REVIEW.md). Verification underway;
+  no new production merge/deployment authorised. Earlier records are historical.
+
+## Previous initiative — approved Explorer V2 integration (16 November)
 
 - Approved source: `59a8d4f584f6356ff9df23447b0b6bb2240edc0d`, including
   restored unchanged scanner. Main fetched at db93754. New branch:

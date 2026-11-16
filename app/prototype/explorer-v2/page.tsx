@@ -1,3 +1,4 @@
+import { explorerGuideLinks } from "@/lib/education/explorerGuideLinks";
 import { notFound } from "next/navigation";
 import { explorerPreviewEnabled } from "@/lib/education/explorerPreview";
 import { ExplorerPrototype } from "@/components/explorer-v2/ExplorerPrototype";
@@ -11,5 +12,5 @@ export const dynamic = "force-dynamic";
 
 export default function PrototypePage() {
   if (!explorerPreviewEnabled()) notFound();
-  return <ExplorerPrototype />;
+  return <ExplorerPrototype guideLinks={explorerGuideLinks()} />;
 }

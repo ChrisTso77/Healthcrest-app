@@ -8,7 +8,13 @@ import {
   HeartHandshake,
   ArrowUpRight,
 } from "lucide-react";
-import { useEffect, useReducer, useRef, useState } from "react";
+import {
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import type { SceneId } from "@/state/PillarsStateTypes";
 import {
   journeyAction,
@@ -21,7 +27,7 @@ import {
   initialPillarsState,
 } from "@/state/PillarsStateMachine";
 import { PILLAR_GUIDES } from "@/lib/education/healthGuide";
-import { learningGuideHref } from "@/lib/education/learningGuides";
+import type { ExplorerGuideLinks } from "@/lib/education/explorerGuideLinks";
 import { FALLBACK_PRESETS } from "@/lib/presets/fallback";
 import { settingDelta } from "@/lib/education/settingComparison";
 import { HABITS, STEPS, validSetting } from "./model";
@@ -42,11 +48,18 @@ const OriginalBodyScanner = dynamic(
   },
 );
 
+// This is an initial navigation preference, not stored health data. React's
+// hydration snapshot avoids postponing the introduction by an extra frame.
+const noIntroductionSubscription = () => () => {};
+const serverIntroductionSnapshot = () => "pending" as const;
+
 export function ExplorerPrototype({
   reviewMode = true,
   initialScene,
   journeyConstraint,
+  guideLinks,
 }: {
+  guideLinks: ExplorerGuideLinks;
   reviewMode?: boolean;
   initialScene?: SceneId;
   journeyConstraint?: JourneyConstraint;
@@ -74,7 +87,18 @@ export function ExplorerPrototype({
   const returningFromScanner = useRef(false);
   const [habit, setHabit] = useState(openingHabit);
   const [step, setStep] = useState(0);
-  const [intro, setIntro] = useState(false);
+  const [entryIntroduction] = useState<"show" | "skip">(() =>
+    typeof window !== "undefined" && location.hash === "#explore"
+      ? "skip"
+      : "show",
+  );
+  const introductionPhase = useSyncExternalStore(
+    noIntroductionSubscription,
+    () => entryIntroduction,
+    serverIntroductionSnapshot,
+  );
+  const [introChoice, setIntro] = useState<boolean | null>(null);
+  const intro = introChoice ?? introductionPhase !== "skip";
   const [drawer, setDrawer] = useState(false);
   const [three, setThree] = useState(false);
   const [paused, setPaused] = useState(true);
@@ -86,19 +110,13 @@ export function ExplorerPrototype({
   const value = state.parameters[h.key];
   const beginning = initialPillarsState.parameters[h.key];
   useEffect(() => {
-    const id = requestAnimationFrame(() =>
-      setIntro(location.hash !== "#explore"),
-    );
-    return () => cancelAnimationFrame(id);
-  }, []);
-  useEffect(() => {
-    if (!intro && !drawer) return;
+    if ((!intro || introductionPhase === "pending") && !drawer) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = previous;
     };
-  }, [intro, drawer]);
+  }, [intro, drawer, introductionPhase]);
   useEffect(() => {
     if (scannerOpen) {
       scannerReturn.current?.focus({ preventScroll: true });
@@ -200,7 +218,15 @@ export function ExplorerPrototype({
       </main>
     );
   return (
-    <div className="ev2" data-habit={habit}>
+    <div
+      className="ev2"
+      data-habit={habit}
+      data-intro-ready={introductionPhase !== "pending"}
+    >
+      <span id="explore" hidden />
+      <noscript>
+        <style>{".ev2-intro-dialog{display:none!important}"}</style>
+      </noscript>
       <a className="ev2-skip" href="#ev2-lesson">
         Skip to lesson
       </a>
@@ -458,7 +484,7 @@ export function ExplorerPrototype({
                 <>
                   <p>{guide.guidance}</p>
                   <p>
-                    <a href={learningGuideHref(h.pillar, journeyConstraint)}>
+                    <a href={guideLinks[h.pillar]}>
                       Read the {h.name.toLowerCase()} guide →
                     </a>
                   </p>
@@ -559,7 +585,9 @@ export function ExplorerPrototype({
         <ModalDialog
           labelledBy="ev2-intro-title"
           onClose={closeIntro}
-          className="ev2-modal"
+          className="ev2-modal ev2-intro-dialog"
+          initiallyOpen
+          ready={introductionPhase !== "pending"}
         >
           <div className="ev2-dialog-content">
             <p className="ev2-eyebrow">WELCOME TO THE EXPLORER</p>
@@ -588,8 +616,18 @@ export function ExplorerPrototype({
               the introduction. No preference or health values are saved to
               device storage. Reopen with Introduction at any time.
             </p>
-            <button onClick={closeIntro}>Start exploring</button>
-            <button onClick={closeIntro}>Skip introduction</button>
+            <button
+              disabled={introductionPhase === "pending"}
+              onClick={closeIntro}
+            >
+              Start exploring
+            </button>
+            <button
+              disabled={introductionPhase === "pending"}
+              onClick={closeIntro}
+            >
+              Skip introduction
+            </button>
           </div>
         </ModalDialog>
       )}

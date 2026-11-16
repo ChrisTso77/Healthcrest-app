@@ -1,3 +1,4 @@
+import { explorerGuideLinks } from "@/lib/education/explorerGuideLinks";
 import { pageMetadata } from "@/lib/siteMetadata";
 import { parseJourneyConstraint } from "@/lib/education/startJourney";
 import { OriginalExplorer } from "@/components/explorer-v2/OriginalExplorer";
@@ -52,6 +53,7 @@ export default async function EnginePage({
   if (!legacy)
     return (
       <ExplorerPrototype
+        guideLinks={explorerGuideLinks(parseJourneyConstraint(idea))}
         reviewMode={false}
         initialScene={initialScene}
         journeyConstraint={parseJourneyConstraint(idea)}
