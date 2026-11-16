@@ -217,12 +217,12 @@
 .ev2 p {
   margin: 12px 0;
 }
-.ev2-lesson > .ev2-section-head > button {
+.ev2-lesson-actions > button:last-child {
   background: #173f34;
   color: #fff;
   border-color: #173f34;
 }
-.ev2-lesson > .ev2-section-head > button:hover {
+.ev2-lesson-actions > button:last-child:hover {
   background: #2e5748;
 }
 .ev2-steps {
@@ -738,7 +738,7 @@
   .ev2-section-head {
     gap: 10px;
   }
-  .ev2-lesson > .ev2-section-head > button {
+  .ev2-lesson-actions > button:last-child {
     font-size: 12px;
     padding: 9px 11px;
   }
@@ -820,5 +820,24 @@
   }
   .ev2-illustration {
     forced-color-adjust: none;
+  }
+}
+
+.ev2-lesson-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+@media (max-width: 650px) {
+  .ev2-lesson-actions {
+    width: 100%;
+    gap: 8px;
+  }
+  .ev2-lesson-actions > button {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    padding: 9px 10px;
   }
 }

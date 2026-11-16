@@ -1,5 +1,7 @@
 # Habit Explorer V2 — isolated prototype review
 
+Latest follow-up: [original Body Scanner restoration, exact files, hashes, visual comparison and tests](SCANNER-RESTORATION.md). Earlier measurements below describe the pre-restoration design.
+
 ## Baseline and decision (16 November 2026)
 Branch: `codex/healthcrest-explorer-v2-prototype`. Base: `db93754a333ceb6255ef632e9218180ad1a7f89e` (#143 merge).
 Next App Router / React / TypeScript; existing R3F/Three renderer retained. Production `/engine`, Body Scan, Planner, CMS and privacy controls remain unchanged. The screenshot supplied in follow-up confirms the existing `/engine` overlay layout. Before images use the actual same implementation at the recorded viewports.

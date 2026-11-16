@@ -8,7 +8,7 @@ import {
   HeartHandshake,
   ArrowUpRight,
 } from "lucide-react";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { ModalDialog } from "@/components/ModalDialog";
 import {
   pillarsReducer,
@@ -21,6 +21,20 @@ import { settingDelta } from "@/lib/education/settingComparison";
 import { HABITS, STEPS, validSetting } from "./model";
 import { HabitIllustration } from "./HabitIllustration";
 const OptionalScene = dynamic(() => import("./OptionalScene"), { ssr: false });
+const OriginalBodyScanner = dynamic(
+  () =>
+    import("@/components/BodyScanExplorer").then(
+      (module) => module.BodyScanExplorer,
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <p role="status" className="px-6 pt-24 text-slate-100">
+        Loading original Body Scanner…
+      </p>
+    ),
+  },
+);
 
 export function ExplorerPrototype() {
   const [state, dispatch] = useReducer(pillarsReducer, {
@@ -29,6 +43,17 @@ export function ExplorerPrototype() {
     activeScene: "fitness",
     activePillar: "Fitness",
   });
+  // Scanner ranges differ from V2. Seed a separate state so original scanner
+  // controls remain intact without replacing unsaved V2 values or lesson state.
+  const [scannerState, scannerDispatch] = useReducer(
+    pillarsReducer,
+    initialPillarsState,
+  );
+  const [scannerOpen, setScannerOpen] = useState(false);
+  const scannerReturn = useRef<HTMLButtonElement>(null);
+  const scannerTrigger = useRef<HTMLButtonElement>(null);
+  const explorerScroll = useRef(0);
+  const returningFromScanner = useRef(false);
   const [habit, setHabit] = useState(0);
   const [step, setStep] = useState(0);
   const [intro, setIntro] = useState(false);
@@ -56,6 +81,26 @@ export function ExplorerPrototype() {
       document.body.style.overflow = previous;
     };
   }, [intro, drawer]);
+  useEffect(() => {
+    if (scannerOpen) {
+      scannerReturn.current?.focus({ preventScroll: true });
+      window.scrollTo(0, 0);
+    } else if (returningFromScanner.current) {
+      returningFromScanner.current = false;
+      scannerTrigger.current?.focus({ preventScroll: true });
+      window.scrollTo(0, explorerScroll.current);
+    }
+  }, [scannerOpen]);
+  function openScanner() {
+    explorerScroll.current = window.scrollY;
+    scannerDispatch({ type: "RESTORE_PARAMETERS", payload: state.parameters });
+    scannerDispatch({ type: "SET_SCENE", payload: h.scene });
+    setScannerOpen(true);
+  }
+  function returnToExplorer() {
+    returningFromScanner.current = true;
+    setScannerOpen(false);
+  }
   function closeIntro() {
     setIntro(false);
     history.replaceState(
@@ -109,6 +154,33 @@ export function ExplorerPrototype() {
     });
     setNotice("All example values reset to the opening scenario.");
   }
+  if (scannerOpen)
+    return (
+      <main className="hc-engine relative w-full h-dvh bg-slate-950 text-slate-100 font-sans overflow-hidden select-none xl:h-screen">
+        <nav
+          aria-label="Body Scanner navigation"
+          className="absolute inset-x-0 top-0 z-20 flex min-h-16 flex-wrap items-center justify-between gap-2 border-b border-slate-700 bg-slate-950 px-4 py-2 text-slate-100 sm:px-6"
+        >
+          <button
+            ref={scannerReturn}
+            type="button"
+            onClick={returnToExplorer}
+            className="min-h-11 rounded-lg border border-emerald-500/60 px-3 text-sm text-emerald-200 focus-visible:outline-2 focus-visible:outline-emerald-300"
+          >
+            ← Back to Habit Explorer
+          </button>
+          <p className="hidden text-xs text-slate-300 sm:block">
+            Scanner settings are separate. Your Explorer choices are preserved.
+          </p>
+        </nav>
+        <OriginalBodyScanner
+          activePillar={scannerState.activePillar}
+          parameters={scannerState.parameters}
+          dispatch={scannerDispatch}
+          onOriginalView={returnToExplorer}
+        />
+      </main>
+    );
   return (
     <div className="ev2" data-habit={habit}>
       <a className="ev2-skip" href="#ev2-lesson">
@@ -178,9 +250,14 @@ export function ExplorerPrototype() {
                 {h.name}
               </h2>
             </div>
-            <button onClick={() => setDrawer(true)} aria-haspopup="dialog">
-              Settings & scenarios
-            </button>
+            <div className="ev2-lesson-actions">
+              <button ref={scannerTrigger} type="button" onClick={openScanner}>
+                Open Body Scanner
+              </button>
+              <button onClick={() => setDrawer(true)} aria-haspopup="dialog">
+                Settings & scenarios
+              </button>
+            </div>
           </div>
           <nav aria-label="Lesson steps" className="ev2-steps">
             {STEPS.map((name, index) => (

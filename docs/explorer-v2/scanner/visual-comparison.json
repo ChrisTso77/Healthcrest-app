@@ -1,0 +1,26 @@
+[
+  {
+    "width": 1440,
+    "model": "female",
+    "maxChannelDifference": 1,
+    "differentPixels": 9
+  },
+  {
+    "width": 1440,
+    "model": "male",
+    "maxChannelDifference": 0,
+    "differentPixels": 0
+  },
+  {
+    "width": 390,
+    "model": "female",
+    "maxChannelDifference": 0,
+    "differentPixels": 0
+  },
+  {
+    "width": 390,
+    "model": "male",
+    "maxChannelDifference": 0,
+    "differentPixels": 0
+  }
+]

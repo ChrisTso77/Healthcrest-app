@@ -316,3 +316,217 @@ test("approved hosted preview opens the redesigned UI while draft clinical conte
   expect((await request.get(preview + "/learn/library")).status()).toBe(404);
   expect((await request.get(preview + "/engine")).status()).toBe(200);
 });
+
+test("original scanner controls and assets work while V2 settings and focus survive both return paths", async ({
+  page,
+}) => {
+  await page.goto(route + "#explore");
+  await page.getByRole("button", { name: "3 Experiment" }).click();
+  await page.getByRole("button", { name: "Example B", exact: false }).click();
+  await page
+    .getByRole("button", { name: "Open Body Scanner", exact: true })
+    .click();
+  const scan = page.getByRole("region", { name: "Habit body scan" });
+  await expect(scan).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Back to Habit Explorer", exact: false }),
+  ).toBeFocused();
+  for (const [habit, setting, value] of [
+    ["Fitness", "Moderate activity per week", "600"],
+    ["Nutrition", "Fruit and vegetable portions per day", "8"],
+    ["Sleep", "Typical sleep per night", "11"],
+    ["Stress", "Time for calming practice each day", "30"],
+  ]) {
+    await scan.getByLabel("Habit", { exact: true }).selectOption(habit);
+    const slider = scan.getByRole("slider", { name: new RegExp(setting) });
+    await slider.fill(value);
+    await expect(slider).toHaveValue(value);
+    await scan
+      .getByRole("slider", { name: /Move scanner manually/ })
+      .fill("49");
+    await expect(
+      scan.getByRole("slider", { name: /Move scanner manually/ }),
+    ).toHaveAttribute("aria-valuetext", "Abdomen");
+  }
+  for (const model of ["female", "male"]) {
+    await scan.getByLabel("Body illustration").selectOption(model);
+    const image = scan.getByAltText(
+      new RegExp("Illustrative " + model + " anatomy"),
+    );
+    await expect(image).toBeVisible();
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (node: HTMLImageElement) => node.complete && node.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+    expect(await image.getAttribute("src")).toContain(
+      "body-scan-" + model + ".webp",
+    );
+  }
+  await scan.getByRole("button", { name: "Start scan", exact: true }).click();
+  await scan.getByRole("button", { name: "Pause scan", exact: true }).click();
+  await scan
+    .getByRole("button", { name: "Original view", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Open Body Scanner", exact: true }),
+  ).toBeFocused();
+  await expect(
+    page.getByRole("heading", { name: "Experiment", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator("#lesson-aerobicVolume")).toHaveValue("300");
+  await page
+    .getByRole("button", { name: "Open Body Scanner", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Back to Habit Explorer", exact: false })
+    .click();
+  await expect(page.locator("#lesson-aerobicVolume")).toHaveValue("300");
+});
+
+test("restored scanner matches the original scanner content", async ({
+  page,
+}, testInfo) => {
+  const { default: sharp } = await import("sharp");
+  const comparisons: {
+    width: number;
+    model: string;
+    maxChannelDifference: number;
+    differentPixels: number;
+  }[] = [];
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const [width, height] of [
+    [1440, 2000],
+    [390, 2200],
+  ]) {
+    await page.setViewportSize({ width, height });
+    for (const model of ["female", "male"]) {
+      await page.goto("/engine?view=scan");
+      const original = page.getByRole("region", { name: "Habit body scan" });
+      await original.getByLabel("Body illustration").selectOption(model);
+      await expect
+        .poll(() =>
+          original
+            .locator("img")
+            .evaluate(
+              (node: HTMLImageElement) =>
+                node.complete && node.naturalWidth > 0,
+            ),
+        )
+        .toBe(true);
+      await page.mouse.move(0, 0);
+      const before = await original.locator(":scope > div").screenshot({
+        animations: "disabled",
+        path: testInfo.outputPath(`original-${width}-${model}.png`),
+      });
+      await page.goto(route + "#explore");
+      await page
+        .getByRole("button", { name: "Open Body Scanner", exact: true })
+        .click();
+      const restored = page.getByRole("region", { name: "Habit body scan" });
+      await restored.getByLabel("Body illustration").selectOption(model);
+      await expect
+        .poll(() =>
+          restored
+            .locator("img")
+            .evaluate(
+              (node: HTMLImageElement) =>
+                node.complete && node.naturalWidth > 0,
+            ),
+        )
+        .toBe(true);
+      await page.mouse.move(0, 0);
+      const after = await restored.locator(":scope > div").screenshot({
+        animations: "disabled",
+        path: testInfo.outputPath(`restored-${width}-${model}.png`),
+      });
+      const a = await sharp(before)
+        .removeAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+      const b = await sharp(after)
+        .removeAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+      expect(b.info).toEqual(a.info);
+      let maxChannelDifference = 0,
+        differentPixels = 0;
+      for (let i = 0; i < a.data.length; i += 3) {
+        const difference = Math.max(
+          ...[0, 1, 2].map((channel) =>
+            Math.abs(a.data[i + channel] - b.data[i + channel]),
+          ),
+        );
+        maxChannelDifference = Math.max(maxChannelDifference, difference);
+        if (difference > 0) differentPixels++;
+      }
+      // Chromium occasionally composites a handful of native select corners
+      // one colour level differently. Permit only that imperceptible noise;
+      // any geometry, text, image, colour or layout change still fails.
+      expect(maxChannelDifference).toBeLessThanOrEqual(2);
+      expect(differentPixels).toBeLessThanOrEqual(64);
+      comparisons.push({ width, model, maxChannelDifference, differentPixels });
+    }
+  }
+  const { writeFile } = await import("node:fs/promises");
+  await writeFile(
+    testInfo.outputPath("visual-comparison.json"),
+    JSON.stringify(comparisons, null, 2),
+  );
+});
+
+test("scanner remains usable at narrow width and cleans up narration when returning", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    class Utterance {
+      lang = "";
+      rate = 1;
+      constructor(public text: string) {}
+    }
+    Object.defineProperty(window, "SpeechSynthesisUtterance", {
+      value: Utterance,
+    });
+    Object.defineProperty(window, "speechSynthesis", {
+      value: {
+        cancel() {
+          document.documentElement.dataset.scanCancelled = String(
+            Number(document.documentElement.dataset.scanCancelled ?? 0) + 1,
+          );
+        },
+        speak() {},
+      },
+    });
+  });
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto(route + "#explore");
+  await page
+    .getByRole("button", { name: "Open Body Scanner", exact: true })
+    .click();
+  const scan = page.getByRole("region", { name: "Habit body scan" });
+  await expect(scan).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await scan.getByRole("button", { name: "Voice off", exact: true }).click();
+  await scan.getByRole("button", { name: "Start scan", exact: true }).click();
+  const cancelled = await page
+    .locator("html")
+    .getAttribute("data-scan-cancelled");
+  await page
+    .getByRole("button", { name: "Back to Habit Explorer", exact: false })
+    .click();
+  await expect(scan).toHaveCount(0);
+  await expect
+    .poll(async () =>
+      Number(await page.locator("html").getAttribute("data-scan-cancelled")),
+    )
+    .toBeGreaterThan(Number(cancelled));
+  await expect(
+    page.getByRole("button", { name: "Open Body Scanner", exact: true }),
+  ).toBeFocused();
+});

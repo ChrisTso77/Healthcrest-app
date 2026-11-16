@@ -4,6 +4,15 @@ Updated 16 November 2026. Current local work is separate from deployed productio
 
 ## Current initiative — Habit Explorer V2 prototype (16 November)
 
+- Latest: restored **Open Body Scanner** by lazily reusing the unchanged original
+  component/assets. V2 settings/lesson stay in memory; original scanner controls
+  use their own state and return restores focus/scroll. No production edits.
+- Build/lint/types, 15 V2 cases and four original scanner cases PASS. Hashes match
+  merged baseline; four actual static screenshot comparisons pass with only
+  negligible native-control edge differences. No scanner source/style edits.
+- [Restoration evidence and exact file list](../explorer-v2/SCANNER-RESTORATION.md).
+  Existing preview approval applies; no production merge/deployment authorised.
+
 - #143 evidence library merged with owner approval at db93754; no deployment implied.
 - Dedicated `codex/healthcrest-explorer-v2-prototype` starts at that merge. User
   authorises isolated prototype/review preparation; production integration,

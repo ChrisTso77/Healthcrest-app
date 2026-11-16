@@ -1,0 +1,21 @@
+{
+  "baselineCommit": "db93754a333ceb6255ef632e9218180ad1a7f89e",
+  "files": {
+    "components/BodyScanExplorer.tsx": {
+      "sha256": "af6535cf8a307dc8eff32a277e80fd725bf4c5336d779941a0ccdae2476bb686",
+      "matchesMergedBaseline": true
+    },
+    "public/media/body-scan-female.webp": {
+      "sha256": "0526596ee38b6cee620567557e14ddf51b9eaca18b025a63860ed32fb737d6aa",
+      "matchesMergedBaseline": true
+    },
+    "public/media/body-scan-male.webp": {
+      "sha256": "eac28048c1100553b6875f6ef286efaf7aa2791acd95617909b3aa5b2e1ca8b6",
+      "matchesMergedBaseline": true
+    },
+    "components/HealthEngineApp.tsx": {
+      "sha256": "6caedb4559892dab1692d1992b9324f0eb529aa2b1bba4a7cc2b5e1b49a92792",
+      "matchesMergedBaseline": true
+    }
+  }
+}
