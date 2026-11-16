@@ -1,0 +1,433 @@
+.ev2 {
+  --ink: #173e35;
+  --muted: #466459;
+  --green: #14634f;
+  color: var(--ink);
+  background: #f4f7f2;
+  min-height: 100dvh;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+.ev2 *,
+.ev2-modal * {
+  box-sizing: border-box;
+}
+.ev2 a,
+.ev2-modal a {
+  color: #115c4c;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.ev2 button,
+.ev2-modal button,
+.ev2-modal summary,
+.ev2 summary {
+  min-height: 44px;
+  border: 1px solid #9ab3a8;
+  border-radius: 12px;
+  padding: 10px 16px;
+  color: #173e35;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.4;
+}
+.ev2 button:hover,
+.ev2-modal button:hover {
+  background: #e4eee8;
+}
+.ev2 button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.ev2 :focus-visible,
+.ev2-modal :focus-visible {
+  outline: 3px solid #7a4300;
+  outline-offset: 4px;
+}
+.ev2-header {
+  max-width: 1200px;
+  margin: auto;
+  padding: 28px 32px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  border-bottom: 1px solid #d5e1d9;
+}
+.ev2-header > div {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ev2-brand {
+  font-size: 28px;
+  font-weight: 700;
+  text-decoration: none !important;
+  letter-spacing: -1px;
+}
+.ev2-brand span {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  font-weight: 400;
+}
+.ev2-tag,
+.ev2-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+.ev2-tag {
+  padding: 7px 12px;
+  border-radius: 24px;
+  background: #e2ece4;
+}
+.ev2-main {
+  max-width: 1120px;
+  margin: auto;
+  padding: 50px 28px 28px;
+}
+.ev2-heading {
+  max-width: 760px;
+  margin-bottom: 32px;
+}
+.ev2 h1 {
+  font-size: clamp(32px, 4.5vw, 54px);
+  line-height: 1.12;
+  letter-spacing: -1.7px;
+  margin: 16px 0 22px;
+}
+.ev2-heading > p:last-child {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 620px;
+}
+.ev2 h2,
+.ev2-modal h2 {
+  font-size: 28px;
+  line-height: 1.25;
+  margin: 8px 0 16px;
+}
+.ev2 h3,
+.ev2-modal h3 {
+  font-size: 21px;
+  line-height: 1.3;
+  margin: 10px 0 18px;
+}
+.ev2 p,
+.ev2-modal p {
+  margin: 12px 0;
+}
+.ev2-habits {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 36px;
+}
+.ev2-habits button {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  min-width: 0;
+}
+.ev2-habits button[aria-pressed="true"] {
+  border: 2px solid #17634f;
+  background: #e4eee6;
+  padding: 19px;
+}
+.ev2-habits strong {
+  font-size: 18px;
+  line-height: 1.3;
+}
+.ev2-habits span:not(.ev2-icon) {
+  font-size: 14px;
+}
+.ev2-icon {
+  font-size: 27px;
+  line-height: 1;
+}
+.ev2-explore {
+  margin-top: auto;
+  font-weight: 700;
+}
+.ev2-lesson {
+  background: white;
+  border: 1px solid #d2dfd6;
+  border-radius: 24px;
+  padding: 30px;
+  scroll-margin-top: 20px;
+}
+.ev2-section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ev2-eyebrow {
+  color: #416858;
+  margin: 0 !important;
+}
+.ev2-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0;
+}
+.ev2-steps button {
+  border-color: transparent;
+  background: #f1f5f0;
+  flex: 1;
+  white-space: nowrap;
+}
+.ev2-steps button[aria-current] {
+  background: #174e3e;
+  color: white;
+}
+.ev2-steps button span {
+  font-size: 12px;
+}
+.ev2-stage {
+  padding: 28px;
+  background: #eef4ed;
+  border-radius: 18px;
+}
+.ev2-scale {
+  display: block;
+  width: 100%;
+  max-height: 200px;
+  margin: 24px 0 0;
+  overflow: visible;
+}
+.ev2-values {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.ev2-values strong {
+  display: block;
+  font-size: 24px;
+}
+.ev2-delta {
+  font-weight: 700;
+}
+.ev2-limit {
+  font-size: 14px;
+  color: #365d4c;
+  max-width: 800px;
+}
+.ev2-copy {
+  max-width: 780px;
+  margin: 30px 0;
+}
+.ev2-copy .ev2-lead {
+  font-size: 21px;
+}
+.ev2-copy button,
+.ev2-dialog-content button {
+  margin: 5px 8px 5px 0;
+}
+.ev2-accordion details,
+.ev2-modal details {
+  border-top: 1px solid #ccdad0;
+  padding: 12px 0;
+}
+.ev2 summary,
+.ev2-modal summary {
+  border: 0;
+  background: transparent;
+  font-weight: 700;
+  cursor: pointer;
+  padding-left: 0;
+}
+.ev2-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+.ev2-control {
+  margin: 24px 0;
+}
+.ev2-control label,
+.ev2-control strong {
+  display: block;
+}
+.ev2-control input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  accent-color: #17634f;
+  cursor: pointer;
+}
+.ev2-control p {
+  font-size: 14px;
+}
+.ev2-support {
+  display: grid;
+  gap: 14px;
+}
+.ev2 select {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px;
+  border: 1px solid #8ca799;
+  border-radius: 8px;
+  background: white;
+  color: #173e35;
+  font: inherit;
+}
+.ev2-footer {
+  font-size: 14px;
+  color: #466459;
+  padding: 24px 0;
+}
+.ev2-notice {
+  min-height: 26px;
+}
+.ev2-canvas {
+  position: relative;
+  height: 340px;
+  max-width: 100%;
+  margin: 20px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+.ev2-modal {
+  color: #173e35 !important;
+  line-height: 1.6;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.ev2-dialog-content {
+  background: #f8faf5;
+  width: 100%;
+  max-width: 640px;
+  padding: 32px;
+  border-radius: 20px;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.ev2-drawer {
+  justify-content: flex-end !important;
+  padding: 0 !important;
+}
+.ev2-drawer .ev2-dialog-content {
+  border-radius: 20px 0 0 20px;
+  height: 100dvh;
+  max-height: 100dvh;
+  max-width: 500px;
+}
+.ev2-skip {
+  position: absolute;
+  left: 12px;
+  top: 0;
+  transform: translateY(-120%);
+  padding: 12px;
+  background: white;
+  z-index: 30;
+}
+.ev2-skip:focus {
+  transform: none;
+}
+@media (max-width: 700px) {
+  .ev2-header {
+    padding: 20px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .ev2-header > div {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .ev2-main {
+    padding: 28px 16px;
+  }
+  .ev2-habits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .ev2-habits button {
+    padding: 14px;
+  }
+  .ev2-habits button[aria-pressed="true"] {
+    padding: 13px;
+  }
+  .ev2-lesson {
+    padding: 18px;
+    border-radius: 18px;
+  }
+  .ev2-stage {
+    padding: 18px;
+  }
+  .ev2-steps button {
+    flex: 1 1 40%;
+    white-space: normal;
+  }
+  .ev2-values strong {
+    font-size: 20px;
+  }
+  .ev2-dialog-content {
+    padding: 24px;
+  }
+  .ev2-canvas {
+    height: 260px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ev2 *,
+  .ev2-modal * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (forced-colors: active) {
+  .ev2 button[aria-pressed="true"],
+  .ev2 button[aria-current] {
+    outline: 2px solid Highlight;
+  }
+  .ev2-scale {
+    forced-color-adjust: none;
+  }
+}
+.ev2-main {
+  padding-top: 32px;
+}
+.ev2-heading {
+  margin-bottom: 24px;
+}
+.ev2-heading h1 {
+  font-size: clamp(30px, 3.7vw, 46px);
+}
+.ev2-habits button {
+  gap: 8px;
+  padding: 16px;
+}
+.ev2-habits button[aria-pressed="true"] {
+  padding: 15px;
+}
+.ev2-habits {
+  margin-bottom: 28px;
+}
+.ev2-steps {
+  margin: 18px 0;
+}
+.ev2-lesson {
+  padding: 26px;
+}
+@media (max-width: 700px) {
+  .ev2-lesson {
+    padding: 16px;
+  }
+  .ev2-main {
+    padding-top: 24px;
+  }
+}

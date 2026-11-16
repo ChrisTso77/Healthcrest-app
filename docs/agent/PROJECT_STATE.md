@@ -2,7 +2,22 @@
 
 Updated 16 November 2026. Current local work is separate from deployed production.
 
-## Current initiative — evidence library (16 November)
+## Current initiative — Habit Explorer V2 prototype (16 November)
+
+- #143 evidence library merged with owner approval at db93754; no deployment implied.
+- Dedicated `codex/healthcrest-explorer-v2-prototype` starts at that merge. User
+  authorises isolated prototype/review preparation; production integration,
+  merge and deployment require new explicit approval.
+- Three concepts evaluated; selected labelled 2D with optional existing Lite 3D.
+  Local-gated `/prototype/explorer-v2`; original Explorer, Body Scan, Planner,
+  reviewed clinical content and data boundaries unchanged.
+- Build/lint, 328 units and 10 targeted Chromium browser cases PASS. Axe at four
+  widths; forced WebGL failure, keyboard dialog and reduced motion checked.
+  Manual assistive technology / real users / other browsers NOT VERIFIED.
+- [Review package, screenshots, tradeoffs and migration proposal](../explorer-v2/REVIEW.md).
+  No integration or deployment performed. Keep #139/#140 work separate.
+
+## Previous initiative — evidence library (16 November, historical pre-merge record)
 
 - User authorises research, development branch and reviewable draft PR; no production
   deployment, unreviewed clinical publication, CMS write or gate bypass.
