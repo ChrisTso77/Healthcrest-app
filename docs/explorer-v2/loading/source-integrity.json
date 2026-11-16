@@ -1,0 +1,14 @@
+{
+  "baseline": "6771f485e32901561b09fc33232cb71bba73c2f2",
+  "unchangedFiles": {
+    "components/BodyScanExplorer.tsx": "af6535cf8a307dc8eff32a277e80fd725bf4c5336d779941a0ccdae2476bb686",
+    "public/media/body-scan-female.webp": "0526596ee38b6cee620567557e14ddf51b9eaca18b025a63860ed32fb737d6aa",
+    "public/media/body-scan-male.webp": "eac28048c1100553b6875f6ef286efaf7aa2791acd95617909b3aa5b2e1ca8b6",
+    "components/HealthEngineApp.tsx": "6caedb4559892dab1692d1992b9324f0eb529aa2b1bba4a7cc2b5e1b49a92792",
+    "components/HabitPlanner.tsx": "5dde10ce63ccc5a76339f68e52c44cd9a5be0ac85da6e69569eeba10dd47363c",
+    "lib/privacy/measurement.ts": "195d8b1850e9805ad53a0539807c158810f26d291a8cb35690ffd5d076916575",
+    "lib/education/learningGuides.ts": "6d77e6ed08f070c1fc63ef37546659d95a74975af24c06b3fb0834645e87803b",
+    "lib/education/healthGuide.ts": "d43e3c7cea78e1a0871dae6478383103fad37ff80bc3dd49c1a365b9f024dde6",
+    "lib/education/library/visibility.ts": "13aa7098931f3053349220cb5f5b74a81213eb56badc0e81ffb9b02af8626a7b"
+  }
+}

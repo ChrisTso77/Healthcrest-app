@@ -15,7 +15,10 @@ Updated 16 November 2026. Current local work is separate from deployed productio
   modal/focus when ready. Default dialogs retain prior behavior. No scanner,
   clinical, persistence or measurement changes.
 - [Loading review record](../explorer-v2/loading/REVIEW.md). Verification underway;
-  no new production merge/deployment authorised. Earlier records are historical.
+  local build/lint/types, 330 units, 26 public cases, 11 shared-dialog/legacy cases,
+  24 identity/release checks and eight unchanged performance profiles PASS. Mobile
+  Explorer lab LCP is 915ms after first-paint improvement. Final CI/preview recorded
+  in the follow-up PR; no new merge/deployment authorised. Earlier records historical.
 
 ## Previous initiative — approved Explorer V2 integration (16 November)
 
