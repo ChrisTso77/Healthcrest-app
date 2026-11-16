@@ -1,0 +1,220 @@
+{
+  "status": "Draft source package; no produced video or audio exists",
+  "title": "Movement: build capacity in everyday life",
+  "objective": "Distinguish activity types from a personal health score.",
+  "durationSeconds": 48,
+  "review": "Independent clinical review of narration, labels, captions and final visuals required before publication. No reviewer or approval recorded.",
+  "visualRequirements": "Use static labelled diagrams; no flashing, forced motion, body measurements or outcome predictions. Supply meaningful audio description through narration and a text alternative. Keep captions readable at mobile sizes. Do not use third-party embeds or tracking.",
+  "scenes": [
+    {
+      "seconds": 12,
+      "visual": "Labelled examples: walking, wheeling and activity at home; avoid a single assumed body type.",
+      "narration": "Movement includes everyday activity as well as exercise. Choose an option that fits your ability, circumstances and available support.",
+      "claimIds": [
+        "MOV-007"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "Three static cards, matching the accessible diagram; no internal body glow.",
+      "narration": "Aerobic activity, muscle challenge, and balance or functional activity contribute in different ways. Minutes alone do not tell the whole story.",
+      "claimIds": [
+        "MOV-001",
+        "MOV-006"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "A simple plan with a cue and an optional smaller version; no streak or score.",
+      "narration": "Choose a manageable opportunity and consider what would make it easier. A weekly target is not a pass or fail test.",
+      "claimIds": [
+        "BEH-001",
+        "MOV-004"
+      ]
+    },
+    {
+      "seconds": 12,
+      "visual": "Plain text: education, not personal assessment. Show original source credits.",
+      "narration": "Use guidance appropriate to your age and circumstances. The Explorer illustrates selected settings; it does not measure your body or decide what is safe for you.",
+      "claimIds": [
+        "MODEL-001",
+        "MOV-001"
+      ]
+    }
+  ],
+  "transcript": "Movement includes everyday activity as well as exercise. Choose an option that fits your ability, circumstances and available support.\n\nAerobic activity, muscle challenge, and balance or functional activity contribute in different ways. Minutes alone do not tell the whole story.\n\nChoose a manageable opportunity and consider what would make it easier. A weekly target is not a pass or fail test.\n\nUse guidance appropriate to your age and circumstances. The Explorer illustrates selected settings; it does not measure your body or decide what is safe for you.",
+  "captions": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nMovement includes everyday activity as\nwell as exercise. Choose an option that\n\n2\n00:00:06.000 --> 00:00:12.000\nfits your ability, circumstances and\navailable support.\n\n3\n00:00:12.000 --> 00:00:18.000\nAerobic activity, muscle challenge, and\nbalance or functional activity contribute\n\n4\n00:00:18.000 --> 00:00:24.000\nin different ways. Minutes alone do not\ntell the whole story.\n\n5\n00:00:24.000 --> 00:00:30.000\nChoose a manageable opportunity and\nconsider what would make it easier. A\n\n6\n00:00:30.000 --> 00:00:36.000\nweekly target is not a pass or fail test.\n\n7\n00:00:36.000 --> 00:00:42.000\nUse guidance appropriate to your age and\ncircumstances. The Explorer illustrates\n\n8\n00:00:42.000 --> 00:00:48.000\nselected settings; it does not measure\nyour body or decide what is safe for you.\n",
+  "claims": [
+    "MOV-007",
+    "MOV-001",
+    "MOV-006",
+    "BEH-001",
+    "MOV-004",
+    "MODEL-001"
+  ],
+  "references": [
+    {
+      "id": "who-activity",
+      "title": "Physical activity",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2026-11-04",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Global overview; not an individual activity prescription."
+    },
+    {
+      "id": "nhs-activity",
+      "title": "Physical activity guidelines for adults aged 19 to 64",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "nhs-older",
+      "title": "Physical activity guidelines for older adults",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-older-adults/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "comb-2011",
+      "title": "The behaviour change wheel: A new method for characterising and designing behaviour change interventions",
+      "authors": [
+        "Susan Michie",
+        "Maartje M van Stralen",
+        "Robert West"
+      ],
+      "url": "https://link.springer.com/article/10.1186/1748-5908-6-42",
+      "kind": "Behavioural framework",
+      "publicationDate": "2011-04-23",
+      "updatedOn": null,
+      "doi": "10.1186/1748-5908-6-42",
+      "pmid": null,
+      "accessLevel": "original-article",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Framework design evidence, not a trial showing this planner changes health outcomes."
+    },
+    {
+      "id": "garcia-2023",
+      "title": "Non-occupational physical activity and risk of cardiovascular disease, cancer and mortality outcomes: a dose-response meta-analysis of large prospective studies",
+      "authors": [
+        "Leandro Garcia",
+        "Matthew Pearce",
+        "Ali Abbas",
+        "et al."
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36854652/",
+      "kind": "Systematic review of prospective cohorts",
+      "publicationDate": "2023",
+      "updatedOn": null,
+      "doi": "10.1136/bjsports-2022-105669",
+      "pmid": "36854652",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; full-text risk-of-bias tables not reappraised. Cohort associations are not personal causal estimates."
+    },
+    {
+      "id": "yu-2025",
+      "title": "Physical activity trajectories and accumulation over adulthood and their associations with all-cause and cause-specific mortality: a systematic review and meta-analysis",
+      "authors": [
+        "Ruyi Yu",
+        "Stephanie L Duncombe",
+        "Yuta Nemoto",
+        "Raphael Ho Araujo",
+        "Hsin-Fang Chung",
+        "Gregore I Mielke"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40639966/",
+      "kind": "Systematic review of prospective cohorts",
+      "publicationDate": "2025",
+      "updatedOn": null,
+      "doi": "10.1136/bjsports-2024-109122",
+      "pmid": "40639966",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; residual confounding and reverse causation remain possible; searches through April 2024."
+    },
+    {
+      "id": "who-diet",
+      "title": "Healthy diet",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2026-01-26",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Global principles; local food guidance and individual requirements differ."
+    },
+    {
+      "id": "cdc-sleep",
+      "title": "About Sleep",
+      "authors": [
+        "Centers for Disease Control and Prevention"
+      ],
+      "url": "https://www.cdc.gov/sleep/about/index.html",
+      "kind": "US public-health guidance",
+      "publicationDate": "2024-05-15",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Named US age bands differ from the general NHS adult range. Duration does not diagnose sleep quality."
+    },
+    {
+      "id": "who-stress",
+      "title": "Stress: questions and answers",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/questions-and-answers/item/stress",
+      "kind": "Public-health information",
+      "publicationDate": "2026-03-30",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    }
+  ]
+}

@@ -14,6 +14,7 @@ import { EVIDENCE_GUIDES, ENGINE_GLOSSARY, PARAMETER_GUIDES, PILLAR_GUIDES } fro
 import { HABIT_TOPIC_LABELS } from '@/lib/education/habitTopics';
 
 type HealthEngineGuideProps = {
+  educationPreview?: boolean;
   state: State;
   presets: CanonicalScenarioPreset[];
   onClose: () => void;
@@ -22,7 +23,7 @@ type HealthEngineGuideProps = {
   journeyConstraint?: JourneyConstraint;
 };
 
-export function HealthEngineGuide({ state, presets, onClose, motionPaused, onToggleMotion, journeyConstraint }: HealthEngineGuideProps) {
+export function HealthEngineGuide({ educationPreview = false, state, presets, onClose, motionPaused, onToggleMotion, journeyConstraint }: HealthEngineGuideProps) {
   const pillar = PILLAR_GUIDES[state.activePillar];
   const preset = resolveActivePreset(resolveAvailablePresets(presets), state.activePreset);
   const values = [
@@ -56,6 +57,7 @@ export function HealthEngineGuide({ state, presets, onClose, motionPaused, onTog
           <p>The Compare button beside Guide shows your starting and current settings, numerical changes and the related habit guidance. Use Restore starting settings there to return the controls to that reference. In 2D, a circle marks the starting value and a diamond marks the current value.</p>
 
           <SceneVisualExplanation state={state} motionPaused={motionPaused} onToggleMotion={onToggleMotion} />
+          {educationPreview && <p><Link href="/learn/library" prefetch={false} target="_blank" rel="noopener noreferrer" className="text-emerald-300 underline">Open the local four-level learning preview (opens in a new tab)</Link>. Independent clinical review pending; the library does not validate this illustration.</p>}
 
           <Link href={journeyLearnHref(state.activePillar, journeyConstraint)} prefetch={false} className="inline-block rounded-lg border border-emerald-500/40 px-3 py-2 font-medium text-emerald-300 hover:bg-emerald-500/10">
             Browse health topics and terms

@@ -1,0 +1,33 @@
+.hc-education { color: #173e31; }
+.hc-education h1 { font-size: clamp(2rem, 5vw, 3.5rem); max-width: 22ch; }
+.hc-education p, .hc-education li, .hc-education dd { line-height: 1.7; max-width: 76ch; overflow-wrap: anywhere; }
+.hc-education section, .hc-education figure { margin-block: 1.75rem; scroll-margin-top: 1rem; }
+.hc-education a { color: #20573f; text-decoration: underline; text-underline-offset: .2em; }
+.hc-education a:hover { text-decoration-thickness: 2px; }
+.hc-education :is(a, button, select, input, summary):focus-visible { outline: 3px solid #174e3a; outline-offset: 4px; }
+.hc-education :is(button, select, summary) { min-height: 44px; }
+.hc-education :is(button, select) { font: inherit; padding: .6rem; max-width: 100%; border: 1px solid #285e48; border-radius: .4rem; background: #fff; color: #173e31; }
+.hc-education button:disabled { opacity: .65; }
+.hc-education details { padding: .8rem; border: 1px solid #627d70; border-radius: .5rem; margin-block: .8rem; }
+.hc-education summary { cursor: pointer; font-weight: 650; padding-block: .5rem; overflow-wrap: anywhere; }
+.hc-education dl > div { margin-block: 1rem; }
+.hc-education dt { font-weight: 700; }
+.hc-education dd { margin: .3rem 0 0; }
+.hc-education-cards, .hc-education-selects { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1.25rem; }
+.hc-education-cards article, .hc-education-pathways, .hc-education-safety { padding: 1.25rem; background: #f0f7f3; border: 1px solid #627d70; border-radius: .6rem; }
+.hc-education-selects label { display: grid; gap: .5rem; }
+.hc-education-level-links { display: flex; flex-wrap: wrap; gap: .7rem 2rem; padding-left: 1.2rem; }
+.hc-education-level-links a, .hc-education-actions a { display: inline-block; padding-block: .5rem; }
+.hc-education-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.hc-education-citations { font-size: .9rem; }
+.hc-education-citations a { display: inline-block; padding: .25rem .35rem; }
+.hc-education-diagram { margin-inline: 0; }
+.hc-education-diagram svg { width: 100%; max-width: 480px; height: auto; }
+.hc-education-diagram figcaption { line-height: 1.7; max-width: 76ch; }
+.hc-education-quiz fieldset { border: 1px solid #627d70; padding: 1rem; }
+.hc-education-quiz legend { font-weight: 700; }
+.hc-education-quiz label { display: flex; align-items: flex-start; gap: .75rem; padding-block: .75rem; line-height: 1.5; }
+.hc-education-quiz input { margin-top: .3rem; flex: 0 0 auto; width: 20px; height: 20px; accent-color: #174e3a; }
+.hc-education-quiz button { margin-top: 1rem; }
+@media (forced-colors: active) { .hc-education svg rect { fill: Canvas; stroke: CanvasText; } .hc-education svg text { fill: CanvasText; } }
+@media print { .hc-education details { display: block; } .hc-education details > * { display: block !important; } .hc-education-selects, .hc-education-quiz button { display: none; } }

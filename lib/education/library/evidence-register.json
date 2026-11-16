@@ -1,0 +1,1877 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-11-16",
+  "reviewDue": "2027-05-16",
+  "author": "Healthcrest editorial draft prepared with Codex",
+  "clinicalReviewer": null,
+  "publicationStatus": "draft",
+  "certaintyPolicy": "Editorial GRADE-informed appraisal; not formal independent GRADE. High certainty never confers publication approval.",
+  "sources": [
+    {
+      "id": "nhs-activity",
+      "title": "Physical activity guidelines for adults aged 19 to 64",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "nhs-older",
+      "title": "Physical activity guidelines for older adults",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-older-adults/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "who-activity",
+      "title": "Physical activity",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2026-11-04",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Global overview; not an individual activity prescription."
+    },
+    {
+      "id": "nhlbi-activity",
+      "title": "Physical Activity and Your Heart: Benefits",
+      "authors": [
+        "NHLBI"
+      ],
+      "url": "https://www.nhlbi.nih.gov/health/heart/physical-activity/benefits",
+      "kind": "Physiology education",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "garcia-2023",
+      "title": "Non-occupational physical activity and risk of cardiovascular disease, cancer and mortality outcomes: a dose-response meta-analysis of large prospective studies",
+      "authors": [
+        "Leandro Garcia",
+        "Matthew Pearce",
+        "Ali Abbas",
+        "et al."
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36854652/",
+      "kind": "Systematic review of prospective cohorts",
+      "publicationDate": "2023",
+      "updatedOn": null,
+      "doi": "10.1136/bjsports-2022-105669",
+      "pmid": "36854652",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; full-text risk-of-bias tables not reappraised. Cohort associations are not personal causal estimates."
+    },
+    {
+      "id": "yu-2025",
+      "title": "Physical activity trajectories and accumulation over adulthood and their associations with all-cause and cause-specific mortality: a systematic review and meta-analysis",
+      "authors": [
+        "Ruyi Yu",
+        "Stephanie L Duncombe",
+        "Yuta Nemoto",
+        "Raphael Ho Araujo",
+        "Hsin-Fang Chung",
+        "Gregore I Mielke"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40639966/",
+      "kind": "Systematic review of prospective cohorts",
+      "publicationDate": "2025",
+      "updatedOn": null,
+      "doi": "10.1136/bjsports-2024-109122",
+      "pmid": "40639966",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; residual confounding and reverse causation remain possible; searches through April 2024."
+    },
+    {
+      "id": "falls-2019",
+      "title": "Exercise for preventing falls in older people living in the community",
+      "authors": [
+        "Catherine Sherrington",
+        "Nicola J Fairhall",
+        "Georgina K Wallbank",
+        "et al."
+      ],
+      "url": "https://www.cochrane.org/evidence/CD012424_exercise-preventing-falls-older-people-living-community",
+      "kind": "Cochrane systematic review",
+      "publicationDate": "2019-01-31",
+      "updatedOn": null,
+      "doi": "10.1002/14651858.CD012424.pub2",
+      "pmid": null,
+      "accessLevel": "original-review-summary",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Summary and detailed abstract read. Searches through May 2018. Falls evidence is stronger than evidence about fractures or harms."
+    },
+    {
+      "id": "nhs-eatwell",
+      "title": "The Eatwell Guide",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "nhs-fibre",
+      "title": "How to get more fibre into your diet",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/live-well/eat-well/digestive-health/how-to-get-more-fibre-into-your-diet/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "who-diet",
+      "title": "Healthy diet",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2026-01-26",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Global principles; local food guidance and individual requirements differ."
+    },
+    {
+      "id": "reynolds-2019",
+      "title": "Carbohydrate quality and human health: a series of systematic reviews and meta-analyses",
+      "authors": [
+        "Andrew Reynolds",
+        "Jim Mann",
+        "John Cummings",
+        "Nicola Winter",
+        "Evelyn Mete",
+        "Lisa Te Morenga"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30638909/",
+      "kind": "Systematic reviews of cohorts and randomised trials",
+      "publicationDate": "2019",
+      "updatedOn": null,
+      "doi": "10.1016/S0140-6736(18)31809-9",
+      "pmid": "30638909",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read. Disease endpoints largely observational; chronic-disease populations and supplement trials excluded. Linked erratum identified; numerical estimates withheld pending full-text/erratum appraisal."
+    },
+    {
+      "id": "rees-2019",
+      "title": "Mediterranean-style diet for the primary and secondary prevention of cardiovascular disease",
+      "authors": [
+        "Karen Rees",
+        "Aiko Takeda",
+        "Nicole Martin",
+        "et al."
+      ],
+      "url": "https://www.cochrane.org/evidence/CD009825_mediterranean-style-diet-prevention-cardiovascular-disease",
+      "kind": "Cochrane systematic review",
+      "publicationDate": "2019-03-13",
+      "updatedOn": null,
+      "doi": "10.1002/14651858.CD009825.pub3",
+      "pmid": null,
+      "accessLevel": "original-review-summary",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Summary and detailed abstract read; searches through September 2018. Older evidence, few event trials, varied interventions; not a current complete diet review."
+    },
+    {
+      "id": "efsa-drv",
+      "title": "Dietary reference values",
+      "authors": [
+        "European Food Safety Authority"
+      ],
+      "url": "https://www.efsa.europa.eu/en/topics/topic/dietary-reference-values",
+      "kind": "European scientific reference overview",
+      "publicationDate": null,
+      "updatedOn": "2024-08-05",
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Living overview, last reviewed 5 August 2024. Reference values vary by population; not a universal meal prescription."
+    },
+    {
+      "id": "nhs-insomnia",
+      "title": "Insomnia",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/conditions/insomnia/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": "2024-03-19",
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Last reviewed 19 March 2024. General information, not diagnosis or an individual treatment plan."
+    },
+    {
+      "id": "nhs-sleep",
+      "title": "Sleep problems",
+      "authors": [
+        "NHS Every Mind Matters"
+      ],
+      "url": "https://www.nhs.uk/every-mind-matters/mental-health-issues/sleep/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "cdc-sleep",
+      "title": "About Sleep",
+      "authors": [
+        "Centers for Disease Control and Prevention"
+      ],
+      "url": "https://www.cdc.gov/sleep/about/index.html",
+      "kind": "US public-health guidance",
+      "publicationDate": "2024-05-15",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Named US age bands differ from the general NHS adult range. Duration does not diagnose sleep quality."
+    },
+    {
+      "id": "nhlbi-sleep",
+      "title": "How Sleep Works: Your Sleep/Wake Cycle",
+      "authors": [
+        "NHLBI"
+      ],
+      "url": "https://www.nhlbi.nih.gov/health/sleep/sleep-wake-cycle",
+      "kind": "Physiology education",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "hse-shifts",
+      "title": "Hints and tips for shift-workers",
+      "authors": [
+        "Health and Safety Executive"
+      ],
+      "url": "https://www.hse.gov.uk/humanfactors/topics/shift-workers.htm",
+      "kind": "Workplace guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Practical workplace advice, not proof that one routine suits every shift worker; date not captured."
+    },
+    {
+      "id": "trauer-2015",
+      "title": "Cognitive Behavioral Therapy for Chronic Insomnia: A Systematic Review and Meta-analysis",
+      "authors": [
+        "James M Trauer",
+        "Mary Y Qian",
+        "Joseph S Doyle",
+        "Shantha M W Rajaratnam",
+        "David Cunnington"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26054060/",
+      "kind": "Systematic review of randomised trials",
+      "publicationDate": "2015",
+      "updatedOn": null,
+      "doi": "10.7326/M14-2841",
+      "pmid": "26054060",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read. Inactive comparators; excluded comorbid insomnia. Not evidence for a general habit planner."
+    },
+    {
+      "id": "furukawa-2024",
+      "title": "Components and Delivery Formats of Cognitive Behavioral Therapy for Chronic Insomnia in Adults: A Systematic Review and Component Network Meta-Analysis",
+      "authors": [
+        "Yuki Furukawa",
+        "Masatsugu Sakata",
+        "Ryuichiro Yamamoto",
+        "et al."
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38231522/",
+      "kind": "Component network meta-analysis",
+      "publicationDate": "2024",
+      "updatedOn": null,
+      "doi": "10.1001/jamapsychiatry.2023.5060",
+      "pmid": "38231522",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; component estimates depend on modelling assumptions and undetected interactions. Do not prescribe individual treatment components."
+    },
+    {
+      "id": "scott-2025",
+      "title": "Cognitive Behavioral Therapy for Insomnia in People With Chronic Disease: A Systematic Review and Meta-Analysis",
+      "authors": [
+        "Amelia J Scott",
+        "Ashleigh B Correa",
+        "Madelyne A Bisby",
+        "et al."
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40982264/",
+      "kind": "Systematic review of randomised trials",
+      "publicationDate": "2025",
+      "updatedOn": null,
+      "doi": "10.1001/jamainternmed.2025.4610",
+      "pmid": "40982264",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; searches through June 2025. Conditions and interventions differ; full-text appraisal outstanding."
+    },
+    {
+      "id": "nhs-stress",
+      "title": "Dealing with stress",
+      "authors": [
+        "NHS Every Mind Matters"
+      ],
+      "url": "https://www.nhs.uk/every-mind-matters/mental-health-issues/stress/",
+      "kind": "Public-health guidance",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "nhs-breathing",
+      "title": "Breathing exercises for stress",
+      "authors": [
+        "NHS"
+      ],
+      "url": "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/breathing-exercises-for-stress/",
+      "kind": "Public-health instructions",
+      "publicationDate": null,
+      "updatedOn": "2026-06-12",
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Last reviewed 12 June 2026. Gentle unforced exercise; does not validate every breathwork technique."
+    },
+    {
+      "id": "who-stress",
+      "title": "Stress: questions and answers",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/questions-and-answers/item/stress",
+      "kind": "Public-health information",
+      "publicationDate": "2026-03-30",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Publication/update date not captured; access date is not a publication date."
+    },
+    {
+      "id": "fincham-review",
+      "title": "Effect of breathwork on stress and mental health: A meta-analysis of randomised-controlled trials",
+      "authors": [
+        "Guy William Fincham",
+        "Clara Strauss",
+        "Jesus Montero-Marin",
+        "Kate Cavanagh"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36624160/",
+      "kind": "Meta-analysis of randomised trials",
+      "publicationDate": "2023",
+      "updatedOn": null,
+      "doi": "10.1038/s41598-022-27247-y",
+      "pmid": "36624160",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; small studies, moderate bias concerns, heterogeneous methods and self-report. Searches through February 2022."
+    },
+    {
+      "id": "fincham-trial",
+      "title": "Effect of coherent breathing on mental health and wellbeing: a randomised placebo-controlled trial",
+      "authors": [
+        "Guy W Fincham",
+        "Clara Strauss",
+        "Kate Cavanagh"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38092805/",
+      "kind": "Randomised active-comparator trial",
+      "publicationDate": "2023",
+      "updatedOn": null,
+      "doi": "10.1038/s41598-023-49279-8",
+      "pmid": "38092805",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read. One tested breathing protocol, online adult sample and short follow-up; no detectable superiority does not prove all breathing methods ineffective."
+    },
+    {
+      "id": "rajan-2026",
+      "title": "Effects of mindfulness-based interventions on perceived stress among non-clinical adults: a systematic review and meta-analysis",
+      "authors": [
+        "Anisha Rajan",
+        "Mahendra Kumar",
+        "Pranav Raj P"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41634335/",
+      "kind": "Systematic review of randomised trials",
+      "publicationDate": "2026-02-03",
+      "updatedOn": null,
+      "doi": "10.1038/s44184-026-00188-4",
+      "pmid": "41634335",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read. Searches through August 2025; perceived stress rather than disease endpoints; programmes and controls differ."
+    },
+    {
+      "id": "hemmingsen-2017",
+      "title": "Diet, physical activity or both for prevention or delay of type 2 diabetes mellitus and its associated complications in people at increased risk of developing type 2 diabetes mellitus",
+      "authors": [
+        "Bianca Hemmingsen",
+        "Gabriel Gimenez-Perez",
+        "Didac Mauricio",
+        "Marta Roque i Figuls",
+        "Maria-Inti Metzendorf",
+        "Bernd Richter"
+      ],
+      "url": "https://www.cochrane.org/evidence/CD003054_diet-physical-activity-or-both-prevention-or-delay-type-2-diabetes-mellitus-and-its-associated",
+      "kind": "Cochrane systematic review",
+      "publicationDate": "2017-12-05",
+      "updatedOn": null,
+      "doi": "10.1002/14651858.CD003054.pub4",
+      "pmid": null,
+      "accessLevel": "original-review-summary",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Summary and detailed abstract read; searches/alerts through 2017. High-risk populations, mostly impaired glucose tolerance. Not evidence for the app or proof of synergy."
+    },
+    {
+      "id": "zhou-2025",
+      "title": "Effects of exercise on sleep quality in general population: Meta-analysis and systematic review",
+      "authors": [
+        "Xiaojie Zhou",
+        "Yan Kong",
+        "Beibei Yu",
+        "Shengnan Shi",
+        "Hui He"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39556996/",
+      "kind": "Systematic review of randomised trials",
+      "publicationDate": "2025",
+      "updatedOn": null,
+      "doi": "10.1016/j.sleep.2024.10.036",
+      "pmid": "39556996",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; published online November 2024. Different exercise and sleep measures; reported moderator statistics need full-text verification; no numerical ranking reproduced."
+    },
+    {
+      "id": "tasali-2022",
+      "title": "Effect of Sleep Extension on Objectively Assessed Energy Intake Among Adults With Overweight in Real-life Settings: A Randomized Clinical Trial",
+      "authors": [
+        "Esra Tasali",
+        "Kristen Wroblewski",
+        "Eva Kahn",
+        "Jennifer Kilkus",
+        "Dale A Schoeller"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35129580/",
+      "kind": "Randomised trial",
+      "publicationDate": "2022",
+      "updatedOn": null,
+      "doi": "10.1001/jamainternmed.2021.8098",
+      "pmid": "35129580",
+      "accessLevel": "original-abstract",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Original abstract read; 80 younger adults with overweight and habitual short sleep; short intervention. Not a general weight-loss recommendation."
+    },
+    {
+      "id": "comb-2011",
+      "title": "The behaviour change wheel: A new method for characterising and designing behaviour change interventions",
+      "authors": [
+        "Susan Michie",
+        "Maartje M van Stralen",
+        "Robert West"
+      ],
+      "url": "https://link.springer.com/article/10.1186/1748-5908-6-42",
+      "kind": "Behavioural framework",
+      "publicationDate": "2011-04-23",
+      "updatedOn": null,
+      "doi": "10.1186/1748-5908-6-42",
+      "pmid": null,
+      "accessLevel": "original-article",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Framework design evidence, not a trial showing this planner changes health outcomes."
+    },
+    {
+      "id": "who-teens",
+      "title": "Mental health of adolescents",
+      "authors": [
+        "World Health Organization"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/adolescent-mental-health",
+      "kind": "Public-health fact sheet",
+      "publicationDate": "2025-09-01",
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "original-guidance",
+      "verifiedOn": "2026-11-16",
+      "verificationStatus": "VERIFIED",
+      "limitations": "Adolescent context; supportive families/schools and access to care, not adult self-treatment instructions."
+    },
+    {
+      "id": "nice-ph49",
+      "title": "Behaviour change: individual approaches",
+      "authors": [
+        "NICE"
+      ],
+      "url": "https://www.nice.org.uk/guidance/ph49/chapter/recommendations",
+      "kind": "Guideline",
+      "publicationDate": null,
+      "updatedOn": null,
+      "doi": null,
+      "pmid": null,
+      "accessLevel": "blocked",
+      "verifiedOn": null,
+      "verificationStatus": "NOT VERIFIED",
+      "limitations": "403 on original page and PDF; NOT VERIFIED in this assessment. Cannot support a lesson pending access."
+    }
+  ],
+  "claims": [
+    {
+      "id": "MOV-001",
+      "habit": "movement",
+      "scientificClaim": "UK guidance for ages 19–64 recommends at least 150 moderate or 75 vigorous aerobic minutes weekly, plus strengthening on at least two days.",
+      "supportingReferences": [
+        "nhs-activity"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Population recommendation; not a biological cutoff.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults aged 19–64.",
+      "geographicalRelevance": [
+        "uk"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-MOV-001",
+        "/learn/library",
+        "/learn/library/movement",
+        "/learn/library/movement#faq-walking-strength",
+        "/learn/library/movement#lesson-strength",
+        "/learn/library/movement#safety-title",
+        "/learn/library/movement#video-source"
+      ]
+    },
+    {
+      "id": "MOV-002",
+      "habit": "movement",
+      "scientificClaim": "Moderate activity usually permits conversation but not singing; vigorous activity makes sustained conversation harder.",
+      "supportingReferences": [
+        "nhs-activity"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Practical intensity indicator, not a personal exercise safety test.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-MOV-002",
+        "/learn/library/movement#lesson-intensity"
+      ]
+    },
+    {
+      "id": "MOV-003",
+      "habit": "movement",
+      "scientificClaim": "Repeated suitable aerobic activity supports cardiovascular capacity and everyday function.",
+      "supportingReferences": [
+        "nhlbi-activity",
+        "who-activity"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Established guidance/physiology; effects vary by activity and person.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "physiology",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-MOV-003",
+        "/learn/library/movement#essentials",
+        "/learn/library/movement#lesson-measures",
+        "/learn/library/movement#lesson-oxygen"
+      ]
+    },
+    {
+      "id": "MOV-004",
+      "habit": "movement",
+      "scientificClaim": "Greater and increasing activity are associated with lower mortality; benefits are not restricted to a single weekly threshold.",
+      "supportingReferences": [
+        "garcia-2023",
+        "yu-2025",
+        "who-activity"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Large consistent cohorts; confounding and reverse causation prevent personal causal estimates.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "association",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-MOV-004",
+        "/learn/library/movement",
+        "/learn/library/movement#essentials",
+        "/learn/library/movement#faq-below-target",
+        "/learn/library/movement#lesson-dose",
+        "/learn/library/movement#lesson-measures",
+        "/learn/library/movement#video-source"
+      ]
+    },
+    {
+      "id": "MOV-005",
+      "habit": "movement",
+      "scientificClaim": "Balance and functional exercise programmes reduce falls in community-dwelling older adults.",
+      "supportingReferences": [
+        "falls-2019"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "high",
+      "certaintyRationale": "Cochrane grades falls outcomes high certainty; harms/fractures less certain.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Community-dwelling older adults; not every walking or resistance programme.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "trial-outcome",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-MOV-005",
+        "/learn/library",
+        "/learn/library/movement",
+        "/learn/library/movement#lesson-ageing",
+        "/learn/library/movement#lesson-measures"
+      ]
+    },
+    {
+      "id": "MOV-006",
+      "habit": "movement",
+      "scientificClaim": "Older-adult activity guidance includes strength, balance and flexibility alongside aerobic activity.",
+      "supportingReferences": [
+        "nhs-older"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Age-specific guidance; adapt to current fitness.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults 65 and over.",
+      "geographicalRelevance": [
+        "uk"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-MOV-006",
+        "/learn/library",
+        "/learn/library/movement",
+        "/learn/library/movement#lesson-strength",
+        "/learn/library/movement#safety-title",
+        "/learn/library/movement#video-source"
+      ]
+    },
+    {
+      "id": "MOV-007",
+      "habit": "movement",
+      "scientificClaim": "Physical activity includes walking, cycling, wheeling and activity in daily life; access and suitability vary.",
+      "supportingReferences": [
+        "who-activity"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Global guidance supports inclusive options, not universal exercise routines.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-MOV-007",
+        "/learn/library",
+        "/learn/library/movement#essentials",
+        "/learn/library/movement#faq-universal",
+        "/learn/library/movement#lesson-barriers",
+        "/learn/library/movement#lesson-capacity",
+        "/learn/library/movement#lesson-choose",
+        "/learn/library/movement#video-source"
+      ]
+    },
+    {
+      "id": "FOOD-001",
+      "habit": "food",
+      "scientificClaim": "Balanced eating concerns variety and the pattern across meals; the Eatwell Guide need not be matched at every meal.",
+      "supportingReferences": [
+        "nhs-eatwell",
+        "who-diet"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Public-health pattern guidance, not proof that a diagram itself prevents disease.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-FOOD-001",
+        "/learn/library",
+        "/learn/library/food#essentials",
+        "/learn/library/food#faq-each-meal",
+        "/learn/library/food#lesson-meal",
+        "/learn/library/food#lesson-nutrients",
+        "/learn/library/food#lesson-pattern",
+        "/learn/library/food#safety-title",
+        "/learn/library/food#video-source"
+      ]
+    },
+    {
+      "id": "FOOD-002",
+      "habit": "food",
+      "scientificClaim": "Starchy foods supply energy; protein foods, vegetables and dairy or suitable alternatives contribute different overlapping nutrients.",
+      "supportingReferences": [
+        "nhs-eatwell"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "high",
+      "certaintyRationale": "Established food composition and physiology; foods are not single-nutrient compartments.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "physiology",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-FOOD-002",
+        "/learn/library/food",
+        "/learn/library/food#lesson-nutrients",
+        "/learn/library/food#lesson-variety",
+        "/learn/library/food#video-source"
+      ]
+    },
+    {
+      "id": "FOOD-003",
+      "habit": "food",
+      "scientificClaim": "Fibre supports bowel function; higher fibre intake is associated with better long-term outcomes and trials support some intermediate outcomes.",
+      "supportingReferences": [
+        "nhs-fibre",
+        "reynolds-2019"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Disease outcomes largely observational; intermediate trial outcomes are not disease prevention proofs.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "mixed",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-FOOD-003",
+        "/learn/library/food#faq-carbs",
+        "/learn/library/food#lesson-bowel",
+        "/learn/library/food#lesson-fibre",
+        "/learn/library/food#lesson-measurement"
+      ]
+    },
+    {
+      "id": "FOOD-004",
+      "habit": "food",
+      "scientificClaim": "UK adult fibre guidance is 30 g daily; this is not a universal target for every age or therapeutic diet.",
+      "supportingReferences": [
+        "nhs-fibre"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Population guidance; individual dietary needs differ.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "General adult population; not children or prescribed modified diets.",
+      "geographicalRelevance": [
+        "uk"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-FOOD-004",
+        "/learn/library",
+        "/learn/library/food#lesson-fibre"
+      ]
+    },
+    {
+      "id": "FOOD-005",
+      "habit": "food",
+      "scientificClaim": "Mediterranean-style dietary intervention evidence varies by outcome and comparison; universal cardiovascular guarantees are unjustified.",
+      "supportingReferences": [
+        "rees-2019"
+      ],
+      "contradictoryEvidence": "Some outcomes favour intervention; other outcomes show little/no clear difference. Newer dietary trial appraisal remains outstanding.",
+      "certainty": "low",
+      "certaintyRationale": "Older review with few clinical endpoint trials and heterogeneous interventions.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults in primary/secondary prevention research; not a treatment programme.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "trial-outcome",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-FOOD-005",
+        "/learn/library/food#lesson-comparison",
+        "/learn/library/food#lesson-measurement"
+      ]
+    },
+    {
+      "id": "FOOD-006",
+      "habit": "food",
+      "scientificClaim": "Frozen and tinned fruit or vegetables can contribute to balanced eating; a whole-food percentage cannot establish nutrient adequacy.",
+      "supportingReferences": [
+        "nhs-eatwell",
+        "who-diet"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Guidance supports varied practical choices; no validated app percentage exists.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-FOOD-006",
+        "/learn/library",
+        "/learn/library/food",
+        "/learn/library/food#essentials",
+        "/learn/library/food#faq-processed",
+        "/learn/library/food#lesson-meal",
+        "/learn/library/food#lesson-practical",
+        "/learn/library/food#video-source"
+      ]
+    },
+    {
+      "id": "FOOD-007",
+      "habit": "food",
+      "scientificClaim": "European dietary reference values differ by population and are not an individual meal prescription.",
+      "supportingReferences": [
+        "efsa-drv"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Scientific reference overview rather than one pan-European diet.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Population groups differ in age and life stage.",
+      "geographicalRelevance": [
+        "eu"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-FOOD-007",
+        "/learn/library"
+      ]
+    },
+    {
+      "id": "SLEEP-001",
+      "habit": "sleep",
+      "scientificClaim": "Many adults need around 7–9 hours; duration and daytime functioning both matter.",
+      "supportingReferences": [
+        "nhs-insomnia",
+        "nhs-sleep"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "General adult range with individual variation; duration is not diagnostic.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-SLEEP-001",
+        "/learn/library",
+        "/learn/library/sleep",
+        "/learn/library/sleep#essentials",
+        "/learn/library/sleep#faq-eight",
+        "/learn/library/sleep#lesson-duration",
+        "/learn/library/sleep#lesson-review",
+        "/learn/library/sleep#lesson-routine",
+        "/learn/library/sleep#lesson-surroundings",
+        "/learn/library/sleep#video-source"
+      ]
+    },
+    {
+      "id": "SLEEP-002",
+      "habit": "sleep",
+      "scientificClaim": "CDC recommends 8–10 hours for ages 13–17, at least 7 for ages 18–60, 7–9 for ages 61–64 and 7–8 for 65+.",
+      "supportingReferences": [
+        "cdc-sleep"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Named age bands; do not average with another guideline.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Specified age bands only.",
+      "geographicalRelevance": [
+        "us"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-SLEEP-002",
+        "/learn/library",
+        "/learn/library/sleep#essentials",
+        "/learn/library/sleep#faq-eight"
+      ]
+    },
+    {
+      "id": "SLEEP-003",
+      "habit": "sleep",
+      "scientificClaim": "Sleep timing reflects daily biological clocks and accumulating sleep pressure; light provides timing cues.",
+      "supportingReferences": [
+        "nhlbi-sleep"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "high",
+      "certaintyRationale": "Established basic sleep regulation; not a personal light-treatment protocol.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "physiology",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-SLEEP-003",
+        "/learn/library/sleep",
+        "/learn/library/sleep#lesson-clock",
+        "/learn/library/sleep#lesson-pressure",
+        "/learn/library/sleep#lesson-timing",
+        "/learn/library/sleep#video-source"
+      ]
+    },
+    {
+      "id": "SLEEP-004",
+      "habit": "sleep",
+      "scientificClaim": "Multicomponent CBT-I improves insomnia outcomes and is different from general sleep tips.",
+      "supportingReferences": [
+        "trauer-2015",
+        "furukawa-2024",
+        "scott-2025"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Consistent trial syntheses; delivery, comparators and component assumptions vary.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults with assessed insomnia, including studied chronic conditions.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "trial-outcome",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-SLEEP-004",
+        "/learn/library/sleep#faq-cure",
+        "/learn/library/sleep#lesson-cbti",
+        "/learn/library/sleep#lesson-measurement",
+        "/learn/library/sleep#lesson-support",
+        "/learn/library/sleep#video-source"
+      ]
+    },
+    {
+      "id": "SLEEP-005",
+      "habit": "sleep",
+      "scientificClaim": "Shift workers need advice adapted to their actual sleep opportunity and circumstances.",
+      "supportingReferences": [
+        "hse-shifts"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Workplace advice supports flexibility, not one optimal schedule.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Shift workers and their households.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-SLEEP-005",
+        "/learn/library/sleep#faq-shift",
+        "/learn/library/sleep#lesson-opportunity",
+        "/learn/library/sleep#video-source"
+      ]
+    },
+    {
+      "id": "SLEEP-006",
+      "habit": "sleep",
+      "scientificClaim": "Persistent sleep problems affecting daily life warrant assessment; do not drive when sleepy.",
+      "supportingReferences": [
+        "nhs-insomnia"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Authoritative safety/help-seeking guidance; no diagnosis made.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-SLEEP-006",
+        "/learn/library/sleep#essentials",
+        "/learn/library/sleep#faq-cure",
+        "/learn/library/sleep#lesson-review",
+        "/learn/library/sleep#safety-title",
+        "/learn/library/sleep#video-source"
+      ]
+    },
+    {
+      "id": "STRESS-001",
+      "habit": "stress",
+      "scientificClaim": "Stress can affect alertness, tension, mood, sleep, appetite and behaviour; responses differ.",
+      "supportingReferences": [
+        "nhs-stress",
+        "who-stress"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "high",
+      "certaintyRationale": "Established broad responses; symptoms are nonspecific and cannot diagnose stress.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "physiology",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-STRESS-001",
+        "/learn/library/stress#essentials",
+        "/learn/library/stress#faq-all-bad",
+        "/learn/library/stress#lesson-connection",
+        "/learn/library/stress#lesson-response",
+        "/learn/library/stress#lesson-response-system",
+        "/learn/library/stress#video-source"
+      ]
+    },
+    {
+      "id": "STRESS-002",
+      "habit": "stress",
+      "scientificClaim": "Gentle unforced breathing is an optional coping practice rather than a required technique.",
+      "supportingReferences": [
+        "nhs-breathing"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Source-specific instructions; not evidence for forceful breathwork or breath holding.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-STRESS-002",
+        "/learn/library/stress",
+        "/learn/library/stress#faq-must-breathe",
+        "/learn/library/stress#lesson-breathing",
+        "/learn/library/stress#lesson-choice",
+        "/learn/library/stress#video-source"
+      ]
+    },
+    {
+      "id": "STRESS-003",
+      "habit": "stress",
+      "scientificClaim": "Small trials suggest breathwork can reduce self-reported stress, but specific superiority over credible active comparisons is uncertain.",
+      "supportingReferences": [
+        "fincham-review",
+        "fincham-trial"
+      ],
+      "contradictoryEvidence": "Fincham 2023 active-comparator trial found no detectable superiority of coherent breathing; both groups improved.",
+      "certainty": "low",
+      "certaintyRationale": "Small studies, bias concerns and heterogeneous controls; a larger active-comparator trial found no detectable added benefit.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "trial-outcome",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-STRESS-003",
+        "/learn/library/stress",
+        "/learn/library/stress#lesson-breath-evidence",
+        "/learn/library/stress#video-source"
+      ]
+    },
+    {
+      "id": "STRESS-004",
+      "habit": "stress",
+      "scientificClaim": "Mindfulness programmes may reduce perceived stress; physiological and long-term disease effects are not established by that outcome.",
+      "supportingReferences": [
+        "rajan-2026"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "low",
+      "certaintyRationale": "Original abstract assessed; programmes/controls differ and full-text appraisal outstanding.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Non-clinical adults in included trials.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "trial-outcome",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-STRESS-004",
+        "/learn/library/stress#lesson-mindfulness"
+      ]
+    },
+    {
+      "id": "STRESS-005",
+      "habit": "stress",
+      "scientificClaim": "Practical support, social connection and addressing pressures belong alongside individual coping skills.",
+      "supportingReferences": [
+        "who-stress",
+        "nhs-stress"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Public-health guidance recognises social and environmental context.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-STRESS-005",
+        "/learn/library",
+        "/learn/library/stress",
+        "/learn/library/stress#essentials",
+        "/learn/library/stress#faq-must-breathe",
+        "/learn/library/stress#lesson-choice",
+        "/learn/library/stress#lesson-context",
+        "/learn/library/stress#lesson-context-science",
+        "/learn/library/stress#lesson-pressure",
+        "/learn/library/stress#lesson-review",
+        "/learn/library/stress#lesson-support",
+        "/learn/library/stress#safety-title",
+        "/learn/library/stress#video-source"
+      ]
+    },
+    {
+      "id": "TEEN-001",
+      "habit": "connected",
+      "scientificClaim": "Adolescent wellbeing involves sleep, activity, coping skills and supportive environments; adult advice is not interchangeable.",
+      "supportingReferences": [
+        "who-teens",
+        "cdc-sleep"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Age-specific public-health guidance, not a youth treatment programme.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Teen reading pathway ages 13–17; seek trusted adult/professional support.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "recommendation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-TEEN-001",
+        "/learn/library",
+        "/learn/library/stress#lesson-context-science",
+        "/learn/library/stress#safety-title"
+      ]
+    },
+    {
+      "id": "LINK-001",
+      "habit": "connected",
+      "scientificClaim": "Exercise interventions can improve some subjective and objective sleep outcomes.",
+      "supportingReferences": [
+        "zhou-2025"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "low",
+      "certaintyRationale": "Original abstract assessed; heterogeneous interventions/measures and no best-exercise claim.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "trial-outcome",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-LINK-001",
+        "/learn/library/movement#lesson-connection",
+        "/learn/library/sleep#lesson-connection",
+        "/learn/library/sleep#lesson-measurement"
+      ]
+    },
+    {
+      "id": "LINK-002",
+      "habit": "connected",
+      "scientificClaim": "Sleep extension affected short-term energy intake in a selected sample of habitual short sleepers.",
+      "supportingReferences": [
+        "tasali-2022"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Randomised trial supports this short-term outcome; wider generalisation low certainty.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Younger adults with overweight and habitual short sleep; short intervention.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "trial-outcome",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-LINK-002",
+        "/learn/library/food#lesson-connection",
+        "/learn/library/sleep#lesson-connection"
+      ]
+    },
+    {
+      "id": "LINK-003",
+      "habit": "connected",
+      "scientificClaim": "Supported combined diet-and-activity programmes can delay diabetes in selected high-risk adults; this does not validate an app score or prove synergy.",
+      "supportingReferences": [
+        "hemmingsen-2017"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Cochrane moderate certainty for incidence; older evidence and high-risk population.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Mostly adults with impaired glucose tolerance; not a general treatment recommendation.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "trial-outcome",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-LINK-003"
+      ]
+    },
+    {
+      "id": "BEH-001",
+      "habit": "connected",
+      "scientificClaim": "Capability, opportunity and motivation provide a framework for understanding behaviour.",
+      "supportingReferences": [
+        "comb-2011"
+      ],
+      "contradictoryEvidence": "No direct contradiction identified in the assessed sources; search was not exhaustive.",
+      "certainty": "moderate",
+      "certaintyRationale": "Framework evidence is not proof of Healthcrest efficacy.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "framework",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-BEH-001",
+        "/learn/library",
+        "/learn/library/food#lesson-access",
+        "/learn/library/food#lesson-review",
+        "/learn/library/movement#lesson-barriers",
+        "/learn/library/movement#lesson-choose",
+        "/learn/library/movement#lesson-cue",
+        "/learn/library/movement#lesson-notice",
+        "/learn/library/movement#video-source",
+        "/learn/library/sleep#faq-shift",
+        "/learn/library/sleep#lesson-surroundings",
+        "/learn/library/stress#lesson-support"
+      ]
+    },
+    {
+      "id": "MODEL-001",
+      "habit": "connected",
+      "scientificClaim": "The Explorer illustrates selected settings; its colours, thresholds and shapes are not body measurements or a validated combined health score.",
+      "supportingReferences": [
+        "who-activity",
+        "who-diet",
+        "cdc-sleep",
+        "who-stress"
+      ],
+      "contradictoryEvidence": "The software omits important dimensions. No combined risk-reduction magnitude may be inferred.",
+      "certainty": "very low",
+      "certaintyRationale": "No clinical validation for the software model. Guidance citations provide context only, not model validation.",
+      "certaintyMethod": "Editorial appraisal, not formal independent GRADE",
+      "population": "Adults; adapt to health, ability and circumstances.",
+      "geographicalRelevance": [
+        "global"
+      ],
+      "inference": "model-limitation",
+      "lastVerificationDate": "2026-11-16",
+      "clinicalReviewer": null,
+      "editorialReviewer": null,
+      "verificationStatus": "VERIFIED",
+      "publicationStatus": "draft",
+      "websiteContentLocations": [
+        "/learn/library#claim-MODEL-001",
+        "/learn/library/food",
+        "/learn/library/food#lesson-measurement",
+        "/learn/library/food#lesson-review",
+        "/learn/library/food#video-source",
+        "/learn/library/movement",
+        "/learn/library/movement#lesson-measures",
+        "/learn/library/movement#lesson-notice",
+        "/learn/library/movement#lesson-oxygen",
+        "/learn/library/movement#video-source",
+        "/learn/library/sleep",
+        "/learn/library/sleep#lesson-duration",
+        "/learn/library/sleep#lesson-measurement",
+        "/learn/library/sleep#video-source",
+        "/learn/library/stress",
+        "/learn/library/stress#faq-rating",
+        "/learn/library/stress#lesson-connection",
+        "/learn/library/stress#lesson-response-system",
+        "/learn/library/stress#video-source"
+      ]
+    }
+  ],
+  "existingContentInventory": [
+    {
+      "slug": "movement-and-strength",
+      "title": "Movement and strength: a manageable starting point",
+      "route": "/learn/movement-and-strength",
+      "status": "Existing reviewed catalogue preserved; inclusion is not new clinical approval",
+      "sections": [
+        {
+          "id": "activity-and-intensity",
+          "title": "What weekly activity guidance means",
+          "sourceIds": [
+            "activity"
+          ]
+        },
+        {
+          "id": "strength-at-home",
+          "title": "Make room for strength as well",
+          "sourceIds": [
+            "strength"
+          ]
+        },
+        {
+          "id": "fit-your-day",
+          "title": "Give the action a cue",
+          "sourceIds": []
+        },
+        {
+          "id": "appropriate-support",
+          "title": "Adapt the guidance and seek support",
+          "sourceIds": [
+            "activity"
+          ]
+        },
+        {
+          "id": "age-appropriate-guidance",
+          "title": "If you are aged 65 or over",
+          "sourceIds": [
+            "older"
+          ]
+        },
+        {
+          "id": "adapt-movement",
+          "title": "Explore seated movement and suitable support",
+          "sourceIds": [
+            "sitting"
+          ]
+        },
+        {
+          "id": "international-perspective",
+          "title": "A global perspective: WHO",
+          "sourceIds": [
+            "who-activity"
+          ]
+        }
+      ],
+      "sourceMappings": [
+        {
+          "legacyId": "activity",
+          "registerSourceId": "nhs-activity",
+          "url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/",
+          "status": "Source accessed in this assessment; scope still claim-specific"
+        },
+        {
+          "legacyId": "strength",
+          "registerSourceId": null,
+          "url": "https://www.nhs.uk/live-well/exercise/strength-exercises/",
+          "status": "Repository reference only; NOT VERIFIED in this assessment"
+        },
+        {
+          "legacyId": "older",
+          "registerSourceId": "nhs-older",
+          "url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-older-adults/",
+          "status": "Source accessed in this assessment; scope still claim-specific"
+        },
+        {
+          "legacyId": "sitting",
+          "registerSourceId": null,
+          "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",
+          "status": "Repository reference only; NOT VERIFIED in this assessment"
+        },
+        {
+          "legacyId": "who-activity",
+          "registerSourceId": "who-activity",
+          "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+          "status": "Source accessed in this assessment; scope still claim-specific"
+        }
+      ]
+    },
+    {
+      "slug": "balanced-meals",
+      "title": "Balanced meals: build on food you already eat",
+      "route": "/learn/balanced-meals",
+      "status": "Existing reviewed catalogue preserved; inclusion is not new clinical approval",
+      "sections": [
+        {
+          "id": "balance-over-time",
+          "title": "Think across the day and week",
+          "sourceIds": [
+            "eatwell"
+          ]
+        },
+        {
+          "id": "familiar-swaps",
+          "title": "Make one familiar meal easier to build on",
+          "sourceIds": [
+            "eating"
+          ]
+        },
+        {
+          "id": "practical-planning",
+          "title": "Plan around access and preferences",
+          "sourceIds": []
+        },
+        {
+          "id": "dietary-support",
+          "title": "When general advice needs adapting",
+          "sourceIds": [
+            "eatwell"
+          ]
+        },
+        {
+          "id": "international-perspective",
+          "title": "Another perspective: Harvard’s Healthy Eating Plate",
+          "sourceIds": [
+            "harvard-plate"
+          ]
+        }
+      ],
+      "sourceMappings": [
+        {
+          "legacyId": "eatwell",
+          "registerSourceId": "nhs-eatwell",
+          "url": "https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/",
+          "status": "Source accessed in this assessment; scope still claim-specific"
+        },
+        {
+          "legacyId": "eating",
+          "registerSourceId": null,
+          "url": "https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/eight-tips-for-healthy-eating/",
+          "status": "Repository reference only; NOT VERIFIED in this assessment"
+        },
+        {
+          "legacyId": "harvard-plate",
+          "registerSourceId": null,
+          "url": "https://nutritionsource.hsph.harvard.edu/healthy-eating-plate/",
+          "status": "Repository reference only; NOT VERIFIED in this assessment"
+        }
+      ]
+    },
+    {
+      "slug": "sleep-routines",
+      "title": "Sleep routines: make room for rest",
+      "route": "/learn/sleep-routines",
+      "status": "Existing reviewed catalogue preserved; inclusion is not new clinical approval",
+      "sections": [
+        {
+          "id": "sleep-needs",
+          "title": "Use duration as part of the picture",
+          "sourceIds": [
+            "sleep"
+          ]
+        },
+        {
+          "id": "wind-down",
+          "title": "Choose a repeatable wind-down step",
+          "sourceIds": [
+            "insomnia"
+          ]
+        },
+        {
+          "id": "sleep-surroundings",
+          "title": "Look at what surrounds your sleep",
+          "sourceIds": [
+            "sleep"
+          ]
+        },
+        {
+          "id": "shift-work",
+          "title": "If shifts change your sleep time",
+          "sourceIds": [
+            "shifts"
+          ]
+        },
+        {
+          "id": "sleep-support",
+          "title": "When to seek help",
+          "sourceIds": [
+            "insomnia"
+          ]
+        },
+        {
+          "id": "international-perspective",
+          "title": "Another perspective: CDC sleep guidance",
+          "sourceIds": [
+            "cdc-sleep"
+          ]
+        }
+      ],
+      "sourceMappings": [
+        {
+          "legacyId": "insomnia",
+          "registerSourceId": "nhs-insomnia",
+          "url": "https://www.nhs.uk/conditions/insomnia/",
+          "status": "Source accessed in this assessment; scope still claim-specific"
+        },
+        {
+          "legacyId": "sleep",
+          "registerSourceId": "nhs-sleep",
+          "url": "https://www.nhs.uk/every-mind-matters/mental-health-issues/sleep/",
+          "status": "Source accessed in this assessment; scope still claim-specific"
+        },
+        {
+          "legacyId": "shifts",
+          "registerSourceId": "hse-shifts",
+          "url": "https://www.hse.gov.uk/humanfactors/topics/shift-workers.htm",
+          "status": "Source accessed in this assessment; scope still claim-specific"
+        },
+        {
+          "legacyId": "cdc-sleep",
+          "registerSourceId": "cdc-sleep",
+          "url": "https://www.cdc.gov/sleep/about/index.html",
+          "status": "Source accessed in this assessment; scope still claim-specific"
+        }
+      ]
+    },
+    {
+      "slug": "stress-and-support",
+      "title": "Stress and support: choose a manageable next step",
+      "route": "/learn/stress-and-support",
+      "status": "Existing reviewed catalogue preserved; inclusion is not new clinical approval",
+      "sections": [
+        {
+          "id": "manageable-changes",
+          "title": "Choose one thing within reach",
+          "sourceIds": [
+            "stress"
+          ]
+        },
+        {
+          "id": "comfortable-breathing",
+          "title": "Try comfortable breathing if it suits you",
+          "sourceIds": [
+            "breathing"
+          ]
+        },
+        {
+          "id": "connection-and-priorities",
+          "title": "Make room for connection and practical support",
+          "sourceIds": [
+            "pressures"
+          ]
+        },
+        {
+          "id": "ongoing-support",
+          "title": "Seek further support when you need it",
+          "sourceIds": [
+            "stress"
+          ]
+        },
+        {
+          "id": "international-perspective",
+          "title": "A global perspective: WHO on coping with stress",
+          "sourceIds": [
+            "who-stress"
+          ]
+        }
+      ],
+      "sourceMappings": [
+        {
+          "legacyId": "stress",
+          "registerSourceId": null,
+          "url": "https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/feelings-and-symptoms/stress/",
+          "status": "Repository reference only; NOT VERIFIED in this assessment"
+        },
+        {
+          "legacyId": "breathing",
+          "registerSourceId": "nhs-breathing",
+          "url": "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/breathing-exercises-for-stress/",
+          "status": "Source accessed in this assessment; scope still claim-specific"
+        },
+        {
+          "legacyId": "pressures",
+          "registerSourceId": null,
+          "url": "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/tips-to-reduce-stress/",
+          "status": "Repository reference only; NOT VERIFIED in this assessment"
+        },
+        {
+          "legacyId": "urgent",
+          "registerSourceId": null,
+          "url": "https://www.nhs.uk/nhs-services/mental-health-services/where-to-get-urgent-help-for-mental-health/",
+          "status": "Repository reference only; NOT VERIFIED in this assessment"
+        },
+        {
+          "legacyId": "samaritans",
+          "registerSourceId": null,
+          "url": "https://www.samaritans.org/how-we-can-help/contact-samaritan/",
+          "status": "Repository reference only; NOT VERIFIED in this assessment"
+        },
+        {
+          "legacyId": "who-stress",
+          "registerSourceId": "who-stress",
+          "url": "https://www.who.int/news-room/questions-and-answers/item/stress",
+          "status": "Source accessed in this assessment; scope still claim-specific"
+        }
+      ]
+    }
+  ]
+}
